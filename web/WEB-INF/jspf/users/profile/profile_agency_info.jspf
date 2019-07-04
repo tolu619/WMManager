@@ -1,0 +1,99 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="card">
+    <div class="card-body border-blue-300">
+        <div class="mb-3">
+            <h6 class="font-weight-semibold mb-0 mt-1 actualAgnName">AGency Name</h6>
+            <span class="d-block text-muted">Agency</span>
+        </div>
+        <div class="row text-center mb-4">
+            <div class="col-sm-6">
+                <div class="mb-6">
+                    <dl>
+                        <dt class="font-size-sm font-weight-bold text-uppercase">
+                            Agency ID
+                        </dt>
+                        <dd class="actualAgnID" id="AgnAgnID">Like partook magic this </dd>
+
+                    </dl>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="mb-6">
+                    <dl>
+                        <dt class="font-size-sm font-weight-bold text-uppercase">
+                            Agency Type
+                        </dt>
+                        <dd id="AgnType" class="actualAgnType badge badge-primary">And earthworm dear arose bald </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center mb-4">
+            <div class="col-sm-6">
+                <div class="mb-6">
+                    <dl>
+                        <dt class="font-size-sm font-weight-bold text-uppercase">
+                            <i class="icon-envelop5 text-blue mr-2"></i>
+                            Agency Email
+                        </dt>
+                        <dd class="actualAgnEmail" id="AgnEmail">Like partook magic this </dd>
+
+                    </dl>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="mb-6">
+                    <dl>
+                        <dt class="font-size-sm font-weight-bold text-uppercase">
+                            <i class="icon-phone2 text-blue mr-2"></i>
+                            Agency Phone
+                        </dt>
+                        <dd id="AgnPhone" class="actualAgnPhone">And earthworm dear arose bald </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3 text-center">
+            <div class="col-sm-4">
+                <div class="mb-4">
+                    <dl>
+                        <dt class="font-size-sm font-weight-bold text-uppercase">
+                            <i class="icon-user text-blue mr-2"></i>
+                            Created By
+                        </dt>
+                        <dd id="Agncreated" class="actualAgnCreated">Like partook magic this </dd>
+
+                    </dl>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="mb-4">
+                    <dl>
+                        <dt class="font-size-sm font-weight-bold text-uppercase">
+                            <i class="icon-user text-blue mr-2"></i>
+                            Agency Admin Name
+                        </dt>
+                        <dd id="Agncreated" class="actualAgnowner">Like partook magic this </dd>
+
+                    </dl>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="mb-4">
+                    <dl>
+                        <dt class="font-size-sm font-weight-bold text-uppercase">
+                            <i class="icon-calendar2 text-blue mr-2"></i>
+                            Date Created
+                        </dt>
+                        <dd id="AgnDateFound" class="actualAgnDateFound">And earthworm dear arose bald </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

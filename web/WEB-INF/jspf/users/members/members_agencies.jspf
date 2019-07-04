@@ -1,0 +1,199 @@
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Members</span> - Agencies</h4>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+            <div class="header-elements d-none hide">
+                <div class="d-flex justify-content-center">
+                    <a href="#" class="btn btn-link btn-float text-default"><i class="icon-bars-alt text-primary"></i><span>Statistics</span></a>
+                    <a href="#" class="btn btn-link btn-float text-default"><i class="icon-calculator text-primary"></i> <span>Invoices</span></a>
+                    <a href="#" class="btn btn-link btn-float text-default"><i class="icon-calendar5 text-primary"></i> <span>Schedule</span></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Members" class="breadcrumb-item">Members</a>
+                    <span class="breadcrumb-item active ">Agencies</span>
+                </div>
+
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+            <div class="header-elements d-none">
+                <div class="breadcrumb justify-content-center">
+                    <div class="breadcrumb-elements-item dropdown p-0">
+                        <a href=".create-agency-modal" class="breadcrumb-elements-item" data-toggle="modal">
+                            <i class="icon-plus-circle2 mr-2"></i>
+                            Create New Agency
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
+
+
+    <!-- Content area -->
+    <div class="content">
+
+        <!-- Inner container -->
+        <div class="d-md-flex align-items-md-start">
+
+            <!-- Left sidebar component -->
+            <div class="sidebar sidebar-light bg-transparent sidebar-component sidebar-component-left border-0 shadow-0 sidebar-expand-md">
+
+                <!-- Sidebar content -->
+                <div class="sidebar-content">
+
+                    <!-- Actions -->
+                    <div class="card">
+                        <div class="card-header bg-transparent header-elements-inline">
+                            <span class="text-uppercase font-size-sm font-weight-semibold">Actions</span>
+                            <div class="header-elements">
+                                <div class="list-icons">
+                                    <a class="list-icons-item" data-action="collapse"></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <a href="#" class="btn bg-indigo-400 btn-block CreateAgencyTypes">Create New Agency Type</a>
+                        </div>
+                    </div>
+                    <!-- /actions -->
+
+
+                    <!-- Sub navigation -->
+                    <div class="card">
+                        <div class="card-header bg-transparent header-elements-inline">
+                            <span class="text-uppercase font-size-sm font-weight-semibold">Agency Types</span>
+                            <div class="header-elements">
+                                <div class="list-icons">
+                                    <a class="list-icons-item" data-action="collapse"></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body p-0">
+                            <ul class="nav nav-sidebar mb-2" data-nav-type="accordion">
+                                <li class="nav-item" id="agencyTypesList">
+                                    <a href="#" class="nav-link clone hide">
+                                        <!--<i class="objTypeIcon"></i>-->
+                                        <span class="agencyTypeName">Loading</span>
+                                        <span class="badge bg-primary badge-pill ml-auto agencyTypeCount">0</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sub navigation -->
+
+                </div>
+                <!-- /sidebar content -->
+
+            </div>
+            <!-- /left sidebar component -->
+
+
+            <!-- Right content -->
+            <div class="flex-fill overflow-auto">
+
+                <div class="card">
+                    <div class="card-header header-elements-inline">
+                        <h6 class="card-title">Agencies</h6>
+                        <div class="header-elements">
+                            <div class="list-icons">
+                                <a class="list-icons-item" data-action="collapse"></a>
+                                <a class="list-icons-item" data-action="reload"></a>
+                                <a class="list-icons-item" data-action="remove"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table datatable-basic table-hover table-bordered table-responsive-lg ">
+                        <thead class="bg-primary-400">
+                            <tr>
+                                <th>SN</th>
+                                <th>Agency Name</th>
+                                <th>Agency Type</th>
+                                <th>Agency ID</th>
+                                <th>Agency Email</th>
+                                <th>Agency Phone</th>
+                                <th>Admin Name</th>
+                                <th>Date Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="Userlist">
+                            <tr class="clone">
+                                <td class="font-size-base font-weight-bold UCount">1</td>
+                                <td>
+                                    <div class="media">
+                                        <div class="mr-2">
+                                            <a href="#">
+                                                <img width="40" height="40" class="rounded-circle UmrgImage" alt="">
+                                            </a>
+                                        </div>
+
+                                        <div class="media-body align-self-center">
+                                            <a href="#" class="font-weight-semibold UName">Loading Username</a>
+
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="UAType">July 26, 2016</td>
+                                <td class="UAID">July 26, 2016</td>
+                                <td><a href="#" class="UEmail">Loading Email</a></td>
+                                <td class="UPhone">Loading Phone NUmber</td>
+                                <td class="UAGOwner"> Loading Admin Name</td>
+                                <td>
+                                    <h6 class="badge badge-primary AGDate">Loading Date</h6>
+                                </td>
+                                <td class="text-center">
+                                    <div class="list-icons">
+                                        <div class="list-icons-item dropdown">
+                                            <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                                <i class="icon-menu9"></i>
+                                            </a>
+
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <button class="dropdown-item btn btn-sm btn-primary UBtnDetails"><i class="icon-info22"></i> Details</button>
+                                                <button class="dropdown-item btn btn-sm btn-info UBtnPerm"><i class="icon-pencil5"></i> Edit Permissions</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+                <!-- /single mail -->
+
+            </div>
+            <!-- /right content -->
+
+        </div>
+        <!-- /inner container -->
+
+    </div>
+    <!-- /content area -->
+
+
+    <!-- Footer -->
+    <%@include file="../../general/footer1.jspf" %>
+    <!-- /footer -->
+
+</div>

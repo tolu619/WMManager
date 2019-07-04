@@ -1,0 +1,215 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<!-- Main content -->
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Members</span> - <span class="memberUtype"></span></h4>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+            <div class="header-elements d-none hide">
+                <div class="d-flex justify-content-center">
+                    <a href="#" class="btn btn-link btn-float text-default"><i class="icon-bars-alt text-primary"></i><span>Statistics</span></a>
+                    <a href="#" class="btn btn-link btn-float text-default"><i class="icon-calculator text-primary"></i> <span>Invoices</span></a>
+                    <a href="#" class="btn btn-link btn-float text-default"><i class="icon-calendar5 text-primary"></i> <span>Schedule</span></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Members" class="breadcrumb-item">Members</a>
+                    <span class="breadcrumb-item active memberUtype">All Accounts</span>
+                </div>
+
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+            <div class="header-elements d-none">
+                <div class="breadcrumb justify-content-center">
+                    <div class="breadcrumb-elements-item dropdown p-0">
+                        <a href="#" class="breadcrumb-elements-item dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-plus-circle2 mr-2"></i>
+                            Create New
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href=".register-member-modal" class="dropdown-item createMemb" data-toggle="modal"><i class="icon-user"></i>Member Account</a>
+                            <a href=".register-member-modal" class="dropdown-item createAdm" data-toggle="modal"><i class="icon-user-lock"></i>Admin Account</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
+
+
+    <!-- Content area -->
+    <div class="content">
+        <!-- Filter toolbar -->
+        <div class="navbar navbar-expand-lg navbar-light navbar-component rounded">
+            <div class="text-center d-lg-none w-100">
+                <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-filter">
+                    <i class="icon-unfold mr-2"></i>
+                    Filters
+                </button>
+            </div>
+
+            <div class="navbar-collapse collapse" id="navbar-filter">
+                <span class="navbar-text mr-3">
+                    Filter: <span class="text-danger-700">(In-progress)</span>
+                </span>
+
+                <ul class="navbar-nav flex-wrap">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-sort-time-asc mr-2"></i>
+                            By date
+                        </a>
+
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">Show all</a>
+                            <div class="dropdown-divider"></div> 
+                            <a href="#" class="dropdown-item">Today</a>
+                            <a href="#" class="dropdown-item">Yesterday</a>
+                            <a data-toggle="modal" data-target=".TransPeriodModal" class="dropdown-item">Select a Date</a>
+
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-sort-amount-desc mr-2"></i>
+                            By Transaction Type
+                        </a>
+
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">Show all</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">Quick Transfers</a>
+                            <a href="#" class="dropdown-item">Market Instruments</a>
+                            <a href="#" class="dropdown-item">Grant OD Lines</a>
+                            <a href="#" class="dropdown-item">Sell Warrants for Cash</a>
+                            <a href="#" class="dropdown-item">Buy Warrants with Cash</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-sort-numeric-asc mr-2"></i>
+                            By Transaction
+                        </a>
+
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">Show all</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">Credit</a>
+                            <a href="#" class="dropdown-item">Debit</a>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <!-- /filter toolbar -->
+        <!-- Customers -->
+        <div class="card">
+            <div class="card-header header-elements-inline">
+                <h6 class="card-title memberUtype">Members</h6>
+                <div class="header-elements">
+                    <div class="list-icons">
+                        <a class="list-icons-item" data-action="collapse"></a>
+                        <a class="list-icons-item" data-action="reload"></a>
+                        <a class="list-icons-item" data-action="remove"></a>
+                    </div>
+                </div>
+            </div>
+            <table class="table datatable-basic table-hover table-bordered table-responsive-lg ">
+                <thead class="bg-primary-400">
+                    <tr>
+                        <th>SN</th>
+                        <th>Name</th>
+                        <th>Date Joined</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Status</th>
+                        <th>Balance</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="Userlist">
+                    <tr class="clone">
+                        <td class="font-size-base font-weight-bold UCount">1</td>
+                        <td>
+                            <div class="media">
+                                <div class="mr-2">
+                                    <a href="#">
+                                        <img width="40" height="40" class="rounded-circle UmrgImage" alt="">
+                                    </a>
+                                </div>
+
+                                <div class="media-body align-self-center">
+                                    <a href="#" class="font-weight-semibold UName">Loading Username</a>
+
+                                </div>
+                            </div>
+                        </td>
+                        <td class="UDateJoined">July 26, 2016</td>
+                        <td><a href="#" class="UEmail">Loading Email</a></td>
+                        <td class="UPhone">Loading Phone NUmber</td>
+                        <td>
+                            <span class="badge UStatus">Loading Status</span>
+                        </td>
+                        <td>
+                            <h6 class="mb-0 font-weight-semibold UBalance">Loading Balance</h6>
+                        </td>
+                        <td class="text-center">
+                            <div class="list-icons">
+                                <div class="list-icons-item dropdown">
+                                    <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                        <i class="icon-menu9"></i>
+                                    </a>
+
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <button class="dropdown-item btn btn-sm btn-primary UBtnDetails"><i class="icon-info22"></i> Details</button>
+                                        <button class="dropdown-item btn btn-sm btn-info UBtnPerm"><i class="icon-pencil5"></i> Edit Permissions</button>
+                                        <div class="dropdown-divider"></div>
+                                        <button type="button" class="dropdown-item btn btn-light UBtnAddBiz" data-toggle="modal" data-target=".register-business-modal"> <i class="icon-store2"></i> Register Business Account</button>
+                                        <div class="dropdown-divider"></div>
+                                        <button class="dropdown-item btn btn-sm btn-warning UBtnMakeAgent" data-target=".make-user-agency-modal" data-toggle="modal"><i class="icon-user-plus"></i> Set as An Agency</button>
+                                        <div class="dropdown-divider"></div>
+                                        <button class="dropdown-item btn btn-sm btn-danger UBtnBlock"><i class="icon-user-block"></i> Block Member</button>
+                                        <button class="dropdown-item btn btn-sm btn-danger UBtnUnBlock"><i class="icon-user"></i> UnBlock Member</button>
+                                        <div class="dropdown-divider"></div>
+                                        <button class="dropdown-item btn btn-sm btn-danger UBtnActivate"><i class="icon-checkmark-circle"></i> Manual Activation</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+
+
+                </tbody>
+
+            </table>
+        </div>
+        <!-- /customers -->
+
+    </div>
+    <!-- /content area -->
+
+
+    <!-- Footer -->
+    <%@include file="../../general/footer1.jspf" %>
+    <!-- /footer -->
+
+</div>
+<!-- /main content -->

@@ -1,0 +1,706 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light border-bottom-0">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Details</span> - <span class="actualUserName"></span></h4>
+            </div>
+        </div>
+        <!-- Top breadcrumb line -->
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+
+                    <span class="breadcrumb-item active"><span class="actualUserName"></span></span>
+                </div>
+
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+        </div>
+        <!-- /page header -->
+
+
+        <!-- Content area -->
+        <div class="content">
+
+
+            <!-- Tabs -->
+            <div class="nav-tabs-responsive mb-3">
+                <%@include file="profile_sublinks.jspf" %>
+            </div>
+            <!-- /tabs -->
+
+
+            <!-- Images grid -->
+            <div class="navbar navbar-expand-lg navbar-dark bg-info-700 mt-3">
+                <div class="text-center d-lg-none w-100">
+                    <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-accts">
+                        <i class="icon-menu7 mr-2"></i>
+                        Accounts Navigation
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse" id="navbar-accts">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item setWarrants">
+                            <a href="#wartab1" class="navbar-nav-link active" data-toggle="tab">
+                                <i class="icon-cash2 mr-2"></i>
+                                Warrants
+                            </a>
+                        </li>
+                        <li class="nav-item setRefRights">
+                            <a href="#reftab2" class="navbar-nav-link" data-toggle="tab">
+                                <i class="icon-cash4 mr-2"></i>
+                                Reflation Rights
+                            </a>
+                        </li>
+                        <li class="nav-item setParRights">
+                            <a href="#partab3" class="navbar-nav-link" data-toggle="tab">
+                                <i class="icon-cash4 mr-2"></i>
+                                Par Cash Rights
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
+            <div class="d-flex align-items-start flex-column flex-md-row">
+
+                <!-- Left content -->
+                <div class="tab-content w-100 overflow-auto mt-1">
+                    <div class="tab-pane fade active show" id="wartab1">
+                        <div class="row">
+                            <div class="col-sm-4 col-xl-4">
+                                <div class="card card-body bg-primary-400 has-bg-image">
+                                    <div class="media mb-3">
+                                        <div class="mr-3 align-self-center">
+                                            <i class="icon-user icon-2x"></i>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <h4 class="font-weight-semibold  mb-0 ActualAcctAccountNameWar">Loading Account Number</h4>
+                                        </div>
+                                    </div>
+
+                                    <div class="progress bg-success mb-2" style="height: 0.125rem;">
+                                        <div class="progress-bar bg-white" style="width: 100%">
+                                            <span class="sr-only">100% Complete</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        Account Name
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4 col-xl-4">
+                                <div class="card card-body bg-success-400 has-bg-image">
+                                    <div class="media mb-3">
+                                        <div class="mr-3 align-self-center">
+                                            <i class="icon-cash2 icon-2x"></i>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <h6 class="font-weight-semibold mb-0 ActualAcctAccountTypeWar">Loading Account Type</h6>
+                                        </div>
+                                    </div>
+
+                                    <div class="progress bg-success mb-2" style="height: 0.125rem;">
+                                        <div class="progress-bar bg-white" style="width: 100%">
+                                            <span class="sr-only">100% Complete</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        Account Type
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4 col-xl-4">
+                                <div class="card card-body bg-indigo-400 has-bg-image">
+                                    <div class="media mb-3">
+                                        <div class="mr-3 align-self-center">
+                                            <i class="icon-sort-numeric-asc icon-2x"></i>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <h6 class="font-weight-semibold mb-0 ActualAcctAccountNumberWar">Loading Account Number</h6>
+                                        </div>
+                                    </div>
+
+                                    <div class="progress bg-indigo mb-2" style="height: 0.125rem;">
+                                        <div class="progress-bar bg-white" style="width: 100%">
+                                            <span class="sr-only">100% Complete</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        Account Number
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card card-body bg-teal-800 has-bg-image">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="mb-0 ActualAcctLedgerBalanceWar">54,390</h3>
+                                            <span class="text-uppercase font-size-xs">Available Balance</span>
+                                        </div>
+
+                                        <div class="ml-3 align-self-center">
+                                            <i class="icon-cash4 icon-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card card-body bg-indigo-800 has-bg-image">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="mb-0 ActualAcctDirectBalanceWar">389,438</h3>
+                                            <span class="text-uppercase font-size-xs">Direct Balance</span>
+                                        </div>
+
+                                        <div class="ml-3 align-self-center">
+                                            <i class="icon-cash3 icon-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card card-body bg-teal-800 has-bg-image">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="mb-0 ActualAcctEscrowBalanceWar">54,390</h3>
+                                            <span class="text-uppercase font-size-xs">Escrow Balance</span>
+                                        </div>
+
+                                        <div class="ml-3 align-self-center">
+                                            <i class="icon-cash4 icon-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card card-body bg-indigo-800 has-bg-image">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="mb-0 ActualAcctBlockedBalanceWar">389,438</h3>
+                                            <span class="text-uppercase font-size-xs">Blocked Balance</span>
+                                        </div>
+
+                                        <div class="ml-3 align-self-center">
+                                            <i class="icon-cash3 icon-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xl-6">
+                                <div class="card card-body bg-green-800 has-bg-image">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="mb-0 ActualAcctODLineBalanceWar">54,390</h3>
+                                            <span class="text-uppercase font-size-xs">ODLine Balance  <span class="font-size-sm text-capitalize text-orange-300">(Amount To Be Refunded)</span>
+                                        </div>
+
+                                        <div class="ml-3 align-self-center">
+                                            <i class="icon-cash2 icon-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-xl-6">
+                                <div class="card card-body bg-orange-800 has-bg-image">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="mb-0 ActualAcctOfflineBalanceWar">389,438</h3>
+                                            <span class="text-uppercase font-size-xs">Offline Balance</span>
+                                        </div>
+
+                                        <div class="ml-3 align-self-center">
+                                            <i class="icon-cash2 icon-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header header-elements-inline">
+                                <h5 class="card-title">Recent Transactions</h5>
+                                <div class="header-elements">
+                                    <div class="list-icons">
+                                        <a class="list-icons-item mr-3"> <span class="transTotalCount badge badge-primary rounded-circle p-2"></span></a> 
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table datatable-basic table-hover table-bordered table-responsive-lg ">
+                                <thead class="bg-primary-400">
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Transaction Reference</th>
+                                        <th>Transaction Type</th>
+                                        <th>Transaction</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="ActualRecentTransDisplay">
+                                    <tr class="transclone hide">
+                                        <td class="transCount">s/n</td>
+                                        <td class="transID" >Loading Trans Ref</td>
+                                        <td><a href="#" class="transName">Loading Transaction Name</a></td>
+                                        <td class=""><span class="transTool">Loading Market Tool</span></td>
+                                        <td class="transAmount">Loading  Amount</td>
+                                        <td class="transDate">Loading  Date</td>
+                                        <td class="text-center">
+                                            <a data-toggle="modal" data-target=".TransDetailsModal" class="btn ViewTransDetails"><i class="icon-info22"></i> View Details</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="reftab2">
+                        <div class="row">
+                            <div class="col-sm-4 col-xl-4">
+                                <div class="card card-body bg-primary-400 has-bg-image">
+                                    <div class="media mb-3">
+                                        <div class="mr-3 align-self-center">
+                                            <i class="icon-user icon-2x"></i>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <h4 class="font-weight-semibold  mb-0 ActualAcctAccountNameRef">Loading Account Number</h4>
+                                        </div>
+                                    </div>
+
+                                    <div class="progress bg-success mb-2" style="height: 0.125rem;">
+                                        <div class="progress-bar bg-white" style="width: 100%">
+                                            <span class="sr-only">100% Complete</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        Account Name
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4 col-xl-4">
+                                <div class="card card-body bg-success-400 has-bg-image">
+                                    <div class="media mb-3">
+                                        <div class="mr-3 align-self-center">
+                                            <i class="icon-cash2 icon-2x"></i>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <h6 class="font-weight-semibold mb-0 ActualAcctAccountTypeRef">Loading Account Type</h6>
+                                        </div>
+                                    </div>
+
+                                    <div class="progress bg-success mb-2" style="height: 0.125rem;">
+                                        <div class="progress-bar bg-white" style="width: 100%">
+                                            <span class="sr-only">100% Complete</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        Account Type
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4 col-xl-4">
+                                <div class="card card-body bg-indigo-400 has-bg-image">
+                                    <div class="media mb-3">
+                                        <div class="mr-3 align-self-center">
+                                            <i class="icon-sort-numeric-asc icon-2x"></i>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <h6 class="font-weight-semibold mb-0 ActualAcctAccountNumberRef">Loading Account Number</h6>
+                                        </div>
+                                    </div>
+
+                                    <div class="progress bg-indigo mb-2" style="height: 0.125rem;">
+                                        <div class="progress-bar bg-white" style="width: 100%">
+                                            <span class="sr-only">100% Complete</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        Account Number
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card card-body bg-teal-800 has-bg-image">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="mb-0 ActualAcctLedgerBalanceRef">54,390</h3>
+                                            <span class="text-uppercase font-size-xs">Available Balance</span>
+                                        </div>
+
+                                        <div class="ml-3 align-self-center">
+                                            <i class="icon-cash4 icon-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card card-body bg-indigo-800 has-bg-image">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="mb-0 ActualAcctDirectBalanceRef">389,438</h3>
+                                            <span class="text-uppercase font-size-xs">Direct Balance</span>
+                                        </div>
+
+                                        <div class="ml-3 align-self-center">
+                                            <i class="icon-cash3 icon-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card card-body bg-teal-800 has-bg-image">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="mb-0 ActualAcctEscrowBalanceRef">54,390</h3>
+                                            <span class="text-uppercase font-size-xs">Escrow Balance</span>
+                                        </div>
+
+                                        <div class="ml-3 align-self-center">
+                                            <i class="icon-cash4 icon-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card card-body bg-indigo-800 has-bg-image">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="mb-0 ActualAcctBlockedBalanceRef">389,438</h3>
+                                            <span class="text-uppercase font-size-xs">Blocked Balance</span>
+                                        </div>
+
+                                        <div class="ml-3 align-self-center">
+                                            <i class="icon-cash3 icon-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xl-6">
+                                <div class="card card-body bg-green-800 has-bg-image">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="mb-0 ActualAcctODLineBalanceRef">54,390</h3>
+                                            <span class="text-uppercase font-size-xs">ODLine Balance  <span class="font-size-sm text-capitalize text-orange-300">(Amount To Be Refunded)</span>
+                                        </div>
+
+                                        <div class="ml-3 align-self-center">
+                                            <i class="icon-cash2 icon-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-xl-6">
+                                <div class="card card-body bg-orange-800 has-bg-image">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="mb-0 ActualAcctOfflineBalanceRef">389,438</h3>
+                                            <span class="text-uppercase font-size-xs">Offline Balance</span>
+                                        </div>
+
+                                        <div class="ml-3 align-self-center">
+                                            <i class="icon-cash2 icon-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card">
+                            <div class="card-header header-elements-inline">
+                                <h5 class="card-title">Recent Transactions</h5>
+                                <div class="header-elements">
+                                    <div class="list-icons">
+                                        <a class="list-icons-item mr-3"> <span class="transTotalCount badge badge-primary rounded-circle p-2"></span></a> 
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table datatable-basic table-hover table-bordered table-responsive-lg ">
+                                <thead class="bg-primary-400">
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Transaction Reference</th>
+                                        <th>Transaction Type</th>
+                                        <th>Transaction</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="ActualRecentTransDisplayRef">
+                                    <tr class="transclone hide">
+                                        <td class="transCount">s/n</td>
+                                        <td class="transID" >Loading Trans Ref</td>
+                                        <td><a href="#" class="transName">Loading Transaction Name</a></td>
+                                        <td class=""><span class="transTool">Loading Market Tool</span></td>
+                                        <td class="transAmount">Loading  Amount</td>
+                                        <td class="transDate">Loading  Date</td>
+                                        <td class="text-center">
+                                            <a data-toggle="modal" data-target=".TransDetailsModal" class="btn ViewTransDetails"><i class="icon-info22"></i> View Details</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="partab3">
+                        <div class="row">
+                            <div class="col-sm-4 col-xl-4">
+                                <div class="card card-body bg-primary-400 has-bg-image">
+                                    <div class="media mb-3">
+                                        <div class="mr-3 align-self-center">
+                                            <i class="icon-user icon-2x"></i>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <h4 class="font-weight-semibold  mb-0 ActualAcctAccountNamePar">Loading Account Number</h4>
+                                        </div>
+                                    </div>
+
+                                    <div class="progress bg-success mb-2" style="height: 0.125rem;">
+                                        <div class="progress-bar bg-white" style="width: 100%">
+                                            <span class="sr-only">100% Complete</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        Account Name
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4 col-xl-4">
+                                <div class="card card-body bg-success-400 has-bg-image">
+                                    <div class="media mb-3">
+                                        <div class="mr-3 align-self-center">
+                                            <i class="icon-cash2 icon-2x"></i>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <h6 class="font-weight-semibold mb-0 ActualAcctAccountTypePar">Loading Account Type</h6>
+                                        </div>
+                                    </div>
+
+                                    <div class="progress bg-success mb-2" style="height: 0.125rem;">
+                                        <div class="progress-bar bg-white" style="width: 100%">
+                                            <span class="sr-only">100% Complete</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        Account Type
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4 col-xl-4">
+                                <div class="card card-body bg-indigo-400 has-bg-image">
+                                    <div class="media mb-3">
+                                        <div class="mr-3 align-self-center">
+                                            <i class="icon-sort-numeric-asc icon-2x"></i>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <h6 class="font-weight-semibold mb-0 ActualAcctAccountNumberPar">Loading Account Number</h6>
+                                        </div>
+                                    </div>
+
+                                    <div class="progress bg-indigo mb-2" style="height: 0.125rem;">
+                                        <div class="progress-bar bg-white" style="width: 100%">
+                                            <span class="sr-only">100% Complete</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        Account Number
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card card-body bg-teal-800 has-bg-image">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="mb-0 ActualAcctLedgerBalancePar">54,390</h3>
+                                            <span class="text-uppercase font-size-xs">Available Balance</span>
+                                        </div>
+
+                                        <div class="ml-3 align-self-center">
+                                            <i class="icon-cash4 icon-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card card-body bg-indigo-800 has-bg-image">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="mb-0 ActualAcctDirectBalancePar">389,438</h3>
+                                            <span class="text-uppercase font-size-xs">Direct Balance</span>
+                                        </div>
+
+                                        <div class="ml-3 align-self-center">
+                                            <i class="icon-cash3 icon-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card card-body bg-teal-800 has-bg-image">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="mb-0 ActualAcctEscrowBalancePar">54,390</h3>
+                                            <span class="text-uppercase font-size-xs">Escrow Balance</span>
+                                        </div>
+
+                                        <div class="ml-3 align-self-center">
+                                            <i class="icon-cash4 icon-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card card-body bg-indigo-800 has-bg-image">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="mb-0 ActualAcctBlockedBalancePar">389,438</h3>
+                                            <span class="text-uppercase font-size-xs">Blocked Balance</span>
+                                        </div>
+
+                                        <div class="ml-3 align-self-center">
+                                            <i class="icon-cash3 icon-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xl-6">
+                                <div class="card card-body bg-green-800 has-bg-image">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="mb-0 ActualAcctODLineBalancePar">54,390</h3>
+                                            <span class="text-uppercase font-size-xs">ODLine Balance  <span class="font-size-sm text-capitalize text-orange-300">(Amount To Be Refunded)</span>
+                                        </div>
+
+                                        <div class="ml-3 align-self-center">
+                                            <i class="icon-cash2 icon-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-xl-6">
+                                <div class="card card-body bg-orange-800 has-bg-image">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="mb-0 ActualAcctOfflineBalancePar">389,438</h3>
+                                            <span class="text-uppercase font-size-xs">Offline Balance</span>
+                                        </div>
+
+                                        <div class="ml-3 align-self-center">
+                                            <i class="icon-cash2 icon-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header header-elements-inline">
+                                <h5 class="card-title">Recent Transactions</h5>
+                                <div class="header-elements">
+                                    <div class="list-icons">
+                                        <a class="list-icons-item mr-3"> <span class="transTotalCount badge badge-primary rounded-circle p-2"></span></a> 
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table datatable-basic table-hover table-bordered table-responsive-lg ">
+                                <thead class="bg-primary-400">
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Transaction Reference</th>
+                                        <th>Transaction Type</th>
+                                        <th>Transaction</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="ActualRecentTransDisplayPar">
+                                    <tr class="transclone hide">
+                                        <td class="transCount">s/n</td>
+                                        <td class="transID" >Loading Trans Ref</td>
+                                        <td><a href="#" class="transName">Loading Transaction Name</a></td>
+                                        <td class=""><span class="transTool">Loading Market Tool</span></td>
+                                        <td class="transAmount">Loading  Amount</td>
+                                        <td class="transDate">Loading  Date</td>
+                                        <td class="text-center">
+                                            <a data-toggle="modal" data-target=".TransDetailsModal" class="btn ViewTransDetails"><i class="icon-info22"></i> View Details</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /left content -->
+
+                </div>
+
+            </div>
+
+
+        </div>
+        <!-- /content area -->
+
+
+        <!-- Footer -->
+        <%@include file="../../general/footer1.jspf" %>
+        <!-- /footer -->
+
+    </div> 

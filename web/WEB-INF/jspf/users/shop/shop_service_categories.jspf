@@ -1,0 +1,131 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="content-wrapper">
+    <!-- page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Shop</span> - Service Categories</h4>
+            </div>
+        </div>
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Shop" class="breadcrumb-item">Shop</a>
+                    <span class="breadcrumb-item active">Shop Service Categories</span>
+                </div>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+            <div class="header-elements d-none">
+                <div class="breadcrumb justify-content-center mr-1">
+                    <a href=".service_create_category_modal" data-toggle="modal" class="breadcrumb-elements-item">
+                        <i class="icon-plus3 mr-1"></i>
+                        Create New Service Category
+                    </a>
+                </div>
+                <div class="breadcrumb justify-content-center mr-1">
+                    <a href=".service_create_subcategory_modal" data-toggle="modal" class="breadcrumb-elements-item">
+                        <i class="icon-plus3 mr-2"></i>
+                        Create New Sub-Category
+                    </a>
+                </div>
+                <div class="breadcrumb justify-content-center">
+                    <a href=".service_create_type_modal" data-toggle="modal" class="breadcrumb-elements-item">
+                        <i class="icon-plus3 mr-1"></i>
+                        Create New Service type
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
+    
+    <!-- Content area -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <!-- Accordion Wrapper-->
+                <div class="accordion md-accordion" id="categoryAccordion" role="tablist" aria-multiselectable="true">
+                    <!--Accordion Card-->
+                    <div class="card CategoryMain">
+                         <!-- Card header -->
+                         <div class="card-header headingOne1" role="tab" id="">
+                             <a data-toggle="collapse" class="controller_anchor" data-parent="#categoryAccordion" href="" aria-expanded="false" aria-controls="">
+                                <h5 class="mb-0 Cat_Name">
+                                    Category #1 <i class="icon-arrow-down12"></i>
+                                </h5> <i class="icon-arrow-down12 ml-auto"></i>
+                                <p class="DESC-Serv text-muted">this is the description</p>
+                            </a>
+                        </div>
+                        <div id="" class="collapse subcat-house show" role="tabpanel" aria-labelledby="headingOne1" data-parent="#categoryAccordion">
+                            <div class="card-body">
+                                <div class="list-group subcat">
+                                    <a href="#" class="list-group-item text-info subcat_clone" id="">
+                                        Sub-Category #1
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <!--Accordion Card-->
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="container">
+                        <div class="d-flex mb-1">
+                            <div class="p-2">
+                                <h5 class="row-title w-100 mt-1 sCName">Sub Category Name</h5>
+                                <p class="subcat-desc text-muted">This is the sub category description of the sub category with a list of all its properties</p>
+                                <input type="hidden" val="" id="subcatId"/>
+                                <input type="hidden" val="" id="subParentCatId"/>
+                            </div>
+                            <div class="p-4 ml-auto">
+                                <button type="button" class="btn btn-danger"> Edit <i class="icon-pencil5"></i></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="d-flex mb-1">
+                                
+                            </div>
+                        </div>
+                        <hr/>
+                        <h6>Properties</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div id="propColLeft">
+                                    <div class="btn-group-justified groupL p-2 mb-2 ">
+                                        <button type="button" class="dropdown-toggle btn btn-outline-secondary subCatPropNameL" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Property 1</button>
+                                        <div class="dropdown-menu form-control vals-divL">
+                                            <a class="dropdown-item valsL" href="#">Action</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="propColRight">
+                                    <div class="btn-group-justified groupR p-2 mb-2 ">
+                                        <button type="button" class="dropdown-toggle btn btn-outline-secondary subCatPropNameR" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Property 1</button>
+                                        <div class="dropdown-menu form-control vals-divR">
+                                            <a class="dropdown-item valsR" href="#">Action</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <%@include file="../../general/footer1.jspf" %>
+    <!-- /footer -->
+</div>

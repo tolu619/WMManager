@@ -1,0 +1,82 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+
+<div class="modal-dialog modal-lg">
+    <div class="modal-content ">
+        <div class="modal-header bg-teal-600">
+            <h6 class="modal-title">Create New Permission Group</h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form class="" action="#" data-fouc name="newPermissionForm" data-parsley-validate>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>All Permissions - Select Permission</label>
+                            <div class="setHeight" id="PermissionList2">
+                                <div class="input-group perm-clone hide mb-1 mt-1">
+                                    <span class="input-group-prepend btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-success btn-outline-success rounded-left-round permPermit">
+                                            <input type="checkbox" class="permPermitcheck" name="permsPerm"/>
+                                            <i class="icon-checkmark-circle"></i>
+                                        </label>
+                                    </span>
+                                    <input type="text" class="form-control cursor form-control border-success border-1 permName"  readonly />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Permission Group Name </label>
+                            <input type="text" class="form-control form-control border-success border-1" id="newPermGroup" placeholder="Type the permission group name here - Manage Members"  />
+                        </div>
+                        <div class="form-group">
+                            <label>Select the User Group </label>
+                            <select name="newPermGrpuserGroupList" data-placeholder="Select User Group" 
+                                    id="newPermGrpuserGroupList" class="form-control form-control-select2 select-search select-clear required" data-fouc>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-size-base font-weight-semibold">Assign Permission Group To: </label>
+                            <div class=" mb-3 permGrpUserList">
+                                <div class="input-group mb-1 mt-1 clone hide">
+                                    <input type="text" class="form-control cursor form-control border-success border-1 UName"  readonly />
+                                    <span class="input-group-append btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-success btn-outline-success rounded-right-round permPermit2">
+                                            <input type="checkbox" class="permPermitcheck2" name="permsPerm2"/>
+                                            <i class="icon-checkmark-circle"></i>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12 selectecPermList">
+                        <div class="selectedPermUserIDS font-size-lg font-weight-bold hide">
+
+                        </div>
+                        <div class="selectedPermids font-size-lg font-weight-bold hide">
+
+                        </div>
+                        <div class="text-center">
+                            <div class="form-group">
+                                <input type="button" class="btn btn-success CreatePermGroup"  name="name" value="Submit" class="btn bg-teal-400"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn bg-teal-400 " data-dismiss="modal" id="Cancel">Close</button>
+        </div>
+    </div>
+</div>
+

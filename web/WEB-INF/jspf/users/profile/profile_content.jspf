@@ -1,0 +1,453 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light border-bottom-0">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Details</span> - <span class="actualUserName"></span></h4>
+            </div>
+        </div>
+        <!-- Top breadcrumb line -->
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+
+                    <span class="breadcrumb-item active"><span class="actualUserName"></span></span>
+                </div>
+
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+        </div>
+        <!-- /page header -->
+
+
+        <!-- Content area -->
+        <div class="content">
+            <!-- Tabs -->
+            <div class="nav-tabs-responsive mb-3">
+               <%@include file="profile_sublinks.jspf" %>
+            </div>
+            <!-- /tabs -->
+
+
+         
+                <div class="navbar navbar-expand-lg navbar-dark bg-info-700">
+                    <div class="text-center d-lg-none w-100">
+                        <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-third">
+                            <i class="icon-menu7 mr-2"></i>
+                            Profile Navigation
+                        </button>
+                    </div>
+
+                    <div class="navbar-collapse collapse" id="navbar-third">
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="#pDetails" class="navbar-nav-link active" data-toggle="tab">
+                                    <i class="icon-bag mr-2"></i>
+                                    Personal Details
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#bDetails" class="navbar-nav-link" data-toggle="tab">
+                                    <i class="icon-calendar3 mr-2"></i>
+                                    Bank Details
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#ADetails" class="navbar-nav-link" data-toggle="tab">
+                                    <i class="icon-calendar3 mr-2"></i>
+                                    Address(es)
+                                    <span class="badge badge-pill bg-success position-static ml-auto ml-lg-2">0</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ForAdminAndMember hide">
+                                <a href="#settings" class="navbar-nav-link" data-toggle="tab">
+                                    <i class="icon-calendar3 mr-2"></i>
+                                    Settings
+                                    <span class="badge badge-pill bg-success position-static ml-auto ml-lg-2">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Inner container -->
+                <div class="d-flex align-items-start flex-column flex-md-row">
+
+                    <!-- Left content -->
+                    <div class="sidebar sidebar-light bg-transparent sidebar-component sidebar-component-left wmin-300 border-0 shadow-0 sidebar-expand-md mt-2">
+
+                        <!-- Sidebar content -->
+                        <div class="sidebar-content">
+
+                            <!-- User card -->
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <div class="card-img-actions d-inline-block mb-3">
+                                        <img class=" rounded-circle actualUserImage"  width="170" height="170" alt="">
+                                    </div>
+
+                                    <h6 class="font-weight-semibold mb-0 actualUserName">Loading Username</h6>
+                                    <span class="d-block text-muted actualUserType">Loading UserType</span>
+
+                                    <div class="list-icons list-icons-extended mt-3">
+                                        <a data-toggle="modal" data-target=".bd-example-modaladdChangeProfilePicture" data-popup="tooltip" title="Change Profile Image" 
+                                           data-container="body" class="btn btn-outline bg-primary text-primary border-primary border-2 btn-icon rounded-round LoadActualUserID">
+                                            <i class="icon-camera"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /user card -->
+
+
+                        </div>
+                        <!-- /sidebar content -->
+
+                    </div>
+                    <div class="tab-content w-100 overflow-hidden mt-2">
+                        <div class="tab-pane fade active show" id="pDetails">
+
+                            <div class="memberinfo hide">
+                                <%@include file="profile_individual_info.jspf" %>
+                            </div>
+                            <div class="bizinfo hide">
+                                <%@include file="profile_business_info.jspf" %>
+                            </div>
+                            <div class="agencyinfo hide">
+                                <%@include file="profile_agency_info.jspf" %>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="bDetails">
+                            <div class="d-flex align-items-center mb-3">
+                                <button type="button" class="btn bg-success-600 btn-labeled btn-labeled-right ml-auto" id="addbkinfo" 
+                                        data-toggle="modal" data-target="#modal_basic_addBankDetails">
+                                    <b><i class="icon-plus3"></i></b> Add Bank Details
+                                </button>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-6 col-xl-6 bankInfo">
+                                    <!-- List of files -->
+                                    <div class="card">
+                                        <div class="card-header bg-transparent header-elements-inline">
+                                            <h6 class="card-title font-weight-semibold text-success-400">
+                                                <i class="icon-user mr-2"></i>
+                                                Names
+                                            </h6>
+
+                                            <div class="header-elements">
+                                                <!--<span class="text-muted">(93)</span>-->
+                                            </div>
+                                        </div>
+
+                                        <div class="list-group list-group-flush">
+                                            <a href="#" class="list-group-item list-group-item-action">
+                                                <i class="icon-user mr-3"></i>
+                                                <span class="BankName bold"></span> <span class="badge bg-success-400 ml-auto"> Bank Name</span>
+                                            </a>
+
+                                            <a href="#" class="list-group-item list-group-item-action">
+                                                <i class="icon-user mr-3"></i>
+                                                <span class="AccountNumber bold" id="userAcctNo"></span> <span class="badge bg-success-400 ml-auto"> Account Number</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- /list of files -->
+
+                                </div>
+
+                                <div class="col-md-6 col-xl-6 bankInfo">
+
+                                    <!-- List of files -->
+                                    <div class="card">
+                                        <div class="card-header bg-transparent header-elements-inline">
+                                            <h6 class="card-title font-weight-semibold text-info-400">
+                                                <i class="icon-notebook mr-2"></i>
+                                                Accounts
+                                            </h6>
+                                        </div>
+
+                                        <div class="list-group list-group-flush">
+                                            <a href="#" class="list-group-item list-group-item-action">
+                                                <i class="icon-envelop5 mr-3"></i>
+                                                <span id="userAcctType" class="AccountType bold"></span> <span class="badge bg-info-400 ml-auto"> Account Type</span>
+                                            </a>
+
+                                            <a href="#" class="list-group-item list-group-item-action">
+                                                <i class="icon-phone2 mr-3"></i>
+                                                <span id="userAcctBVN" class="AccountBVN bold"></span> <span class="badge bg-info-400 ml-auto"> BVN</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- /list of files -->
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade" id="ADetails">
+                            <div class="d-flex align-items-center mb-3">
+                                <button type="button" class="btn bg-primary-600 btn-labeled btn-labeled-right ml-auto" id="addbkinfo" 
+                                        data-toggle="modal" data-target=".bd-example-modaladdress">
+                                    <b><i class="icon-plus3"></i></b> Add New Address
+                                </button>
+                            </div>
+                            <div class="card">
+                                <div class="card-header header-elements-inline">
+                                    <h5 class="card-title">Address(es)</h5>
+                                    <div class="header-elements">
+                                        <div class="list-icons">
+                                            <a class="list-icons-item" data-action="collapse"></a>
+                                            <a class="list-icons-item" data-action="reload"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>S/N</th>
+                                            <th>Address Name</th>
+                                            <th>Address</th>
+                                            <th class="text-center">Actions</th>
+                                        </tr> 
+                                    </thead>
+
+                                    <tbody class="user-addresses">
+                                        <tr class="clone">
+                                            <td><span class="badge badge-info address-sn">Active</span></td>
+                                            <td><span class="badge badge-success address-name">Active</span></td>
+                                            <td><strong><span id="address" class="UserAddress"> address</span></strong></td>
+                                            <td class="text-center">
+                                                <div class="list-icons">
+                                                    <div class="dropdown">
+                                                        <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                                            <i class="icon-menu9"></i>
+                                                        </a>
+
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a href="#" class="dropdown-item btnDeleteAdd" ><i class="icon-trash text-danger"></i> Delete</a>
+                                                            <a href=".bd-example-modaladdress" data-toggle="modal" class="dropdown-item btnEditAdd" ><i class="icon-pencil5 text-danger"></i> Edit</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <thead>
+                                        <tr>
+                                            <th>S/N</th>
+                                            <th>Address Name</th>
+                                            <th>Address</th>
+                                            <th class="text-center">Actions</th>
+                                        </tr> 
+                                    </thead>
+                                </table>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade" id="settings">
+
+                            <!-- Profile info -->
+                            <div class="row">
+                                <div class="col-md-6 col-xl-6">
+                                    <!-- List of files -->
+                                    <div class="card">
+                                        <div class="card-header header-elements-inline">
+                                            <h5 class="card-title">Change Email</h5>
+                                            <div class="header-elements">
+                                                <div class="list-icons">
+                                                    <a class="list-icons-item" data-action="collapse"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <form action="#">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label>Email</label>
+                                                            <input type="email" placeholder="Enter the Email" id="newLastName" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-right">
+                                                    <button type="button" class="btn btn-primary" id="UpdateEmail">Save</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- /list of files -->
+                                </div>
+
+                                <div class="col-md-6 col-xl-6">
+
+                                    <!-- List of files -->
+                                    <div class="card">
+                                        <div class="card-header header-elements-inline">
+                                            <h5 class="card-title">Change Phone Number</h5>
+                                            <div class="header-elements">
+                                                <div class="list-icons">
+                                                    <a class="list-icons-item" data-action="collapse"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <form action="#">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label>Phone Number</label>
+                                                            <input type="tel" placeholder="Enter the Phone Number" id="newFirstName" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-right">
+                                                    <button type="button" class="btn btn-primary" id="UpdatePhone" >Save</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                    <!-- /list of files -->
+
+                                </div>
+                            </div>
+                            <div class="row bizBusinessLink">
+                                <div class="col-md-6 col-xl-6">
+                                    <!-- List of files -->
+                                    <div class="card">
+                                        <div class="card-header header-elements-inline">
+                                            <h5 class="card-title">Change LastName</h5>
+                                            <div class="header-elements">
+                                                <div class="list-icons">
+                                                    <a class="list-icons-item" data-action="collapse"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <form action="#">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label>Lastname</label>
+                                                            <input type="text" placeholder="Enter the Lastname" id="newLastName" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-right">
+                                                    <button type="button" class="btn btn-primary" id="UpdateLastName">Save</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- /list of files -->
+                                </div>
+
+                                <div class="col-md-6 col-xl-6">
+
+                                    <!-- List of files -->
+                                    <div class="card">
+                                        <div class="card-header header-elements-inline">
+                                            <h5 class="card-title">Change FirstName</h5>
+                                            <div class="header-elements">
+                                                <div class="list-icons">
+                                                    <a class="list-icons-item" data-action="collapse"></a>
+                                                    <a class="list-icons-item" data-action="reload"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <form action="#">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label>Firstname</label>
+                                                            <input type="text" placeholder="Enter the Firstname" id="newFirstName" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-right">
+                                                    <button type="button" class="btn btn-primary" id="UpdateFirstName" >Save</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                    <!-- /list of files -->
+
+                                </div>
+                            </div>
+
+                            <!-- Account settings -->
+                            <div class="card bizBusinessLink">
+                                <div class="card-header header-elements-inline">
+                                    <h5 class="card-title">Change Password</h5>
+                                    <div class="header-elements">
+                                        <div class="list-icons">
+                                            <a class="list-icons-item" data-action="collapse"></a>
+                                            <a class="list-icons-item" data-action="reload"></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <form action="#">
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>New password</label>
+                                                    <input type="password" id="newpassword" placeholder="Enter new password" class="form-control">
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label>Repeat password</label>
+                                                    <input type="password" id="newpassword2" placeholder="Repeat new password" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="text-right">
+                                            <button type="button" class="btn btn-primary" id="UpdatePassword">Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- /account settings -->
+
+                        </div>
+
+                    </div>
+                    <!-- /left content -->
+
+
+                    <!-- Right sidebar component -->
+
+                    <!-- /right sidebar component -->
+
+                </div>
+                <!-- /inner container -->
+    
+
+        </div>
+        <!-- /content area -->
+
+
+        <!-- Footer -->
+        <%@include file="../../general/footer1.jspf" %>
+        <!-- /footer -->
+
+    </div> 

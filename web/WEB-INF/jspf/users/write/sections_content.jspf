@@ -1,0 +1,401 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Write</span> - Sections</h4>
+            </div>
+        </div>
+
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Books" class="breadcrumb-item">Write</a>
+                    <span class="breadcrumb-item active">Sections</span>
+                </div>
+
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+        </div>
+    </div>
+    <!-- Profile navigation -->
+    <div class="navbar navbar-expand-lg navbar-dark bg-info-700">
+        <div class="text-center d-lg-none w-100">
+            <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-sections">
+                <i class="icon-menu7 mr-2"></i>
+                Sections Navigation
+            </button>
+        </div>
+
+        <div class="navbar-collapse collapse" id="navbar-sections">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <a href="#AllSections" class="navbar-nav-link active" id="allSections" data-toggle="tab">
+                        <i class="icon-list mr-2"></i>
+                        All Sections
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#ChkInSections" class="navbar-nav-link" id="chkinSections" data-toggle="tab">
+                        <i class="icon-list2 mr-2"></i>
+                        Check-In Sections
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#ChkOutSections" class="navbar-nav-link" id="chkoutSections" data-toggle="tab">
+                        <i class="icon-list mr-2"></i>
+                        Check-Out Sections
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /profile navigation -->
+    <!-- /page header -->
+
+
+    <!-- Content area -->
+    <div class="content">
+
+        <div class="d-flex align-items-start flex-column flex-md-row">
+            <!-- Left content -->
+
+            <div class="tab-content w-100 overflow-auto">
+                <div class="tab-pane fade active show" id="AllSections">
+
+                    <div class="row">
+                        <div class="col-12 col-lg-8">
+                            <div class="card card-body">
+                                <span class="text-muted font-size-sm">About <span class="searchResult">20</span> results</span>
+
+                                <hr>
+
+                                <ul class="media-list mb-3" id="AllSectionList">
+                                    <li class="media flex-column flex-sm-row clone hide">
+
+                                        <div class="media-body">
+                                            <h6 class="media-title ViewObject "><a href="#" class="sectionName">Up unpacked friendly</a></h6>
+                                            <ul class="list-inline list-inline-dotted text-muted mb-2">
+                                                <li class="list-inline-item bkStatus"><i class="icon-list-unordered mr-2"></i></li>
+                                                <li class="list-inline-item sectionlastEdited">2018-01-10</li>
+                                                <li class="list-inline-item"><button class="btn btn-link ViewObject">View</button></li>
+                                            </ul>
+                                            <!--<p class="bkSummary">The him father parish looked has sooner. Attachment frequently gay terminated son. You greater nay use prudent placing passage to so distant behaved natural between do talking...</p>-->
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <ul class="pagination pagination-flat align-self-center flex-wrap my-2">
+                                    <li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-right13"></i></a></li>
+                                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                    <li class="page-item align-self-center"><span class="mx-2">...</span></li>
+                                    <li class="page-item"><a href="#" class="page-link">58</a></li>
+                                    <li class="page-item"><a href="#" class="page-link">59</a></li>
+                                    <li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-left12"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-4">
+                            <div class="card card-body cardblock">
+                                <div class="card-header bg-transparent header-elements-inline">
+                                    <h6 class="card-title font-weight-semibold">
+                                        <i class="icon-list-unordered mr-2"></i>
+                                        Section Title
+                                    </h6>
+                                </div>
+                                <h5 class="font-weight-semibold ObjectName">Limitless UI kit</h5>
+
+                                <div class="card-header bg-transparent header-elements-inline">
+                                    <h6 class="card-title font-weight-semibold">
+                                        <i class="icon-book2 mr-2"></i>
+                                        Parent Book
+                                    </h6>
+                                </div>
+                                <p class="mb-3 ObjectsectionBookTitle">In post mean shot ye. There out her child sir his lived. Design at uneasy me season of branch on praise esteem. Abilities discourse believing consisted remaining to no. Mistaken no me denoting dashwood as screened. Whence or esteem easily he on. Dissuade husbands at of no if disposal. Oh he decisively impression attachment friendship so if everything.</p>
+                                <hr>
+                                <ul class="list mb-3">
+                                    <li><span class="font-weight-semibold">Index Number: </span> <a href="#" class="ObjectIndexNumber">Eugene Kopyov</a></li>
+
+                                    <li><span class="font-weight-semibold">Last Edited Date:</span> <span class="ObjectLastUpdatedDate">June 1, 2015</span></li>
+                                    <li  class="hide"><span class="font-weight-semibold">Sectionid:</span> <span class="ObjectID">June 1, 2015</span></li>
+                                </ul>
+
+                                <div class="card-header bg-transparent header-elements-inline">
+                                    <h6 class="card-title font-weight-semibold">
+                                        <i class="icon-folder6 mr-2"></i>
+                                        Referenced Objects in this Section
+                                    </h6>
+                                </div>
+                                <div class="list-group list-group-flush">
+
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <i class="icon-files-empty2 mr-3"></i>
+                                        Indexes 
+                                        <span class="badge bg-success-400 ml-auto ObjectIndexCounts">0</span>
+                                    </a>
+
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <i class="icon-bubbles mr-3"></i>
+                                        Comments
+                                        <span class="badge bg-pink-400 ml-auto ObjectCommentCounts">0</span>
+                                    </a>
+
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <i class="icon-price-tags mr-3"></i>
+                                        Tags
+                                        <span class="badge bg-info-400 ml-auto ObjectTagCounts">0</span>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <i class="icon-bookmark mr-3"></i>
+                                        Bookmarks
+                                        <span class="badge bg-grey-400 ml-auto ObjectBookmarkCounts">0</span>
+                                    </a>
+                                </div>
+
+                                <div class="text-center">
+                                    <h6 class="m-0 font-weight-semibold">Section Actions</h6>
+                                    <button type="button" class="btn btn-outline bg-primary border-primary text-primary-800 btn-icon ml-2" data-popup="tooltip" title="View History" data-placement="top"><i class="icon-history"></i></button>
+                                    <button type="button" class="btn btn-outline bg-success border-success text-success-800 btn-icon ml-2 chkInSection" data-popup="tooltip" title="Check-In Section (Make Available Offline)" data-placement="top"><i class="icon-warning2"></i></button>
+                                    <button type="button" class="btn btn-outline bg-pink border-pink text-pink-800 btn-icon ml-2 chkOutSection" data-popup="tooltip" title="Check-Out Section (Make Available Online)" data-placement="top"><i class="icon-connection"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="tab-pane fade" id="ChkInSections">
+                    <div class="row">
+                        <div class="col-12 col-lg-8">
+                            <div class="card card-body">
+                                <span class="text-muted font-size-sm">About <span class="searchResult">20</span> results</span>
+
+                                <hr>
+
+                                <ul class="media-list mb-3" id="AllCheckInSectionList">
+                                    <li class="media flex-column flex-sm-row clone hide">
+
+                                        <div class="media-body">
+                                            <h6 class="media-title ViewObject "><a href="#" class="sectionName">Up unpacked friendly</a></h6>
+                                            <ul class="list-inline list-inline-dotted text-muted mb-2">
+                                                <li class="list-inline-item bkStatus"><i class="icon-list-unordered mr-2"></i></li>
+                                                <li class="list-inline-item sectionlastEdited">2018-01-10</li>
+                                                <li class="list-inline-item"><button class="btn btn-link ViewObject">View</button></li>
+                                            </ul>
+                                            <!--<p class="bkSummary">The him father parish looked has sooner. Attachment frequently gay terminated son. You greater nay use prudent placing passage to so distant behaved natural between do talking...</p>-->
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <ul class="pagination pagination-flat align-self-center flex-wrap my-2">
+                                    <li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-right13"></i></a></li>
+                                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                    <li class="page-item align-self-center"><span class="mx-2">...</span></li>
+                                    <li class="page-item"><a href="#" class="page-link">58</a></li>
+                                    <li class="page-item"><a href="#" class="page-link">59</a></li>
+                                    <li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-left12"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-4">
+                            <div class="card card-body cardblock">
+                                <div class="card-header bg-transparent header-elements-inline">
+                                    <h6 class="card-title font-weight-semibold">
+                                        <i class="icon-list-unordered mr-2"></i>
+                                        Section Title
+                                    </h6>
+                                </div>
+                                <h5 class="font-weight-semibold ObjectName">Limitless UI kit</h5>
+
+                                <div class="card-header bg-transparent header-elements-inline">
+                                    <h6 class="card-title font-weight-semibold">
+                                        <i class="icon-book2 mr-2"></i>
+                                        Parent Book
+                                    </h6>
+                                </div>
+                                <p class="mb-3 ObjectsectionBookTitle">In post mean shot ye. There out her child sir his lived. Design at uneasy me season of branch on praise esteem. Abilities discourse believing consisted remaining to no. Mistaken no me denoting dashwood as screened. Whence or esteem easily he on. Dissuade husbands at of no if disposal. Oh he decisively impression attachment friendship so if everything.</p>
+                                <hr>
+                                <ul class="list mb-3">
+                                    <li><span class="font-weight-semibold">Index Number: </span> <a href="#" class="ObjectIndexNumber">Eugene Kopyov</a></li>
+
+                                    <li><span class="font-weight-semibold">Last Edited Date:</span> <span class="ObjectLastUpdatedDate">June 1, 2015</span></li>
+                                    <li  class="hide"><span class="font-weight-semibold">Sectionid:</span> <span class="ObjectID">June 1, 2015</span></li>
+                                </ul>
+
+                                <div class="card-header bg-transparent header-elements-inline">
+                                    <h6 class="card-title font-weight-semibold">
+                                        <i class="icon-folder6 mr-2"></i>
+                                        Referenced Objects in this Section
+                                    </h6>
+                                </div>
+                                <div class="list-group list-group-flush">
+
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <i class="icon-files-empty2 mr-3"></i>
+                                        Indexes 
+                                        <span class="badge bg-success-400 ml-auto ObjectIndexCounts">0</span>
+                                    </a>
+
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <i class="icon-bubbles mr-3"></i>
+                                        Comments
+                                        <span class="badge bg-pink-400 ml-auto ObjectCommentCounts">0</span>
+                                    </a>
+
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <i class="icon-price-tags mr-3"></i>
+                                        Tags
+                                        <span class="badge bg-info-400 ml-auto ObjectTagCounts">0</span>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <i class="icon-bookmark mr-3"></i>
+                                        Bookmarks
+                                        <span class="badge bg-grey-400 ml-auto ObjectBookmarkCounts">0</span>
+                                    </a>
+                                </div>
+
+                                <div class="text-center">
+                                    <h6 class="m-0 font-weight-semibold">Section Actions</h6>
+                                    <p class="text-muted mb-3">Perform the following actions on this section.</p>
+
+                                    <button type="button" class="btn btn-outline bg-primary border-primary text-primary-800 btn-icon ml-2" data-popup="tooltip" title="View History" data-placement="top"><i class="icon-history"></i></button>
+                                    <button type="button" class="btn btn-outline bg-pink border-pink text-pink-800 btn-icon ml-2 chkOutSection" data-popup="tooltip" title="Check-Out Section (Make Available Online)" data-placement="top"><i class="icon-connection"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="tab-pane fade" id="ChkOutSections">
+
+                    <div class="row">
+                        <div class="col-12 col-lg-8">
+                            <div class="card card-body">
+                                <span class="text-muted font-size-sm">About <span class="searchResult">20</span> results</span>
+
+                                <hr>
+
+                                <ul class="media-list mb-3" id="AllCheckOutSectionList">
+                                    <li class="media flex-column flex-sm-row clone hide">
+
+                                        <div class="media-body">
+                                            <h6 class="media-title ViewObject "><a href="#" class="sectionName">Up unpacked friendly</a></h6>
+                                            <ul class="list-inline list-inline-dotted text-muted mb-2">
+                                                <li class="list-inline-item bkStatus"><i class="icon-list-unordered mr-2"></i></li>
+                                                <li class="list-inline-item sectionlastEdited">2018-01-10</li>
+                                                <li class="list-inline-item"><button class="btn btn-link ViewObject">View</button></li>
+                                            </ul>
+                                            <!--<p class="bkSummary">The him father parish looked has sooner. Attachment frequently gay terminated son. You greater nay use prudent placing passage to so distant behaved natural between do talking...</p>-->
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <ul class="pagination pagination-flat align-self-center flex-wrap my-2">
+                                    <li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-right13"></i></a></li>
+                                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                    <li class="page-item align-self-center"><span class="mx-2">...</span></li>
+                                    <li class="page-item"><a href="#" class="page-link">58</a></li>
+                                    <li class="page-item"><a href="#" class="page-link">59</a></li>
+                                    <li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-left12"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-4">
+                            <div class="card card-body cardblock">
+                                <div class="card-header bg-transparent header-elements-inline">
+                                    <h6 class="card-title font-weight-semibold">
+                                        <i class="icon-list-unordered mr-2"></i>
+                                        Section Title
+                                    </h6>
+                                </div>
+                                <h5 class="font-weight-semibold ObjectName">Limitless UI kit</h5>
+
+                                <div class="card-header bg-transparent header-elements-inline">
+                                    <h6 class="card-title font-weight-semibold">
+                                        <i class="icon-book2 mr-2"></i>
+                                        Parent Book
+                                    </h6>
+                                </div>
+                                <p class="mb-3 ObjectsectionBookTitle">In post mean shot ye. There out her child sir his lived. Design at uneasy me season of branch on praise esteem. Abilities discourse believing consisted remaining to no. Mistaken no me denoting dashwood as screened. Whence or esteem easily he on. Dissuade husbands at of no if disposal. Oh he decisively impression attachment friendship so if everything.</p>
+                                <hr>
+                                <ul class="list mb-3">
+                                    <li><span class="font-weight-semibold">Index Number: </span> <a href="#" class="ObjectIndexNumber">Eugene Kopyov</a></li>
+
+                                    <li><span class="font-weight-semibold">Last Edited Date:</span> <span class="ObjectLastUpdatedDate">June 1, 2015</span></li>
+                                    <li  class="hide"><span class="font-weight-semibold">Sectionid:</span> <span class="ObjectID">June 1, 2015</span></li>
+                                </ul>
+
+                                <div class="card-header bg-transparent header-elements-inline">
+                                    <h6 class="card-title font-weight-semibold">
+                                        <i class="icon-folder6 mr-2"></i>
+                                        Referenced Objects in this Section
+                                    </h6>
+                                </div>
+                                <div class="list-group list-group-flush">
+
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <i class="icon-files-empty2 mr-3"></i>
+                                        Indexes 
+                                        <span class="badge bg-success-400 ml-auto ObjectIndexCounts">0</span>
+                                    </a>
+
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <i class="icon-bubbles mr-3"></i>
+                                        Comments
+                                        <span class="badge bg-pink-400 ml-auto ObjectCommentCounts">0</span>
+                                    </a>
+
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <i class="icon-price-tags mr-3"></i>
+                                        Tags
+                                        <span class="badge bg-info-400 ml-auto ObjectTagCounts">0</span>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <i class="icon-bookmark mr-3"></i>
+                                        Bookmarks
+                                        <span class="badge bg-grey-400 ml-auto ObjectBookmarkCounts">0</span>
+                                    </a>
+                                </div>
+
+                                <div class="text-center">
+                                    <h6 class="m-0 font-weight-semibold">Section Actions</h6>
+                                    <button type="button" class="btn btn-outline bg-primary border-primary text-primary-800 btn-icon ml-2" data-popup="tooltip" title="View History" data-placement="top"><i class="icon-history"></i></button>
+                                    <button type="button" class="btn btn-outline bg-success border-success text-success-800 btn-icon ml-2 chkInSection" data-popup="tooltip" title="Check-In Section (Make Available Offline)" data-placement="top"><i class="icon-warning2"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <!-- /left content -->
+
+
+            <!-- Right sidebar component -->
+
+            <!-- /right sidebar component -->
+
+        </div>
+
+    </div>
+    <!-- /content area -->
+
+
+    <!-- Footer -->
+    <%@include file="../../general/footer1.jspf" %>
+    <!-- /footer -->
+
+</div>

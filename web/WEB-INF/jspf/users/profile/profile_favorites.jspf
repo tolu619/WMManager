@@ -1,0 +1,555 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light border-bottom-0">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Details</span> - <span class="actualUserName"></span></h4>
+            </div>
+        </div>
+        <!-- Top breadcrumb line -->
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+
+                    <span class="breadcrumb-item active"><span class="actualUserName"></span></span>
+                </div>
+
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+        </div>
+        <!-- /page header -->
+
+
+        <!-- Content area -->
+        <div class="content">
+            <!-- Tabs -->
+            <div class="nav-tabs-responsive mb-3">
+                <%@include file="profile_sublinks.jspf" %>
+            </div>
+            <!-- /tabs -->
+
+            <!-- Content area -->
+            <div class="content">
+                <div class="navbar navbar-expand-lg navbar-dark bg-info-700">
+                    <div class="text-center d-lg-none w-100">
+                        <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-favorite">
+                            <i class="icon-menu7 mr-2"></i>
+                            Favorite Navigation
+                        </button>
+                    </div>
+                    <div class="navbar-collapse collapse" id="navbar-favorite">
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="#books" class="navbar-nav-link active" data-toggle="tab">
+                                    <i class="icon-bag mr-2"></i>
+                                    Books
+                                    <span class="badge badge-pill bg-success position-static ml-auto ml-lg-2">0</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#articles" class="navbar-nav-link" data-toggle="tab">
+                                    <i class="icon-calendar3 mr-2"></i>
+                                    Articles
+                                    <span class="badge badge-pill bg-success position-static ml-auto ml-lg-2">0</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#products" class="navbar-nav-link" data-toggle="tab">
+                                    <i class="icon-calendar3 mr-2"></i>
+                                    Products
+                                    <span class="badge badge-pill bg-success position-static ml-auto ml-lg-2">0</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#services" class="navbar-nav-link" data-toggle="tab">
+                                    <i class="icon-calendar3 mr-2"></i>
+                                    Services
+                                    <span class="badge badge-pill bg-success position-static ml-auto ml-lg-2">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="d-flex align-items-start flex-column flex-md-row">
+
+                    <!-- Left content -->
+
+                    <div class="tab-content w-100 overflow-auto">
+                        <div class="tab-pane fade active show" id="books">
+
+                            <div class="row mt-2">
+                                <div class="col-12 col-lg-8">
+                                    <div class="card card-body">
+                                        <ul class="media-list mb-3">
+                                            <li class="media flex-column flex-sm-row">
+                                                <div class="mr-sm-3 mb-2 mb-sm-0">
+                                                    <div class="card-img-actions">
+                                                        <a href="#">
+                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="media-body">
+                                                    <h6 class="media-title"><a href="#">Book Title</a></h6>
+                                                    <ul class="list-inline list-inline-dotted text-muted mb-2">
+                                                        <li class="list-inline-item"><i class="icon-book-play mr-2"></i> Book </li>
+                                                        <li class="list-inline-item">14 minutes ago</li>
+                                                    </ul>
+                                                    The him father parish looked has sooner. Attachment frequently gay terminated son. You greater nay use prudent placing passage to so distant behaved natural between do talking...
+                                                </div>
+                                            </li>
+
+                                            <li class="media flex-column flex-sm-row">
+                                                <div class="mr-sm-3 mb-2 mb-sm-0">
+                                                    <div class="card-img-actions">
+                                                        <a href="#">
+                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="media-body">
+                                                    <h6 class="media-title"><a href="#">That know ask case ham</a></h6>
+                                                    <ul class="list-inline list-inline-dotted text-muted mb-2">
+                                                        <li class="list-inline-item"><i class="icon-book-play mr-2"></i> FAQ section</li>
+                                                        <li class="list-inline-item">1 hour ago</li>
+                                                    </ul>
+                                                    Friends off her windows painful. Still gay event you being think nay for. In three if aware he point it. Effects warrant me by no on feeling settled resolve. Her old collecting...
+                                                </div>
+                                            </li>
+
+                                            <li class="media flex-column flex-sm-row">
+                                                <div class="mr-sm-3 mb-2 mb-sm-0">
+                                                    <div class="card-img-actions">
+                                                        <a href="#">
+                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="media-body">
+                                                    <h6 class="media-title"><a href="#">Perhaps prudent several</a></h6>
+                                                    <ul class="list-inline list-inline-dotted text-muted mb-2">
+                                                        <li class="list-inline-item"><i class="icon-book-play mr-2"></i> FAQ section</li>
+                                                        <li class="list-inline-item">2 hours ago</li>
+                                                    </ul>
+                                                    Did had way law dinner square tastes. Recommend concealed yet her procuring see consulted depending. Adieus hunted end plenty are his she afraid. Resources agreement contained...
+                                                </div>
+                                            </li>
+
+                                            <li class="media flex-column flex-sm-row">
+                                                <div class="mr-sm-3 mb-2 mb-sm-0">
+                                                    <div class="card-img-actions">
+                                                        <a href="#">
+                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="media-body">
+                                                    <h6 class="media-title"><a href="#">Contented get distrusts</a></h6>
+                                                    <ul class="list-inline list-inline-dotted text-muted mb-2">
+                                                        <li class="list-inline-item"><i class="icon-book-play mr-2"></i> FAQ section</li>
+                                                        <li class="list-inline-item">4 hours ago</li>
+                                                    </ul>
+                                                    On unaffected resolution on considered of. No thought me husband or colonel forming effects. End sitting shewing who saw besides son musical adapted. Contrasted interested warm...
+                                                </div>
+                                            </li>
+
+                                            <li class="media flex-column flex-sm-row">
+                                                <div class="mr-sm-3 mb-2 mb-sm-0">
+                                                    <div class="card-img-actions">
+                                                        <a href="#">
+                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="media-body">
+                                                    <h6 class="media-title"><a href="#">He families believed</a></h6>
+                                                    <ul class="list-inline list-inline-dotted text-muted mb-2">
+                                                        <li class="list-inline-item"><i class="icon-book-play mr-2"></i> Video tutorials</li>
+                                                        <li class="list-inline-item">6 hours ago</li>
+                                                    </ul>
+                                                    Ask especially collecting terminated may son expression. Extremely eagerness principle estimable own was man. Men received far his dashwood subjects new. My sufficient surrounded...
+                                                </div>
+                                            </li>
+                                        </ul>
+
+                                        <ul class="pagination pagination-flat align-self-center flex-wrap my-2">
+                                            <li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-right13"></i></a></li>
+                                            <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                                            <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                            <li class="page-item align-self-center"><span class="mx-2">...</span></li>
+                                            <li class="page-item"><a href="#" class="page-link">58</a></li>
+                                            <li class="page-item"><a href="#" class="page-link">59</a></li>
+                                            <li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-left12"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-4">
+                                    <div class="card card-body">
+                                        <div class="mb-3">
+                                            <a href="#"><img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid rounded" alt=""></a>
+                                        </div>
+
+                                        <h5 class="font-weight-semibold">Limitless UI kit</h5>
+                                        <p class="mb-3">In post mean shot ye. There out her child sir his lived. Design at uneasy me season of branch on praise esteem. Abilities discourse believing consisted remaining to no. Mistaken no me denoting dashwood as screened. Whence or esteem easily he on. Dissuade husbands at of no if disposal. Oh he decisively impression attachment friendship so if everything.</p>
+
+                                        <ul class="list mb-3">
+                                            <li><span class="font-weight-semibold">Author:</span> <a href="#">Eugene Kopyov</a></li>
+                                            <li><span class="font-weight-semibold">Time spent:</span> 8 months</li>
+                                            <li><span class="font-weight-semibold">Client base:</span> <a href="#">16,893 (2015)</a></li>
+                                            <li><span class="font-weight-semibold">Pages:</span> 1200+</li>
+                                            <li><span class="font-weight-semibold">Latest update:</span> June 1, 2015</li>
+                                        </ul>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="articles">
+
+                            <div class="row mt-2">
+                                <div class="col-12 col-lg-8">
+                                    <div class="card card-body">
+                                        <span class="text-muted font-size-sm">About 827,000 results (0.34 seconds)</span>
+
+                                        <hr>
+
+                                        <ul class="media-list mb-3">
+                                            <li class="media flex-column flex-sm-row">
+                                                <div class="mr-sm-3 mb-2 mb-sm-0">
+                                                    <div class="card-img-actions">
+                                                        <a href="#">
+                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="media-body">
+                                                    <h6 class="media-title"><a href="#">Up unpacked friendly</a></h6>
+                                                    <ul class="list-inline list-inline-dotted text-muted mb-2">
+                                                        <li class="list-inline-item"><i class="icon-book-play mr-2"></i> Video tutorials</li>
+                                                        <li class="list-inline-item">14 minutes ago</li>
+                                                    </ul>
+                                                    The him father parish looked has sooner. Attachment frequently gay terminated son. You greater nay use prudent placing passage to so distant behaved natural between do talking...
+                                                </div>
+                                            </li>
+
+                                            <li class="media flex-column flex-sm-row">
+                                                <div class="mr-sm-3 mb-2 mb-sm-0">
+                                                    <div class="card-img-actions">
+                                                        <a href="#">
+                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="media-body">
+                                                    <h6 class="media-title"><a href="#">That know ask case ham</a></h6>
+                                                    <ul class="list-inline list-inline-dotted text-muted mb-2">
+                                                        <li class="list-inline-item"><i class="icon-book-play mr-2"></i> FAQ section</li>
+                                                        <li class="list-inline-item">1 hour ago</li>
+                                                    </ul>
+                                                    Friends off her windows painful. Still gay event you being think nay for. In three if aware he point it. Effects warrant me by no on feeling settled resolve. Her old collecting...
+                                                </div>
+                                            </li>
+
+                                            <li class="media flex-column flex-sm-row">
+                                                <div class="mr-sm-3 mb-2 mb-sm-0">
+                                                    <div class="card-img-actions">
+                                                        <a href="#">
+                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="media-body">
+                                                    <h6 class="media-title"><a href="#">Perhaps prudent several</a></h6>
+                                                    <ul class="list-inline list-inline-dotted text-muted mb-2">
+                                                        <li class="list-inline-item"><i class="icon-book-play mr-2"></i> FAQ section</li>
+                                                        <li class="list-inline-item">2 hours ago</li>
+                                                    </ul>
+                                                    Did had way law dinner square tastes. Recommend concealed yet her procuring see consulted depending. Adieus hunted end plenty are his she afraid. Resources agreement contained...
+                                                </div>
+                                            </li>
+
+                                            <li class="media flex-column flex-sm-row">
+                                                <div class="mr-sm-3 mb-2 mb-sm-0">
+                                                    <div class="card-img-actions">
+                                                        <a href="#">
+                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="media-body">
+                                                    <h6 class="media-title"><a href="#">Contented get distrusts</a></h6>
+                                                    <ul class="list-inline list-inline-dotted text-muted mb-2">
+                                                        <li class="list-inline-item"><i class="icon-book-play mr-2"></i> FAQ section</li>
+                                                        <li class="list-inline-item">4 hours ago</li>
+                                                    </ul>
+                                                    On unaffected resolution on considered of. No thought me husband or colonel forming effects. End sitting shewing who saw besides son musical adapted. Contrasted interested warm...
+                                                </div>
+                                            </li>
+
+
+                                        </ul>
+
+                                        <ul class="pagination pagination-flat align-self-center flex-wrap my-2">
+                                            <li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-right13"></i></a></li>
+                                            <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                                            <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                            <li class="page-item align-self-center"><span class="mx-2">...</span></li>
+                                            <li class="page-item"><a href="#" class="page-link">58</a></li>
+                                            <li class="page-item"><a href="#" class="page-link">59</a></li>
+                                            <li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-left12"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-4">
+                                    <div class="card card-body">
+                                        <div class="mb-3">
+                                            <a href="#"><img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid rounded" alt=""></a>
+                                        </div>
+
+                                        <h5 class="font-weight-semibold">Limitless UI kit</h5>
+                                        <p class="mb-3">In post mean shot ye. There out her child sir his lived. Design at uneasy me season of branch on praise esteem. Abilities discourse believing consisted remaining to no. Mistaken no me denoting dashwood as screened. Whence or esteem easily he on. Dissuade husbands at of no if disposal. Oh he decisively impression attachment friendship so if everything.</p>
+
+                                        <ul class="list mb-3">
+                                            <li><span class="font-weight-semibold">Author:</span> <a href="#">Eugene Kopyov</a></li>
+                                            <li><span class="font-weight-semibold">Time spent:</span> 8 months</li>
+                                            <li><span class="font-weight-semibold">Client base:</span> <a href="#">16,893 (2015)</a></li>
+                                            <li><span class="font-weight-semibold">Pages:</span> 1200+</li>
+                                            <li><span class="font-weight-semibold">Latest update:</span> June 1, 2015</li>
+                                        </ul>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade" id="products">
+
+                            <div class="card mt-2">
+                                <div class="card-header bg-transparent header-elements-inline">
+                                    <h6 class="card-title">Products</h6>
+                                    <div class="header-elements">
+                                        <div class="list-icons">
+                                            <a class="list-icons-item" data-action="collapse"></a>
+                                            <a href=".bd-example-modal" data-toggle="modal" class="list-icons-item ml-2" data-popup="tooltip" title="List Product" data-placement="left"><i class="icon-add"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>S/N</th>
+                                                <th >Product Image</th>
+                                                <th>Product Name</th>
+                                                <th>Category</th>
+                                                <th>Proposed Price</th>
+                                                <th>Supplied Quantity</th>
+                                                <th>Status</th>
+                                                <th class="text-center" style="width: 20px;"><i class="icon-arrow-down12"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="FavProductsList">
+
+                                            <tr class="clone hide">
+                                                <td class="productSN">1</td>
+                                                <td class="pr-0" style="width: 45px;">
+                                                    <a href="#">
+                                                        <img class="productImage" height="60" alt="">
+                                                    </a>
+                                                </td>
+                                                <td class="">
+                                                    <a href="#" class="font-weight-semibold productName">Fathom Backpack</a>
+                                                    <div class="text-muted font-size-sm overflow-auto"   style="width: 280px;">
+                                                        <div class="productDesc"></div>
+                                                        <!--<div class="productSummary text-blue-300"></div>-->
+
+                                                    </div>
+                                                </td>
+                                                <td class="productCategory">34cm x 29cm</td>
+                                                <td class="productPrice">Orange</td>
+                                                <td class="text-center">
+                                                    <span class="productQuantity pl-3 pr-3"></span>
+                                                </td>
+                                                <td> <span class="productStatus"></span></td>
+                                                <td class="text-center">
+                                                    <div class="list-icons">
+                                                        <div class="list-icons-item dropdown">
+                                                            <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a href="#" class="dropdown-item text-danger-800 btnDeleteProduct hide"><i class="icon-trash"></i> Delete Product</a>
+                                                                <a href=".product-detail-modal" data-toggle="modal"  class="dropdown-item text-primary-800 btnViewProductDetatails hide"><i class="icon-microscope"></i> View Details</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade" id="services">
+
+                            <div class="row mt-2">
+                                <div class="col-12 col-lg-8">
+                                    <div class="card card-body">
+                                        <span class="text-muted font-size-sm">About 827,000 results (0.34 seconds)</span>
+
+                                        <hr>
+
+                                        <ul class="media-list mb-3">
+                                            <li class="media flex-column flex-sm-row">
+                                                <div class="mr-sm-3 mb-2 mb-sm-0">
+                                                    <div class="card-img-actions">
+                                                        <a href="#">
+                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="media-body">
+                                                    <h6 class="media-title"><a href="#">Up unpacked friendly</a></h6>
+                                                    <ul class="list-inline list-inline-dotted text-muted mb-2">
+                                                        <li class="list-inline-item"><i class="icon-book-play mr-2"></i> Video tutorials</li>
+                                                        <li class="list-inline-item">14 minutes ago</li>
+                                                    </ul>
+                                                    The him father parish looked has sooner. Attachment frequently gay terminated son. You greater nay use prudent placing passage to so distant behaved natural between do talking...
+                                                </div>
+                                            </li>
+
+                                            <li class="media flex-column flex-sm-row">
+                                                <div class="mr-sm-3 mb-2 mb-sm-0">
+                                                    <div class="card-img-actions">
+                                                        <a href="#">
+                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="media-body">
+                                                    <h6 class="media-title"><a href="#">That know ask case ham</a></h6>
+                                                    <ul class="list-inline list-inline-dotted text-muted mb-2">
+                                                        <li class="list-inline-item"><i class="icon-book-play mr-2"></i> FAQ section</li>
+                                                        <li class="list-inline-item">1 hour ago</li>
+                                                    </ul>
+                                                    Friends off her windows painful. Still gay event you being think nay for. In three if aware he point it. Effects warrant me by no on feeling settled resolve. Her old collecting...
+                                                </div>
+                                            </li>
+
+                                            <li class="media flex-column flex-sm-row">
+                                                <div class="mr-sm-3 mb-2 mb-sm-0">
+                                                    <div class="card-img-actions">
+                                                        <a href="#">
+                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="media-body">
+                                                    <h6 class="media-title"><a href="#">Perhaps prudent several</a></h6>
+                                                    <ul class="list-inline list-inline-dotted text-muted mb-2">
+                                                        <li class="list-inline-item"><i class="icon-book-play mr-2"></i> FAQ section</li>
+                                                        <li class="list-inline-item">2 hours ago</li>
+                                                    </ul>
+                                                    Did had way law dinner square tastes. Recommend concealed yet her procuring see consulted depending. Adieus hunted end plenty are his she afraid. Resources agreement contained...
+                                                </div>
+                                            </li>
+
+
+                                        </ul>
+
+                                        <ul class="pagination pagination-flat align-self-center flex-wrap my-2">
+                                            <li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-right13"></i></a></li>
+                                            <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                                            <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                            <li class="page-item align-self-center"><span class="mx-2">...</span></li>
+                                            <li class="page-item"><a href="#" class="page-link">58</a></li>
+                                            <li class="page-item"><a href="#" class="page-link">59</a></li>
+                                            <li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-left12"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-4">
+                                    <div class="card card-body">
+                                        <div class="mb-3">
+                                            <a href="#"><img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid rounded" alt=""></a>
+                                        </div>
+
+                                        <h5 class="font-weight-semibold">Limitless UI kit</h5>
+                                        <p class="mb-3">In post mean shot ye. There out her child sir his lived. Design at uneasy me season of branch on praise esteem. Abilities discourse believing consisted remaining to no. Mistaken no me denoting dashwood as screened. Whence or esteem easily he on. Dissuade husbands at of no if disposal. Oh he decisively impression attachment friendship so if everything.</p>
+
+                                        <ul class="list mb-3">
+                                            <li><span class="font-weight-semibold">Author:</span> <a href="#">Eugene Kopyov</a></li>
+                                            <li><span class="font-weight-semibold">Time spent:</span> 8 months</li>
+                                            <li><span class="font-weight-semibold">Client base:</span> <a href="#">16,893 (2015)</a></li>
+                                            <li><span class="font-weight-semibold">Pages:</span> 1200+</li>
+                                            <li><span class="font-weight-semibold">Latest update:</span> June 1, 2015</li>
+                                        </ul>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- /left content -->
+
+
+                    <!-- Right sidebar component -->
+
+                    <!-- /right sidebar component -->
+
+                </div>
+
+
+
+            </div>
+            <!-- /content area -->
+
+
+            <!-- Footer -->
+            <%@include file="../../general/footer1.jspf" %>
+            <!-- /footer -->
+
+        </div> 

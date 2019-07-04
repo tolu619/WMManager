@@ -1,0 +1,75 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header bg-primary">
+            <h6 class="modal-title">Create New Monetisation Rule</h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <form name="NewMonetisationRule">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="subCategoryName"><b>Select Scheme</b></label>
+                    <select class="form-control form-control-select2" id="schemeType" placeholder="Select the parent category" required>
+                        <option value="0">Select Scheme</option>
+                        <option value="Monetisation">Monetisation</option>
+                        <option value="Commoditisation">Commoditisation</option>
+                        <option value="Mobilisation">Mobilisation</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="subCategoryDesc"><b>Rule Name:</b></label>
+                    <input type="text" class="form-control" id="ruleName" rows="1" placeholder="Enter a brief description" required/>
+                </div>
+                <div class="form-group">
+                    <label for="subCategoryDesc"><b>Type a Description:</b></label>
+                    <textarea class="form-control" id="ruleDesc" rows="1" placeholder="Enter a brief description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="categoryID"><b>Minimum Value (₦):</b></label>
+                            <input type="text" class="form-control" id="minMonVal" placeholder="eg. 200,000" required/>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="categoryID"><b>Application fee (%):</b></label>
+                            <input type="number" class="form-control" id="monPercent" placeholder="eg. 10" required/>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="categoryID"><b>Maximum Stage:</b></label>
+                            <select class="form-control form-control-select2" id="monMaxstage" placeholder="Select the parent category" required>
+                                <option value="0">Select Stage</option>
+                                <option value="1">1 Stage</option>
+                                <option value="2">2 Stages</option>
+                                <option value="3">3 Stages</option>
+                                <option value="4">4 Stages</option>
+                                <option value="5">5 Stages</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="categoryID"><b>Monetisation Category:</b></label>
+                            <select class="form-control form-control-select2" id="monType" placeholder="Select the parent category" required>
+                                <option value="0">Select Type</option>
+                                <option value="1">Full</option>
+                                <option value="2">Half</option>
+                                <option value="4">Quarter</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                
+                <button type="button" class="btn btn-warning" data-dismiss="modal" id="Cancel">Close</button>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </form>
+    </div>
+</div>

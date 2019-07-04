@@ -1,0 +1,194 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<!-- Secondary sidebar -->
+
+<!-- /secondary sidebar -->
+
+
+<!-- Main content -->
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Permissions</span> - Proposed/Requested Permissions</h4>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+            <div class="header-elements d-none mr-2">
+                <a href="#" class="btn btn-primary btn-float rounded-round" id="CreateWmObjectType" data-popup="tooltip" title="" data-placement="left" data-container="body"  data-original-title="Add New WM-Object">
+                    <i class="icon-plus-circle2"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Permissions" class="breadcrumb-item">Permissions</a>
+                    <span class="breadcrumb-item active">Proposed/Requested Permissions</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar navbar-expand-lg navbar-dark bg-info-700">
+        <div class="text-center d-lg-none w-100">
+            <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-perms">
+                <i class="icon-menu7 mr-2"></i>
+                Permission Navigation
+            </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-perms">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <a href="#reqperms" class="navbar-nav-link active" data-toggle="tab">
+                        <i class="icon-blocked mr-2"></i>
+                        Requested Permissions
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#reqchanges" class="navbar-nav-link" data-toggle="tab">
+                        <i class="icon-blocked mr-2"></i>
+                        Requested Changes
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <!-- /page header -->
+
+
+    <!-- Content area -->
+    <div class="content">
+
+        <div class="d-flex align-items-start flex-column flex-md-row">
+
+            <!-- Left content -->
+
+            <div class="tab-content w-100 overflow-auto">
+                <div class="tab-pane fade active show" id="reqperms">
+
+                    <!--<div class="row">-->
+                    <div class="card">
+                        <div class="card-header header-elements-inline">
+                            <h5 class="card-title">Requested Permissions</h5>
+                        </div>
+
+
+                        <table class="table datatable-basic table-hover table-bordered table-responsive-lg ">
+                            <thead class="bg-info-700">
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Name</th>
+                                    <th>Permission Name</th>
+                                    <th>Permission Description</th>
+                                    <th>Status</th>
+                                    <th>Date-Time</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="AllRequestedPermissions">
+                                <tr class="clone hide">
+                                    <td class="newPermCount">s/n</td>
+                                    <td class="newPermUserName" >Loading Trans Ref</td>
+                                    <td><a href="#" class="newPermName">Loading Transaction Name</a></td>
+                                    <td class=""><span class="newPermDesc">Loading Market Tool</span></td>
+                                    <td class=""><span class="newPermStatus"> Loading  Amount </span> </td>
+                                    <td class="newPermDateAndTime">Loading  Date</td>
+                                    <td class="text-center">
+                                        <div class="list-icons">
+                                            <div class="dropdown">
+                                                <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                                    <i class="icon-menu9"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item approveNewPerm btn btn-mini btn-success"><i class="icon-checkmark-circle"></i> Approve</a>
+                                                    <a class="dropdown-item rejectNewPerm btn btn-mini btn-primary"><i class="icon-cancel-circle2"></i> Reject</a>
+                                                    <a class="dropdown-item completeNewPerm btn btn-mini btn-primary"><i class="icon-checkmark3"></i> Mark As Completed</a>
+                                                    <a class="dropdown-item deleteNewPerm btn btn-mini btn-primary"><i class="icon-trash"></i> Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--</div>-->
+                </div>
+
+                <div class="tab-pane fade" id="reqchanges">
+
+                    <div class="card">
+                        <div class="card-header header-elements-inline">
+                            <h5 class="card-title">Requested Changes</h5>
+                            <div class="header-elements">
+                                <div class="list-icons">
+                                    <a class="list-icons-item mr-3"> <span class="reqchangesCounticon badge badge-primary rounded-circle p-2">0</span></a> 
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <table class="RequestedChanges table datatable-basic table-hover table-bordered table-responsive-lg ">
+                            <thead class="bg-info-700">
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Subject</th>
+                                    <th>Old Details</th>
+                                    <th>New Details</th>
+                                    <th>Date-Time</th>
+                                    <th>Status</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="RequestedPermissions">
+                                <tr class="clone ">
+                                    <td class="reqchangesCount">1</td>
+                                    <td class="reqchangesSubject" ></td>
+                                    <td class="reqchangesOld"></td>
+                                    <td class="reqchangesNew"></td>
+                                    <td class="reqchangesDateAndTime"></td>
+                                    <td class=""><span class="reqchangesStatus">Loading Status</span></td>
+                                    <td class="text-center reqaction">
+                                        <div class="list-icons">
+                                            <div class="dropdown">
+                                                <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                                    <i class="icon-menu9"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item approvechange btn btn-mini btn-success"><i class="icon-checkmark-circle"></i> Approve</a>
+                                                    <a class="dropdown-item rejectchange btn btn-mini btn-primary"><i class="icon-cancel-circle2"></i> Reject</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- /content area -->
+
+
+    <!-- Footer -->
+    <%@include file="../../general/footer1.jspf" %>
+    <!-- /footer -->
+
+</div>
+<!-- /main content -->
+
+
+<!-- Right sidebar -->
+
+<!-- /right sidebar -->

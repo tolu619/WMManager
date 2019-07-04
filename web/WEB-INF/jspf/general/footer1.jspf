@@ -1,0 +1,173 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<!-- footer area start -->
+
+<div class="navbar navbar-expand-lg navbar-light">
+    <div  class="modal fade service_create_type_modal">
+        <%@include file="../users/shop/shop_service_create_serviceType.jspf" %>        
+    </div>
+    <div  class="modal fade service_create_subcategory_modal">
+        <%@include file="../users/shop/shop_service_new_subcategory.jspf" %>
+    </div>
+    <div  class="modal fade service_create_category_modal">
+        <%@include file="../users/shop/shop_service_new_category.jspf" %>
+    </div>
+    <div  class="modal fade shop_services_details_modal">
+        <%@include file="../users/shop/shop_service_details.jspf" %>
+    </div>
+    <div  class="modal fade bd-example-modal-1">
+        <%@include file="../users/profile/profile_add_new_contact.jspf" %>
+    </div>
+    <div class="modal bd-example-modalListNewBusiness">
+        <%@include file="../users/profile/profile_list_business.jspf" %>
+    </div>
+    <div class="modal bd-example-modaladdChangeProfilePicture">
+        <%@include file="../users/profile/profile_changeImage.jspf" %>
+    </div>
+    <div class="modal bd-example-modaltransfer">
+        <%@include file="../users/accounts/accounts_quickTransfer.jspf" %>
+    </div>
+    <div class="modal modal_basic_SMSTransactions" >
+        <%@include file="../users/accounts/accounts_sms.jspf" %>
+    </div>
+    <div  class="modal fade bd-example-modal-addstaff">
+        <%@include file="../users/profile/profile_add_new_staff.jspf" %>
+    </div>
+    <div  class="modal fade modal_basic_buyWarrants">
+        <%@include file="../users/warrantsMarket/warrantsMarket_buyWarrants.jspf" %>
+    </div>
+    <div  class="modal fade bd-modal-list-for-sale">
+        <%@include file="../users/warrantsMarket/warrantsMarket_list_for_sale.jspf" %>
+    </div>
+    <div  class="modal fade TransDetailsModal">
+        <%@include file="../users/accounts/accounts_transaction_details.jspf" %>
+    </div>
+    <div  class="modal fade bd-example-tdmodal3">
+        <%@include file="../users/accounts/accounts_generate_statement.jspf" %>
+    </div>
+    <div  class="modal fade bd-account-details">
+        <%@include file="../users/accounts/accounts_account_details.jspf" %>
+    </div>
+    <div  class="modal fade TransPeriodModal">
+        <%@include file="../users/accounts/accounts_generate_transactions.jspf" %>
+    </div>
+    <div  class="modal fade shop_product-detail-modal">
+        <%@include file="../users/shop/shop_product_details.jspf" %>
+    </div>
+    <div  class="modal fade bd-example-modal">
+        <%@include file="../users/profile/profile_list_product.jspf" %>
+    </div>
+    <div class="modal fade orderdetails-modal">
+        <%@include file="../users/shop/shop_order_details.jspf" %>
+    </div>
+    <div class="modal fade order-product-supplier-modal">
+        <%@include file="../users/shop/shop_order_product_supplier.jspf" %>
+    </div>
+    <div class="modal fade order-product-supplier-details-modal">
+        <%@include file="../users/shop/shop_order_product_supplier_details.jspf" %>
+    </div>
+    <div class="modal fade warrants-in-accounts-modal">
+        <%@include file="../users/warrantsMarket/warrantsMarket_warrants_In_Acct.jspf" %>
+    </div>
+    <div class="modal fade warrants-in-diff-accounts-modal">
+        <%@include file="../users/warrantsMarket/warrantsMarket_warrants_In_Diff_Accounts.jspf" %>
+    </div>
+    <div  class="modal fade add-cat-prop-modal">
+        <%@include file="../users/shop/shop_add_cat_properties.jspf" %>
+    </div>
+    <div  class="modal fade add-cat-modal">
+        <%@include file="../users/shop/shop_add_category.jspf" %>
+    </div>
+    <div  class="modal fade add-cat-image-modal">
+        <%@include file="../users/shop/shop_add_cat_image.jspf" %>
+    </div>
+    <div  class="modal fade add-new-promo-modal">
+        <%@include file="../users/shop/shop_add_promo.jspf" %>
+    </div>
+    <div  class="modal fade add-promo-product-modal">
+        <%@include file="../users/shop/shop_add_promo_products.jspf" %>
+    </div>
+    <div  class="modal fade add-pickup-centre-modal">
+        <%@include file="../users/shop/shop_add_pickup_center.jspf" %>
+    </div>
+    <div  class="modal fade register-business-modal">
+        <%@include file="../users/members/members_register_business.jspf" %>
+    </div>
+    <div  class="modal fade register-member-modal">
+        <%@include file="../users/members/members_register_member.jspf" %>
+    </div>
+    <div  class="modal fade create-agency-modal">
+        <%@include file="../users/members/members_create_agency.jspf" %>
+    </div>
+    <div  class="modal fade make-user-agency-modal">
+        <%@include file="../users/members/members_make_user_agency.jspf" %>
+    </div>
+    <div  class="modal fade register-semple-business-modal">
+        <%@include file="../users/schemes/schemes_semple_register_business.jspf" %>
+    </div>
+    <div  class="modal fade semple-contract-modal">
+        <%@include file="../users/schemes/schemes_semple_contract.jspf" %>
+    </div>
+    <div  class="modal fade semple-contract-display1-modal">
+        <%@include file="../users/schemes/schemes_semple_contract_display1.jspf" %>
+    </div>
+    <div  class="modal fade semple-contract-display2-modal">
+        <%@include file="../users/schemes/schemes_semple_contract_display2.jspf" %>
+    </div>
+    <div  class="modal fade new-permission-modal">
+        <%@include file="../users/permissions/perm_new_permission.jspf" %>
+    </div>
+    <div  class="modal fade perm-assign-permission-modal">
+        <%@include file="../users/permissions/perm_assign_permission.jspf" %>
+    </div>
+    <div  class="modal fade perm-assign-permission-modal">
+        <%@include file="../users/permissions/perm_assign_permission.jspf" %>
+    </div>
+    <div  class="modal fade perm-manage-permgroup-modal">
+        <%@include file="../users/permissions/perm_manage_permgroup.jspf" %>
+    </div>
+    <div  class="modal fade perm-new-permission-group-modal">
+        <%@include file="../users/permissions/perm_new_permission_group.jspf" %>
+    </div>
+    <div  class="modal fade bd-example-modaladdress">
+        <%@include file="../users/profile/profile_addAddress.jspf" %>
+    </div>
+    <div  class="modal fade modal_basic_addBankDetails">
+        <%@include file="../users/profile/profile_addBankDetails.jspf" %>
+    </div>
+    <div  class="modal fade product-detail-modal">
+        <%@include file="../users/profile/profile_product_details.jspf" %>
+    </div>
+    <div  class="modal fade change-transaction-limit-modal">
+        <%@include file="../users/accounts/accounts_change_transaction_limit.jspf" %>
+    </div>
+    <div  class="modal fade modal-request-permissions">
+        <%@include file="../users/profile/profile_business_request_perms.jspf" %>
+    </div>
+    <div  class="modal fade modal-new-monetisation-rule">
+        <%@include file="../users/schemes/schemes_new_monetisation_rule.jspf" %>
+    </div>
+    <div  class="modal fade modal-view-monetisation-goods">
+        <%@include file="../users/schemes/schemes_monetisation_inventory_details.jspf" %>
+    </div>
+    <div  class="modal fade modal-view-mon-verify-goods">
+        <%@include file="../users/schemes/schemes_goodsVerificationDetails.jspf" %>
+    </div>
+    <div class="text-center d-lg-none w-100">
+        <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
+            <i class="icon-unfold mr-2"></i>
+            Footer
+        </button>
+    </div>
+
+    <div class="navbar-collapse collapse" id="navbar-footer">
+        <span class="navbar-text">
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> <a href="http://thewealthmarket.com/" target="_blank"> | TheWealthMarket</a>
+        </span>
+
+        <ul class="navbar-nav ml-lg-auto">
+            <li class="nav-item"><a href="#" class="navbar-nav-link" target="_blank"><i class="icon-lifebuoy mr-2"></i> Support</a></li>
+            <li class="nav-item"><a href="#" class="navbar-nav-link" target="_blank"><i class="icon-file-text2 mr-2"></i> Docs</a></li>
+        </ul>
+    </div>
+</div>

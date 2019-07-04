@@ -1,0 +1,135 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="content-wrapper">
+    
+    <!-- Page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Schemes</span> - Monetisation</h4>
+            </div>
+
+
+        </div>
+
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Semple" class="breadcrumb-item">Schemes</a>
+                    <span class="breadcrumb-item active">Monetisation</span>
+                </div>
+
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+            <div class="header-elements d-none">
+                <div class="breadcrumb justify-content-center ml-2 cursor-pointer">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Monetisation" class="breadcrumb-elements-item">
+                        <i class="icon-hand  mr-2"></i>
+                        Pending Monetisations
+                    </a>
+                </div>
+                        
+                <div class="breadcrumb justify-content-center cursor-pointer">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=MonetisationRules" class="breadcrumb-elements-item">
+                        <i class="icon-hand mr-2"></i>
+                        Monetization Rules
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
+    
+    <!-- Page Content -->
+    <div class="content">
+        
+        <!-- Customers -->
+        <div class="card">
+            <div class="card-header header-elements-inline">
+                <h6 class="card-title">Unverified Monetisation Products/Services</h6>
+                <div class="header-elements">
+                    <div class="list-icons">
+                        <a class="list-icons-item" data-action="collapse"></a>
+                        <a class="list-icons-item" data-action="reload"></a>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-striped text-nowrap table-customers">
+                <thead>
+                    <tr>
+                        <th>User Detail</th>
+                        <th>Monetisation Applied</th>
+                        <th>Value</th>
+                        <th>Date Applied</th>
+                        <th>History</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody id="monVerifyParent">
+                    <tr class="monVerifyChild hide">
+                        <td>
+                            <div class="media">
+                                <div class="mr-3">
+                                    <a href="#!">
+                                        <img src="../../../global_assets/images/placeholders/placeholder.jpg" width="40" height="40" class="rounded-circle monVerifyUserImg" alt="">
+                                    </a>
+                                </div>
+
+                                <div class="media-body align-self-center">
+                                    <a href="user_pages_profile_tabbed.html" class="font-weight-semibold monVerifyUserName"><h4>James Alexander</h4></a>
+                                    
+                                </div>
+                            </div>
+                            <input type="hidden" class="monVerifyUserID"/>
+                            <input type="hidden" class="monVerifyAppID"/>
+                        </td>
+                        <td class="">
+                            <span class="VerifyUsedMonRuleName">
+                                Standard Monetisation
+                            </span>
+                            <input type="hidden" class="userUsedMonRuleID"/>
+                        </td>
+                        <td >
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    Value:
+                                    <a href="#" class="monExWarrants">N250,000.00</a>
+                                </li>
+                            </ul>
+                        </td>
+                        <td class="monVerifyUserAppDate">
+                            2019-06-13
+                        </td>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    Successful Applications:
+                                    <a href="#" class="monVerifysuccessApps">0</a>
+                                </li>
+
+                                <li>
+                                    Declined Applications:
+                                    <a href="#" class="monverifyDeclinedApps">0</a>
+                                </li>
+                            </ul>
+                        </td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-secondary ViewMonGoodsVerify">Details</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /customers -->
+        
+    </div>
+    <!-- /Page Content -->
+    
+    <!-- Footer -->
+    <%@include file="../../general/footer1.jspf" %>
+    <!-- /footer -->
+</div>

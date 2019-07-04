@@ -1,0 +1,113 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Write</span> - Indexes</h4>
+            </div>
+        </div>
+
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Books" class="breadcrumb-item">Write</a>
+                    <span class="breadcrumb-item active">Indexes</span>
+                </div>
+
+                <!--<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>-->
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
+
+
+    <!-- Content area -->
+    <div class="content">
+
+        <!-- Inner container -->
+        <div class="d-flex align-items-start flex-column flex-md-row">
+
+            <!-- Left content -->
+            <div class="w-100 overflow-auto order-2 order-md-1">
+                <div class="" id="AllIndexList">
+                    <div class="card neg-margintop clone hide">
+                        <div class="card-header">
+                            <h4 class="card-title">
+                                <span class="indexHeader font-weight-semibold">Card title</span><span class="font-size-sm font-weight-normal ml-3 indexObjectView"><a href="#">View</a></span>
+                                <span class="d-block font-size-base indexSubHeader font-size-lg ml-3">With block subtitle</span>
+                            </h4>
+                        </div>
+
+                        <div class="card-body indexContent">
+                            Basic card with block header subtitle
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Right sidebar component -->
+            <div class="sidebar sidebar-light bg-transparent sidebar-component sidebar-component-right border-0 shadow-0 order-1 order-md-2 sidebar-expand-md">
+
+                <!-- Sidebar content -->
+                <div class="sidebar-content">
+                    <div class="col-12 ">
+                        <div class="card card-body cardblock">
+
+                            <h5 class="font-weight-semibold objectindexHeader">Limitless UI kit</h5>
+                            <h6 class="d-block font-size-base  objectindexHeader">Limitless UI kit</h6>
+                            <p class="mb-3 ObjectindexText">In post mean shot ye. There out her child sir his lived. Design at uneasy me season of branch on praise esteem. Abilities discourse believing consisted remaining to no. Mistaken no me denoting dashwood as screened. Whence or esteem easily he on. Dissuade husbands at of no if disposal. Oh he decisively impression attachment friendship so if everything.</p>
+
+                            <div class="card-header bg-transparent header-elements-inline">
+                                <h6 class="card-title font-weight-semibold font-size-sm">
+
+                                    Referenced Objects in this Index
+                                </h6>
+                            </div>
+                            <div class="list-group list-group-flush">
+
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="icon-book3 mr-3"></i>
+                                    Books 
+                                    <span class="badge bg-success-400 ml-auto ObjectindexBook">0</span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="icon-list-unordered mr-3"></i>
+                                    Sections
+                                    <span class="badge bg-info-400 ml-auto ObjectindexSection">0</span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="icon-bubbles mr-3"></i>
+                                    Comments
+                                    <span class="badge bg-pink-400 ml-auto ObjectindexComment">0</span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="icon-bookmark mr-3"></i>
+                                    Bookmarks
+                                    <span class="badge bg-grey-400 ml-auto ObjectindexBookmark">0</span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="icon-price-tags mr-3"></i>
+                                    Tags
+                                    <span class="badge bg-grey-400 ml-auto ObjectindexTag">0</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /content area -->
+
+
+    <!-- Footer -->
+    <%@include file="../../general/footer1.jspf" %>
+    <!-- /footer -->
+
+</div>

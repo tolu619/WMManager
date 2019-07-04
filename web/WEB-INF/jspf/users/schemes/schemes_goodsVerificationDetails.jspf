@@ -1,0 +1,114 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header bg-purple">
+            <h6 class="modal-title">Verify Product/Service</h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex align-items-start flex-column flex-md-row">
+                        <div class="media-body">
+                            <h6 class="media-title font-weight-semibold">
+                                <a href="#" class="">Products</a>
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card w-100">
+                    <div class="card-header bg-slate-400 header-elements-inline">
+                        <h4 class="card-title text-center mt-2 w-100">Product Details</h4>
+                        <div class="header-elements">
+                            <div class="list-icons">
+                                <a class="list-icons-item" data-action="collapse"></a>
+                                <a class="list-icons-item" data-action="reload"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="max-height: 50em; overflow-x: auto; padding: 5px;">
+                        <table class="table datatable-basic table-hover table-bordered table-responsive-lg">
+                            <thead class="bg-primary">
+                                <tr>
+                                    <th scope="col">S/N</th>
+                                    <th scope="col">Picture</th>
+                                    <th scope="col">Product/Service Name</th>
+                                    <th scope="col">Avail* Quantity</th>
+                                    <th scope="col">Applied Quantity</th>
+                                    <th scope="col">Unit Price()</th>
+                                    <th scope="col">Subtotal</th>
+                                    <th scope="col">Select to Approve</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mon-inv-verify">
+
+                            </tbody>
+                            <!-- <tfoot>
+                                <tr class="">
+                                    <td class=""></td>
+                                    <td class="">
+
+                                    </td>
+                                    <td class="">
+
+                                    </td>
+                                    <td class="">
+
+                                    </td>
+                                    <td class=""></td>
+                                    <td class="">
+                                        Verify:
+                                    </td>
+                                    <td id="">
+                                        
+                                    </td>
+                                </tr>
+                            </tfoot>-->
+                                <tr class="monVerifyClone hide">
+                                    <td class="monVerifyCount rm">1</td>
+                                    <td class="p-1 rm" style="width: 45px;">
+                                        <a href="#">
+                                            <img class="monVerifyImage"  src="https://www.indiafilings.com/learn/wp-content/uploads/2019/03/Composition-Scheme-for-Service-Providers.jpg" height="60" alt="">
+                                        </a>
+                                    </td>
+                                    <td class="rm">
+                                        <a href="#" class="font-weight-semibold monVerifyName">Fathom Backpack</a>
+                                        <div class="text-muted font-size-sm overflow-auto"   style="width: 280px;">
+                                            <div class="monVerifyDesc">This id the product/Service description</div
+                                        </div>
+                                    </td>
+                                    <td class="pt-2 pb-1 rm monVerifyAvailQuantity">
+
+                                    </td>
+                                    <td class="pt-2 pb-1 rm monVerifyAppliedQuantity">
+
+                                    </td>
+                                    <td class="monVerifyPrice rm">N25,000</td>
+
+                                    <td class="monVerifySubtotal total">
+                                        913
+                                    </td>
+                                    <td class="mvc">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input monVerifyCheck" name="monSelectedVerify" id="try">
+                                            <label class="custom-control-label monVerifyCheckLabel" for="try">Add</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" class="monVerifyAppID" val=""/>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" id="Cancel">Close</button>
+            <button type="button" class="btn btn-secondary" id="declineMonInv">Decline All</button>
+            <button type="button" class="btn btn-success" id="verifyMonInv">Verify Selected</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,176 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light border-bottom-0">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Accounts</span> - All Transactions</h4>
+            </div>
+
+        </div>
+        <!-- Top breadcrumb line -->
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Accounts" class="breadcrumb-item">Accounts</a>
+                    <span class="breadcrumb-item active">All Transactions</span>
+                </div>
+
+            </div>
+
+            <div class="header-elements d-none">
+                <div class="breadcrumb justify-content-center">
+                    <a data-toggle="modal" data-target=".TransPeriodModal" class="breadcrumb-elements-item cursor">
+                        <i class="icon-gear mr-2"></i>
+                        Select Transaction Period
+                    </a>
+                    <a data-toggle="modal" data-target=".bd-example-tdmodal3" class="breadcrumb-elements-item cursor">
+                        <i class="icon-rotate-cw2 mr-2"></i>
+                        Generate Account Statement
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- /breadcrumb line -->
+
+
+    </div>
+    <!-- /page header -->
+
+
+    <!-- Content area -->
+    <div class="content">
+        <!-- Filter toolbar -->
+        <div class="navbar navbar-expand-lg navbar-light navbar-component rounded">
+            <div class="text-center d-lg-none w-100">
+                <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-filter">
+                    <i class="icon-unfold mr-2"></i>
+                    Filters
+                </button>
+            </div>
+
+            <div class="navbar-collapse collapse" id="navbar-filter">
+                <span class="navbar-text mr-3">
+                    Filter: <span class="text-danger-700">(In-progress)</span>
+                </span>
+
+                <ul class="navbar-nav flex-wrap">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-sort-time-asc mr-2"></i>
+                            By date
+                        </a>
+
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">Show all</a>
+                            <div class="dropdown-divider"></div> 
+                            <a href="#" class="dropdown-item">Today</a>
+                            <a href="#" class="dropdown-item">Yesterday</a>
+                            <a data-toggle="modal" data-target=".TransPeriodModal" class="dropdown-item">Select a Date</a>
+
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-sort-amount-desc mr-2"></i>
+                            By Transaction Type
+                        </a>
+
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">Show all</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">Quick Transfers</a>
+                            <a href="#" class="dropdown-item">Market Instruments</a>
+                            <a href="#" class="dropdown-item">Grant OD Lines</a>
+                            <a href="#" class="dropdown-item">Sell Warrants for Cash</a>
+                            <a href="#" class="dropdown-item">Buy Warrants with Cash</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-sort-numeric-asc mr-2"></i>
+                            By Transaction
+                        </a>
+
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">Show all</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">Credit</a>
+                            <a href="#" class="dropdown-item">Debit</a>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <!-- /filter toolbar -->
+        <div class="card">
+            <div class="card-header header-elements-inline">
+                <h5 class="card-title">All Transactions</h5>
+                <div class="header-elements">
+                    <div class="list-icons">
+                        <a class="list-icons-item mr-3"> <span class="transTotalCount badge badge-primary rounded-circle p-2"></span></a> 
+                        <a class="list-icons-item mr-2" data-action="collapse"></a>
+                        <div class="dropdown ml-2">
+                            <a href="#" class="list-icons-item " data-toggle="dropdown">
+                                <i class="icon-menu9"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a  data-toggle="modal" data-target=".TransPeriodModal" class="dropdown-item text-warning"><i class="icon-credit-card2"></i> Select Transaction Period</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <table class="table datatable-basic table-hover table-bordered table-responsive-lg ">
+                <thead class="bg-primary-400">
+                    <tr>
+                        <th>S/N</th>
+                        <th>Transaction Reference</th>
+                        <th>Transaction Type</th>
+                        <th>Market Tool</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="RecentTransDisplay">
+                    <tr class="transclone hide">
+                        <td class="transCount">s/n</td>
+                        <td class="transID" >Loading Trans Ref</td>
+                        <td><a href="#" class="transName">Loading Transaction Name</a></td>
+                        <td class=""><span class="transTool">Loading Market Tool</span></td>
+                        <td class="transAmount">Loading  Amount</td>
+                        <td class="transDate">Loading  Date</td>
+                        <td class="text-center">
+                            <div class="list-icons">
+                                <div class="dropdown">
+                                    <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                        <i class="icon-menu9"></i>
+                                    </a>
+
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a data-toggle="modal" data-target=".TransDetailsModal" class="dropdown-item ViewTransDetails"><i class="icon-microscope"></i> View Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- /Content area -->
+
+    <!-- Footer -->
+    <%@include file="../../general/footer1.jspf" %>
+    <!-- /footer -->
+
+</div> 

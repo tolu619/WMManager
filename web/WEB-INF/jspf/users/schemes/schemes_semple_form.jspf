@@ -1,0 +1,44 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="row">    
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Contract Percentage<span class="text-danger">*</span></label>
+            <input type="text" id="" value="10" name="contractPerc" class="form-control touchspin-postfix contractPerc">
+            <input type="hidden" class="mycaContractPerc">
+
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Minimum Inventory Percentage<span class="text-danger">*</span></label>
+            <input id="" type="text" value="20" name="minInventoryPerc"  class="form-control touchspin-postfix2 minInventoryPerc" />
+            <input type="hidden" class="mycaMinInventoryPerc">
+        </div>
+    </div>
+</div>
+<div class="row">    
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Total Inventory<span class="text-danger">*</span></label>
+            <input class="form-control TotalInventory" type="number" value="0" min="0" required parsley-trigger="change" placeholder="">
+             <input type="hidden" class="mycaTotalInventory">
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>WM Minimum Inventory<span class="text-danger">*</span></label>
+            <input class="form-control wmMinInventory" type="number" required parsley-trigger="change" placeholder="" disabled="disabled">
+            <input type="hidden" class="mycaWmMinInventory">
+        </div>
+    </div>
+</div>
+<div class="row">    
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Charges<span class="text-danger">*</span></label>
+            <input class="form-control contractCharges" type="number" required parsley-trigger="change" placeholder="" disabled="disabled">
+            <input type="hidden" class="mycaContractCharges">
+        </div>
+    </div>
+</div>

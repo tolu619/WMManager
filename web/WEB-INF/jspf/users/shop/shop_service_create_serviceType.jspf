@@ -1,0 +1,60 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header bg-primary">
+            <h6 class="modal-title">Create New Service Type</h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <form name="NewServType">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="subCategoryName"><b>Service Type Name:</b></label>
+                    <input type="text" class="form-control" id="serviceTypeName" placeholder="Enter New Category Name"/>
+                </div>
+                <div class="form-group">
+                    <label for="subCategoryDesc"><b>Service Type Description Name:</b></label>
+                    <textarea class="form-control" id="serviceTypeDesc" rows="2" placeholder="Enter sub category desc"></textarea>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="categoryID"><b>Select Parent category:</b></label>
+                            <select class="form-control form-control-select2" id="typeCatID" placeholder="Select the parent category">
+                                <option value="0">Select Category</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="categoryID"><b>Select Parent Sub category:</b></label>
+                            <select class="form-control form-control-select2" id="typeSubCatID" placeholder="Select the parent category">
+                                <option value="0">Select Sub Category</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="form-group clone">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="propertyName"><b>Enter Service Type Property Name</b></label>
+                            <input type="text" class="form-control" id="typePropertyName" placeholder="eg. Paper Size"/>
+                        </div>
+                        <div class="col-md-8">
+                            <label for="newpropvalue"><b>Enter Service Type Property Values</b></label>
+                            <textarea class="form-control" id="typepropvalue" aria-describedby="inst" rows="1" placeholder="eg. A4, A3, Potrait"></textarea>
+                            <small id="inst" class="form-text text-muted">
+                                Enter The various values of the property, separate each one with a comma, then click on <em>'Add Property'</em> before submitting
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <textarea id="servtypeproplist" class="form-control hide"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="addnewprop" class="btn btn-outline-secondary mr-auto">Add Property<i class="ml-2 icon-add"></i></button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal" id="Cancel">Close</button>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </form>
+    </div>
+</div>

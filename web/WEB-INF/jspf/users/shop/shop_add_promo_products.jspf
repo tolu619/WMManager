@@ -1,0 +1,131 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+
+<div class="modal-dialog modal-full">
+    <div class="modal-content">
+        <div class="modal-header bg-teal-600"> <span class="promo-id mediumtext hide "></span>
+            <h6 class="modal-title col-md-5">Add Product To "<span class="pname mediumtext"></span>" Promo</h6>
+            <input type="text" class="form-control form-control-sm rounded-round col-md-5" placeholder="Search Product">
+               <button class="btn btn-sm btn-success rounded-round addpromoprodbtn col-md-1"> Search</button>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <!-- Filter toolbar -->
+            <div class="navbar navbar-expand-lg navbar-light navbar-component rounded">
+                <div class="text-center d-lg-none w-100">
+                    <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-filter">
+                        <i class="icon-unfold mr-2"></i>
+                        Filters
+                    </button>
+                </div>
+
+                <div class="navbar-collapse collapse" id="navbar-filter">
+                    <span class="navbar-text mr-3">
+                        Filter: <span class="text-danger-700">(In-progress)</span>
+                    </span>
+
+                    <ul class="navbar-nav flex-wrap">
+                        <li class="nav-item dropdown">
+                            <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-sort-time-asc mr-2"></i>
+                                By date
+                            </a>
+
+                            <div class="dropdown-menu">
+                                <a href="#" class="dropdown-item">Show all</a>
+                                <div class="dropdown-divider"></div> 
+                                <a href="#" class="dropdown-item">Today</a>
+                                <a href="#" class="dropdown-item">Yesterday</a>
+                                <a data-toggle="modal" data-target=".TransPeriodModal" class="dropdown-item">Select a Date</a>
+
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-sort-amount-desc mr-2"></i>
+                                By Transaction Type
+                            </a>
+
+                            <div class="dropdown-menu">
+                                <a href="#" class="dropdown-item">Show all</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">Quick Transfers</a>
+                                <a href="#" class="dropdown-item">Market Instruments</a>
+                                <a href="#" class="dropdown-item">Grant OD Lines</a>
+                                <a href="#" class="dropdown-item">Sell Warrants for Cash</a>
+                                <a href="#" class="dropdown-item">Buy Warrants with Cash</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-sort-numeric-asc mr-2"></i>
+                                By Transaction
+                            </a>
+
+                            <div class="dropdown-menu">
+                                <a href="#" class="dropdown-item">Show all</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">Credit</a>
+                                <a href="#" class="dropdown-item">Debit</a>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+            <!-- /filter toolbar -->
+            <div class="table-responsive">
+                <table class="table text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Product Image</th>
+                            <th>Product Name</th>
+                            <th>In Shop</th>
+                            <th>Category</th>
+                            <th>Ratings</th>
+                            <th>Selling Price</th>
+                            <th>Quantity</th>
+                            <th class="text-center"><i class="icon-arrow-down12"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody id="AddshopPromoProd">
+                        <tr class="clone hide">
+                            <td class="shop-promo-count">1</td>
+                            <td class="pr-0" style="width: 45px;">
+                                <a href="#">
+                                    <img class="shop-promo-Image" height="60"  alt="">
+                                </a>
+                            </td>
+                            <td class="">
+                                <a href="#" class="font-weight-semibold shop-promo-name overflow-auto">Fathom Backpack</a>
+                                <div class="text-muted font-size-sm overflow-auto"   style="width: 280px;">
+                                    <div class="shop-promo-desc"></div>
+                                </div>
+                            </td>
+                            <td class=""><span class="shop-promo-status"></span></td>
+                            <td class="shop-promo-category">34cm x 29cm</td>
+                            <td class="">     
+                                <span class="goldtext"><i class="icon-star-full2"></i></span>
+                                <span class="shop-promo-rating">4.0</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="shop-promo-price"></span>
+                            </td>
+                            <td> <span class="shop-promo-quantity"></span></td>
+                            <td class="text-center">
+                                <button href="#" class="btn btn-sm btn-info addpromoprodbtn"><i class="icon-plus3"></i> Add Product</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn bg-teal-600" data-dismiss="modal" id="Cancel">Close</button>
+        </div>
+    </div>
+</div>
+

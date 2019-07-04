@@ -1,0 +1,48 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+
+<div class="modal-dialog ">
+    <div class="modal-content">
+        <div class="modal-header bg-teal-600">
+            <h6 class="modal-title">Add Product Category</h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <h6 class="text-danger font-weight-bold font-size-sm">Do not select any category if you want to add top category, just type in the category name and submit.</h6>
+                    <div class="form-group">
+                        <label>Select a Category: <span class="text-danger">*</span></label>
+                        <select name="prodTopCategories" data-placeholder="Select a Category"  id="topcatid"
+                                class="form-control form-control-select2 select-search select-clear required topcat" data-fouc>
+                        </select>
+                    </div>
+                    <div class="form-group prod-cat-info">
+                        <label>Select a Category: <span class="text-danger">*</span></label>
+                        <select name="prodCategories" data-placeholder="Select a Category"  id="catid"
+                                class="form-control form-control-select2 select-search select-clear required cat" data-fouc>
+
+                        </select>
+                    </div>
+
+<!--                    <div class="form-group prod-sub-cat-info hide">
+                        <label>Select a Category: <span class="text-danger">*</span></label>
+                        <select name="prodSubCategories" data-placeholder="Select a Category" 
+                                class="form-control form-control-select2 select-search select-clear required subcat" data-fouc>
+
+                        </select>
+                    </div>-->
+                    <div class="form-group">
+                        <label>Category Name <span class="text-danger">*</span></label>
+                        <input type="text" id="catname"  name="catname" class="form-control required" placeholder="Category Name"  autocomplete="off">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-success left" id="addCategory">Submit</button>
+            <button type="button" class="btn bg-teal-400 right" data-dismiss="modal" id="Cancel">Close</button>
+        </div>
+    </div>
+</div>
+

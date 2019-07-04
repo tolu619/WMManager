@@ -1,0 +1,234 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header bg-primary">
+            <h6 class="modal-title">Register Business And Sign Semple Contract</h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form class="wizard-form SempleMemberAndBizRegForm" data-parsley-validate action="#" data-fouc >
+                <h6>Member Registration</h6>
+                <fieldset>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>First Name:<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-user-check"></i></span>
+                                    </span>
+                                    <input type="text" class="form-control" id="mycafirstname" required parsley-trigger="change" placeholder="First name">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Last Name:<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-user-check"></i></span>
+                                    </span>
+                                    <input type="text" class="form-control" id="mycalastname" required parsley-trigger="change" placeholder="Last name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email:<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-mention"></i></span>
+                                    </span>
+                                    <input type="email" id="mycaemail" parsley-type="email" required parsley-trigger="change" name="email" class="form-control" placeholder="Your email">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Phone Number:<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-mobile"></i></span>
+                                    </span>
+                                    <input type="tel" id="mycaphone" data-mask="99999999999" required parsley-trigger="change" name="phone" data-parsley-type="digits" class="form-control" placeholder="Your Phone number">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Gender:<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <select class="form-control form-control-select2 select-search select-clear" parsley-trigger="change" id="mycagender" required>
+                                        <option>Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select> 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Date Of Birth:<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-calendar2"></i></span>
+                                    </span>
+                                    <input type="date" id="datepicker-myca" class="form-control ValdateFound" required value="1900-06-09">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Password:<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-user-lock"></i></span>
+                                    </span>
+                                    <input type="password" id="mycapassword" parsley-trigger="change" required class="form-control" placeholder="Create password">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label>Password:<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-user-lock"></i></span>
+                                    </span>
+                                    <input type="password" required parsley-trigger="change" data-parsley-equalto="#mycapassword" id="mycapassword2" class="form-control" placeholder="Repeat password">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <h6>Business Registration</h6>
+                <fieldset>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Select Business Industry: <span class="text-danger">*</span></label>
+                                <select name="mycabizindustry" data-placeholder="Select Business Industry" 
+                                        id="mycabizindustry"  class="form-control form-control-select2 select-search select-clear required" data-fouc>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Select Business Types: <span class="text-danger">*</span></label>
+                                <select name="mycabiztype" data-placeholder="Select Business Types" 
+                                        id="mycabiztype"  class="form-control form-control-select2 select-search select-clear required" data-fouc>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Business Name:<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-user"></i></span>
+                                    </span>
+                                    <input type="text" id="mycabizname" class="form-control" required autocomplete="off" placeholder="Business Name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Date Founded:<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-calendar22"></i></span>
+                                    </span>
+                                    <input type="date" id="datepicker-biz-myca" class="form-control dateFound" required value="2020-06-09">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email:<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-envelop5"></i></span>
+                                    </span>
+                                    <input type="email" id="mycabizEmail"  name="bizEmail" class="form-control bizEmail" required placeholder="Business Email"  autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Phone: <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-mobile"></i></span>
+                                    </span>
+                                    <input type="phone" id="mycabizPhone" data-mask="99999999999"  name="bizPhone" class="form-control bizPhone" required placeholder="Business Phone"  autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Website Address:</label>
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-IE"></i></span>
+                                    </span>
+                                    <input type="url" id="mycabizWebaddress"  name="bizWebaddress" class="form-control" value="http://" required placeholder="Business Website Address"  autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>CAC Number:<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                        <span class="input-group-text">RC-</span>
+                                    </span>
+                                    <input type="number" id="mycabizCACNumber"  name="bizCACNumber" class="form-control bizCACNumber" required placeholder="2020202"  autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>What else should we know about your Business?</label>
+                                <textarea name="description" id="mycabizDesc" maxlength="180" placeholder="Business Description" rows="4" cols="20" class="form-control bizDesc" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <h6>Fill in Semple Contract details</h6>
+                <fieldset>
+                    <%@include file="schemes_semple_form.jspf" %>
+
+                </fieldset>
+            </form>
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger waves-effect right w-md" data-dismiss="modal" id="Cancel">Cancel</button>
+        </div>
+    </div>
+</div>

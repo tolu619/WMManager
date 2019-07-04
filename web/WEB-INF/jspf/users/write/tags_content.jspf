@@ -1,0 +1,124 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Write</span> - Tags</h4>
+            </div>
+        </div>
+
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Books" class="breadcrumb-item">Write</a>
+                    <span class="breadcrumb-item active">Tags</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
+
+
+    <!-- Content area -->
+    <div class="content">
+
+        <!-- Inner container -->
+        <div class="d-flex align-items-start flex-column flex-md-row">
+
+            <!-- Left content -->
+            <div class="w-100 overflow-auto order-2 order-md-1">
+                <div class="card">
+
+                    <div class="card-body">
+                        <div class="row" id="AllTagList">
+                            <div class="col-md-6 clone hide">
+                                <a href="#" class="dropdown-item">
+                                    <i class="icon-price-tags"></i> <span class="TagName"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="pagination pagination-flat align-self-center flex-wrap my-2">
+                        <li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-right13"></i></a></li>
+                        <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                        <li class="page-item"><a href="#" class="page-link">2</a></li>
+                        <li class="page-item align-self-center"><span class="mx-2">...</span></li>
+                        <li class="page-item"><a href="#" class="page-link">58</a></li>
+                        <li class="page-item"><a href="#" class="page-link">59</a></li>
+                        <li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-left12"></i></a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+
+            <!-- Right sidebar component -->
+            <div class="sidebar sidebar-light bg-transparent sidebar-component sidebar-component-right border-0 shadow-0 order-1 order-md-2 sidebar-expand-md">
+
+                <!-- Sidebar content -->
+                <div class="sidebar-content">
+                    <div class="col-12 ">
+                        <div class="card card-body cardblock">
+
+                            <h5 class="font-weight-semibold">Details</h5>
+                            <p class="mb-3 ObjectTagName">In post mean shot ye. There out her child sir his lived. Design at uneasy me season of branch on praise esteem. Abilities discourse believing consisted remaining to no. Mistaken no me denoting dashwood as screened. Whence or esteem easily he on. Dissuade husbands at of no if disposal. Oh he decisively impression attachment friendship so if everything.</p>
+                            <p class="mb-3 ObjectTagID hide"> </p>
+
+                            <div class="card-header bg-transparent header-elements-inline">
+                                <h6 class="card-title font-weight-semibold font-size-sm">
+
+                                    Referenced Objects in this Tag
+                                </h6>
+                            </div>
+                            <div class="list-group list-group-flush">
+
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="icon-book3 mr-3"></i>
+                                    Books 
+                                    <span class="badge bg-success-400 ml-auto ObjectTagBooks">0</span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="icon-list-unordered mr-3"></i>
+                                    Sections
+                                    <span class="badge bg-info-400 ml-auto ObjectTagSections">0</span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="icon-bubbles mr-3"></i>
+                                    Comments
+                                    <span class="badge bg-pink-400 ml-auto ObjectTagComments">0</span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="icon-bookmark mr-3"></i>
+                                    Bookmarks
+                                    <span class="badge bg-grey-400 ml-auto ObjectTagBookmarks">0</span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="icon-files-empty2 mr-3"></i>
+                                    Indexes
+                                    <span class="badge bg-grey-400 ml-auto ObjectTagIndexes">0</span>
+                                </a>
+                            </div>
+                            <div class="text-center">
+                                <h6 class="m-0 font-weight-semibold font-size-sm">Tag Actions</h6>
+
+                                <button type="button" class="btn btn-outline bg-primary border-primary text-primary-800 btn-icon ml-2 EditTag" data-popup="tooltip" title="Edit" data-placement="top"><i class="icon-pencil5"></i></button>
+                                <button type="button" class="btn btn-outline bg-primary border-primary text-primary-800 btn-icon ml-2 SetTagPermission" data-popup="tooltip" title="Set Permissions" data-placement="top"><i class="icon-lock2"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /content area -->
+
+
+    <!-- Footer -->
+    <%@include file="../../general/footer1.jspf" %>
+    <!-- /footer -->
+
+</div>

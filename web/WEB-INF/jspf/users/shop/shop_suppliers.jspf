@@ -1,0 +1,170 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<!-- Main content -->
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Shop</span> - Product Suppliers</h4>
+            </div>
+        </div>
+
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Shop" class="breadcrumb-item">Shop</a>
+                    <span class="breadcrumb-item active">Shop Product Suppliers </span>
+                </div>
+
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+            <!--            <div class="header-elements d-none">
+                            <div class="breadcrumb justify-content-center">
+                                <a href=".bd-example-modal" data-toggle="modal" class="breadcrumb-elements-item">
+                                    <i class="icon-plus3 mr-2"></i>
+                                    Add New Category
+                                </a>
+                            </div>
+                        </div>-->
+        </div>
+    </div>
+    <!-- /page header -->
+
+
+    <!-- Content area -->
+    <div class="content">
+        <!-- Filter toolbar -->
+        <div class="navbar navbar-expand-lg navbar-light navbar-component rounded">
+            <div class="text-center d-lg-none w-100">
+                <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-filter">
+                    <i class="icon-unfold mr-2"></i>
+                    Filters
+                </button>
+            </div>
+
+            <div class="navbar-collapse collapse" id="navbar-filter">
+                <span class="navbar-text mr-3">
+                    Filter: <span class="text-danger-700">(In-progress)</span>
+                </span>
+
+                <ul class="navbar-nav flex-wrap">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-sort-time-asc mr-2"></i>
+                            By date
+                        </a>
+
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">Show all</a>
+                            <div class="dropdown-divider"></div> 
+                            <a href="#" class="dropdown-item">Today</a>
+                            <a href="#" class="dropdown-item">Yesterday</a>
+                            <a data-toggle="modal" data-target=".TransPeriodModal" class="dropdown-item">Select a Date</a>
+
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-sort-amount-desc mr-2"></i>
+                            By Transaction Type
+                        </a>
+
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">Show all</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">Quick Transfers</a>
+                            <a href="#" class="dropdown-item">Market Instruments</a>
+                            <a href="#" class="dropdown-item">Grant OD Lines</a>
+                            <a href="#" class="dropdown-item">Sell Warrants for Cash</a>
+                            <a href="#" class="dropdown-item">Buy Warrants with Cash</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-sort-numeric-asc mr-2"></i>
+                            By Transaction
+                        </a>
+
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">Show all</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">Credit</a>
+                            <a href="#" class="dropdown-item">Debit</a>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <!-- /filter toolbar -->
+        <!-- Customers -->
+        <div class="card">
+            <div class="card-header header-elements-inline">
+                <h6 class="card-title memberUtype">Product Suppliers</h6>
+                <div class="header-elements">
+                    <div class="list-icons">
+                        <a class="list-icons-item" data-action="collapse"></a>
+                        <a class="list-icons-item" data-action="reload"></a>
+                    </div>
+                </div>
+            </div>
+            <table class="table datatable-basic table-hover table-bordered table-responsive-lg">
+                <thead class="bg-primary-400">
+                    <tr>
+                        <th>SN</th>
+                        <th>Name</th>
+                        <th>Date Joined</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="WMSuppliers">
+                    <tr class="clone">
+                        <td class="font-size-base font-weight-bold UCount">1</td>
+                        <td>
+                            <div class="media">
+                                <div class="mr-2">
+                                    <a href="#">
+                                        <img width="40" height="40" class="rounded-circle SupImage" alt="">
+                                    </a>
+                                </div>
+
+                                <div class="media-body align-self-center">
+                                    <a href="#" class="font-weight-semibold SupName">Loading Username</a>
+
+                                </div>
+                            </div>
+                        </td>
+                        <td class="UDateJoined">July 26, 2016</td>
+                        <td><a href="#" class="SupEmail">Loading Email</a></td>
+                        <td class="SupPhone">Loading Phone NUmber</td>
+                        <td class="text-center">
+                            <button type="button" data-toggle="modal" data-target=".order-product-supplier-details-modal" class="btn btn-sm btn-primary SupUBtn1"><i class="icon-microscope"></i> Details</button>
+                        </td>
+                    </tr>
+
+
+
+                </tbody>
+
+            </table>
+        </div>
+        <!-- /customers -->
+
+    </div>
+    <!-- /content area -->
+
+
+    <!-- Footer -->
+    <%@include file="../../general/footer1.jspf" %>
+    <!-- /footer -->
+
+</div>
+<!-- /main content -->

@@ -1,0 +1,41 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+
+<div class="modal-dialog modal-lg">
+    <div class="modal-content ">
+        <div class="modal-header bg-teal-600">
+            <h6 class="modal-title">Assign New Permission Group To - <span class="lUserName">Name</span></h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="row mt-1 mb-2" >
+                <div class="col-md-12 border-bottom-1 border-bottom-green-300 mb-3">
+                    <label class="font-size-base font-weight-semibold">Select The Permission Group(s) to assign permission(s) to: </label>
+                    <div class="">
+                        <div class="btn-group-toggle"  data-toggle="buttons" id="PermGrpPermParentList2">
+                            <label class="btn btn-success btn-outline-success mt-1 clone hide mr-1  mb-2">
+                                <input type="checkbox" class="objectTypePermCheck" id="objectTypePermCheck" name="objectTypePermCheck"/>
+                                <i class="icon-checkmark-circle mr-1"></i> <span class="objName"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <div class="form-group">
+                            <input type="submit" id=""  name="name" value="Sumbit" class="btn bg-teal-400 SetPermGroup"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn bg-teal-400" data-dismiss="modal" id="Cancel">Close</button>
+        </div>
+    </div>
+</div>
+

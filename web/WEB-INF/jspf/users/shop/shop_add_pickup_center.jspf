@@ -1,0 +1,128 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header bg-primary">
+            <h6 class="modal-title">Add New Pick-Up Center</h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <form class="" name="AddPickUpForm" data-parsley-validate="" id="">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="addressname">Center Name</label>
+                    <input type="text" required class="form-control" id="pickup-Centername" placeholder="Enter Address Name e.g Home Address">
+                </div>
+                <div class="form-group state">
+                    <label for="State">State</label>
+                    <div class="input-group">
+                        <select class="form-control form-control-select2 select-search select-clear "  id="pickup-states" required>
+                            <option>Select State</option>
+                        </select>
+                        <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-map-marker fa-fw"></i></span>
+                    </div>
+                </div>
+                <p id="info"></p>
+
+                <div class="form-group">
+                    <label for="Lga">Lga</label>
+                    <div class="input-group">
+                        <select class="form-control form-control-select2  selectpicker show-tick select-search select-clear " id="pickup-lgas" required >
+                            <option></option>
+                        </select>
+                        <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-map-marker fa-fw"></i></span>
+                    </div>
+                </div>
+                <div class="form-group" id="lcdaform" style="display: none">
+                    <label for="Lga">Lcda</label>
+                    <div class="input-group">
+                        <select class="form-control form-control-select2 selectpicker select-search select-clear " id="pickup-lcdas" required >
+                            <option></option>
+                        </select>
+                        <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-map-marker fa-fw"></i></span>
+                    </div>
+                    <button type="button" class="_newL btn-outline-primary">Add</button>
+                    <div class="_hideL" style="margin-left: 40px; margin-top: -26.5px; display: none">
+                        <input class="_newlcdas" type="text" name="newLcda" value="" />
+                        <button type="button" class="_newLok ok btn-success">Ok</button>
+                    </div>
+                </div>
+                <div class="form-group w">
+                    <label for="town">Town</label>
+                    <div class="input-group">
+                        <select class="form-control form-control-select2 selectpicker select-search select-clear " id="pickup-towns" required >
+                            <option></option>
+                        </select>
+                        <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-map-marker fa-fw"></i></span>
+                    </div>
+                    <button type="button" class="_newT btn-outline-primary" data-toggle="button">Add</button>
+                    <div class="_hideT" style="margin-left: 40px; margin-top: -26.5px; display: none">
+                        <input class="_newtowns" type="text" name="newTown" value="" />
+                        <button type="button" class="_newTok ok btn-success">Ok</button>
+                    </div>
+                </div>
+
+                <div class="form-group w">
+                    <label for="busstop">Bus Stop</label>
+                    <div class="input-group">
+                        <div class="input-group">
+                            <select class="form-control form-control-select2 selectpicker select-search select-clear " id="pickup-busstop" required >
+                                <option></option>
+                            </select>
+                            <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-map-marker fa-fw"></i></span>
+                        </div>
+                        <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-location-arrow fa-fw"></i></span>
+                    </div>
+                    <button type="button" class="_newB btn-outline-primary">Add</button>
+                    <div class="_hideB" style="margin-left: 40px; margin-top: -26.5px; display: none">
+                        <input class="_newbusstop" type="text" name="newBstop" value="" />
+                        <button type="button" class="_newBok ok btn-success">Ok</button>
+                    </div>
+                </div>
+
+                <div class="form-group w">
+                    <label for="street">Street</label>
+                    <div class="input-group">
+                        <select class="form-control form-control-select2 selectpicker select-search select-clear " id="pickup-street" required >
+                            <option></option>
+                        </select>
+                        <!--<input type="text" required class="form-control" id="pickupstreet" placeholder="Type your Street">-->
+                        <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-location-arrow fa-fw"></i></span>
+                    </div>
+                    <button type="button" class="_newS btn-outline-primary">Add</button>
+                    <div class="_hideS" style="margin-left: 40px; margin-top: -26.5px; display: none">
+                        <input class="_newstreet" type="text" name="newStreet" value="" />
+                        <button type="button" class="_newSok ok btn-success">Ok</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="street">Delivery Fees</label>
+                    <div class="input-group">
+                        <input type="text" required class="form-control" id="pickup-fees" placeholder="Delivery Fees">
+                        <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-location-arrow fa-fw"></i></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="street">Working Hours <span class="font-size-xs text-muted">(Monday-Friday: 8am-6pm, Saturday: 9am-6pm)</span></label>
+                    <div class="input-group">
+                        <input type="text" required class="form-control" id="pickup-hours" placeholder="Working Hours">
+                        <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-location-arrow fa-fw"></i></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="street">Contact Phone</label>
+                    <div class="input-group">
+                        <input type="text" required class="form-control" id="pickup-phone" placeholder="Phone">
+                        <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-location-arrow fa-fw"></i></span>
+                        <input id="checker" type="hidden" name="checker" value="add" />
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect right w-md" data-dismiss="modal" id="Cancel">Cancel</button>
+                <button type="submit" id="pickupbtn" class="btn btn-primary waves-effect waves-light left w-md">Add</button>
+            </div>
+        </form>
+    </div>
+</div>

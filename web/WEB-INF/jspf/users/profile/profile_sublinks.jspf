@@ -1,0 +1,17 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<ul class="nav nav-tabs nav-tabs-bottom flex-nowrap mb-0 subLinks">
+    <li class="nav-item ForAll hide"><a href="#" class="nav-link cursor linkprofile" id="prof_det_id">Details</a></li>
+    <li class="nav-item ForAll hide"><a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Profile-Accounts" class="nav-link" id="prof_acct_id">Accounts</a></li>
+    <li class="nav-item ForAll hide"><a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Profile-Contacts" class="nav-link" id="prof_cont_id">Contacts</a></li>
+    <li class="nav-item ForBiz ForAgency hide"><a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Profile-Staff" class="nav-link" id="prof_staf_id">Staff</a></li>
+    <li class="nav-item ForAll hide"><a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Profile-Messages" class="nav-link" id="prof_msgs_id">Messages</a></li>
+    <li class="nav-item ForAdminAndMember hide"><a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Profile-Businesses" class="nav-link" id="prof_biz_id">Businesses</a></li>
+    <li class="nav-item ForAdminAndMember ForBiz hide"><a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Profile-Favorites" class="nav-link" id="prof_fav_id">Favorites</a></li>
+    <li class="nav-item ForAll hide"><a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Profile-History" class="nav-link" id="prof_hist_id">History</a></li>
+    <li class="nav-item ForAdminAndMember ForBiz hide"><a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Profile-Products" class="nav-link" id="prof_prod_id">Products</a></li>
+    <li class="nav-item ForAdminAndMember ForBiz hide"><a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Profile-Services" class="nav-link" id="prof_serv_id">Services</a></li>
+    <li class="nav-item ForAdminAndMember ForBiz hide"><a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Profile-Listings" class="nav-link" id="prof_list_id">Listings</a></li>
+    <li class="nav-item ForAdminAndMember ForBiz hide"><a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Profile-Schemes" class="nav-link" id="prof_sche_id">Schemes</a></li>
+    <li class="nav-item ForAll hide"><a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Profile-Permissions" class="nav-link" id="prof_perm_id">Permissions</a></li>
+</ul>

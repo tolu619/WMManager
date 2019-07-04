@@ -1,0 +1,141 @@
+
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<!-- Modal with invoice -->
+
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header bg-success">
+            <h5 class="modal-title">Product Supplier</h5>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="mb-1">
+                    <div class="page-header" style="border: 1px solid #ddd;">
+                        <div class="page-header-content header-elements-inline">
+                            <div class="page-title">
+                                <h5>
+                                    <i class="icon-arrow-left52 mr-2"></i>
+                                    <span class="font-weight-semibold">Product Onwer</span>
+                                    <small class="d-block text-muted">Default Supplier</small>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-lg p-2">
+                <thead>
+                    <tr>
+                        <th style="width: 180px;">Product</th>
+                        <th>Quantity Left</th>
+                        <th>Price</th>
+                        <th>Supplier Name</th>
+                        <th>Supplier Phone</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="DefaultSupplierTable">
+                    <tr class="">
+                        <td>
+                            <h6 class="mb-0 defaultPName">Create UI design model</h6>
+                            <!--<span class="text-muted defaultDesc">One morning, when Gregor Samsa woke from troubled.</span>-->
+                        </td>
+                        <td class="defaultQuantity">57</td>
+                        <td><span class="font-weight-semibold defaultPrice">$3,990</span></td>
+                        <td class=""> 
+                            <span class="font-weight-semibold defaultSupplierName"> - </span>
+                        </td>
+                        <td class=""> 
+                            <span class="font-weight-semibold defaultSupplierPhone"> - </span>
+                            <span class="font-weight-semibold defaultSupplierID hide"> - </span>
+                        </td>
+                        <td class=""> 
+                            <button type="button" class= "btn btn-outline btn-sm bg-info btn-icon text-info border-info border-2 rounded-round assignToDefSupplier ">Assign To Product Onwer</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <button type="button" class= "btn btn-outline btn-sm mb-2 bg-blue-800 btn-icon text-blue-800 border-blue-800 border-2 rounded-round GetAltSupplier ">Get Alternate Suppliers</button>
+            </div>
+        </div>
+
+        <div class="row altSupplier hide">
+            <div class="col-xl-12">
+                <div class="mb-1">
+                    <div class="page-header" style="border: 1px solid #ddd;">
+                        <div class="page-header-content header-elements-inline">
+                            <div class="page-title">
+                                <h5>
+                                    <i class="icon-arrow-left52 mr-2"></i>
+                                    <span class="font-weight-semibold">Product Suppliers</span>
+                                    <small class="d-block text-muted">Alternate Suppliers</small>
+                                    <span class="OrderID hide"></span>
+                                    <span class="OrderHistoryID hide"></span>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-lg p-2">
+                        <thead>
+                            <tr>
+                                <th>SN</th>
+                                <th style="width: 180px;">Product</th>
+                                <th>Quantity Left</th>
+                                <th>Price</th>
+                                <th>Supplier Name</th>
+                                <th>Supplier Phone</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="alternativeSupplierTable">
+                            <tr class="alt-clone hide">
+                                <td class="altsp-serial">57</td>
+                                <td>
+                                    <h6 class="mb-0 altsp-name">Create UI design model</h6>
+                                    <!--<span class="text-muted defaultDesc">One morning, when Gregor Samsa woke from troubled.</span>-->
+                                </td>
+
+                                <td class="altsp-quantity">57</td>
+                                <td><span class="font-weight-semibold altsp-price">$3,990</span></td>
+                                <td class=""> 
+                                    <span class="font-weight-semibold altsup-name"> - </span>
+                                </td>
+                                <td class=""> 
+                                    <span class="font-weight-semibold altsup-no"> - </span>
+                                </td>
+                                <td class=""> 
+                                    <button type="button" class= "btn btn-outline btn-sm bg-info btn-icon text-info border-info border-2 rounded-round assignToAltSupplier ">Assign To Supplier</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <div class="text-danger mediumtext half-marginbottom">Please endure you call the supplier before assigning this product.</div>
+        </div>
+
+        <div class="modal-footer bg-transparent">
+
+            <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>
+<!-- /modal with invoice -->
+
+<!-- /modal with invoice -->

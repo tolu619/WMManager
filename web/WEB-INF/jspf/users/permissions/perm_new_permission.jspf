@@ -1,0 +1,63 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+
+<div class="modal-dialog ">
+    <div class="modal-content">
+        <div class="modal-header bg-teal-600">
+            <h6 class="modal-title">Create New Permission</h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form class="" action="#" data-fouc name="newPermissionForm" data-parsley-validate>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Select a WM-Object <span class="text-danger">*</span></label>
+                            <select name="wmobjects" data-placeholder="Select a WM Object" 
+                                    id="wmobjects" class="form-control form-control-select2 select-search select-clear required" data-fouc>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="">
+                            <div class="form-group">
+                                <label>Permission Name <span class="text-danger">*</span></label>
+                                <input type="text" id="permissionName"  name="name" class="form-control required" placeholder="Type the permission name" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row permcontainer">
+                    <div class="col-md-12 border-bottom-1 border-bottom-green-300 mb-3">
+                        <label class="font-size-base font-weight-semibold">Assign permission to </label>
+                        <div class="">
+                            <div class="btn-group-toggle UserGroupList mb-2"  data-toggle="buttons">
+                                <label class="btn btn-success btn-outline-success mt-1 clone hide mr-1">
+                                    <input type="checkbox" class="objectTypePermCheck" required="" id="objectTypePermCheck" name="objectTypePermCheck"/>
+                                    <i class="icon-checkmark-circle mr-1"></i> <span class="objName"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            <div class="form-group">
+                                <input type="submit" id=""  name="name" value="Submit" class="btn bg-teal-400"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn bg-teal-400" data-dismiss="modal" id="Cancel">Close</button>
+        </div>
+    </div>
+</div>
+

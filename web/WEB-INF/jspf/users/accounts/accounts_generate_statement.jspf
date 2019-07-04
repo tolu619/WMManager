@@ -1,0 +1,53 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header bg-primary">
+            <h6 class="modal-title">Generate Account Statement</h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+            
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!-- List with text -->
+                    <div class="card">
+                        <div class="card-header header-elements-inline">
+                            <h5 class="card-title" id="benName" style="color: #4A148C">Search Result</h5>
+                            <span class="list-id d-none hide" id="beneficiaryID"></span>
+                            <div class="header-elements">
+                                <div class="list-icons">
+                                    <a class="list-icons-item" data-action="collapse"></a>
+                                    <a class="list-icons-item" data-action="reload"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="">
+                    <select class="form-control form-control-select2 select-search" id="accountDefName" required >
+                        <option></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input class="form-control daterange-buttons" id="daterangepicker" type="text" name="daterange" value="2018-05-01 : 2018-12-31"/>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" id="GenerateAccount"  class="btn btn-outline-primary pull-left" data-dismiss="modal">Generate Statement</button>
+            <button type="button"  id="ViewAcctStmt" class="btn btn-primary" data-dismiss="modal">View Statement</button>
+        </div>
+    </div>
+</div>
+
+

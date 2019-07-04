@@ -1,0 +1,73 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Shop</span> - All Categories</h4>
+            </div>
+        </div>
+
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Shop" class="breadcrumb-item">Shop</a>
+                    <span class="breadcrumb-item active">Shop All Categories </span>
+                </div>
+
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+            <div class="header-elements d-none">
+                <div class="breadcrumb justify-content-center">
+                    <a href=".add-cat-modal" data-toggle="modal" class="breadcrumb-elements-item">
+                        <i class="icon-plus-circle2 mr-2"></i>
+                        Add New Category
+                    </a>
+                    <a href=".add-cat-prop-modal" data-toggle="modal" class="breadcrumb-elements-item">
+                        <i class="icon-plus3 mr-2"></i>
+                        Add Category Properties
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
+
+
+    <!-- Content area -->
+    <div class="content">
+        <div class="row" id="all-cat-list">
+            <div class="col-lg-4 col-sm-6 accordion-parent clone hide">
+                <div class="bold accordion-handler cursor borderbottom faintborder slightly-largetext top-cat-name mb-2 bg-grey pt-2 pb-2 pl-3">WM Objects</div>
+                <div class="accordion-content openfirst">
+                    <div class="tiletablerow normaltext tiletablerow-clicked">
+                        <div class="cat-list marginleft double-marginleft">
+                            <div class="accordion-parent cat-clone hide">
+                                <div class="bold accordion-handler padding cursor borderbottom faintborder slightly-largetext cat-name">WM Objects</div>
+                                <div class="accordion-content accordion-expanded">
+                                    <div class="tiletablerow normaltext tiletablerow-clicked">
+                                        <div class="sub-cat-list marginleft double-marginleft">
+                                            <div class="accordion-parent sub-cat-clone hide">
+                                                <div class="bold accordion-handler padding cursor borderbottom faintborder slightly-largetext sub-cat-name">WM Objects</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /content area -->
+
+    <!-- Footer -->
+    <%@include file="../../general/footer1.jspf" %>
+    <!-- /footer -->
+
+</div>

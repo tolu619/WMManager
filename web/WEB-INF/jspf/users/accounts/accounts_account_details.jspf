@@ -1,0 +1,66 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header bg-primary">
+            <h6 class="modal-title">Account Details (<span class="AccountName"></span>)</h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+
+            <div class="" id="acctDetailDisplay">
+                <div class="accordion-parent clone hide" >
+                    <div class="bold accordion-handler cursor acctDetailType p-2 font-size-lg bg-primary">type</div>
+                    <div class="accordion-content openfirst">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody class="">
+                                    <tr class="table-active">
+                                        <td class="bold">Names</td>
+                                        <td class="AccountName">Saint Deemene</td>
+                                    </tr>
+                                    <tr class="table-success">
+                                        <td class="bold">Numbers</td>
+                                        <td class="" id="AccountNumber">00000Saint</td>
+                                    </tr>
+                                    <tr class="bg-teal-800">
+                                        <td class="bold text-center" colspan="2" >Details</td>
+                                    </tr>
+                                    <tr class="table-warning">
+                                        <td class="bold">Available Balance</td>
+                                        <td class="bold"  id="AvBal">0</td>
+                                    </tr>
+                                    <tr class="table-active">
+                                        <td class="bold">Direct Balance</td>
+                                        <td class="" id="DiBalance">0</td>
+                                    </tr>
+                                    <tr class="table-success">
+                                        <td class="bold">Blocked Balance</td>
+                                        <td class=""  id="BlBalance">0</td>
+                                    </tr>
+                                    <tr class="table-active">
+                                        <td class="bold">Escrow Balance</td>
+                                        <td class=""  id="EsBalance">0</td>
+                                    </tr>
+                                    <tr class="table-warning">
+                                        <td class="bold">Offline Balance</td>
+                                        <td class=""  id="OfBalance">0</td>
+                                    </tr>
+                                    <tr class="table-active">
+                                        <td class="bold">OD Balance</td>
+                                        <td class="" id="OdBalance">0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>
+

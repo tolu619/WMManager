@@ -1,0 +1,43 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header bg-primary">
+            <h6 class="modal-title">Change Transaction Limits</h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <form class="double-padding-horizontal" name="ChangeLimits" data-parsley-validate="">
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="addressname">Daily Limit</label>
+                    <div class="input-group">
+                        <button id="DailyTransLimit" class="btn-secondary btn-sm" value="">10</button>
+                        <input type="number" required class="form-control" id="DailyTransInput" placeholder="Enter new daily transaction limit">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="State">Debit Limit</label>
+                    <div class="input-group">
+                        <button id="DebitTransLimit" class="btn-secondary btn-sm" value="">N100,000</button>
+                        <input type="text" required="" class="form-control" id="DebitLimitInput"  data-type="currency" placeholder="Enter new debit transaction limit">
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label for="Lga">Credit Limit</label>
+                    <div class="input-group">
+                        <button id="CreditTransLimit" class="btn-secondary btn-sm" value="" >N400,000</button>
+                        <input type="text" required="" class="form-control" id="CreditLimitInput"  data-type="currency" placeholder="Enter new credit transaction limit">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect right w-md" data-dismiss="modal" id="Cancel">Close</button>
+                <button type="submit" class="btn btn-primary waves-effect waves-light left w-md">Submit</button>
+            </div>
+        </form>
+
+    </div>
+</div>

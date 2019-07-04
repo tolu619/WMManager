@@ -1,0 +1,58 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header bg-primary">
+            <h6 class="modal-title">Sign Semple Contract</h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>  
+        <form name="mycacontractform" data-parsley-validate>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="input-group mb-3">
+                        <div class=" form-group-feedback form-group-feedback-left">
+                            <input type="search" parsley-type="search" class="form-control" id="searchmycatext" name="email" placeholder="Search with Phone/Email/Account Number" required parsley-trigger="change">
+                            <div class="form-control-feedback">
+                                <i class="icon-search4 text-muted"></i>
+                            </div>
+                        </div>
+                        <button type="button" id="findmycaBiz"  class="pull-right btn btn-primary btn-mini">Search</button> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header header-elements-inline">
+                                <h6 class="card-title">Search Result</h6>
+                            </div>
+
+                            <div class="card-body">
+                                <ul class="media-list" id="verifyMYCA-list">
+                                    <li class="media verifyclone hide">
+                                        <div class="mr-2">
+                                            <a href="#">
+                                                <img class="rounded-circle list-Image" width="40" height="40" alt=""> </a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <div class="media-title font-weight-semibold list-name">Loading UserName</div>
+                                            <span class="text-muted list-email">Loading Email</span>
+                                            <span class="text-muted list-phone text-center">Loading Phone</span>
+                                            <span class="hide" id="list-id" id="beneficiaryID">1</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <%@include file="schemes_semple_form.jspf" %>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect right w-md" data-dismiss="modal" id="Cancel">Cancel</button>
+                <button type="submit" class="btn btn-primary waves-effect waves-light left w-md" id="SendContract">Submit Contract</button>
+            </div>
+        </form>
+    </div>
+</div>

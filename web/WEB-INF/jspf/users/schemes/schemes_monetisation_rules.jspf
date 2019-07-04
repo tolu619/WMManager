@@ -1,0 +1,77 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="content-wrapper">
+    <!-- Page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Schemes</span> - Monetisation Rules</h4>
+            </div>
+        </div>
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Semple" class="breadcrumb-item">Schemes</a>
+                    <span class="breadcrumb-item active">Monetisation Rules</span>
+                </div>
+
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+            <div class="header-elements d-none">
+                <div class="breadcrumb justify-content-center cursor-pointer">
+                    <a data-toggle="modal" data-target=".modal-new-monetisation-rule" class="breadcrumb-elements-item text-blue-400">
+                        <i class="icon-hand mr-2"></i>
+                        New Rule
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
+    
+    
+    <!-- Content area -->
+    <div class="content">
+        <div class="d-flex flex-wrap justify-content-start w-100" id="monParent">
+                <!-- Cards -->
+                <div class="card align-items-center m-2 monCard hide" style="width: 27%">
+                    <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-1">
+                        <div>
+                            <h5 class="pink-text"><i class="icon-grid6 mr-2"></i> <span class="monGroup">Monetisation</span></h5>
+                            <h3 class="card-title pt-2 mb-1 monTitle"><strong>Rule Name</strong></h3>
+                            <p class="mt-1 monDesc">This is the very short description of the rule</p>
+                                <div class="row mt-3">
+                                    <div class="col-6 p-0">
+                                        <h1 class="monMinVal">₦200,000</h1>
+                                        <p class="mt-0">Min Value</p>
+                                    </div>
+                                    <div class="col-6 p-0">
+                                        <h1 class="monPercent">10%</h1>
+                                        <p class="mt-0">Percentage</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6 p-0">
+                                        <h1 class="monCycle">5</h1>
+                                        <p class="mt-0">Cycle</p>
+                                    </div>
+                                    <div class="col-6 p-0">
+                                        <h1 class="monType">Full</h1>
+                                        <p class="mt-0">Category</p>
+                                    </div>
+                                </div>
+                            <a class="btn btn-danger mt-2"><i class="icon-clipboard5 left"></i> View Rule</a>
+                        </div>
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <%@include file="../../general/footer1.jspf" %>
+    <!-- /footer -->
+    
+</div>

@@ -1,0 +1,98 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Shop</span> - Pick-Up Centres</h4>
+            </div>
+
+        </div>
+
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Shop" class="breadcrumb-item">Shop</a>
+                    <span class="breadcrumb-item active">Shop Pick-Up Centres</span>
+                </div>
+
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+            <div class="header-elements d-none">
+                <div class="breadcrumb justify-content-center">
+                    <a href=".add-pickup-centre-modal" data-toggle="modal" class="breadcrumb-elements-item">
+                        <i class="icon-plus3 mr-2"></i>
+                        Create New Pick-Up Centre
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /page header -->
+
+
+    <!-- Content area -->
+    <div class="content">
+        <div class="row" id="PickupCenters">
+            <div class="accordion-parent clone hide col-12">
+                <div class="accordion-handler cursor mb-2 pickup-name font-weight-semibold bg-grey pt-2 pb-2 pl-3"></div>
+                <div class="accordion-content accordion-expanded">
+                    <div class="table-responsive-lg">
+                        <table class="table table-responsive-lg">
+                            <thead>
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Center Name</th>
+                                    <th>Fees</th>
+                                    <th>Working Hours</th>
+                                    <th>Phone Number</th>
+                                    <th class="text-center" style="width: 20px;"><i class="icon-arrow-down12"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody class="PickCenters" >
+                                <tr class="pickupclone hide" >
+                                    <td class="centre-count">34cm x 29cm</td>
+                                    <td style="width: 400px;">
+                                        <a href="#" class="font-weight-semibold centre-name">Fathom Backpack</a>
+                                        <div class="text-muted font-size-sm">
+                                            <span class="badge badge-mark bg-grey border-grey mr-1"></span>
+                                            <span class="centre-address text-black-50">Processing</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h6 class="mb-0 font-weight-normal centre-fees">&euro; 79.00</h6>
+                                    </td>
+                                    <td> <h6 class="mb-0 font-weight-normal centre-working_hours">&euro; 79.00</h6></td>
+                                    <td> <h6 class="mb-0 font-weight-normal centre-phone">&euro; 79.00</h6></td>
+                                    <td class="text-center">
+                                        <div class="list-icons">
+                                            <div class="list-icons-item dropdown">
+                                                <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href=".add-pickup-centre-modal" data-toggle="modal"  class="dropdown-item editcentrebtn text-primary-800"><i class="icon-pencil7"></i> Edit Pick-Up Centre</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /content area -->
+
+
+    <!-- Footer -->
+    <%@include file="../../general/footer1.jspf" %>
+    <!-- /footer -->
+
+</div>   

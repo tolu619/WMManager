@@ -1,0 +1,336 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light border-bottom-0">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Details</span> - <span class="actualUserName"></span></h4>
+            </div>
+        </div>
+        <!-- Top breadcrumb line -->
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+
+                    <span class="breadcrumb-item active"><span class="actualUserName"></span></span>
+                </div>
+
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+        </div>
+        <!-- /page header -->
+
+
+        <!-- Content area -->
+        <div class="content">
+            <!-- Tabs -->
+            <div class="nav-tabs-responsive mb-3">
+                <%@include file="profile_sublinks.jspf" %>
+            </div>
+            <!-- /tabs -->
+
+            <div class="navbar navbar-expand-lg navbar-dark bg-info-700">
+                <div class="text-center d-lg-none w-100">
+                    <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-favorite">
+                        <i class="icon-menu7 mr-2"></i>
+                        Listings Navigation
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse" id="navbar-favorite">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item setMyListings">
+                            <a href="#myListings" class="navbar-nav-link active" data-toggle="tab">
+                                <i class="icon-cash2 mr-2"></i>
+                                My Listings
+                            </a>
+                        </li>
+                        <li class="nav-item setMyBids">
+                            <a href="#myBids" class="navbar-nav-link" data-toggle="tab">
+                                <i class="icon-cash4 mr-2"></i>
+                                My Bids
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
+            <div class="d-flex align-items-start flex-column flex-md-row">
+
+                <!-- Left content -->
+                <div class="tab-content w-100 overflow-auto">
+                    <div class="tab-pane fade active show" id="myListings">
+
+                        <!-- Filter toolbar -->
+                        <div class="navbar navbar-expand-lg navbar-light navbar-component rounded">
+                            <div class="text-center d-lg-none w-100">
+                                <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-filter">
+                                    <i class="icon-unfold mr-2"></i>
+                                    Filters
+                                </button>
+                            </div>
+
+                            <div class="navbar-collapse collapse" id="navbar-filter">
+                                <span class="navbar-text mr-3">
+                                    Filter:
+                                </span>
+
+                                <ul class="navbar-nav flex-wrap">
+                                    <li class="nav-item dropdown">
+                                        <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                                            <i class="icon-sort-time-asc mr-2"></i>
+                                            By date
+                                        </a>
+
+                                        <div class="dropdown-menu">
+                                            <a href="#" class="dropdown-item">Show all</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item">Today</a>
+                                            <a href="#" class="dropdown-item">Yesterday</a>
+                                            <a href="#" class="dropdown-item">This week</a>
+                                            <a href="#" class="dropdown-item">This month</a>
+                                            <a href="#" class="dropdown-item">This year</a>
+                                        </div>
+                                    </li>
+
+                                    <li class="nav-item dropdown">
+                                        <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                                            <i class="icon-sort-amount-desc mr-2"></i>
+                                            By status
+                                        </a>
+
+                                        <div class="dropdown-menu">
+                                            <a href="#" class="dropdown-item">Show all</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item">Open (Pending)</a>
+                                            <a href="#" class="dropdown-item">On Going</a>
+                                            <a href="#" class="dropdown-item">Closed</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /filter toolbar -->
+                        <div class="text-center text-muted content-divider mb-3 hide">
+                            <span class="p-2">Today</span>
+                        </div>
+
+                        <!-- Invoice grid -->
+
+                        <div class="row"id="mylistings">
+                            <div class="col-lg-6 listclone hide">
+                                <div class="card border-left-3 border-left-danger rounded-left-0 ">
+                                    <div class="card-header d-sm-flex justify-content-sm-between align-items-sm-center">
+                                        <h6 class="font-weight-bold list-fullname">Deemene Saint</h6>  
+                                        <span class="mr-2"><i class="icon-watch2"></i>
+                                            <span class="font-weight-thin list-time"> 11:22:00</span>
+                                        </span>
+
+                                    </div>
+                                    <div class="card-body mt-0 neg-margintop">
+                                        <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
+                                            <div>
+                                                <h6 class="font-weight-semibold">Offering:</h6>
+                                                <ul class="list list-unstyled mb-0 parentlist-offer">
+                                                    <li class="list-offer-clone">
+                                                        <span class="list-offer">Par Cash Rights</span>  &nbsp;
+                                                        <a href="#" class="badge bg-success align-top list-offer-value">$5,100</a>
+                                                    </li> 
+                                                </ul>
+                                            </div>
+
+                                            <div class="text-sm-right mb-0 mt-3 mt-sm-0 ml-auto">
+                                                <h6 class="font-weight-semibold list-expect">Expecting:</h6>
+                                                <ul class="list list-unstyled mb-0 " id="parentlist-expect">
+                                                    <li class="list-expect-clone">
+                                                        <span class="list-expect">Par Cash Rights</span>  &nbsp;
+                                                        <a href="#" class="badge bg-warning align-top list-expect-value">$5,100</a>
+                                                    </li> 
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
+                                        <span>
+                                            <span class="mr-2"><i class="icon-calendar22"></i></span>
+                                            <span class="font-weight-semibold list-date">2018/03/24</span>
+                                        </span>
+                                        <span>
+                                            <span class="badge bg-pink-300 mr-2 ml-2 list-bid-count">33</span>
+                                        </span>
+                                        <span>
+                                            <span class="badge bg-primary mr-2 ml-2 list-status">Status</span>
+                                        </span>
+
+                                        <ul class="list-inline list-inline-condensed mb-0 mt-2 mt-sm-0">
+                                            <li class="list-inline-item dropdown">
+                                                <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
+
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item text-blue-800"><i class="icon-cash3"></i> Buy</a>
+                                                    <a href="#" class="dropdown-item text-success-800"><i class="icon-file-download"></i> Bid</a>
+                                                    <a href="#" class="dropdown-item text-indigo-800 "><i class="icon-eye-plus"></i> View</a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- /invoice grid -->
+                    </div>
+
+                    <div class="tab-pane fade" id="myBids">
+
+                        <!-- Filter toolbar -->
+                        <div class="navbar navbar-expand-lg navbar-light navbar-component rounded">
+                            <div class="text-center d-lg-none w-100">
+                                <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-filter">
+                                    <i class="icon-unfold mr-2"></i>
+                                    Filters
+                                </button>
+                            </div>
+
+                            <div class="navbar-collapse collapse" id="navbar-filter">
+                                <span class="navbar-text mr-3">
+                                    Filter:
+                                </span>
+
+                                <ul class="navbar-nav flex-wrap">
+                                    <li class="nav-item dropdown">
+                                        <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                                            <i class="icon-sort-time-asc mr-2"></i>
+                                            By date
+                                        </a>
+
+                                        <div class="dropdown-menu">
+                                            <a href="#" class="dropdown-item">Show all</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item">Today</a>
+                                            <a href="#" class="dropdown-item">Yesterday</a>
+                                            <a href="#" class="dropdown-item">This week</a>
+                                            <a href="#" class="dropdown-item">This month</a>
+                                            <a href="#" class="dropdown-item">This year</a>
+                                        </div>
+                                    </li>
+
+                                    <li class="nav-item dropdown">
+                                        <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                                            <i class="icon-sort-amount-desc mr-2"></i>
+                                            By status
+                                        </a>
+
+                                        <div class="dropdown-menu">
+                                            <a href="#" class="dropdown-item">Show all</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item">Open (Pending)</a>
+                                            <a href="#" class="dropdown-item">On Going</a>
+                                            <a href="#" class="dropdown-item">Closed</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /filter toolbar -->
+                        <div class="text-center text-muted content-divider mb-3 hide">
+                            <span class="p-2">Today</span>
+                        </div>
+
+                        <!-- Invoice grid -->
+
+                        <div class="row"id="mybids">
+                            <div class="col-lg-6 listclone hide">
+                                <div class="card border-left-3 border-left-danger rounded-left-0 ">
+                                    <div class="card-header d-sm-flex justify-content-sm-between align-items-sm-center">
+                                        <h6 class="font-weight-bold list-fullname">Deemene Saint</h6>  
+                                        <span class="mr-2"><i class="icon-watch2"></i>
+                                            <span class="font-weight-thin list-time"> 11:22:00</span>
+                                        </span>
+
+                                    </div>
+                                    <div class="card-body mt-0 neg-margintop">
+                                        <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
+                                            <div>
+                                                <h6 class="font-weight-semibold">Offering:</h6>
+                                                <ul class="list list-unstyled mb-0 parentlist-offer">
+                                                    <li class="list-offer-clone">
+                                                        <span class="list-offer">Par Cash Rights</span>  &nbsp;
+                                                        <a href="#" class="badge bg-success align-top list-offer-value">$5,100</a>
+                                                    </li> 
+                                                </ul>
+                                            </div>
+
+                                            <div class="text-sm-right mb-0 mt-3 mt-sm-0 ml-auto">
+                                                <h6 class="font-weight-semibold list-expect">Expecting:</h6>
+                                                <ul class="list list-unstyled mb-0 " id="parentlist-expect">
+                                                    <li class="list-expect-clone">
+                                                        <span class="list-expect">Par Cash Rights</span>  &nbsp;
+                                                        <a href="#" class="badge bg-warning align-top list-expect-value">$5,100</a>
+                                                    </li> 
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
+                                        <span>
+                                            <span class="mr-2"><i class="icon-calendar22"></i></span>
+                                            <span class="font-weight-semibold list-date">2018/03/24</span>
+                                        </span>
+                                        <span>
+                                            <span class="badge bg-pink-300 mr-2 ml-2 list-bid-count">33</span>
+                                        </span>
+                                        <span>
+                                            <span class="badge bg-primary mr-2 ml-2 list-status">Status</span>
+                                        </span>
+
+                                        <ul class="list-inline list-inline-condensed mb-0 mt-2 mt-sm-0">
+                                            <li class="list-inline-item dropdown">
+                                                <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
+
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item text-blue-800"><i class="icon-cash3"></i> Buy</a>
+                                                    <a href="#" class="dropdown-item text-success-800"><i class="icon-file-download"></i> Bid</a>
+                                                    <a href="#" class="dropdown-item text-indigo-800 "><i class="icon-eye-plus"></i> View</a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- /invoice grid -->
+
+                    </div>
+
+                </div>
+                <!-- /left content -->
+
+
+                <!-- Right sidebar component -->
+
+                <!-- /right sidebar component -->
+
+            </div>
+
+
+
+
+        </div>
+        <!-- /content area -->
+
+
+        <!-- Footer -->
+        <%@include file="../../general/footer1.jspf" %>
+        <!-- /footer -->
+
+    </div> 

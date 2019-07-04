@@ -1,0 +1,130 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header bg-teal-400">
+            <h6 class="modal-title">Account Creation Form</h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <form name="RegistrationForm" data-parsley-validate="" class="flex-fill">
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <div class="card mb-0">
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <i class="icon-plus3 icon-2x text-success border-success border-3 rounded-round p-3 mb-3 mt-1"></i>
+                                <h5 class="mb-0">Create Account</h5>
+                                <span class="d-block text-muted">All fields are required</span>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-feedback form-group-feedback-right">
+                                        <input type="text" class="form-control" id="Fname" required parsley-trigger="change" placeholder="First name">
+                                        <div class="form-control-feedback">
+                                            <i class="icon-user-check text-muted"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-feedback form-group-feedback-right">
+                                        <input type="text" class="form-control" id="Lname" required parsley-trigger="change" placeholder="Last name">
+                                        <div class="form-control-feedback">
+                                            <i class="icon-user-check text-muted"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-feedback form-group-feedback-right">
+                                        <input type="email" id="Email" parsley-type="email" required parsley-trigger="change" name="email" class="form-control" placeholder="Your email">
+                                        <div class="form-control-feedback">
+                                            <i class="icon-mention text-muted"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-feedback form-group-feedback-right">
+                                        <input type="tel" id="Phon" data-mask="99999999999" required parsley-trigger="change" name="phone" data-parsley-type="digits" class="form-control" placeholder="Your Phone number">
+                                        <div class="form-control-feedback">
+                                            <i class="icon-mobile text-muted"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-feedback form-group-feedback-right">
+                                        <select class="form-control form-control-select2 select-search select-clear" parsley-trigger="change" id="Gend" required>
+                                            <option>Select Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                        <div class="form-control-feedback">
+                                            <i class="icon-man-woman text-muted"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-feedback form-group-feedback-right">
+                                        <input type="date" id="datepicker-autoclose" required class="form-control ValdateFound required" value="1900-06-09">
+                                        <div class="form-control-feedback">
+                                            <i class="icon-calendar2 text-muted"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-feedback form-group-feedback-right">
+                                        <input type="password" id="pass" parsley-trigger="change" required class="form-control" placeholder="Create password">
+                                        <div class="form-control-feedback">
+                                            <i class="icon-user-lock text-muted"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group form-group-feedback form-group-feedback-right">
+                                        <input type="password" required parsley-trigger="change" data-parsley-equalto="#pass" required id="password2" class="form-control" placeholder="Repeat password">
+                                        <div class="form-control-feedback">
+                                            <i class="icon-user-lock text-muted"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group form-group-feedback form-group-feedback-right">
+                                    <input type="hidden" required  required id="membadm" class="form-control" placeholder="Repeat password">
+                                    <div class="form-control-feedback">
+                                        <i class="icon-user-lock text-muted"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-center align-items-center form-group-feedback-right">
+                                <div class="form-group form-group-feedback form-group-feedback-right">
+                                    <div class="form-check text-left ">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" name="checkTerms" class="form-input-styled" checked="true" data-fouc id="checkTerms">
+                                            Accept our <a href="#" id="LinkTerms">Terms &amp; Conditions.</a>
+                                        </label>
+                                    </div> 
+                                </div>  
+                                <button type="submit" class="btn bg-teal-400 btn-labeled btn-labeled-right text-center align-items-center"><b>
+                                        <i class="icon-plus3"></i></b> Create Account</button>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

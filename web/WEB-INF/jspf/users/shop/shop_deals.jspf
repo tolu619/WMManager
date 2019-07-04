@@ -1,0 +1,114 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Shop</span> - Promotions/Deals</h4>
+            </div>
+
+        </div>
+
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Shop" class="breadcrumb-item">Shop</a>
+                    <span class="breadcrumb-item active">Shop Promo</span>
+                </div>
+
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+            <div class="header-elements d-none">
+                <div class="breadcrumb justify-content-center">
+                    <a href=".add-new-promo-modal" data-toggle="modal" data-toggle="modal" data-popup="tooltip" title="Create Promo" data-placement="top" class="breadcrumb-elements-item">
+                        <i class="icon-plus3 mr-2"></i>
+                        Create Promo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /page header -->
+
+
+    <!-- Content area -->
+    <div class="content">
+        <div class="row" id="PromoProducts">
+            <div class="accordion-parent clone hide col-12">
+                <div class="accordion-handler cursor mb-2 promo-name font-weight-semibold bg-grey pt-2 pb-2 pl-3 left threequarterwide"></div>
+                <div class="right bg-grey pt-2 pb-2 pr-3 quarterwide">
+                    <a href=".add-promo-product-modal" data-toggle="modal" data-popup="tooltip" title="Add product to promo" data-placement="top" class="text-white" id="promoprodbtn">
+                        <i class="icon-plus-circle2 mr-2"></i>
+                    </a>
+                </div>
+                <div class="accordion-content accordion-expanded">
+                    <div class="table-responsive-lg">
+                        <table class="table table-responsive-lg">
+                            <thead>
+                                <tr>
+                                    <th>S/N</th>
+                                    <th colspan="2">Product</th>
+                                    <th>Category</th>
+                                    <th>Product Price</th>
+                                    <th>Promo Price</th>
+                                    <th>Quantity</th>
+                                    <th class="text-center" style="width: 20px;"><i class="icon-arrow-down12"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody class="PromoProd" >
+                                <tr class="promoclone hide" >
+                                    <td class="promoprod-count">34cm x 29cm</td>
+                                    <td class="pr-0" style="width: 45px;">
+                                        <a href="#">
+                                            <img class="promoprod-image" height="60" alt="">
+                                        </a>
+                                    </td>
+                                    <td style="width: 400px;">
+                                        <a href="#" class="font-weight-semibold promoprod-name">Fathom Backpack</a>
+                                        <div class="text-muted font-size-sm">
+                                            <span class="badge badge-mark bg-grey border-grey mr-1"></span>
+                                            <span class="promoprod-desc">Processing</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h6 class="mb-0 font-weight-semibold promoprod-catname">&euro; 79.00</h6>
+                                    </td>
+                                    <td> <h6 class="mb-0 font-weight-semibold promoprod-prodprice">&euro; 79.00</h6></td>
+                                    <td> <h6 class="mb-0 font-weight-semibold promoprod-price">&euro; 79.00</h6></td>
+                                    <td>
+                                        <h6 class="mb-0 font-weight-semibold promoprod-quantity">&euro; 79.00</h6>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="list-icons">
+                                            <div class="list-icons-item dropdown">
+                                                <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href=".product-detail-modal" data-toggle="modal"  class="dropdown-item text-primary-800 promoprodbtn"><i class="icon-info22"></i> View Details</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a href="#" class="dropdown-item editPricebtn text-primary-800"><i class="icon-pencil7"></i> Edit Price</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /content area -->
+
+
+    <!-- Footer -->
+    <%@include file="../../general/footer1.jspf" %>
+    <!-- /footer -->
+
+</div>   

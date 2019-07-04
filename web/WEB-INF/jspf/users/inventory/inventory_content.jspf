@@ -1,0 +1,397 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Inventory</span> - Overview</h4>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+            <div class="header-elements d-none">
+                <div class="d-flex justify-content-center">
+                    <a href="#" class="btn btn-link btn-float text-default"><i class="icon-bars-alt text-primary"></i><span>Statistics</span></a>
+                    <a href="#" class="btn btn-link btn-float text-default"><i class="icon-calculator text-primary"></i> <span>Invoices</span></a>
+                    <a href="#" class="btn btn-link btn-float text-default"><i class="icon-calendar5 text-primary"></i> <span>Schedule</span></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <span class="breadcrumb-item active">Dashboard</span>
+                </div>
+
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+            <div class="header-elements d-none">
+                <div class="breadcrumb justify-content-center">
+                    <a href="#" class="breadcrumb-elements-item">
+                        <i class="icon-comment-discussion mr-2"></i>
+                        Support
+                    </a>
+
+                    <div class="breadcrumb-elements-item dropdown p-0">
+                        <a href="#" class="breadcrumb-elements-item dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-gear mr-2"></i>
+                            Settings
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="#" class="dropdown-item"><i class="icon-user-lock"></i> Account security</a>
+                            <a href="#" class="dropdown-item"><i class="icon-statistics"></i> Analytics</a>
+                            <a href="#" class="dropdown-item"><i class="icon-accessibility"></i> Accessibility</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item"><i class="icon-gear"></i> All settings</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
+
+
+    <!-- Content area -->
+    <div class="content">
+
+        <!-- Main charts -->
+        <div class="row">
+            <div class="col-xl-4">
+
+                <!-- Traffic sources -->
+                <div class="card">
+                    <div class="card-header header-elements-inline">
+                        <h6 class="card-title">Total Inventory</h6>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+
+                            <!-- Available hours -->
+                            <div class="text-center">
+                                <div class="card-body">
+
+                                    <!-- Progress counter -->
+                                    <div class="svg-center position-relative" id="hours-available-progress"></div>
+                                    <!-- /progress counter -->
+
+
+                                    <!-- Bars -->
+                                    <div id="hours-available-bars"></div>
+                                    <!-- /bars -->
+
+                                </div>
+                            </div>
+                            <!-- /available hours -->
+
+                        </div>
+
+                        <div class="col-sm-6">
+
+                            <!-- Productivity goal -->
+                            <div class="text-center">
+                                <div class="card-body">
+
+                                    <!-- Progress counter -->
+                                    <div class="svg-center position-relative" id="goal-progress"></div>
+                                    <!-- /progress counter -->
+
+                                    <!-- Bars -->
+                                    <div id="goal-bars"></div>
+                                    <!-- /bars -->
+
+                                </div>
+                            </div>
+                            <!-- /productivity goal -->
+
+                        </div>
+                        
+                        
+                        <div class="col-sm-6">
+
+                            <!-- Available hours -->
+                            <div class="text-center">
+                                <div class="card-body">
+
+                                    <!-- Progress counter -->
+                                    <div class="svg-center position-relative" id="goal-progress2"></div>
+                                    <!-- /progress counter -->
+
+
+                                    <!-- Bars -->
+                                    <div id="goal-bars2"></div>
+                                    <!-- /bars -->
+
+                                </div>
+                            </div>
+                            <!-- /available hours -->
+
+                        </div>
+                        
+                        
+                        <div class="col-sm-6">
+
+                            <!-- Productivity goal -->
+                            <div class="text-center">
+                                <div class="card-body">
+
+                                    <!-- Progress counter -->
+                                    <div class="svg-center position-relative" id="hours-available-progress2"></div>
+                                    <!-- /progress counter -->
+
+                                    <!-- Bars -->
+                                    <div id="hours-available-bars2"></div>
+                                    <!-- /bars -->
+
+                                </div>
+                            </div>
+                            <!-- /productivity goal -->
+
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+                <!-- /traffic sources -->
+
+            </div>
+
+
+
+
+
+
+            <div class="col-xl-4">
+
+                <!-- Traffic sources -->
+                <div class="card">
+                    <div class="row">
+                        <div class="col-lg-12">
+
+                            <!-- Members online -->
+                            <div class="card bg-teal-400">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <h3 class="font-weight-semibold mb-0">13,670</h3>
+                                        <span class="badge bg-teal-800 badge-pill align-self-center ml-auto">+63,6%</span>
+                                    </div>
+
+                                    <div>
+                                        Total Inventory
+                                        <div class="font-size-sm opacity-75">489 avg</div>
+                                    </div>
+                                </div>
+
+                                <div class="container-fluid">
+                                    <div id="members-online"></div>
+                                </div>
+                            </div>
+                            <!-- /members online -->
+
+                        </div>
+                    </div>
+
+                    <div class="card-header header-elements-sm-inline">
+                        <div class="d-flex align-items-center mb-3 mb-md-0">
+                            <a href="#" class="btn bg-transparent border-indigo-400 text-indigo-400 rounded-round border-2 btn-icon">
+                                <i class="icon-price-tags"></i>
+                            </a>
+                            <div class="ml-3">
+                                <h5 class="font-weight-semibold mb-0">234</h5>
+                                <span class="text-muted">Products</span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center mb-3 mb-md-0">
+                            <a href="#" class="btn bg-transparent border-indigo-400 text-indigo-400 rounded-round border-2 btn-icon">
+                                <i class="icon-credit-card2"></i>
+                            </a>
+                            <div class="ml-3">
+                                <h5 class="font-weight-semibold mb-0">$1,236</h5>
+                                <span class="text-muted">Cash</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-header header-elements-sm-inline">
+                        <div class="d-flex align-items-center mb-3 mb-md-0">
+                            <a href="#" class="btn bg-transparent border-indigo-400 text-indigo-400 rounded-round border-2 btn-icon">
+                                <i class="icon-stats-decline"></i>
+                            </a>
+                            <div class="ml-3">
+                                <h5 class="font-weight-semibold mb-0"> 34</h5>
+                                <span class="text-muted">Services</span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center mb-3 mb-md-0">
+                            <a href="#" class="btn bg-transparent border-indigo-400 text-indigo-400 rounded-round border-2 btn-icon">
+                                <i class="icon-coins"></i>
+                            </a>
+                            <div class="ml-3">
+                                <h5 class="font-weight-semibold mb-0">$1,132</h5>
+                                <span class="text-muted">Warrant</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <!-- /traffic sources -->
+
+            </div>
+
+
+
+
+
+
+
+            <div class="col-xl-4">
+
+                <!-- Traffic sources -->
+                <div class="card">
+                    <div class="card-header header-elements-inline">
+                        <h6 class="card-title">Todays Transactions</h6>
+                        <div class="header-elements">
+                            <div class="form-check form-check-right form-check-switchery form-check-switchery-sm">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="table-responsive">
+                        <table class="table text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th class="w-100"></th>
+                                    <th>Time</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="mr-3">
+                                                <a href="#" class="btn bg-primary-400 rounded-round btn-icon btn-sm">
+                                                    <span class="icon-price-tags"></span>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a href="#" class="text-default font-weight-semibold letter-icon-title">Hp laserjet printer</a>
+                                                <div class="text-muted font-size-sm"><i class="icon-checkmark3 font-size-sm mr-1"></i>New Product Listed</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted font-size-sm">06:28 pm</span>
+                                    </td>
+                                    <td>
+                                        <h6 class="font-weight-semibold mb-0">12</h6>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="mr-3">
+                                                <a href="#" class="btn bg-danger-400 rounded-round btn-icon btn-sm">
+                                                    <span class="icon-stats-decline"></span>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a href="#" class="text-default font-weight-semibold letter-icon-title">Services</a>
+                                                <div class="text-muted font-size-sm"><i class="icon-checkmark3 font-size-sm mr-1"></i>New Service Listed</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted font-size-sm">04:52 pm</span>
+                                    </td>
+                                    <td>
+                                        <h6 class="font-weight-semibold mb-0">3</h6>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="mr-3">
+                                                <a href="#" class="btn bg-indigo-400 rounded-round btn-icon btn-sm">
+                                                    <span class="icon-credit-card2"></span>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a href="#" class="text-default font-weight-semibold letter-icon-title">Cash</a>
+                                                <div class="text-muted font-size-sm"><i class="icon-checkmark3 font-size-sm mr-1"></i> Cash Paid In</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted font-size-sm">01:26 pm</span>
+                                    </td>
+                                    <td>
+                                        <h6 class="font-weight-semibold mb-0">$6,680.00</h6>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="mr-3">
+                                                <a href="#" class="btn bg-success-400 rounded-round btn-icon btn-sm">
+                                                    <span class="icon-coins"></span>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a href="#" class="text-default font-weight-semibold letter-icon-title">Warrant</a>
+                                                <div class="text-muted font-size-sm"><i class="icon-checkmark3 font-size-sm mr-1"></i>Warrant Paid In</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted font-size-sm">11:46 am</span>
+                                    </td>
+                                    <td>
+                                        <h6 class="font-weight-semibold mb-0">$5,500.00</h6>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>       
+                    
+                </div>
+                <!-- /traffic sources -->
+
+            </div>
+
+
+
+
+        </div>
+        <!-- /main charts -->
+
+
+        
+
+    </div>
+    <!-- /content area -->
+
+
+    <!-- Footer -->
+    <%@include file="../../general/footer1.jspf" %>
+    <!-- /footer -->
+
+</div>
