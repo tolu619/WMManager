@@ -46,7 +46,6 @@
         <script src="global_assets/app/js/AppScript.js" type="text/javascript"></script>
         <script src="global_assets/app/js/custom.js" type="text/javascript"></script>
         <script src="global_assets/js/plugins/parsleyjs/dist/parsley.min.js" type="text/javascript"></script>
-
         <!-- /theme JS files -->
     </body>
 </html>
