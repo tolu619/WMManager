@@ -2851,10 +2851,10 @@ function DisplayUserLogin(data) {
                 window.location = extension + "ControllerServlet?action=Link&type=Login";
             }
         });
-    } else if (data === "Please contact WM-Admin") {
+    } else if (data === "Please contact the WM-Admin") {
         swal({
             title: "Oops!",
-            text: "Please contact WM-Admin!",
+            text: "Please contact the WM-Admin!",
             type: "info",
             showCancelButton: false,
             confirmButtonClass: 'btn btn-info',
