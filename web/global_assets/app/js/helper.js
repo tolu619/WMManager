@@ -12,6 +12,7 @@ $(document).ready(function () {
 function getCurrentPage() {
 //returns the current page the user is on
     var path = window.location.pathname;
+   
     var page = path.split("/").pop();
     if (page === "" || page === "index.jsp") {
         page = "index.jsp";
