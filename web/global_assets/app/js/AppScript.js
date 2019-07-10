@@ -12184,6 +12184,11 @@ function linkToFunction(action, params) {
             DisplayMyMonApplications(params);
             break;
         }
+        case "LoadPaymentResponse":
+        {
+            DisplayPaymentResponse(params);
+            break;
+        }
     }
 }
 
