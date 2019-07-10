@@ -220,7 +220,7 @@
                                     <div class="card-header d-sm-flex justify-content-sm-between align-items-sm-center">
                                         <h6 class="font-weight-bold">New Application</h6>  
                                         <span class="mr-2"><i class="icon-watch2"></i>
-                                            <span class="font-weight-thin list-time"> 11:22:00</span>
+                                            <span class="font-weight-thin list-time"> 2</span>
                                         </span>
 
                                     </div>
@@ -239,7 +239,7 @@
 
                                     </div>
                                     <div class="card-body mt-0 neg-margintop">
-                                        <button type="button" class="prof_mon_app bg-primary">Apply</button>
+                                        <button type="button" class="prof_user_mon_apps bg-primary">Apply</button>
                                     </div>
                                 </div>
                             </div>
