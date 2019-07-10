@@ -28,3 +28,7 @@ nbdist/
 **/JDBConnector.java
 # Class Files #
 *.class
+/build.xml
+/nbproject/ant-deploy.xml
+/nbproject/build-impl.xml
+/nbproject/genfiles.properties

@@ -55,6 +55,12 @@
                                 UPPEP
                             </a>
                         </li>
+                        <li class="nav-item setMyMonetisation">
+                            <a href="#MonetisationScheme" class="navbar-nav-link" data-toggle="tab">
+                                <i class="icon-cash4 mr-2"></i>
+                                Monetisation
+                            </a>
+                        </li>
 
                     </ul>
                 </div>
@@ -194,6 +200,46 @@
                                                 </div>
                                             </li>
                                         </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- /invoice grid -->
+
+                    </div>
+                    
+                    
+                    <div class="tab-pane fade" id="MonetisationScheme">
+                        <!-- Invoice grid -->
+
+                        <div class="row"id="mybids">
+                            <div class="col-md-6">
+                                <div class="card border-left-3 border-left-danger rounded-left-0 ">
+                                    <div class="card-header d-sm-flex justify-content-sm-between align-items-sm-center">
+                                        <h6 class="font-weight-bold">New Application</h6>  
+                                        <span class="mr-2"><i class="icon-watch2"></i>
+                                            <span class="font-weight-thin list-time"> 11:22:00</span>
+                                        </span>
+
+                                    </div>
+                                    <div class="card-body mt-0 neg-margintop">
+                                        <button type="button" class="prof_mon_app bg-primary">Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-left-3 border-left-danger rounded-left-0 ">
+                                    <div class="card-header d-sm-flex justify-content-sm-between align-items-sm-center">
+                                        <h6 class="font-weight-bold">Application History</h6>  
+                                        <span class="mr-2"><i class="icon-watch2"></i>
+                                            <span class="font-weight-thin list-time">0</span>
+                                        </span>
+
+                                    </div>
+                                    <div class="card-body mt-0 neg-margintop">
+                                        <button type="button" class="prof_mon_app bg-primary">Apply</button>
                                     </div>
                                 </div>
                             </div>
