@@ -2759,6 +2759,7 @@ function monetisationPageFunctions() {
     GetData("Schemes", "GetAllMonetisationRules", "LoadMonetisationRules");
     GetData("Schemes", "GetAllMonetisationApplication", "LoadMonetisationApplications");
     GetData("Schemes", "GetAllMonApplyPendingVerification", "LoadMonApplyPendingVerification");
+    GetData("Schemes", "GetMyMonApplications", "LoadMyMonApplications", actualuserid);
 }
 
 function CallSempleContract(data) {
@@ -10806,16 +10807,15 @@ function monStep3() {
         alert("You have not selected a rule");
     } else {
         var schmVal = $(".schmVal").val();
+        if (schmVal === "Monetisation") {
+            GetData("Product", "GetUserProducts", "LoadUserProductsMon", actualuserid);
+        } else if (schmVal === "Mobilisation" || schmVal === "Commoditisation") {
+            //GetData("Product", "GetUserProducts", "LoadUserProductsMon", userid);
+        }
         $(".monSteps").text("Step 3");
         $(".monStep2").addClass("hide");
         $(".monStep3").removeClass("hide");
         $(".monStep4").addClass("hide");
-        if (schmVal === "Monetisation") {
-            GetData("Product", "GetUserProducts", "LoadUserProductsMon", userid);
-        } else if (schmVal === "Mobilisation" || schmVal === "Commoditisation") {
-            //GetData("Product", "GetUserProducts", "LoadUserProductsMon", userid);
-        }
-
     }
 
 }
@@ -10867,7 +10867,7 @@ function monStep4() {
             $(".monSteps").text("Step 4");
             $(".monStep3").addClass("hide");
             $(".monStep4").removeClass("hide");
-            var data = [StringifiedValue, monRuleID, userid];
+            var data = [StringifiedValue, monRuleID, actualuserid];
             $(".monPay").click(function () {
                 //payWithPaystack(userid, appFee, loginuseremail, actualamount + ":" + appFee, "Monetisation Application Fee", StringifiedValue + ";" + monRuleID);
                 GetData("Schemes", "SubmitMonetisationApplication", "LoadSubmitMonApp", data);
