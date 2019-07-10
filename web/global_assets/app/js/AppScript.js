@@ -1683,6 +1683,12 @@ function btnEvents() {
     $(".callMonApplications").click(function () {
         GetData("Schemes", "GetAllMonetisationApplication", "LoadMonetisationApplications");
     });
+    $(".prof_mon_app").click(function(){
+        window.location = extension + "ControllerServlet?action=Link&type=MonetisationApplication&actualUserID=" + actualuserid;
+    });
+    $(".prof_user_mon_apps").click(function(){
+        window.location = extension + "ControllerServlet?action=Link&type=MonetisationUserApplications&actualUserID=" + actualuserid;
+    });
     //Monetisation
 }//end of btnEvents
 
