@@ -397,6 +397,9 @@ public class AccountServlet extends HttpServlet {
                     String trxref = data[2].trim();
                     String transcode = data[3].trim();
                     String paytype = data[4].trim();
+                    String json1 = "";
+                    String json2 = "";
+                    String result = "";
                     int MemberUserID = Integer.parseInt(userid);
                     int Amount = Integer.parseInt(actualamount);
                     String message = "";

@@ -200,6 +200,76 @@ public class SchemesServlet extends HttpServlet {
                     json = "[" + json1 + ", " + json2 + "]"; 
                     break;
                 }
+                //portal features
+                case "ApplyForMonetisation":{
+                    String[] data = request.getParameterValues("data[]");
+                    String userid = data[0].trim();
+                    String actualamount = data[1].trim();
+                    int AmountPD = Integer.parseInt(actualamount.split(":")[1]);
+                    actualamount = actualamount.split(":")[0];
+                    String trxref = data[2].trim();
+                    String transcode = data[3].trim();
+                    String paytype = data[4].trim();
+                    String AppData = data[5].trim();
+                    int MonRuleId = Integer.parseInt(AppData.split(";")[1]);
+                    String appData = AppData.split(";")[0];
+                    int UserID = Integer.parseInt(userid);
+                    int WarrantsExpected = Integer.parseInt(actualamount);
+                    String message = "";
+                    /*String payresult = PayStackManager.getInstance().PayStackPay(trxref);
+                    JSONParser parser = new JSONParser();
+                    JSONObject jsonParameter = null;
+                    try {
+                        jsonParameter = (JSONObject) parser.parse(payresult);
+                    } catch (Exception e) {
+                        message = "Your payment validation was not successful, Please contact the admin if your account was debited and send prove of payment!";
+                        json1 = new Gson().toJson(paytype);
+                        json2 = new Gson().toJson(result);
+                        String json3 = new Gson().toJson(message);
+                        json = "[" + json1 + "," + json2 + "," + json3 + "]";
+                        e.printStackTrace();
+                    }
+                    String Status = jsonParameter.get("status").toString();*/
+                    String Status = "true";
+                    if (Status.equals("false")) {
+                        message = "Your payment validation was not successful, Please contact the admin if your account was debited and send prove of payment!";
+                        json1 = new Gson().toJson(paytype);
+                        json2 = new Gson().toJson(result);
+                        json3 = new Gson().toJson(message);
+                        json = "[" + json1 + "," + json2 + "," + json3 + "]";
+
+                    }else if (Status.equals("true")) {
+                        if (paytype.equals("Monetisation Application Fee")) {
+                            result = GeneralSchemesManager.LogMonetisationApplication(MonRuleId, appData, UserID, AmountPD, WarrantsExpected, Status, transcode);
+                            if(result.equals("success")){
+                                message = "Successful";
+                            }else{
+                                message = "Failed";
+                            }
+                            
+                            json1 = new Gson().toJson(paytype);
+                            json2 = new Gson().toJson(result);
+                            json3 = new Gson().toJson(message);
+                            json = "[" + json1 + "," + json2 + "," + json3 + "]";
+                        }
+                    }
+                    break;
+                }
+                case "SubmitMonetisationApplication":{
+                    String[] data = request.getParameterValues("data[]");
+                    String appData = data[0];
+                    int MonRuleID = Integer.parseInt(data[1]);
+                    int userid = Integer.parseInt(data[2]);
+                    result = GeneralSchemesManager.SubmitMonetisationApplication(appData, MonRuleID, userid);
+                    json = new Gson().toJson(result);
+                    break;
+                }
+                case "GetMyMonApplications":{
+                    int data = Integer.parseInt(request.getParameter("data"));
+                    HashMap<String, HashMap<String, Object>> applications = GeneralSchemesManager.GetUserMonetisationApplications(data);
+                    json = new Gson().toJson(applications);
+                    break;
+                }
             }
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");

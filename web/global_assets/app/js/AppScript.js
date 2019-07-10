@@ -371,6 +371,16 @@ function performPageActions() {
         shopPageFunctions();
         $("#id_main_shop").addClass("active");
         $("#id_shop_complaints").addClass("active bg-white blacktext");
+    }else if (page === "monetisation_application.jsp") {
+        extension = "../../../";
+        monetisationPageFunctions();
+        $("#id_main_semple").addClass("active");
+        $("#id_main_money").addClass("active");
+    } else if (page === "my_monetisation_applications.jsp") {
+        extension = "../../../";
+        monetisationPageFunctions();
+        $("#id_main_semple").addClass("active");
+        $("#id_main_money").addClass("active");
     }
 
     CheckUser();
@@ -9258,6 +9268,27 @@ function DisplayAllRequestedPemissions(data) {
             newchild.appendTo(par);
         });
         ChildClone.hide();
+    }
+}
+
+function DisplayPaymentResponse(data) {
+    if (data[0] === "Buy Warrants With Cash" || data[0] === "Inspection Fees") {
+        swal({
+            title: "Payment Advice",
+            text: data[2],
+            type: data[1],
+            showCancelButton: false,
+            confirmButtonClass: 'btn btn-' + data[1],
+            confirmButtonText: 'Continue',
+            onClose: function () {
+                $(".modal_basic_buyWarrants").modal("hide");
+                window.location.reload();
+            }
+        });
+    } else if (data[0] === "Validation Fees") {
+        DisplayValidateAccount(data);
+    } else if (data[0] === "Monetisation Application Fee") {
+        DisplayMonPayAppFee(data);
     }
 }
 
