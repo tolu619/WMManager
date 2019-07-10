@@ -2818,6 +2818,53 @@ function CheckInAndOutSection(sectionid, type) {
 
 }
 
+function payWithPaystack(userID, paymentamount, email, actualamount, PaymentType) {
+    var userDetail;
+    if (username) {
+        userDetail = username;
+    } else {
+        userDetail = email;
+    }
+    var handler = PaystackPop.setup({
+        key: 'pk_test_b3685f824518679567d6356e2636fc184878e833',
+        email: email,
+        amount: paymentamount + "00",
+        ref: '' + Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+        metadata: {
+            custom_fields: [
+                {
+                    display_name: "Customer Name",
+                    variable_name: "Customer Name",
+                    value: userDetail
+                },
+                {
+                    display_name: "Payment Type",
+                    variable_name: "Payment Type",
+                    value: PaymentType
+                }
+            ]
+        },
+        callback: function (response) {
+            var data = [userID, actualamount, response.reference, response.trans, PaymentType];
+            GetData("Accounts", "ValidatePaystackTransaction", "LoadPaymentResponse", data);
+        },
+        onClose: function () {
+            swal({
+                title: "PayStack CheckOut!",
+                text: "CheckOut closed, transaction terminated",
+                type: "error",
+                showCancelButton: false,
+                confirmButtonClass: 'btn btn-danger',
+                conffirmButtonText: 'Retry',
+                onClose: function () {
+                    window.location.reload();
+                }
+            });
+        }
+    });
+    handler.openIframe();
+}
+
 function DisplayUserLogin(data) {
     hideLoader();
     if (data === "Account has not been activated") {
@@ -10684,6 +10731,384 @@ function DisplayApprovedMonApplications(params) {
         child.hide();
     }
 }
+function schmVal(val) {
+    $(".schmVal").val(val);
+    GetData("Schemes", "GetAllMonetisationRules", "LoadAllMonetisationRules");
+    $(".monStep1").hide();
+    $(".monStep2").removeClass("hide");
+    $(".monSteps").text("Step 2");
+
+}
+////portal-features
+function DisplayMonetisationRules(params) {
+    var parent = $("#monRulesParent");
+    parent.find(".newCloneElement").hide();
+    var cloneThis = parent.find(".monRulesClone");
+    var schmVal = $(".schmVal").val();
+    $.each(params, function (ind, value) {
+        var schm = ind.split("-")[1];
+        var monType;
+        value["mon_type"] === 0 ? monType = "Not Specified!" : value["mon_type"] === 1 ? monType = "Full" : value["mon_type"] === 2 ? monType = "Half" : monType = "Quarter";
+        if (schm === schmVal) {
+            var childClone = cloneThis.clone();
+            childClone.addClass("newCloneElement");
+            childClone.removeClass("monRulesClone");
+            childClone.removeClass("hide");
+            childClone.find(".monRuleName").text(value["rule_name"]);
+            childClone.find(".monRulePercent").text(value["percent"] + "%");
+            childClone.find(".monRuleDesc").text(value["rule_desc"]);
+            childClone.find(".monRuleMinVal").text(value["min_value"]);
+            childClone.find(".monRuleMaxStage").text(value["max_stage"]);
+            childClone.find(".monRuleMonType").text(monType);
+            childClone.find(".monRadio").attr("id", ind);
+            var radioVal = JSON.stringify(value);
+            childClone.find(".monRadio").attr("value", radioVal);
+            childClone.find(".monRadioLabel").attr("for", ind);
+            childClone.appendTo(parent).show();
+        }
+        cloneThis.hide();
+    });
+}
+function monStep3() {
+    var selectedMonRule = $("input[name='monRuleSelected']:checked").val();
+    if (selectedMonRule === "" || selectedMonRule === "on" || selectedMonRule == undefined) {
+        alert("You have not selected a rule");
+    } else {
+        var schmVal = $(".schmVal").val();
+        $(".monSteps").text("Step 3");
+        $(".monStep2").addClass("hide");
+        $(".monStep3").removeClass("hide");
+        $(".monStep4").addClass("hide");
+        if (schmVal === "Monetisation") {
+            GetData("Product", "GetUserProducts", "LoadUserProductsMon", userid);
+        } else if (schmVal === "Mobilisation" || schmVal === "Commoditisation") {
+            //GetData("Product", "GetUserProducts", "LoadUserProductsMon", userid);
+        }
+
+    }
+
+}
+function monStep4() {
+    var toMonitize = [];
+    var totalValue = 0;
+    var StringifiedValue = "";
+    $.each($("input[name='monSelectedGoods']:checked"), function () {
+        toMonitize.push($(this).val());
+    });
+    if (toMonitize.length === 0) {
+        monStep3();
+    } else {
+        if (minValue > totalValue) {
+
+        } else {
+            $.each(toMonitize, function (index, value) {
+                var item = JSON.parse(toMonitize[index]);
+                totalValue += item[4];
+                StringifiedValue += "" + item[0] + ">" + item[1] + ">" + item[2] + ">" + item[3] + ">" + item[4];
+                if (index < (toMonitize.length - 1)) {
+                    StringifiedValue += ":";
+                }
+            });
+            var selectedMonRule = $("input[name='monRuleSelected']:checked").val();
+            var monRule = JSON.parse(selectedMonRule);
+            var minValue = monRule["min_value"];
+            var feePercent = parseInt(monRule["percent"]);
+            var eqiVal = parseInt(monRule["mon_type"]);
+            var monRuleID = monRule["id"];
+            var charges = 0;
+            var appFee = ((feePercent / 100) * totalValue) + charges;
+            $(".monAppFee").text(PriceFormat(appFee));
+            $(".monProdTotVal").text(PriceFormat(totalValue));
+            $(".monWarrant").text(PriceFormat(totalValue / eqiVal));
+            var schmVal = $(".schmVal").val();
+            $(".schemeType").text(schmVal);
+            if (minValue > totalValue) {
+                $(".monProdTotVal").removeClass("text-primary");
+                $(".monProdTotVal").addClass("text-danger");
+                $(".monPay").addClass("hide");
+                $(".errMsg").removeClass("hide");
+            } else {
+                $(".monPay").removeClass("hide");
+                $(".errMsg").addClass("hide");
+                $(".monProdTotVal").addClass("text-primary");
+                $(".monProdTotVal").removeClass("text-danger");
+            }
+            $(".monSteps").text("Step 4");
+            $(".monStep3").addClass("hide");
+            $(".monStep4").removeClass("hide");
+            var data = [StringifiedValue, monRuleID, userid];
+            $(".monPay").click(function () {
+                //payWithPaystack(userid, appFee, loginuseremail, actualamount + ":" + appFee, "Monetisation Application Fee", StringifiedValue + ";" + monRuleID);
+                GetData("Schemes", "SubmitMonetisationApplication", "LoadSubmitMonApp", data);
+            });
+        }
+
+    }
+
+}
+function DisplaySubmitMonApplication(params){
+    if(params === "success"){
+        swal({
+            title: "Submitted!",
+            text: "Application submitted and awaiting approval.",
+            type: "success",
+            showCancelButton: false,
+            confirmButtonClass: 'btn btn-success',
+            confirmButtonText: 'Ok!',
+            onClose: function () {
+                window.location.reload();
+            }
+        });
+    }
+}
+function DisplayUserProductsMon(params) {
+    var parent = $("#monGoodParent");
+    parent.find(".clone-child").remove();
+    if (params === "none") {
+        $("<div />", {class: "padding", text: "No Product"}).appendTo(parent);
+    } else {
+        var count = 0;
+        var childclone = parent.find(".monGoodClone");
+        $.each(params, function (id, details) {
+            var status = details["status"];
+            if (status === "Accepted") {
+                count++;
+                var newchild = childclone.clone();
+                newchild.removeClass("monGoodClone");
+                newchild.removeClass("hide");
+                newchild.addClass("clone-child");
+                var image_url = extension + "global_assets/app/img/UnlistedProductImages/product-" + id + ".png";
+                if (imageExists(image_url) === false) {
+                    image_url = extension + "global_assets/app/img/ProductImages/product-0.png";
+                }
+                newchild.find(".monGoodCount").text(count);
+                newchild.find(".monGoodImage").attr("src", image_url);
+                newchild.find(".monGoodImage").attr("alt", "Product " + count + " Listied by " + id + " on the wealth market");
+                var name = capitaliseFirstLetter(details["product_name"]);
+                newchild.find(".monGoodName").text(name);
+                newchild.find(".monGoodDesc").text(details["description"]);
+                var checkid = "check" + id;
+                newchild.find(".monGoodCheck").attr("id", checkid);
+                newchild.find(".monGoodCheckLabel").attr("for", checkid);
+                var price = details["proposed_price"];
+                var newprice = PriceFormat(price);
+                newchild.find(".monGoodPrice").text(newprice);
+                var Quantity = parseInt(details["quantity"]);
+                var subTotal;
+                if (Quantity > 0) {
+                    newchild.find(".monGoodQuantity").text(Quantity).val(Quantity).attr("max", Quantity);
+                    subTotal = Quantity * parseInt(price);
+                    newchild.find(".monGoodSubtotal").text(subTotal);
+                } else {
+                    newchild.find(".monGoodQuantity").text("Invalid").prop("disabled", true);
+                }
+
+                var quantInput = newchild.find(".monGoodQuantity");
+                var goodChecked = newchild.find("#" + checkid);
+                quantInput.change(function () {
+                    var quant = parseInt($(this).val());
+                    if (quant > Quantity) {
+                        $(this).val(Quantity);
+                    } else {
+                        var amt = parseInt(price);
+                        var subTtl = quant * amt;
+                        newchild.find(".monGoodSubtotal").text(subTtl);
+                        goodChecked.click();
+                    }
+                });
+                goodChecked.click(function () {
+                    var quant = parseInt(quantInput.val());
+                    var Total = parseInt($("#gTotal").text());
+                    if (this.checked) {
+                        var arr = new Array();
+                        arr[0] = id;
+                        arr[1] = name;
+                        arr[2] = parseInt(price);
+                        arr[3] = parseInt(newchild.find(".monGoodQuantity").val());
+                        arr[4] = parseInt(newchild.find(".monGoodSubtotal").text());
+                        var value = JSON.stringify(arr);
+                        $(this).val(value);
+                        var vl = $(this).val();
+                        vl = JSON.parse(vl);
+                        alert("Item Added Successfully \nName: " + details["product_name"] + "\nQuantity = " + quant);
+                        newchild.find(".monGoodQuantity").prop('disabled', true);
+                        Total += subTotal;
+
+                        $("#gTotal").text(Total);
+                    } else {
+                        newchild.find(".monGoodQuantity").prop('disabled', false);
+                        Total -= subTotal;
+                        $("#gTotal").text(Total);
+                    }
+                });
+                newchild.appendTo(parent).show();
+            }
+        });
+
+    }
+}
+function DisplayMonetisationAppFee(data) {
+    if (data[2] == "Successful") {
+        swal({
+            title: data[2],
+            text: data[0],
+            type: data[1],
+            showCancelButton: false,
+            confirmButtonClass: 'btn btn-' + data[1],
+            confirmButtonText: 'Ok!',
+            onClose: function () {
+                window.location.reload();
+            }
+        });
+    } else {
+        swal({
+            title: data[2],
+            text: "The Monetisation Apllicaton Failed, Contact an Admin",
+            type: "danger",
+            showCancelButton: false,
+            confirmButtonClass: 'btn btn-' + data[1],
+            confirmButtonText: 'Ok!',
+            onClose: function () {
+                window.location.reload();
+            }
+        });
+    }
+}
+function DisplayMyMonApplications(params){
+    var monAppParent = $("#myMonApplicationParent");
+    var child = $(".myMonAppClone");
+    if(params.length == 0 || params == ""){
+        $("<div>").text("No pending monetisation applications").addClass("text-center").appendTo(monAppParent);
+    }else{
+        monAppParent.empty();
+        $.each(params, function(ind, val){
+            var newChild = child.clone();
+            newChild.removeClass("myMonAppClone");
+            newChild.removeClass("hide");
+            newChild.addClass(ind);
+            var image_url = "../../../global_assets/app/img/ProfilePicture/user-" + val["userid"] + ".png";
+            if (imageExists(image_url) === false) {
+                image_url = "../../../global_assets/app/img/ProfilePicture/user-0.png";
+            }
+            newChild.find(".monAppUserImg").attr("src", image_url);
+            var Name = val["UserName"];
+            newChild.find(".monAppUserName").text(Name);
+            newChild.find(".monAppDateTime").text(val["date_applied"]);
+            newChild.find(".monUserID").val(val["userid"]);
+            newChild.find(".userUsedMonRuleName").text(val["monName"]);
+            newChild.find(".userUsedMonRuleID").text(val["monRuleId"]);
+            var maxVal = PriceFormat(parseInt(val["warrants_calculated"]));
+            newChild.find(".monExWarrants").text(maxVal);
+            newChild.find(".monAppFeePd").text(PriceFormat(parseInt(val["amount_paid"])));
+            newChild.find(".monAppFeeStatus").text(val["payment_status"]);
+            newChild.find(".monAppUserPayRef").text(val["payment_reference"]);
+            var appStatus = val["application_status"];
+            var actualamount = parseInt(val["calculated_goods_value"]);
+            var paymentamount = parseInt(val["AppFee_Calculated"]);
+            var goodsVerifed = val["verified"];
+            if(goodsVerifed == 1){
+                newChild.find(".verifiedBadge").removeClass("badge-secondary").addClass("badge-success").text("verified");
+                newChild.find(".ApproveMonetisation").removeClass("disableClick");
+            }else if(goodsVerifed == 2){
+                newChild.find(".verifiedBadge").removeClass("badge-secondary").addClass("badge-danger").text("Rejected");
+            }
+            var AppStatus = "";
+            appStatus == 0 ? AppStatus = "pending" : appStatus == 1 ? AppStatus = "Approved" : appStatus == 2 ? AppStatus = "Declined": appStatus == 3 ? AppStatus = "Rights Granted": appStatus == 4 ? AppStatus = "Completed": AppStatus = "Not Recognised!!!";
+            newChild.find(".monAppStatus").text(AppStatus);
+            newChild.find(".monAppUserPayRef").text(val["payment_reference"]);
+            var DetailsButton = newChild.find(".ViewMonetisationGoods");
+            var PayButton = newChild.find(".PayMonAppFee");
+            if(appStatus == 1){
+                PayButton.removeClass("hide");
+            }
+            if(appStatus == 1){
+                PayButton.removeClass("disableClick");
+            }
+            //Details Button
+            DetailsButton.click(function(){
+                $(".modal-view-monetisation-goods").on("show.bs.modal", function(){
+                    MonetisationGoodsDetails(val);
+                }).modal("show");
+
+            });
+            PayButton.click(function(){
+                payWithPaystack(val["id"], paymentamount, val["UserEmail"], actualamount, "Monetisation Application Fee");
+            });
+            newChild.appendTo(monAppParent).show();
+        });
+        child.hide();
+    }
+}
+function MonetisationGoodsDetails(details){
+    var parent = $("#mon-inv-property");
+    parent.empty();
+    var child = $(".monGoodClone");
+    var productDetails = details['ProductDetails'];
+    var count = 0;
+    var grandTotal = 0;
+    var verified = details["verified"];
+    $.each(productDetails, function(index, product){
+        count++;
+        var newChild = child.clone();
+        newChild.removeClass("monGoodClone");
+        newChild.removeClass("hide");
+        newChild.addClass(index);
+        var image_url = extension + "global_assets/app/img/UnlistedProductImages/product-" + index + ".png";
+        if (imageExists(image_url) === false) {
+            image_url = extension + "global_assets/app/img/ProductImages/product-0.png";
+        }
+        newChild.find(".monGoodCount").text(count);
+        newChild.find(".monGoodImage").attr("src", image_url);
+        newChild.find(".monGoodImage").attr("alt", "Product "+ count+ " Listied by " + details["UserName"] + " on the wealth market");
+        var name = capitaliseFirstLetter(product["product_name"]);
+        newChild.find(".monGoodName").text(name);
+        newChild.find(".monGoodDesc").text(product["description"]);
+        var price = parseInt(product["proposed_price"]);
+        var newprice = PriceFormat(price);
+        newChild.find(".monGoodPrice").text(newprice);
+        var availQuantity = parseInt(product["quantity"]);
+        var appliedQuantity = parseInt(product["ProdAppliedQuant"]);
+        newChild.find(".monGoodAvailQuantity").text(availQuantity);
+        newChild.find(".monGoodAppliedQuantity").text(appliedQuantity);
+        var subTotal = price * appliedQuantity;
+        grandTotal += subTotal;
+        newChild.find(".monGoodSubtotal").text(PriceFormat(subTotal));
+        newChild.appendTo(parent).show();
+    });
+    $("#gTotal").text(PriceFormat(grandTotal));
+    
+    var monetisationPercent = parseInt(details["MonetisationDetails"]["percent"]);
+    var percentAmt = (monetisationPercent/100) * grandTotal;
+    var amtPaid = parseInt(details["amount_paid"]);
+    var calcWarrants = parseInt(details["warrants_calculated"]);
+    var expWarrants = parseInt(details["warrants_expected"]);
+    $(".amt-paid").text(PriceFormat(amtPaid));
+    $(".calc-percent").text(PriceFormat(percentAmt));
+    $(".exp-warrant").text(PriceFormat(expWarrants));
+    $(".calc-warrants").text(PriceFormat(calcWarrants));
+    if(verified == 1){
+        $(".mon-verification").text("Verified on "+details["date_verified"]).removeClass("text-muted").addClass("text-success");
+    }else if(verified == 2){
+        $(".mon-verification").text("Goods were not verified by the agent.").removeClass("text-muted").addClass("text-danger");
+    }else{
+        $(".mon-verification").text("waiting for verification").removeClass("text-success").addClass("text-muted");
+        
+    }
+    
+}
+function DisplayMonPayAppFee(data){
+    swal({
+        title: data[0],
+        text: data[2],
+        type: data[1],
+        showCancelButton: false,
+        confirmButtonClass: 'btn btn-' + data[1],
+        confirmButtonText: 'Continue',
+        onClose: function () {
+            window.location.reload();
+        }
+    });
+}
 //Monetisation
 
 //complaints and change details
@@ -11737,6 +12162,26 @@ function linkToFunction(action, params) {
         case "LoadApprovedMonApplications":
         {
             DisplayApprovedMonApplications(params);
+            break;
+        }
+        case "LoadAllMonetisationRules":
+        {
+            DisplayMonetisationRules(params);
+            break;
+        }
+        case "LoadUserProductsMon":
+        {
+            DisplayUserProductsMon(params);
+            break;
+        }
+        case "LoadSubmitMonApp":
+        {
+            DisplaySubmitMonApplication(params);
+            break;
+        }
+        case "LoadMyMonApplications":
+        {
+            DisplayMyMonApplications(params);
             break;
         }
     }
