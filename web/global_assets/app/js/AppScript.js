@@ -2563,6 +2563,7 @@ function dealPageFunctions() {
 function pickupPageFunctions() {
     showLoader();
     GetData("Product", "GetPickUpCentres", "LoadPickUpCenters");
+    GetData("Product", "GetAddressTypes", "LoadAddressTypes");
     PopulateStates("");
     $("form[name=AddPickUpForm]").submit(function (e) {
         var f = $(this);
@@ -2587,6 +2588,29 @@ function pickupPageFunctions() {
                 GetData("Product", "EditNewPickUpCenter", "LoadPickUpCenterOptionAfterEdit", data);
             }
 
+        } else {
+            swal({
+                title: "Oop!!!",
+                text: "Please check all inputs",
+                type: "error",
+                showCancelButton: false,
+                confirmButtonClass: 'btn btn-danger',
+                confirmButtonText: 'Ok!',
+                buttonsStyling: false
+            });
+        }
+        e.preventDefault();
+    });
+    $("form[name=AddAddressType]").submit(function (e) {
+        var f = $(this);
+        f.parsley().validate();
+        if (f.parsley().isValid()) {
+            var checker = $("#checker").val();
+            var addresstypename = $("#addresstype-name").val();
+            if (checker === "add" || checker === "Add") {
+                var data = [addresstypename];
+                GetData("Product", "AddAddressTypes", "LoadAddAddressType", data);
+            }
         } else {
             swal({
                 title: "Oop!!!",
@@ -5729,6 +5753,60 @@ function DisplayPickUpCenters(data) {
     }
     Accordion();
 }
+function DisplayAddressTypes(data) {
+    hideLoader();
+    var parent = $(".addresstypeclone");
+    if (data === "none") {
+        parent.text("No result");
+    } else {
+        var childClone = parent.find(".clone");
+        var newcount = 0;
+        $.each(data, function (id, details) {
+            var newchild = childClone.clone();
+            newchild.removeClass("clone");
+            newcount++;
+            newchild.find(".addtype-count").text(newcount);
+            newchild.find(".addtype-name").text(details["name"]);
+            var editaddtype = newchild.find(".editaddtype");
+            editaddtype.click(function () {
+//                EditAddType(id, details["new_detail"], details["subject"], "Approved", details["userid"]);
+            });
+            var deleteaddtype = newchild.find(".deleteaddtype");
+            deleteaddtype.click(function () {
+                swal({
+                    title: "Delete Address Type",
+                    text: "This action is irreversible!",
+                    type: "info",
+                    showCancelButton: true,
+                    confirmButtonClass: 'btn btn-danger',
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    cancelButtonClass: 'btn btn-primary'
+                }).then(function (dismiss) {
+                    if (dismiss.value) {
+                        var ID = [id];
+                        GetData("Product", "DeleteAddressTypes", "LoadDeleteAddressTypes", ID);
+                    } else {
+                        swal({
+                            title: 'Safe',
+                            text: "Address Type is safe!",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonText: 'Ok!',
+                            confirmButtonClass: 'btn btn-success',
+                            buttonsStyling: false
+                        });
+                    }
+                });
+//                RejectRequestedChanges(id, details["subject"], details["userid"], "Rejected");
+            });
+            newchild.appendTo(parent);
+        });
+        $(".reqchangesCounticon").text(newcount);
+        childClone.hide();
+    }
+
+}
 
 function DisplayNewDeals(data) {
     if (data === "success") {
@@ -5890,16 +5968,14 @@ function DisplayUserContacts(data, parent, objecttype) {
                 var info = value["user_name"] + " - " + value["email"] + " - " + value["phone_number"];
                 cs.append($('<option/>').val(key).text(info));
             });
-
             cs.change('select2:select', function () {
                 //Use $option (with the "$") to see that the variable is a jQuery object
                 var option = $(this).find('option:selected');
                 //Added with the EDIT
-                var id = option.val();//to get content of "value" attrib
-                var text = option.text();//to get <option>Text</option> content
+                var id = option.val(); //to get content of "value" attrib
+                var text = option.text(); //to get <option>Text</option> content
                 $("#msguserEmail").val(text);
                 $("#msguserID").text(id);
-
             });
         }
 
@@ -5921,7 +5997,6 @@ function DisplayUserContacts(data, parent, objecttype) {
             newchild.find(".UsercontactPhone").text(details["phone_number"]);
             newchild.find(".UsercontactEmail").text(details["email"]);
             var btnSendContactMsg = newchild.find(".btnSendContactMsg");
-
             btnSendContactMsg.tooltip({
                 position: {
                     my: "center bottom-40", // the "anchor point" in the tooltip element
@@ -6119,7 +6194,6 @@ function DisplayUserHistory(data, parent) {
             newchild.removeClass("clone");
             newchild.removeClass("hide");
             newchild.addClass("clearclone1");
-
             var image_url = extension + "global_assets/app/img/ProfilePicture/user-" + details["userId"] + ".png";
             if (imageExists(image_url) === false) {
                 image_url = extension + "global_assets/app/img/ProfilePicture/user-0.png";
@@ -6164,7 +6238,6 @@ function DisplayUserProducts(data, parent) {
             newchild.removeClass("clone");
             newchild.removeClass("hide");
             newchild.addClass("clone-child");
-
             var image_url = extension + "global_assets/app/img/UnlistedProductImages/product-" + id + ".png";
             if (imageExists(image_url) === false) {
                 image_url = extension + "global_assets/app/img/ProductImages/product-0.png";
@@ -6195,7 +6268,6 @@ function DisplayUserProducts(data, parent) {
             }
             var btnDeleteProduct = newchild.find(".btnDeleteProduct");
             var btnViewProductDetatails = newchild.find(".btnViewProductDetatails");
-
             newchild.find(".productStatus").text(status);
             if (status === "Declined" || status === "Pending") {
                 btnDeleteProduct.removeClass("hide");
@@ -6258,7 +6330,6 @@ function DisplayUserOrderedProducts(data, parent) {
             newchild.removeClass("clone");
             newchild.removeClass("hide");
             newchild.addClass("clone-child");
-
             var image_url = extension + "global_assets/app/img/ProductImages/product-" + details["product_id"] + ".png";
             if (imageExists(image_url) === false) {
                 image_url = extension + "global_assets/app/img/ProductImages/product-0.png";
@@ -6327,7 +6398,6 @@ function DisplayBusinessList(data) {
     var image_url = extension + "global_assets/app/img/ProfilePicture/user-0.png";
     $(".bizImage").attr("src", image_url);
     $(".profile-cover-img").css("background-image", "url('" + image_url + "')");
-
 }
 
 function DisplayBusinessDetails(data) {
@@ -6350,7 +6420,6 @@ function DisplayBusinessDetails(data) {
     $(".bizweb").text(data["Website"]);
     $(".bizemail").text(data["email"]);
     $(".bizphone").text(data["phone_number"]);
-
 }
 
 function DisplayBusinessStaffList(data) {
@@ -6377,7 +6446,6 @@ function DisplayBusinessStaffList(data) {
             childclone.hide();
         });
         $(".biz-staff-count").text(count);
-
     } else {
         $(".biz-staff-count").text(0);
     }
@@ -6443,7 +6511,6 @@ function DisplayShopProductDetails(data) {
     $(".shop_product-detail-name").text(name);
     var price = PriceFormat(data["selling_price"]);
     $(".shop_product-detail-price").text(price);
-
     $(".shop_product-details-description").text(data["description"]);
     $(".shop_product-detail-quantity").text(data["quantity"]);
     $(".shop_product-id-gen").text(data["product_id"]);
@@ -6457,7 +6524,6 @@ function DisplayShopProductDetails(data) {
     $(".shop_product-details-approvedby").text(data["VerifiedByName"]);
     $(".shop_product-details-owner-name").text(data["ProductOwnerName"]);
     $(".shop_product-details-owner-phone").text(data["ProductOwnerPhone"]);
-
 }
 
 function DisplayContactAction(data) {
@@ -6535,7 +6601,6 @@ function DisplayTopCategories(data, parent) {
             GetData("Category", "GetCategoryProperties", "LoadCategoryProps", catid);
             GetData("Category", "GetCategoryProperties", "LoadCategoryVariants", catid);
         });
-
         var topcat = $(".topcat");
         topcat.empty();
         topcat.append($('<option/>').val(0).text("Select Category"));
@@ -6547,7 +6612,6 @@ function DisplayTopCategories(data, parent) {
 //            var catname = $('#prodTopCategories :selected').text();
             GetData("Category", "GetCategories", "LoadCategories", catid);
         });
-
     }
 }
 
@@ -6571,7 +6635,6 @@ function DisplayCategories(data, parent) {
             var catid = $(this).val();
             GetData("Category", "GetSubCategories", "LoadSubCategory", catid);
         });
-
         var cat = $(".cat");
         cat.empty();
         cat.append($('<option/>').val(0).text("Select Category"));
@@ -6597,8 +6660,6 @@ function DisplaySubCategories(data, parent) {
         });
         $(".prod-sub-cat-info").removeClass("hide");
         $(".prod-sub-cat-info").show();
-
-
         var subcat = $(".subcat");
         subcat.empty();
         subcat.append($('<option/>').val(0).text("Select Category"));
@@ -6656,7 +6717,6 @@ function DisplayProductCategoryVariantValues(data, parent) {
                 value: id
             }).appendTo(parent);
         });
-        
     }
 }
 
@@ -6673,7 +6733,6 @@ function DisplayProductUnits(data, parent) {
                 value: id
             }).appendTo(parent);
         });
-
     }
 }
 
@@ -6690,7 +6749,6 @@ function DisplayProductHscodes(data, parent) {
                 value: id
             }).appendTo(parent);
         });
-
     }
 }
 
@@ -6730,7 +6788,6 @@ function DisplayUnreadMessages(data) {
 //                DisplayMessageDetails(result, data[2]);
 //            });
             newchild.appendTo(parent).show();
-
         });
         $(".unreadcount").text(data[2]);
         childclone.hide();
@@ -6966,7 +7023,6 @@ function DisplayPlacedOrderDetails(data) {
             });
             childclone.hide();
         });
-
     }
 }
 
@@ -6982,13 +7038,11 @@ function DefaultShopProductSupplier(data) {
     var OrdID = data["OrderID"];
     var productOnwerID = data["productOnwerID"];
     var orderHistoryID = data["orderHistoryID"];
-
     $(".GetAltSupplier").click(function () {
         $(".altSupplier").show();
         $(".altSupplier").removeClass("hide");
         GetData("Product", "GetProductSuppliers", "LoadProductSuppliers", data["name"]);
     });
-
     $(".assignToDefSupplier").click(function () {
         swal({
             title: 'Assign Product?',
@@ -7190,6 +7244,48 @@ function DisplayPickUpCenterOption(data) {
         });
     }
 }
+function DisplayAddAddressType(data) {
+    hideLoader();
+    if (data === "success") {
+        swal({
+            title: "Address Type  Added",
+            text: "Successful",
+            type: "success",
+            showCancelButton: false,
+            confirmButtonClass: 'btn btn-success btn-sm',
+            confirmButtonText: "Ok",
+            onClose: function () {
+                window.location.reload();
+            }
+        });
+    } else {
+        swal({
+            title: "Oops!",
+            text: "Something went wrong!",
+            type: "info",
+            showCancelButton: false,
+            confirmButtonClass: 'btn btn-info btn-sm',
+            confirmButtonText: 'Ok',
+            onClose: function () {
+                window.location.reload();
+            }
+        });
+    }
+}
+function DisplayDeleteAddressTypes() {
+    hideLoader();
+    swal({
+        title: "Address Type  Deleted",
+        text: "Successful",
+        type: "success",
+        showCancelButton: false,
+        confirmButtonClass: 'btn btn-success btn-sm',
+        confirmButtonText: "Ok",
+        onClose: function () {
+            window.location.reload();
+        }
+    });
+}
 
 function DisplayGetAllCategories(data) {
     hideLoader();
@@ -7200,7 +7296,7 @@ function DisplayGetAllCategories(data) {
     if (data === "none") {
         parent.text("No Result");
     } else {
-        //-------------------TOp Categery Start----------------------//
+//-------------------TOp Categery Start----------------------//
         var childclone = parent.find(".clone");
         $.each(List, function (topcatid, details) {
             var newchild = childclone.clone();
@@ -7211,7 +7307,6 @@ function DisplayGetAllCategories(data) {
             btntopcatname.click(function () {
 //                LoadProductPage(topcatid);
             });
-
             //-------------------Categery Start----------------------//
             var Categories = CatIDs[topcatid];
             var catParent = newchild.find(".cat-list");
@@ -7226,7 +7321,6 @@ function DisplayGetAllCategories(data) {
                 btncatname.click(function () {
 //                    LoadProductPage(catid);
                 });
-
                 //-------------------Sub Categery Start----------------------//
                 var SubCategories = SubCatIDs[catid];
                 var subcatParent = newchild.find(".sub-cat-list");
@@ -7280,7 +7374,6 @@ function DisplayListings(data, parent) {
             newchild.find(".list-date").text(details["date_listed"]);
             newchild.find(".list-bid-count").text(details["bid_count"] + " Bid(s)");
             newchild.find(".list-status").text(capitaliseFirstLetter(details["status"]));
-
             var parentlistoffer = newchild.find(".parentlist-offer");
             var offered = details["offered"].split(";");
             var newoffered = cleanArray(offered);
@@ -7310,7 +7403,6 @@ function DisplayListings(data, parent) {
                 newofferchild.appendTo(parentlistoffer).show();
                 chilofferclone.hide();
             });
-
             var parentlistexpect = newchild.find("#parentlist-expect");
             var requested = details["requested"].split(";");
             var newrequested = cleanArray(requested);
@@ -7340,12 +7432,9 @@ function DisplayListings(data, parent) {
                 newexpectchild.appendTo(parentlistexpect).show();
                 childexpectclone.hide();
             });
-
-
             newchild.appendTo(parent).show();
             childclone.hide();
         });
-
     }
 }
 
@@ -7377,8 +7466,6 @@ function RegisterSempleMemberAndBusiness() {
         ContractPercentage, TotalInventory, MinInventoryPerc, WMMinInventory, ContractCharges];
     $(".register-semple-business-modal").modal("hide");
     GetData("User", "RegisterAndSendSempleContract", "LoadRegisterAndSendSempleContract", data);
-
-
 }
 
 function DisplayActivateUser(data) {
@@ -7541,7 +7628,6 @@ function DisplayAllBooks(data) {
             var newchild = childClone.clone();
             newchild.removeClass("clone");
             newchild.removeClass("hide");
-
             var image_url = extension + "global_assets/app/img/BookImages/book-" + id + ".png";
             if (imageExists(image_url) === false) {
                 image_url = extension + "global_assets/app/img/BookImages/book-0.png";
@@ -7587,7 +7673,6 @@ function BookDetailsDisplay(data, image_url, object) {
     $(".ObjectTagCounts").text(data["Tags"]);
     $(".ObjectBookmarkCounts").text(data["Bookmarks"]);
     $(".ObjectID").text(data["BookID"]);
-
     var status = data["Status"];
     if (status === 1 || status === "1") {
         $(".pubBooks").addClass("hide");
@@ -7650,7 +7735,6 @@ function SectionDetails(data) {
     $(".ObjectsectionBookTitle").text(data["sectionBookTitle"]);
     $(".ObjectIndexNumber").text(data["indexNum"]);
     $(".ObjectLastUpdatedDate").text(data["last_edited"]);
-
     $(".ObjectIndexCounts").text(data["Indexes"]);
     $(".ObjectCommentCounts").text(data["Comments"]);
     $(".ObjectBookmarkCounts").text(data["Bookmarks"]);
@@ -7669,7 +7753,6 @@ function SectionDetails(data) {
 function DisplayAllKeywords(data) {
     hideLoader();
     var parent = $("#AllKeywordList");
-
     if (data === "none") {
         parent.text("No Keywords");
     } else {
@@ -7898,7 +7981,6 @@ function DisplayWMObjectCategory(data) {
         $.each(data, function (id, det) {
             $("<option />", {text: capitaliseFirstLetter(det["name"]), value: id}).appendTo(par);
         });
-
     }
 }
 
@@ -7920,8 +8002,6 @@ function DisplayPermissions(data, parent) {
             var restrict = newchild.find(".permRestrictcheck");
             var setPerms = newchild.find("#setPerms");
             var setRestrict = newchild.find("#setRestrict");
-
-
             permName.click(function () {
                 UnBlockDetails(cardblock2);
                 cardblock3.addClass("hide");
@@ -7936,7 +8016,7 @@ function DisplayPermissions(data, parent) {
                 if (permPermitcheck.is(':checked')) {
                     CreatePermissionList(permid); //remove
                 } else {
-                    CreatePermissionList(permid);  //add 
+                    CreatePermissionList(permid); //add 
                 }
 
             });
@@ -7946,12 +8026,10 @@ function DisplayPermissions(data, parent) {
                 var name = details["permName"];
                 RemoveLoadedObjectPermission(id, name, lid, ltype);
             });
-
             setPerms.click(function () {
                 var extra = "Add " + details["permName"] + " as an additional permission to the list of assigned permissions";
                 SetSpecialPerms(loadedUserID, loadedUserType, "Permission", id, extra);
             });
-
             setRestrict.click(function () {
                 var extra = "Remove " + details["permName"] + " from the list of assigned permissions";
                 SetSpecialPerms(loadedUserID, loadedUserType, "Restriction", id, extra);
@@ -8053,7 +8131,6 @@ function DisplayPermDetails(details) {
             });
             newchild.appendTo(usergroupParent).show();
         });
-
         childClone.hide();
     }
 
@@ -8160,8 +8237,6 @@ function DisplayUserGroupList(data) {
         childClone.hide();
     }
     $(".TotalUgroupCount").text(counter);
-
-
     var par = $("#newPermGrpuserGroupList");
     par.empty();
     if (data !== "none") {
@@ -8173,8 +8248,8 @@ function DisplayUserGroupList(data) {
             //Use $option (with the "$") to see that the variable is a jQuery object
             var option = $(this).find('option:selected');
             //Added with the EDIT
-            var id = option.val();//to get content of "value" attrib
-            var text = option.text();//to get <option>Text</option> content
+            var id = option.val(); //to get content of "value" attrib
+            var text = option.text(); //to get <option>Text</option> content
             showLoader();
             GetData("User", "GetAllUsers", "LoadAllUserList", text);
         });
@@ -8210,8 +8285,6 @@ function DisplayPermParent(data, par) {
             newchild.appendTo(par);
         });
         ChildClone.hide();
-
-
     }
 }
 
@@ -8385,14 +8458,12 @@ function SetLCDAValues(section) {
     //var value = $("#pickup-lcda").children("option:selected").val();
     var data = [value, section, "LCDA"];
     GetData("User", "GetValues", "Show" + section + "Value", data);
-
 }
 
 function SetTownValues(section) {
     var value = $("#pickup-towns").children("option:selected").val();
     var data = [value, section, "Town"];
     GetData("User", "GetValues", "Show" + section + "Value", data);
-
 }
 
 function SetBstopValues(section) {
@@ -8405,7 +8476,6 @@ function SetStreetValues(section) {
     var value = $("#pickup-street").children("option:selected").val();
     var data = [value, section, "Street"];
     GetData("User", "GetValues", "Show" + section + "Value", data);
-
 }
 
 function SetLCDAValues1(section) {
@@ -8413,14 +8483,12 @@ function SetLCDAValues1(section) {
     //var value = $("#pickup-lcda").children("option:selected").val();
     var data = [value, section, "LCDA"];
     GetData("User", "GetValues", "Show" + section + "Value", data);
-
 }
 
 function SetTownValues1(section) {
     var value = $("#towns").children("option:selected").val();
     var data = [value, section, "Town"];
     GetData("User", "GetValues", "Show" + section + "Value", data);
-
 }
 
 function SetBstopValues1(section) {
@@ -8433,7 +8501,6 @@ function SetStreetValues1(section) {
     var value = $("#streets").children("option:selected").val();
     var data = [value, section, "Street"];
     GetData("User", "GetValues", "Show" + section + "Value", data);
-
 }
 
 function DisplayLGAValue(params) {
@@ -8554,8 +8621,8 @@ function DisplayNewSection(params) {
             pickupsection = "#pickup-street";
         }
     }
-    //$("<option>").val(value).text(Section_Name).attr('selected', 'selected').appendTo(pickupsection);
-    //pickupsection.append($('<option/>').val(value).text(Section_Name).attr('selected', 'selected'));
+//$("<option>").val(value).text(Section_Name).attr('selected', 'selected').appendTo(pickupsection);
+//pickupsection.append($('<option/>').val(value).text(Section_Name).attr('selected', 'selected'));
     $("<option>").val(value).text(Section_Name).attr('selected', 'selected').appendTo(pickupsection);
 }
 
@@ -8653,7 +8720,6 @@ function Displaylgas(data) {
     }
 
     hideLoader();
-
 }
 
 function DisplayLCDAs(data) {
@@ -9067,7 +9133,6 @@ function DisplayUserRequestedPemissions(data) {
 
             newchild.find(".newPermDateAndTime").text(details["DateTime"]);
             newchild.find(".newPermDateAndTime").text(details["DateTime"]);
-
             var approveNewPerm = newchild.find(".approveNewPerm");
             approveNewPerm.click(function () {
                 UpdateRequestedPermission(id, "Approve");
@@ -9105,17 +9170,13 @@ function DisplayStaffPermissions(data, parent) {
             var permName = newchild.find(".permName").val(details["permName"]);
             var setPerms = newchild.find("#setPerms");
             var setRestrict = newchild.find("#setRestrict");
-
-
             permName.click(function () {
                 DisplayPermDetails(details);
             });
-
             setPerms.click(function () {
                 var extra = "Add " + details["permName"] + " as an new permission to the list of " + StaffUserName + "'s assigned permissions";
                 SetSpecialPerms(StaffUserID, userid, id, extra, "Add");
             });
-
             setRestrict.click(function () {
                 var extra = "Remove " + details["permName"] + " from the list of " + StaffUserName + "'s assigned permissions";
                 SetSpecialPerms(StaffUserID, userid, id, extra, "Remove");
@@ -9186,7 +9247,6 @@ function DisplayAllRequestedPemissions(data) {
 
             newchild.find(".newPermDateAndTime").text(details["DateTime"]);
             newchild.find(".newPermDateAndTime").text(details["DateTime"]);
-
             var approveNewPerm = newchild.find(".approveNewPerm");
             approveNewPerm.click(function () {
                 UpdateRequestedPermission(id, "Approve");
@@ -9220,14 +9280,12 @@ function DisplayListOfServiceCategories(params) {
         var ChildClone = Parent.find(".clone");
         SubParent.find(".clearclone").remove();
         var SubClone = SubParent.find(".clone");
-
         $.each(params, function (key, value) //for each category
         {
             var ThisChild = ChildClone.clone();
             ThisChild.removeClass("clone");
             ThisChild.removeClass("hide");
             ThisChild.addClass("clearclone");
-
             ThisChild.find(".IDTB").val(value["ID"]);
             ThisChild.find(".TitleTB").val(value["Name"]);
             ThisChild.find(".DescriptionTB").val(value["Description"]);
@@ -9240,10 +9298,8 @@ function DisplayListOfServiceCategories(params) {
                     Child.removeClass("clone");
                     Child.removeClass("hide");
                     Child.addClass("clearclone");
-
                     Child.find(".NameTB").val(SubCategory["Name"]);
                     Child.find(".DescriptionTB").val(SubCategory["Description"]);
-
                     var Props = SubCategory["Properties"]; //Gets all properties of this sub category
                     var StringBuilder = "";
                     if (Props != null)
@@ -9263,7 +9319,6 @@ function DisplayListOfServiceCategories(params) {
                         });
                     }
                     Child.find(".PropertiesTB").val(StringBuilder);
-
                     Child.appendTo(SubParent).show();
                 });
                 SubClone.hide();
@@ -9287,7 +9342,6 @@ function DisplayShowAllServiceTypes(params) {
             ThisChild.removeClass("clone");
             ThisChild.removeClass("hide");
             ThisChild.addClass("clearclone");
-
             ThisChild.find(".ServiceNameTB").val(value["ServiceTypeName"]);
             var LastUpdated = value["LastUpdatedDate"] + " ";
             LastUpdated += value["LastUpdatedTime"];
@@ -9311,7 +9365,6 @@ function DisplayShowAllServiceTypes(params) {
                 });
             }
             ThisChild.find(".PropertiesTB").val(StringBuilder);
-
             ThisChild.appendTo(Parent).show();
         });
         ChildClone.hide();
@@ -9383,9 +9436,7 @@ function DisplayShowAllServiceListings(params) {
             ViewServiceDetailsModalButton.click(function ()
             {
                 DisplayServiceDetails(value);
-
             });
-
             ApproveListing.click(function () {
                 ApproveServiceList(data);
             });
@@ -9398,7 +9449,6 @@ function DisplayShowAllServiceListings(params) {
             ThisChild.appendTo(Parent).show();
         });
         ChildClone.hide();
-
         $("#MyTextBox").html("Services Listed on our market:");
     }
 }
@@ -9426,7 +9476,6 @@ function DisplayServiceDetails(value) {
         var propertyParent = $("#service-property");
         propertyParent.find(".clearclone").remove();
         var ChildClone = propertyParent.find(".cloneProp");
-
         $.each(prop, function (ind, option) {
             var ThisChild = ChildClone.clone();
             ThisChild.removeClass("cloneProp");
@@ -9460,7 +9509,6 @@ function DisplayServiceDetails(value) {
             ThisChild.appendTo(propertyParent).show();
         });
         ChildClone.hide();
-
         $(".approveServListing1").click(function () {
             var data = value["ID"];
             swal({
@@ -9642,9 +9690,7 @@ function DisplayListedServices(params) {
                 ViewServiceDetailsModalButton.click(function ()
                 {
                     DisplayServiceDetails(value);
-
                 });
-
                 ApproveListing.click(function () {
                     ApproveServiceList(data);
                 });
@@ -9659,7 +9705,6 @@ function DisplayListedServices(params) {
 
         });
         ChildClone.hide();
-
         $("#MyTextBox").html("Services Listed on our market:");
     }
 }
@@ -9733,9 +9778,7 @@ function DisplayUnlistedServices(params) {
                 ViewServiceDetailsModalButton.click(function ()
                 {
                     DisplayServiceDetails(value);
-
                 });
-
                 ApproveListing.click(function () {
                     var data = value["ID"];
                     ApproveServiceList(data);
@@ -9752,7 +9795,6 @@ function DisplayUnlistedServices(params) {
 
         });
         ChildClone.hide();
-
         $("#MyTextBox").html("Services Listed on our market:");
     }
 }
@@ -9837,7 +9879,6 @@ function DisplayShowAllServiceTypesBySubCategoryID(params) {
                             PropertyNameContainer.removeClass("clone");
                             PropertyNameContainer.removeClass("hide");
                             PropertyNameContainer.addClass("clearclone");
-
                             PropertyNameContainer.find(".PropertiesNameDiv").text((value["Name"]).trim()).addClass("bold");
                             PropertyNameContainer.find(".PropertiesNameTB").val((value["Name"]).trim()); //hidden textbox
                             var ValuesArray = value["Values"];
@@ -10052,7 +10093,6 @@ function showOnRight(value) {
             createRightButton(key, opt);
         }
     });
-
 }
 function createLeftButton(key, property) {
     var propParentLeft = $("#propColLeft");
@@ -10108,7 +10148,6 @@ function DisplayLoadCatNSubCatSelecet(params) {
         var opt = $('<option></options>').text(value["Name"]).val(value["ID"]);
         select.append(opt);
     });
-
     select.change(function () {
         var val = parseInt(select.val());
         var select2 = $("#typeSubCatID");
@@ -10208,7 +10247,6 @@ function DisplayMonetisationRules(params) {
             newCard.find(".monType").text(monType);
             parent.prepend(newCard);
         });
-
     }
 }
 function DisplayMonetisationApplications(params) {
@@ -10260,9 +10298,7 @@ function DisplayMonetisationApplications(params) {
                 $(".modal-view-monetisation-goods").on("show.bs.modal", function () {
                     MonetisationGoodsDetails(val);
                 }).modal("show");
-
             });
-
             ApproveMonetisation.click(function () {
                 swal({
                     title: "Approve this monetisation ?!",
@@ -10291,7 +10327,6 @@ function DisplayMonetisationApplications(params) {
                     }
                 });
             });
-
             DeclineMonetisation.click(function () {
                 swal({
                     title: "Decline Application ?!",
@@ -10320,7 +10355,6 @@ function DisplayMonetisationApplications(params) {
                     }
                 });
             });
-
             newChild.appendTo(monAppParent).show();
         });
         child.hide();
@@ -10363,7 +10397,6 @@ function MonetisationGoodsDetails(details) {
         newChild.appendTo(parent).show();
     });
     $("#gTotal").text(PriceFormat(grandTotal));
-
     var monetisationPercent = parseInt(details["MonetisationDetails"]["percent"]);
     var percentAmt = (monetisationPercent / 100) * grandTotal;
     var amtPaid = parseInt(details["amount_paid"]);
@@ -10379,7 +10412,6 @@ function MonetisationGoodsDetails(details) {
         $(".mon-verification").text("Goods were not verified by the agent.").removeClass("text-muted").addClass("text-danger");
     } else {
         $(".mon-verification").text("waiting for verification").removeClass("text-success").addClass("text-muted");
-
     }
 
 }
@@ -10667,13 +10699,9 @@ function DisplayApprovedMonApplications(params) {
                 $(".modal-view-monetisation-goods").on("show.bs.modal", function () {
                     MonetisationGoodsDetails(val);
                 }).modal("show");
-
             });
-
             ApproveMonetisation.hide();
-
             DeclineMonetisation.hide();
-
             newChild.appendTo(monAppParent).show();
         });
         child.hide();
@@ -10811,7 +10839,6 @@ function DisplayRequestedChanges(data) {
             var rejectChanges = newchild.find(".rejectchange");
             rejectChanges.click(function () {
                 RejectRequestedChanges(id, details["subject"], details["userid"], "Rejected");
-
             });
             newchild.appendTo(parent);
         });
@@ -10835,7 +10862,6 @@ function ApproveRequestedChanges(RequestedID, new_detail, subject, Status, Useri
             var data = [RequestedID, new_detail, subject, Status, Userid];
             showLoader();
             GetData("User", "ApproveRequestedChanges", "LoadGeneralAlert", data);
-
         } else {
             swal({
                 title: 'Error',
@@ -11277,6 +11303,16 @@ function linkToFunction(action, params) {
             DisplayPickUpCenters(params);
             break;
         }
+        case "LoadAddressTypes":
+        {
+            DisplayAddressTypes(params);
+            break;
+        }
+        case "LoadDeleteAddressTypes":
+        {
+            DisplayDeleteAddressTypes(params);
+            break;
+        }
         case "LoadNewDeals":
         {
             DisplayNewDeals(params);
@@ -11453,6 +11489,11 @@ function linkToFunction(action, params) {
         case "LoadPickUpCenterOption":
         {
             DisplayPickUpCenterOption(params);
+            break;
+        }
+        case "LoadAddAddressType":
+        {
+            DisplayAddAddressType(params);
             break;
         }
         case "LoadGetAllCategories":

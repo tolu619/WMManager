@@ -1,0 +1,24 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header bg-primary">
+            <h6 class="modal-title">Add New Address Type</h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <form class="" name="AddAddressType" data-parsley-validate="" id="">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="addresstype">Name</label>
+                    <input type="text" required class="form-control" id="addresstype-name" placeholder="Enter New Address Type e.g Home, School, etc ">
+                    <input id="checker" type="hidden" name="checker" value="add" />
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect right w-md" data-dismiss="modal" id="Cancel">Cancel</button>
+                <button type="submit" id="pickupbtn" class="btn btn-primary waves-effect waves-light left w-md">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
