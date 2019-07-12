@@ -433,7 +433,6 @@ function GreetingMessage() {
 function AppFunctions() {
     GetData("User", "GetMemberDetails", "LoadMemberDetails", userid);
     GetData("Messages", "GetUserUnreadMessages", "LoadUnreadMessages", userid);
-
 }
 
 function showLoader() {
