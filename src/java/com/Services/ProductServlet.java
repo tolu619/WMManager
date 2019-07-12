@@ -656,6 +656,7 @@ public class ProductServlet extends HttpServlet {
                     }
                     break;
                 }
+                
                 case "AddAddressTypes": {
                     String[] data = request.getParameterValues("data[]");
                     String addtype = data[0];
