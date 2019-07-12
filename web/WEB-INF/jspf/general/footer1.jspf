@@ -90,6 +90,10 @@
     <div  class="modal fade add-pickup-centre-modal">
         <%@include file="../users/shop/shop_add_pickup_center.jspf" %>
     </div>
+    </div>
+    <div  class="modal fade add-address-type-modal">
+        <%@include file="../users/shop/shop_add_address_type.jspf" %>
+    </div>
     <div  class="modal fade register-business-modal">
         <%@include file="../users/members/members_register_business.jspf" %>
     </div>

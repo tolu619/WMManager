@@ -23,6 +23,7 @@ nbproject/private/private.xml
 **/nbproject/ant-deploy.xml
 **/nbproject/genfiles.properties
 build/
+build.xml
 nbbuild/
 dist/
 nbdist/
