@@ -640,6 +640,45 @@ public class ProductServlet extends HttpServlet {
                     json = new Gson().toJson(result);
                     break;
                 }
+                case "GetAddressTypes": {
+                    HashMap<Integer, Object> List = new HashMap<>();
+                    ArrayList<Integer> IDs = GeneralAddressManager.GetAllAddressTypes();
+                    if (!IDs.isEmpty()) {
+                        for (int id : IDs) {
+                            HashMap<String, String> addtypes = GeneralAddressManager.GetAddressTypes(id);
+                            if (!addtypes.isEmpty()) {
+                                List.put(id, addtypes);
+                            }
+                        }
+                        json = new Gson().toJson(List);
+                    } else {
+                        json = new Gson().toJson("empty");
+                    }
+                    break;
+                }
+                
+                case "AddAddressTypes": {
+                    String[] data = request.getParameterValues("data[]");
+                    String addtype = data[0];
+                    result = GeneralAddressManager.AddAddressTypes(addtype);
+                    json = new Gson().toJson(result);
+                    break;
+                }
+                case "EditAddressTypes": {
+                    String[] data = request.getParameterValues("data[]");
+                    int ID = Integer.parseInt(data[0].trim());
+                    String addtype = data[1];
+                    result = GeneralAddressManager.EditAddressTypes(ID, addtype);
+                    json = new Gson().toJson(result);
+                    break;
+                }
+                case "DeleteAddressTypes": {
+                    String[] data = request.getParameterValues("data[]");
+                    int ID = Integer.parseInt(data[0].trim());
+                    result = GeneralAddressManager.DeleteAddressTypes(ID);
+                    json = new Gson().toJson(result);
+                    break;
+                }
 
             }
 
