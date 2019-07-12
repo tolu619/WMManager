@@ -8,6 +8,9 @@ target/
 # End of https://www.gitignore.io/api/java-web
 # NetBeans specific #
 nbactions.xml
+build.xml
+lib/javaee-endorsed-api-7.0/*
+Lib/CopyLibs-2/*
 nb-configuration.xml
 /src/**/tmp # exclude any /tmp files or folders at any level in the /src/ folder.
 **/nbproject/private/
