@@ -1699,6 +1699,11 @@ function btnEvents() {
     $(".prof_user_mon_apps").click(function(){
         window.location = extension + "ControllerServlet?action=Link&type=MonetisationUserApplications&actualUserID=" + actualuserid;
     });
+    $(".monPay").click(function () {
+        var data = $("#monSubmitData").val();
+        data = JSON.parse(data);
+        GetData("Schemes", "SubmitMonetisationApplication", "LoadSubmitMonApp", data);
+    });
     //Monetisation
 }//end of btnEvents
 
@@ -10807,15 +10812,16 @@ function monStep3() {
         alert("You have not selected a rule");
     } else {
         var schmVal = $(".schmVal").val();
+        $(".monSteps").text("Step 3");
+        $(".monStep2").addClass("hide");
+        $(".monStep3").removeClass("hide");
+        $(".monStep4").addClass("hide");
         if (schmVal === "Monetisation") {
             GetData("Product", "GetUserProducts", "LoadUserProductsMon", actualuserid);
         } else if (schmVal === "Mobilisation" || schmVal === "Commoditisation") {
             //GetData("Product", "GetUserProducts", "LoadUserProductsMon", userid);
         }
-        $(".monSteps").text("Step 3");
-        $(".monStep2").addClass("hide");
-        $(".monStep3").removeClass("hide");
-        $(".monStep4").addClass("hide");
+
     }
 
 }
@@ -10868,10 +10874,9 @@ function monStep4() {
             $(".monStep3").addClass("hide");
             $(".monStep4").removeClass("hide");
             var data = [StringifiedValue, monRuleID, actualuserid];
-            $(".monPay").click(function () {
-                //payWithPaystack(userid, appFee, loginuseremail, actualamount + ":" + appFee, "Monetisation Application Fee", StringifiedValue + ";" + monRuleID);
-                GetData("Schemes", "SubmitMonetisationApplication", "LoadSubmitMonApp", data);
-            });
+            data = JSON.stringify(data);
+            $("#monSubmitData").val(data);
+            
         }
 
     }
@@ -10895,11 +10900,15 @@ function DisplaySubmitMonApplication(params){
 function DisplayUserProductsMon(params) {
     var parent = $("#monGoodParent");
     parent.find(".clone-child").remove();
+    var selectedMonRule = $("input[name='monRuleSelected']:checked").val();
+    var monRule = JSON.parse(selectedMonRule);
+    var minValue = monRule["min_value"];
     if (params === "none") {
         $("<div />", {class: "padding", text: "No Product"}).appendTo(parent);
     } else {
         var count = 0;
         var childclone = parent.find(".monGoodClone");
+        var keys = Object.keys(params);
         $.each(params, function (id, details) {
             var status = details["status"];
             if (status === "Accepted") {
@@ -10913,28 +10922,35 @@ function DisplayUserProductsMon(params) {
                     image_url = extension + "global_assets/app/img/ProductImages/product-0.png";
                 }
                 newchild.find(".monGoodCount").text(count);
+                newchild.find(".MonGoodProductId").addClass("MonGoodProductId"+count).val(id);
                 newchild.find(".monGoodImage").attr("src", image_url);
                 newchild.find(".monGoodImage").attr("alt", "Product " + count + " Listied by " + id + " on the wealth market");
                 var name = capitaliseFirstLetter(details["product_name"]);
-                newchild.find(".monGoodName").text(name);
+                newchild.find(".monGoodName").addClass("monGoodName"+id).text(name);
                 newchild.find(".monGoodDesc").text(details["description"]);
-                var checkid = "check" + id;
+                var checkid = "check-" + id;
                 newchild.find(".monGoodCheck").attr("id", checkid);
+                newchild.find(".monGoodCheck").addClass("MonGoodCheckbox").addClass("MonGoodCheckbox"+id);
                 newchild.find(".monGoodCheckLabel").attr("for", checkid);
+                newchild.find(".monGoodQuantity").addClass("monGoodQuantity"+id);
+                newchild.find(".monGoodSubtotal").addClass("monGoodSubtotal"+id);
                 var price = details["proposed_price"];
                 var newprice = PriceFormat(price);
                 newchild.find(".monGoodPrice").text(newprice);
+                newchild.find(".hiddenMonPrice").addClass("hiddenMonPrice"+id).val(price);
                 var Quantity = parseInt(details["quantity"]);
+                newchild.find(".hiddenListedQuantity").addClass("hiddenListedQuantity"+id).val(Quantity);
                 var subTotal;
                 if (Quantity > 0) {
                     newchild.find(".monGoodQuantity").text(Quantity).val(Quantity).attr("max", Quantity);
                     subTotal = Quantity * parseInt(price);
-                    newchild.find(".monGoodSubtotal").text(subTotal);
+                    newchild.find(".monGoodSubtotal"+id).text(PriceFormat(subTotal));
+                    newchild.find(".hiddenMonSubtotal").addClass("hiddenMonSubtotal"+id).val(subTotal);
                 } else {
                     newchild.find(".monGoodQuantity").text("Invalid").prop("disabled", true);
                 }
 
-                var quantInput = newchild.find(".monGoodQuantity");
+                var quantInput = newchild.find(".monGoodQuantity"+id);
                 var goodChecked = newchild.find("#" + checkid);
                 quantInput.change(function () {
                     var quant = parseInt($(this).val());
@@ -10943,39 +10959,77 @@ function DisplayUserProductsMon(params) {
                     } else {
                         var amt = parseInt(price);
                         var subTtl = quant * amt;
-                        newchild.find(".monGoodSubtotal").text(subTtl);
-                        goodChecked.click();
+                        newchild.find(".monGoodSubtotal"+id).text(PriceFormat(subTtl));
+                        newchild.find(".hiddenMonSubtotal"+id).val(subTtl);
+                        //goodChecked.click();
                     }
                 });
                 goodChecked.click(function () {
-                    var quant = parseInt(quantInput.val());
-                    var Total = parseInt($("#gTotal").text());
-                    if (this.checked) {
-                        var arr = new Array();
-                        arr[0] = id;
-                        arr[1] = name;
-                        arr[2] = parseInt(price);
-                        arr[3] = parseInt(newchild.find(".monGoodQuantity").val());
-                        arr[4] = parseInt(newchild.find(".monGoodSubtotal").text());
-                        var value = JSON.stringify(arr);
-                        $(this).val(value);
-                        var vl = $(this).val();
-                        vl = JSON.parse(vl);
-                        alert("Item Added Successfully \nName: " + details["product_name"] + "\nQuantity = " + quant);
-                        newchild.find(".monGoodQuantity").prop('disabled', true);
-                        Total += subTotal;
-
-                        $("#gTotal").text(Total);
-                    } else {
-                        newchild.find(".monGoodQuantity").prop('disabled', false);
-                        Total -= subTotal;
-                        $("#gTotal").text(Total);
-                    }
+                    var checked = !this.checked;
+                    var thisClass = ".MonGoodCheckbox"+id;
+                    MarkCheck(id, thisClass, checked, minValue);
                 });
                 newchild.appendTo(parent).show();
             }
         });
-
+        $(".selectAllMonProducts").click(function(){
+            $(".MonGoodCheckbox").each(function() {
+                var thisId = $(this).attr('id');
+                var id = thisId.split("-")[1];
+                var checked = this.checked;
+                var thisClass = ".MonGoodCheckbox"+id;
+                MarkCheck(id, thisClass, checked, minValue);
+                this.checked = !this.checked;
+            });
+        });
+    }
+}
+function MarkCheck(id, thisClass, checked, minValue){
+    minValue = parseInt(minValue);
+    var quant = parseInt($(".monGoodQuantity"+id).val());
+    var Total = parseInt($("#gTotalHidden").val());
+    var subTotal = parseInt($(".hiddenMonSubtotal"+id).val());
+    var image_url = extension + "global_assets/app/img/UnlistedProductImages/product-" + id + ".png";
+    if (imageExists(image_url) === false) {
+        image_url = extension + "global_assets/app/img/ProductImages/product-0.png";
+    }
+    if (!checked) {
+        var arr = new Array();
+        arr[0] = id;
+        arr[1] = $(".monGoodName"+id).text();
+        arr[2] = parseInt($(".hiddenMonPrice"+id).val());
+        arr[3] = parseInt($(".monGoodQuantity"+id).val());
+        arr[4] = subTotal;
+        var value = JSON.stringify(arr);
+        $(thisClass).val(value);
+        var vl = $(thisClass).val();
+        vl = JSON.parse(vl);
+        
+        
+        $(".monGoodQuantity"+id).prop('disabled', true);
+        Total += subTotal;
+        $("#gTotalHidden").val(Total);
+        $("#gTotal").text(PriceFormat(Total));
+        $.notify({
+            title: "<strong>Name:</strong> "+vl[1],
+            message: "<br/> <strong>Quantities added:</strong> "+quant+"<br/><strong>SubTotal:</strong> "+PriceFormat(vl[4])+"<hr/><strong>Total Added: </strong>"+PriceFormat(Total)+"<br/> <strong>Minimum Value:</strong> "+PriceFormat(minValue)
+        },{
+            type: 'success'
+        });
+    } else {
+        $(".monGoodQuantity"+id).prop('disabled', false);
+        Total -= subTotal;
+        $("#gTotalHidden").val(Total);
+        $("#gTotal").text(PriceFormat(Total));
+        $.notify({
+            title: "<strong>Total:</strong>",
+            message: PriceFormat(Total),
+            allow_dismiss: true,
+            placement: {
+                from: 'top',
+                align: 'left'
+            }
+        });
     }
 }
 function DisplayMonetisationAppFee(data) {

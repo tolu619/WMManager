@@ -18,15 +18,6 @@
 
                 <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
             </div>
-
-            <div class="header-elements d-none">
-                <div class="breadcrumb justify-content-center cursor-pointer">
-                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=MyMonetisationApplications" class="breadcrumb-elements-item">
-                        <i class="icon-hand mr-2"></i>
-                        My Monetisation Applications
-                    </a>
-                </div>
-            </div>
         </div>
     </div>
     <!-- /page header -->
@@ -83,7 +74,7 @@
 
 
                 <fieldset class="monStep2 mt-3 hide">
-                    <h5>Select Rule</h5>
+                    <h5>Select Monetisation Option</h5>
                     <div class="row">
                         <div class="col-md-1">
                             
@@ -128,7 +119,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-around">
-                        <button type="button" class="btn btn-sm btn-danger" onclick='$(".monStep2").addClass("hide"); $(".monStep1").show();'><< Back </button>
+                        <button type="button" class="btn btn-sm btn-danger" onclick='window.location.reload();'><< Back </button>
                         <button type="button" class="btn btn-sm btn-primary" onclick='monStep3()'>Next >></button>
                     </div>
                 </fieldset>
@@ -138,6 +129,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
+                                <button type="button" class="btn btn-sm ml-auto btn-outline-primary selectAllMonProducts">Select all Products</button>
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -152,6 +144,7 @@
                                     </thead>
                                     <tbody id="monGoodParent">
                                         <tr class="monGoodClone hide">
+                                            <input type="hidden" class="MonGoodProductId">
                                             <td class="monGoodCount rm">1</td>
                                             <td class="p-1 rm" style="width: 45px;">
                                                 <a href="#">
@@ -167,18 +160,25 @@
                                             <td class="pt-2 pb-1 rm">
                                                 <div class="form-group">
                                                     <input type="number" class="form-control-styled-lg w-100 monGoodQuantity" id="" min="1">
+                                                    <input type="hidden" class="hiddenMonQuantity">
+                                                    <input type="hidden" class="hiddenListedQuantity">
                                                 </div>
                                             </td>
-                                            <td class="monGoodPrice rm">N25,000</td>
+                                            <input type="hidden" class="hiddenMonPrice">
+                                            <td class="monGoodPrice rm">
+                                                N25,000
+                                            </td>
                                             <td class="tm1">
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input monGoodCheck" name="monSelectedGoods" id="try">
                                                     <label class="custom-control-label monGoodCheckLabel" for="try">Add</label>
                                                 </div>
                                             </td>
+                                            <input type="hidden" class="hiddenMonSubtotal">
+                                            <input type="hidden" class="monCheckedStore"/>
                                             <td class="monGoodSubtotal total">
                                                 913
-                                                <input type="hidden" class="monCheckedStore"/>
+                                                
                                             </td>
                                             
                                         </tr>
@@ -199,6 +199,7 @@
                                             <td class="">
                                                 Total:
                                             </td>
+                                            <input type="hidden" id="gTotalHidden" value="0">
                                             <td id="gTotal">
                                                 0
                                             </td>
@@ -209,7 +210,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-around mt-3">
-                        <button type="button" class="btn btn-sm btn-danger" onclick='$(".monStep3").addClass("hide"); $(".monStep2").show();'><< Back </button>
+                        <button type="button" class="btn btn-sm btn-danger" onclick='window.location.reload();'><< Back </button>
                         <button type="button" class="btn btn-sm btn-primary" onclick='monStep4()'>Next >></button>
                     </div>
                 </fieldset>
@@ -248,6 +249,7 @@
                                             </tbody>
                                         </table>
                                         <div class="d-flex justify-content-around mt-3">
+                                            <input type="hidden" value="" id="monSubmitData"/>
                                             <button type="button" class="btn btn-sm btn-danger" onclick='$(".monStep4").addClass("hide"); $(".monStep3").removeClass("hide");'><< Back </button>
                                             <button type="button" class="btn btn-sm btn-primary hide monPay">Submit <i class="icon-cash4"></i> </button>
                                         </div>
