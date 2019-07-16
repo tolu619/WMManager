@@ -321,6 +321,16 @@ public class LinksServlet extends HttpServlet {
                     response.sendRedirect("pages/users/schemes/monetisation_verify.jsp");
                     break;
                 }
+                case "MonetisationApplication": {
+                    session.setAttribute("actualUserID", request.getParameter("actualUserID"));
+                    response.sendRedirect("pages/users/schemes/monetisation_application.jsp");
+                    break;
+                }
+                case "MonetisationUserApplications": {
+                    session.setAttribute("actualUserID", request.getParameter("actualUserID"));
+                    response.sendRedirect("pages/users/schemes/my_monetisation_applications.jsp");
+                    break;
+                }
 
                 case "Search": {
                     session.setAttribute("categoryID", request.getParameter("cat"));
