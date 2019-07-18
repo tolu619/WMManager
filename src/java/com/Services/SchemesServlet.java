@@ -139,9 +139,14 @@ public class SchemesServlet extends HttpServlet {
                     String ruleName = data[1].trim();
                     String ruleDesc = data[2].trim();
                     int minMonVal = Integer.parseInt(data[3].trim());
-                    int percent = Integer.parseInt(data[4].trim());
-                    int monMaxstage = Integer.parseInt(data[5].trim());
-                    int monType = Integer.parseInt(data[6].trim());
+                    int maxMonVal = Integer.parseInt(data[4].trim());
+                    int percentToMonetise = Integer.parseInt(data[5].trim());
+                    int ContractTenor = Integer.parseInt(data[6].trim());
+                    String appFeeDetail = data[7].trim();
+                    String chargeDetail = data[8].trim();
+                    String monRuleAccesibleGroups = data[9].trim();
+                    String monRuleDependentMonetisations = data[10].trim();
+                    int visibility = Integer.parseInt(data[11].trim());
                     result = GeneralSchemesManager.CreateMonetisationRule(schemeType, ruleName, ruleDesc, minMonVal, percent, monMaxstage, monType);
                     json = new Gson().toJson(result);
                     break;
@@ -269,6 +274,11 @@ public class SchemesServlet extends HttpServlet {
                     HashMap<String, HashMap<String, Object>> applications = GeneralSchemesManager.GetUserMonetisationApplications(data);
                     json = new Gson().toJson(applications);
                     break;
+                }
+                case "GetNewMonetisationRuleparameters":{
+//                    HashMap<String, HashMap<String, Object>> applications = GeneralSchemesManager.GetUserMonetisationApplications(data);
+//                    json = new Gson().toJson(applications);
+//                    break;
                 }
             }
             response.setContentType("application/json");

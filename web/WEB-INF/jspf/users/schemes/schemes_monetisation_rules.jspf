@@ -21,7 +21,7 @@
 
             <div class="header-elements d-none">
                 <div class="breadcrumb justify-content-center cursor-pointer">
-                    <a data-toggle="modal" data-target=".modal-new-monetisation-rule" class="breadcrumb-elements-item text-blue-400">
+                    <a data-toggle="modal" data-target=".modal-new-monetisation-rule" class="create-new-monetisation-rule-modal breadcrumb-elements-item text-blue-400">
                         <i class="icon-hand mr-2"></i>
                         New Rule
                     </a>

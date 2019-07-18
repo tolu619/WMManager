@@ -1671,16 +1671,30 @@ function btnEvents() {
         GetData("User", "GetBusinessTypes", "LoadBusinessTypes", data);
     });
     //Monetisation
-    $("Form[name=NewMonetisationRule]").submit(function () {
+    $("Form[name=NewMonetisationRule]").submit(function (e) {
         var schemeType = $("#schemeType").val();
         var ruleName = $("#ruleName").val();
         var ruleDesc = $("#ruleDesc").val();
         var minMonVal = $("#minMonVal").val();
-        var percent = $("#monPercent").val();
-        var monMaxstage = $("#monMaxstage").val();
-        var monType = $("#monType").val();
-        var data = [schemeType, ruleName, ruleDesc, minMonVal, percent, monMaxstage, monType];
+        var maxMonVal = $("#maxMonVal").val();
+        var percentToMonetise = $("#monRulePercentMonetised").val();
+        var ContractTenor = $("#monRuleExpirationInDays").val();
+        var appFeeType = $("input[name='monRuleAppFeeType']:checked").val();
+        var appFeeAmount = $("#monRuleApplyFeeAmount").val();
+        var appFeeDetail = appFeeType+"-"+appFeeAmount;
+        var chargeType = $("input[name='monRuleChargesType']:checked").val();
+        var chargeAmount = $("#monRuleChargeAmount").val();
+        var chargeDetail = chargeType+"-"+chargeAmount;
+        var monRuleAccesibleGroups = $("#monRuleAccesibleGroups").val();
+        var monRuleDependentMonetisations = $("#monRuleDependentMonetisations").val();
+        var visibility = 1;
+        if(!$('#monRuleVisibile').is(":checked")){
+            visibility = 0;
+        }
+        var data = [schemeType, ruleName, ruleDesc, minMonVal, maxMonVal, percentToMonetise, ContractTenor, appFeeDetail, chargeDetail,
+        monRuleAccesibleGroups, monRuleDependentMonetisations, visibility];
         GetData("Schemes", "CreateNewMonetisationRule", "LoadNewMonetisationRule", data);
+        e.preventDefault();
     });
     $(".callApprovedMonetisations").click(function () {
         var data = [1, "Approved"];
@@ -1703,6 +1717,11 @@ function btnEvents() {
         var data = $("#monSubmitData").val();
         data = JSON.parse(data);
         GetData("Schemes", "SubmitMonetisationApplication", "LoadSubmitMonApp", data);
+    });
+    $(".create-new-monetisation-rule-modal").click(function(){
+        $(".modal-new-monetisation-rule").on("show.bs.modal", function(){
+            //GetData("Schemes", "GetNewMonetisationRuleparameters", "LoadNewMonetisationRuleparameters"); 
+        }).modal("show");
     });
     //Monetisation
 }//end of btnEvents
