@@ -2785,7 +2785,7 @@ function semplePageFunctions() {
 }
 
 function monetisationPageFunctions() {
-    GetData("Schemes", "GetAllMonetisationRules", "LoadMonetisationRules");
+    GetData("Schemes", "GetAllMonetisationRules", "LoadSystemMonetisationRules");
     GetData("Schemes", "GetAllMonetisationApplication", "LoadMonetisationApplications");
     GetData("Schemes", "GetAllMonApplyPendingVerification", "LoadMonApplyPendingVerification");
     GetData("Schemes", "GetMyMonApplications", "LoadMyMonApplications", actualuserid);
@@ -10283,7 +10283,7 @@ function DisplayLoadNewServiceType(params) {
 
 
 //Monetisation
-function DisplayNewMonetisationRule(params) {
+function DisplayMonetisationRules(params) {
     alert(params);
     if (params === "success") {
         swal({
@@ -10311,7 +10311,7 @@ function DisplayNewMonetisationRule(params) {
         });
     }
 }
-function DisplayMonetisationRules(params) {
+function DisplaySystemNewMonetisationRule(params) {
     if (params != "nuil") {
         var parent = $("#monParent");
         var childCard = parent.find(".monCard");
@@ -12188,9 +12188,9 @@ function linkToFunction(action, params) {
             DisplayNewMonetisationRule(params);
             break;
         }
-        case "LoadMonetisationRules":
+        case "LoadSystemMonetisationRules":
         {
-            DisplayMonetisationRules(params);
+            DisplaySystemNewMonetisationRule(params);
             break;
         }
         case "LoadMonetisationApplications":
