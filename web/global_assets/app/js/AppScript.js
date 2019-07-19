@@ -10332,27 +10332,78 @@ function DisplayMonetisationRules(params) {
 }
 function DisplaySystemNewMonetisationRule(params) {
     if (params != "nuil") {
-        var parent = $("#monParent");
-        var childCard = parent.find(".monCard");
+        var parent = $("#MonOptionParent");
+        var childCard = parent.find(".MonOptionClone");
         $.each(params, function (key, value) {
             var title = key.split("-")[1];
             //key === "monetisation"? CloneMonetisation(value): key === "commoditisation"? CloneCommoditisation(value): CloneMobilisation(value);
             var newCard = childCard.clone();
             newCard.removeClass("hide");
-            newCard.removeClass("monCard");
+            newCard.removeClass("MonOptionClone");
             var bg = "bg-secondary-400";
-            var monType = "Full";
-            var minVal = PriceFormat(parseInt(value["min_value"]));
+            var minVal = PriceFormat(parseInt(value["MinimumValue"]));
+            var maxVal = PriceFormat(parseInt(value["MaximumValue"]));
+            var PercentageMonetisation = parseInt(value["PercentageMonetisation"])+"%";
+            var ExpiryDateInDays = parseInt(value["ExpiryDateInDays"]);
+            var ChargeAmt = parseInt(value["ChargeAmt"]);
+            var ApplicationFeeAmt = parseInt(value["ApplicationFeeAmt"]);
+            var ChargeType = value["ChargeType"];
+            var ApplicationFeeType = value["ApplicationFeeType"];
+            var RuleName = value["RuleName"];
+            var RuleDescription = value["RuleDescription"];
+            
+            
+            var AccessibleGroups = value["AccessibleGroups"];
+            var DependentMonetisations = value["DependentMonetisations"];
+            var chkAcc = AccessibleGroups[0];
+            var chkDpd = DependentMonetisations[0];
+            
+            var visibility = "ON";
+            var Visibility = parseInt(value["Visibility"]);
+            Visibility = 1? visibility = "ON" : visibility = "OFF";
             title === "Monetisation" ? bg = "bg-violet-400" : title === "Commoditisation" ? bg = "bg-brown-400" : bg = "bg-primary-400";
-            value["mon_type"] === 1 ? monType = "Full" : value["mon_type"] === 2 ? monType = "Half" : monType = "Quater";
-            newCard.addClass(bg);
-            newCard.find(".monGroup").text(title);
-            newCard.find(".monTitle").text(value["rule_name"]);
-            newCard.find(".monDesc").text(value["rule_desc"]);
-            newCard.find(".monMinVal").text(minVal);
-            newCard.find(".monPercent").text(value["percent"] + "%");
-            newCard.find(".monCycle").text(value["max_stage"]);
-            newCard.find(".monType").text(monType);
+            newCard.find(".card-heading0").addClass(bg);
+            newCard.find(".MonOptionType").text(title);
+            newCard.find(".MonOptionVisibility").text(visibility);
+            newCard.find(".MonOptionName").text(RuleName);
+            newCard.find(".MonOptionDesc").text(RuleDescription);
+            newCard.find(".MonOptionMinVal").text(minVal);
+            newCard.find(".MonOptionMaxVal").text(maxVal);
+            newCard.find(".MonOptionPercentMonetised").text(PercentageMonetisation);
+            newCard.find(".MonOptionAppFeeType").text(ApplicationFeeType);
+            newCard.find(".MonOptionAppFeeAmt").text(ApplicationFeeAmt);
+            newCard.find(".MonOptionExpDays").text(ExpiryDateInDays);
+            newCard.find(".MonOptionChargesType").text(ChargeType);
+            newCard.find(".MonOptionChargesAmt").text(ChargeAmt);
+            if(chkAcc === "0-none"){
+                newCard.find(".MonOptionNoAcc").removeClass("hide");
+            }else{
+                var accParent = newCard.find(".MonOptionAccParent");
+                var accClone = newCard.find(".MonOptionAccClone");
+                $.each(AccessibleGroups, function(groups){
+                    var newAccClone = accClone.clone();
+                    newAccClone.removeClass("hide");
+                    newAccClone.removeClass("MonOptionAccClone");
+                    newAccClone.text(groups.split("-")[1]);
+                    accParent.append(newAccClone);
+                });
+                accParent.removeClass("hide");
+            }
+            if(chkDpd === "0-none"){
+                newCard.find(".MonOptionNoDpdc").removeClass("hide");
+            }else{
+                var dpdParent = newCard.find(".MonOptionDpdcParent");
+                var dpdClone = newCard.find(".MonOptionAccClone");
+                $.each(DependentMonetisations, function(options){
+                    var newDpdClone = dpdClone.clone();
+                    newDpdClone.removeClass("hide");
+                    newDpdClone.removeClass("MonOptionAccClone");
+                    newDpdClone.text(options.split("-")[1]);
+                    dpdParent.append(newDpdClone);
+                });
+                dpdParent.removeClass("hide");
+            }
+            
             parent.prepend(newCard);
         });
     }

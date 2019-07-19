@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -143,11 +145,14 @@ public class SchemesServlet extends HttpServlet {
                     int percentToMonetise = Integer.parseInt(data[5].trim());
                     int ContractTenor = Integer.parseInt(data[6].trim());
                     String appFeeDetail = data[7].trim();
+                    appFeeDetail = appFeeDetail.split("-")[0]+"~"+appFeeDetail.split("-")[1];
                     String chargeDetail = data[8].trim();
+                    chargeDetail = chargeDetail.split("-")[0]+"~"+chargeDetail.split("-")[1];
                     String monRuleAccesibleGroups = data[9].trim();
                     String monRuleDependentMonetisations = data[10].trim();
                     int visibility = Integer.parseInt(data[11].trim());
-                    result = GeneralSchemesManager.CreateMonetisationRule(schemeType, ruleName, ruleDesc, minMonVal, percent, monMaxstage, monType);
+                    result = GeneralSchemesManager.CreateMonetisationRule(schemeType, ruleName, ruleDesc, minMonVal, maxMonVal, percentToMonetise, 
+                            ContractTenor, appFeeDetail, chargeDetail, monRuleAccesibleGroups, monRuleDependentMonetisations, visibility);
                     json = new Gson().toJson(result);
                     break;
                 }
@@ -206,60 +211,6 @@ public class SchemesServlet extends HttpServlet {
                     break;
                 }
                 //portal features
-                case "ApplyForMonetisation":{
-                    String[] data = request.getParameterValues("data[]");
-                    String userid = data[0].trim();
-                    String actualamount = data[1].trim();
-                    int AmountPD = Integer.parseInt(actualamount.split(":")[1]);
-                    actualamount = actualamount.split(":")[0];
-                    String trxref = data[2].trim();
-                    String transcode = data[3].trim();
-                    String paytype = data[4].trim();
-                    String AppData = data[5].trim();
-                    int MonRuleId = Integer.parseInt(AppData.split(";")[1]);
-                    String appData = AppData.split(";")[0];
-                    int UserID = Integer.parseInt(userid);
-                    int WarrantsExpected = Integer.parseInt(actualamount);
-                    String message = "";
-                    /*String payresult = PayStackManager.getInstance().PayStackPay(trxref);
-                    JSONParser parser = new JSONParser();
-                    JSONObject jsonParameter = null;
-                    try {
-                        jsonParameter = (JSONObject) parser.parse(payresult);
-                    } catch (Exception e) {
-                        message = "Your payment validation was not successful, Please contact the admin if your account was debited and send prove of payment!";
-                        json1 = new Gson().toJson(paytype);
-                        json2 = new Gson().toJson(result);
-                        String json3 = new Gson().toJson(message);
-                        json = "[" + json1 + "," + json2 + "," + json3 + "]";
-                        e.printStackTrace();
-                    }
-                    String Status = jsonParameter.get("status").toString();*/
-                    String Status = "true";
-                    if (Status.equals("false")) {
-                        message = "Your payment validation was not successful, Please contact the admin if your account was debited and send prove of payment!";
-                        json1 = new Gson().toJson(paytype);
-                        json2 = new Gson().toJson(result);
-                        json3 = new Gson().toJson(message);
-                        json = "[" + json1 + "," + json2 + "," + json3 + "]";
-
-                    }else if (Status.equals("true")) {
-                        if (paytype.equals("Monetisation Application Fee")) {
-                            result = GeneralSchemesManager.LogMonetisationApplication(MonRuleId, appData, UserID, AmountPD, WarrantsExpected, Status, transcode);
-                            if(result.equals("success")){
-                                message = "Successful";
-                            }else{
-                                message = "Failed";
-                            }
-                            
-                            json1 = new Gson().toJson(paytype);
-                            json2 = new Gson().toJson(result);
-                            json3 = new Gson().toJson(message);
-                            json = "[" + json1 + "," + json2 + "," + json3 + "]";
-                        }
-                    }
-                    break;
-                }
                 case "SubmitMonetisationApplication":{
                     String[] data = request.getParameterValues("data[]");
                     String appData = data[0];
