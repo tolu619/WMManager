@@ -3,7 +3,7 @@
 <!-- Main navbar -->
 <div class="navbar navbar-expand-md navbar-dark">
     <div class="navbar-brand">
-       <a href="http://thewealthmarket.com/" class="d-inline-block" target="_blank">
+       <a href="/WMHome" class="d-inline-block" target="_blank">
             <img src="../../global_assets/images/wm/wm-name3.png" alt="">
         </a>
     </div>
@@ -53,11 +53,11 @@
                         <!-- Buttons -->
                         <div class="row">
                             <div class="col-sm-6">
-                                <a href="http://thewealthmarket.com/" class="btn btn-success btn-block"><i class="icon-home4 mr-2"></i> Home</a>
+                                <a href="/WMHome/"  target="_blank" class="btn btn-success btn-block"><i class="icon-home4 mr-2"></i> Home</a>
                             </div>
 
                             <div class="col-sm-6">
-                                <a href="http://thewealthmarket.com/WMarketManager/" class="btn btn-dark btn-block mt-3 mt-sm-0"><i class="icon-circle-right2 mr-2"></i> Sign In</a>
+                                <a href="/WMManager/" target="_blank"  class="btn btn-dark btn-block mt-3 mt-sm-0" ><i class="icon-circle-right2 mr-2"></i> Sign In</a>
                             </div>
                         </div>
                         <!-- /buttons -->
