@@ -6939,16 +6939,62 @@ function DisplayPlacedOrderDetails(data) {
                 $(".orderDetActn").show();
             } else if (stats === "Shipped") {
                 ordercnt.addClass("badge badge-primary  badge-rounded").text("Shipped");
-                $("#cancelOrder").removeClass("hide");
-                $("#cancelOrder").show();
-                $("#confirmOrder").addClass("hide");
-                $("#confirmOrder").hide();
-                $("#confirmDelivery").removeClass("hide");
-                $("#confirmDelivery").show();
-                $(".orderDetsupName").removeClass("hide");
-                $(".orderDetsupName").show();
-                $(".orderDetActn").removeClass("hide");
-                $(".orderDetActn").show();
+                function shipped() {
+                    $("#cancelOrder").removeClass("hide");
+                    $("#cancelOrder").show();
+                    $("#confirmOrder").addClass("hide");
+                    $("#confirmOrder").hide();
+                    $("#confirmDelivery").removeClass("hide");
+                    $("#confirmDelivery").show();
+                    $(".orderDetsupName").removeClass("hide");
+                    $(".orderDetsupName").show();
+                    $(".orderDetActn").removeClass("hide");
+                    $(".orderDetActn").show();
+                }
+                //function to allow verifier to confirm delivery or not using his location
+                navigator.geolocation.getCurrentPosition(
+                        function success(position) {
+                            $.ajax('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + position.coords.latitude + ',' + position.coords.longitude + '&key=AIzaSyCNBHWAnRGzp1k_q6pev8LcIW8hWnXeKic')
+                                    .then(
+                                            function success(response) {
+                                                if (response.status === "OK") {
+                                                    var BusStop = response.results[0].address_components[0].long_name;
+//                                                    var BusStop = "Suberu Town";
+                                                    if (order["deliveryaddress"].includes("Pick")) {
+                                                        //Verifier can confirm order because the address is in the pickup centre
+                                                        shipped();
+                                                    } else if (order["deliveryaddress"].includes(BusStop)) {
+                                                        //Verifier can confirm order because he is in  the location
+                                                        shipped();
+                                                    } else {
+                                                        //Verifier can not confirm order if he is not in  the location
+                                                        $("#cancelOrder").removeClass("hide");
+                                                        $("#cancelOrder").show();
+                                                        $("#confirmOrder").addClass("hide");
+                                                        $("#confirmOrder").hide();
+                                                        $("#confirmDelivery").removeClass("hide");
+                                                        $("#confirmDelivery").hide();
+                                                        $(".orderDetsupName").removeClass("hide");
+                                                        $(".orderDetsupName").show();
+                                                        $(".orderDetActn").removeClass("hide");
+                                                        $(".orderDetActn").show();
+                                                    }
+                                                } else {
+                                                    //Verifier can confirm order because geolocation did not work probably the key did not work
+                                                    shipped();
+                                                }
+                                            },
+                                            function fail(status) {
+                                                //Verifier can confirm order because geolocation did not work probably due to network
+                                                shipped();
+                                            }
+                                    );
+                        },
+                        function error(error_message) {
+                            //Verifier can confirm order because geolocation will not work due to user not allowing google location activation
+                            shipped();
+                        }
+                );
             } else if (stats === "Delivered") {
                 ordercnt.addClass("badge badge-success  badge-rounded").text("Delivered");
                 $("#cancelOrder").addClass("hide");
