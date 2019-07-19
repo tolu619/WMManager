@@ -25,14 +25,12 @@
             <div class="header-elements d-none">
                 <div class="breadcrumb justify-content-center">
                     <a href=".add-address-type-modal" data-toggle="modal" class="breadcrumb-elements-item">
-                        
-                        Add New Address Type<i class="icon-plus3 mr-2"></i>
+                        <i class="icon-plus3 mr-2 ml-2"></i>Add New Address Type
                     </a>
                 </div>
                 <div class="breadcrumb justify-content-center">
                     <a href=".add-pickup-centre-modal" data-toggle="modal" class="breadcrumb-elements-item">
-                        
-                        Create New Pick-Up Centre<i class="icon-plus3 mr-2"></i>
+                        <i class="icon-plus3 mr-2 ml-2"></i>Create New Pick-Up Centre
                     </a>
                 </div>
             </div>
