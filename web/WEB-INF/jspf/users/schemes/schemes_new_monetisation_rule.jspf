@@ -103,7 +103,7 @@
                                     <div class="row">
                                         <div class="col-6 " id="monRuleChooseDependencies1">
                                             <div class="custom-control custom-checkbox MonRuleDpdClone hide">
-                                                <input type="checkbox" class="custom-control-input monOptionDpdCheckbox" id="thisMonRule" checked>
+                                                <input type="checkbox" class="custom-control-input monOptionDpdCheckbox" id="thisMonRule">
                                                 <label class="custom-control-label monOptionDpdChkbxLabel" for="thisMonRule">Standard Monetisation</label>
                                             </div>
                                         </div>
@@ -139,7 +139,7 @@
                                     <span class="text-green">User groups</span>
                                     <div class="row" id="monRuleChooseAccessibilitiesParent">
                                         <div class="custom-control custom-checkbox MonRuleChooseAccessClone">
-                                            <input type="checkbox" class="custom-control-input MonRuleChooseAccChkbx" id="thisMonRule" checked>
+                                            <input type="checkbox" class="custom-control-input MonRuleChooseAccChkbx" id="thisMonRule">
                                             <label class="custom-control-label MonRuleChooseAccChkbxLabel" for="thisMonRule">Standard Monetisation</label>
                                         </div>
                                         

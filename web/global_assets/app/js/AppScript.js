@@ -10371,7 +10371,6 @@ function DisplaySystemNewMonetisationRule(params) {
         var childCard = parent.find(".MonOptionClone");
         $.each(params, function (key, value) {
             var title = key.split("-")[1];
-            //key === "monetisation"? CloneMonetisation(value): key === "commoditisation"? CloneCommoditisation(value): CloneMobilisation(value);
             var newCard = childCard.clone();
             newCard.removeClass("hide");
             newCard.removeClass("MonOptionClone");
@@ -10386,6 +10385,7 @@ function DisplaySystemNewMonetisationRule(params) {
             var ApplicationFeeType = value["ApplicationFeeType"];
             var RuleName = value["RuleName"];
             var RuleDescription = value["RuleDescription"];
+            var ID = value["optionId"];
             
             
             var AccessibleGroups = value["AccessibleGroups"];
@@ -10395,7 +10395,9 @@ function DisplaySystemNewMonetisationRule(params) {
             
             var visibility = "ON";
             var Visibility = parseInt(value["Visibility"]);
-            Visibility = 1? visibility = "ON" : visibility = "OFF";
+            if(Visibility == 0){
+                visibility = "OFF";
+            }
             title === "Monetisation" ? bg = "bg-violet-400" : title === "Commoditisation" ? bg = "bg-brown-400" : bg = "bg-primary-400";
             newCard.find(".card-heading0").addClass(bg);
             newCard.find(".MonOptionType").text(title);
@@ -10415,11 +10417,11 @@ function DisplaySystemNewMonetisationRule(params) {
             }else{
                 var accParent = newCard.find(".MonOptionAccParent");
                 var accClone = newCard.find(".MonOptionAccClone");
-                $.each(AccessibleGroups, function(groups){
+                $.each(AccessibleGroups, function(index, val){
                     var newAccClone = accClone.clone();
                     newAccClone.removeClass("hide");
                     newAccClone.removeClass("MonOptionAccClone");
-                    newAccClone.text(groups.split("-")[1]);
+                    newAccClone.text(val.split("-")[1]);
                     accParent.append(newAccClone);
                 });
                 accParent.removeClass("hide");
@@ -10429,16 +10431,56 @@ function DisplaySystemNewMonetisationRule(params) {
             }else{
                 var dpdParent = newCard.find(".MonOptionDpdcParent");
                 var dpdClone = newCard.find(".MonOptionAccClone");
-                $.each(DependentMonetisations, function(options){
+                $.each(DependentMonetisations, function(index, val){
                     var newDpdClone = dpdClone.clone();
                     newDpdClone.removeClass("hide");
                     newDpdClone.removeClass("MonOptionAccClone");
-                    newDpdClone.text(options.split("-")[1]);
+                    newDpdClone.text(val.split("-")[1]);
                     dpdParent.append(newDpdClone);
                 });
                 dpdParent.removeClass("hide");
             }
             
+            var SwapVisibility = newCard.find(".SwapOptVisibility");
+            var DeleteMonOption = newCard.find(".MonDeleteOption");
+            SwapVisibility.click(function(){
+                if(Visibility == 0){
+                    Visibility = 1;
+                }else{
+                    Visibility = 0;
+                }
+                var data = [ID, Visibility];
+                GetData("Schemes", "ChangeMonOptionVisibility", "LoadMonOptionVisibility", data);
+            });
+            DeleteMonOption.click(function(){
+                swal({
+                    title: "Delete?!",
+                    text: "Do you want to proceed to delete this Monetisation Option?",
+                    type: 'danger',
+                    showCancelButton: true,
+                    confirmButtonText: '<i class="icon-checkmark3 mr-2"></i> Yes ',
+                    cancelButtonText: '<i class="icon-reading mr-2"></i> No',
+                    confirmButtonClass: 'btn btn-info',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: false
+                }).then(function (dismiss) {
+                    if (dismiss.value) {
+                        var data = [ID, 1];
+                        GetData("Schemes", "DeleteMonetisationOption", "LoadDeleteMonetisationOption", data);
+                    } else {
+                        swal({
+                            title: 'Not Deleted',
+                            text: "No action taken!",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonText: 'Ok!',
+                            confirmButtonClass: 'btn btn-success',
+                            buttonsStyling: false
+                        });
+                    }
+                });
+                
+            });
             parent.prepend(newCard);
         });
     }
@@ -10909,19 +10951,19 @@ function DisplayNewMonetisationOptionParameters(params){
         var chooseMonOptDpdParent2 = $("#monRuleChooseDependencies2");
         var chooseMonOptClone = $(".MonRuleDpdClone");
         $.each(dependencies, function(index, value){
-            index = parseInt(index);
+            var key = parseInt(value.split[1]);
             var Child = chooseMonOptClone.clone();
             Child.removeClass("MonRuleDpdClone");
             Child.removeClass("hide");
             Child.addClass("MonDependentOpts");
-            Child.find(".monOptionDpdCheckbox").attr("id", "thisDpdChechBox"+index).val(index);
-            Child.find(".monOptionDpdChkbxLabel").attr("for", "thisDpdChechBox"+index).text(value);
+            Child.find(".monOptionDpdCheckbox").attr("id", "thisDpdChechBox"+key).val(key);
+            Child.find(".monOptionDpdChkbxLabel").attr("for", "thisDpdChechBox"+key).text(value.split[0]);
             
             var parent;
             if(index%2 === 0){
-                parent = chooseMonOptDpdParent2;
-            }else{
                 parent = chooseMonOptDpdParent1;
+            }else{
+                parent = chooseMonOptDpdParent2;
             }
             parent.append(Child);
         });
@@ -10932,18 +10974,60 @@ function DisplayNewMonetisationOptionParameters(params){
         var chooseMonAccesibilitiesParent = $("#monRuleChooseAccessibilitiesParent");
         var chooseMonAccClone = $(".MonRuleChooseAccessClone");
         $.each(accessibilities, function(index, value){
-            index = parseInt(index);
+            var key = parseInt(value.split[1]);
             var Child = chooseMonAccClone.clone();
             Child.removeClass("MonRuleChooseAccessClone");
             Child.removeClass("hide");
             Child.addClass("MonAccessGroupsOpts");
-            Child.find(".MonRuleChooseAccChkbx").attr("id", "thisAccChechBox"+index).val(index);
-            Child.find(".MonRuleChooseAccChkbxLabel").attr("for", "thisAccChechBox"+index).text(value);
+            Child.find(".MonRuleChooseAccChkbx").attr("id", "thisAccChechBox"+key).val(key);
+            Child.find(".MonRuleChooseAccChkbxLabel").attr("for", "thisAccChechBox"+key).text(value.split[0]);
             
             chooseMonAccesibilitiesParent.append(Child);
         });
     }else{
         $("<div></div>").text("No user groups created yet").appendTo($(".monRuleChooseDependencies1"));
+    }
+}
+function DisplayMonOptionVisibility(params){
+    if(params[0] === "success"){
+        $.notify({
+            title: "<strong>Visibility Turned: "+params[1]+"</strong>"
+        },{
+            type: 'success'
+        });
+    }else{
+        $.notify({
+            title: "<strong>Something went wrong, Try again</strong>"
+        },{
+            type: 'danger'
+        });
+    }
+}
+function DisplayDeleteMonetisationOption(params){
+    if(params === "success"){
+        swal({
+            title: "Deleted!",
+            text: "Monetisation Option been deleted!!.",
+            type: "success",
+            showCancelButton: false,
+            confirmButtonClass: 'btn btn-success',
+            confirmButtonText: 'Ok!',
+            onClose: function () {
+                window.location.reload();
+            }
+        });
+    }else{
+        swal({
+            title: "Oops!!!",
+            text: "Something went wrong.",
+            type: "info",
+            showCancelButton: false,
+            confirmButtonClass: 'btn btn-success',
+            confirmButtonText: 'Ok!',
+            onClose: function () {
+                window.location.reload();
+            }
+        });
     }
 }
 
@@ -12469,6 +12553,16 @@ function linkToFunction(action, params) {
         case "LoadNewMonetisationOptionParameters":
         {
             DisplayNewMonetisationOptionParameters(params);
+            break;
+        }
+        case "LoadMonOptionVisibility":
+        {
+            DisplayMonOptionVisibility(params);
+            break;
+        }
+        case "LoadDeleteMonetisationOption":
+        {
+            DisplayDeleteMonetisationOption(params);
             break;
         }
     }

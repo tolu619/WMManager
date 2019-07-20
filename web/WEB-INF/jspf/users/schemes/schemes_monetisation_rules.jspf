@@ -70,15 +70,15 @@
         </div>
         
         <div class="d-flex flex-wrap justify-content-start w-100" id="MonOptionParent">
-            <div class="card align-items-start m-2 MonOptionClone" style="width: 45%">
+            <div class="card align-items-start m-2 MonOptionClone hide" style="width: 45%">
                 <div class="card-heading0 p-2 w-100">
                     <div class="d-flex">
                         <i class="icon-grid6 mr-2 pt-3"></i> <span class="pt-3 MonOptionType">Monetisation</span>
                         <div class="p-2 ml-auto">
                             <div class="btn-group btn-group-sm" role="group">
                                 <span class="pt-2 font-size-base text-white mr-1">Visibility:</span>
-                                <a class="btn btn-warning btn-sm "><i class="icon-rotate-cw2 mr-1"></i><span class="MonOptionVisibility">On</span></a>
-                                <a class="btn btn-danger btn-sm "><i class="icon-basket mr-1"></i> <span class="MonDeleteOption">Delete</span></a>
+                                <a class="btn btn-warning btn-sm SwapOptVisibility"><i class="icon-rotate-cw2 mr-1"></i><span class="MonOptionVisibility">OFF</span></a>
+                                <a class="btn btn-danger btn-sm MonDeleteOption"><i class="icon-basket mr-1"></i> <span class="">Delete</span></a>
                             </div>
                         </div>
                     </div>

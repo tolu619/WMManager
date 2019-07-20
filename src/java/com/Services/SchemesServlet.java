@@ -157,9 +157,9 @@ public class SchemesServlet extends HttpServlet {
                     break;
                 }
                 case "GetNewMonetisationOptionParameters":{
-                    HashMap<String, ArrayList<HashMap<Integer, String>>> NewOptParams = new HashMap<>();
-                    ArrayList<HashMap<Integer, String>> options = GeneralSchemesManager.GetAllMonetisationOptionNames();
-                    ArrayList<HashMap<Integer, String>> usergroups = GeneralUserManager.GetAllUsergroups();
+                    HashMap<String, ArrayList<String>> NewOptParams = new HashMap<>();
+                    ArrayList<String> options = GeneralSchemesManager.GetAllMonetisationOptionNames();
+                    ArrayList<String> usergroups = GeneralUserManager.GetAllUsergroups();
                     NewOptParams.put("DependencyParameters", options);
                     NewOptParams.put("AccessParameters", usergroups);
                     json = new Gson().toJson(NewOptParams);
@@ -235,10 +235,28 @@ public class SchemesServlet extends HttpServlet {
                     json = new Gson().toJson(applications);
                     break;
                 }
-                case "GetNewMonetisationRuleparameters":{
-//                    HashMap<String, HashMap<String, Object>> applications = GeneralSchemesManager.GetUserMonetisationApplications(data);
-//                    json = new Gson().toJson(applications);
-//                    break;
+                case "ChangeMonOptionVisibility":{
+                    String[] data = request.getParameterValues("data[]");
+                    int Id = Integer.parseInt(data[0]);
+                    int visible = Integer.parseInt(data[1]);
+                    String update = GeneralSchemesManager.ChangeMonetisationVisibility(Id, visible);
+                    String visibility = "";
+                    if(visible == 0){
+                        visibility = "ON";
+                    }else{
+                        visibility = "OFF";
+                    }
+                    json1 = "["+ update + ", " + visible + "]";
+                    json = new Gson().toJson(json1);
+                    break;
+                }
+                case "DeleteMonetisationOption":{
+                    String[] data = request.getParameterValues("data[]");
+                    int Id = Integer.parseInt(data[0]);
+                    int delete = Integer.parseInt(data[1]);
+                    String update = GeneralSchemesManager.DeleteMonetisationOption(Id, delete);
+                    json = new Gson().toJson(update);
+                    break;
                 }
             }
             response.setContentType("application/json");
