@@ -1720,8 +1720,43 @@ function btnEvents() {
     });
     $(".create-new-monetisation-rule-modal").click(function(){
         $(".modal-new-monetisation-rule").on("show.bs.modal", function(){
-            //GetData("Schemes", "GetNewMonetisationRuleparameters", "LoadNewMonetisationRuleparameters"); 
+            GetData("Schemes", "GetNewMonetisationOptionParameters", "LoadNewMonetisationOptionParameters"); 
         }).modal("show");
+    });
+    $(".monRuleDependency").click(function(){
+        $(".monRuleDependencyDiv").removeClass("hide");
+    });
+    $(".CancelMonRuleDependency").click(function(){
+        $(".monRuleDependencyDiv").addClass("hide");
+    });
+    $(".SetMonRuleDependency").click(function(){
+        var dpdSave = "";
+        $(".MonDependentOpts").each(function() {
+            if(this.checked){
+                var val = $(this).val();
+                dpdSave += val+",";
+            }
+        });
+        $("#monRuleDependentMonetisations").val(dpdSave);
+        $(".monRuleDependencyDiv").addClass("hide");
+    });
+    
+    $(".monRuleAccesibility").click(function(){
+        $(".monRuleAccessibilityDiv").removeClass("hide");
+    });
+    $(".CancelMonRuleAccessibility").click(function(){
+        $(".monRuleAccessibilityDiv").addClass("hide");
+    });
+    $(".SetMonRuleAccessibility").click(function(){
+        var accSave = "";
+        $(".MonAccessGroupsOpts").each(function() {
+            if(this.checked){
+                var val = $(this).val();
+                accSave += val+",";
+            }
+        });
+        $("#monRuleAccesibleGroups").val(accSave);
+        $(".monRuleAccessibilityDiv").addClass("hide");
     });
     //Monetisation
 }//end of btnEvents
@@ -10866,6 +10901,53 @@ function DisplayApprovedMonApplications(params) {
         child.hide();
     }
 }
+function DisplayNewMonetisationOptionParameters(params){
+    var dependencies = params["DependencyParameters"];
+    var accessibilities = params["AccessParameters"];
+    if(dependencies.length >= 1){
+        var chooseMonOptDpdParent1 = $("#monRuleChooseDependencies1");
+        var chooseMonOptDpdParent2 = $("#monRuleChooseDependencies2");
+        var chooseMonOptClone = $(".MonRuleDpdClone");
+        $.each(dependencies, function(index, value){
+            index = parseInt(index);
+            var Child = chooseMonOptClone.clone();
+            Child.removeClass("MonRuleDpdClone");
+            Child.removeClass("hide");
+            Child.addClass("MonDependentOpts");
+            Child.find(".monOptionDpdCheckbox").attr("id", "thisDpdChechBox"+index).val(index);
+            Child.find(".monOptionDpdChkbxLabel").attr("for", "thisDpdChechBox"+index).text(value);
+            
+            var parent;
+            if(index%2 === 0){
+                parent = chooseMonOptDpdParent2;
+            }else{
+                parent = chooseMonOptDpdParent1;
+            }
+            parent.append(Child);
+        });
+    }else{
+        $("<div></div>").text("No existent Monetisation options yet").appendTo($(".monRuleChooseDependencies1"));
+    }
+    if(accessibilities.length >= 1){
+        var chooseMonAccesibilitiesParent = $("#monRuleChooseAccessibilitiesParent");
+        var chooseMonAccClone = $(".MonRuleChooseAccessClone");
+        $.each(accessibilities, function(index, value){
+            index = parseInt(index);
+            var Child = chooseMonAccClone.clone();
+            Child.removeClass("MonRuleChooseAccessClone");
+            Child.removeClass("hide");
+            Child.addClass("MonAccessGroupsOpts");
+            Child.find(".MonRuleChooseAccChkbx").attr("id", "thisAccChechBox"+index).val(index);
+            Child.find(".MonRuleChooseAccChkbxLabel").attr("for", "thisAccChechBox"+index).text(value);
+            
+            chooseMonAccesibilitiesParent.append(Child);
+        });
+    }else{
+        $("<div></div>").text("No user groups created yet").appendTo($(".monRuleChooseDependencies1"));
+    }
+}
+
+////portal-features
 function schmVal(val) {
     $(".schmVal").val(val);
     GetData("Schemes", "GetAllMonetisationRules", "LoadAllMonetisationRules");
@@ -10874,7 +10956,6 @@ function schmVal(val) {
     $(".monSteps").text("Step 2");
 
 }
-////portal-features
 function DisplayMonetisationRules(params) {
     var parent = $("#monRulesParent");
     parent.find(".newCloneElement").hide();
@@ -12383,6 +12464,11 @@ function linkToFunction(action, params) {
         case "LoadPaymentResponse":
         {
             DisplayPaymentResponse(params);
+            break;
+        }
+        case "LoadNewMonetisationOptionParameters":
+        {
+            DisplayNewMonetisationOptionParameters(params);
             break;
         }
     }

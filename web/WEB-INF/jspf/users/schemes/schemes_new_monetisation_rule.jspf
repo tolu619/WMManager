@@ -91,52 +91,32 @@
                         <h6>Do you want to set a dependency to this monetisation?</h6>
                         <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                             <button type="button" class="btn btn-outline-primary monRuleDependency btn-sm">Yes</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm">No</button>
                             <input type="hidden" id="monRuleDependentMonetisations" value="none"/>
                         </div>
                     </div>
-                    <div class="d-flex flex-column p-2 ml-auto monRuleDependencyDiv ">
+                    <div class="d-flex flex-column p-2 ml-auto monRuleDependencyDiv hide">
                         <div class="ml-auto text-info">Select all that apply</div>
                         <div class="">
                             <div class="row">
                                 <div class="col-md-12 col-sm-6">
                                     <span class="text-green">Existing Monetisations</span>
                                     <div class="row">
-                                        <div class="col-6 monRuleChooseDependencies1">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="thisMonRule" checked>
-                                                <label class="custom-control-label" for="thisMonRule">Standard Monetisation</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="thisMonRule" checked>
-                                                <label class="custom-control-label" for="thisMonRule">Standard Monetisation</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="thisMonRule" checked>
-                                                <label class="custom-control-label" for="thisMonRule">Standard Monetisation</label>
+                                        <div class="col-6 " id="monRuleChooseDependencies1">
+                                            <div class="custom-control custom-checkbox MonRuleDpdClone hide">
+                                                <input type="checkbox" class="custom-control-input monOptionDpdCheckbox" id="thisMonRule" checked>
+                                                <label class="custom-control-label monOptionDpdChkbxLabel" for="thisMonRule">Standard Monetisation</label>
                                             </div>
                                         </div>
-                                        <div class="col-6 monRuleChooseDependencies2">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="thisMonRule" checked>
-                                                <label class="custom-control-label" for="thisMonRule">Standard Monetisation</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="thisMonRule" checked>
-                                                <label class="custom-control-label" for="thisMonRule">Standard Monetisation</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="thisMonRule" checked>
-                                                <label class="custom-control-label" for="thisMonRule">Standard Monetisation</label>
-                                            </div>
+                                        <div class="col-6 " id="monRuleChooseDependencies2">
+                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>  
                         </div>
                         <div class="mt-2 ml-auto">
-                            <span class="text-primary mt-2"><a href="#">Done</a></span>
-                            <span class="ml-2"><a href="#" class="text-brown">Cancel</a></span>
+                            <span class="text-primary mt-2"><a href="#" class="SetMonRuleDependency">Done</a></span>
+                            <span class="ml-2"><a href="#" class="text-brown CancelMonRuleDependency">Cancel</a></span>
                         </div>
                     </div>
                 </div>
@@ -148,7 +128,7 @@
                             <input type="hidden" id="monRuleAccesibleGroups" value="none"/>
                         </div>
                     </div>
-                    <div class="d-flex flex-column p-2 ml-auto monRuleAccessibilityDiv ">
+                    <div class="d-flex flex-column p-2 ml-auto monRuleAccessibilityDiv hide">
                         <div class="ml-auto text-info">Select all that apply</div>
                         <div class="">
                             <div class="row">
@@ -157,27 +137,20 @@
                                 </div>
                                 <div class="col-6">
                                     <span class="text-green">User groups</span>
-                                    <div class="row monRuleChooseAccessibilities">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="thisMonRule" checked>
-                                            <label class="custom-control-label" for="thisMonRule">Standard Monetisation</label>
+                                    <div class="row" id="monRuleChooseAccessibilitiesParent">
+                                        <div class="custom-control custom-checkbox MonRuleChooseAccessClone">
+                                            <input type="checkbox" class="custom-control-input MonRuleChooseAccChkbx" id="thisMonRule" checked>
+                                            <label class="custom-control-label MonRuleChooseAccChkbxLabel" for="thisMonRule">Standard Monetisation</label>
                                         </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="thisMonRule" checked>
-                                            <label class="custom-control-label" for="thisMonRule">Standard Monetisation</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="thisMonRule" checked>
-                                            <label class="custom-control-label" for="thisMonRule">Standard Monetisation</label>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <div class="col-3"></div>
                             </div>  
                         </div>
                         <div class="mt-2 ml-auto">
-                            <span class="text-primary mt-2"><a href="#">Done</a></span>
-                            <span class="ml-2"><a href="#" class="text-brown">Cancel</a></span>
+                            <span class="text-primary mt-2"><a href="#" class="SetMonRuleAccessibility">Done</a></span>
+                            <span class="ml-2"><a href="#" class="text-brown CancelMonRuleAccessibility">Cancel</a></span>
                         </div>
                     </div>
                 </div>

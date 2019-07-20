@@ -156,9 +156,18 @@ public class SchemesServlet extends HttpServlet {
                     json = new Gson().toJson(result);
                     break;
                 }
+                case "GetNewMonetisationOptionParameters":{
+                    HashMap<String, ArrayList<HashMap<Integer, String>>> NewOptParams = new HashMap<>();
+                    ArrayList<HashMap<Integer, String>> options = GeneralSchemesManager.GetAllMonetisationOptionNames();
+                    ArrayList<HashMap<Integer, String>> usergroups = GeneralUserManager.GetAllUsergroups();
+                    NewOptParams.put("DependencyParameters", options);
+                    NewOptParams.put("AccessParameters", usergroups);
+                    json = new Gson().toJson(NewOptParams);
+                    break;
+                }
                 case "GetAllMonetisationRules":{
-                    HashMap<String, HashMap<String, Object>> rules = GeneralSchemesManager.GetMonetisationRules();
-                    json = new Gson().toJson(rules);
+                    HashMap<String, HashMap<String, Object>> options = GeneralSchemesManager.GetMonetisationRules();
+                    json = new Gson().toJson(options);
                     break;
                 }
                 case "GetAllMonetisationApplication":{
