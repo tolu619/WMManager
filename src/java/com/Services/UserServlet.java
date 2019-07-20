@@ -715,7 +715,7 @@ public class UserServlet extends HttpServlet {
                     int val = Integer.parseInt(data[0]);
                     String Section = data[1];
                     String value = data[2];
-                    HashMap<Integer, String> nameset = GeneralUserManager.GetTableOptions(val, Section);
+                    HashMap<Integer, String> nameset = GeneralAddressManager.GetTableOptions(val, Section);
                     HashMap<String, HashMap<Integer, String>> resend = new HashMap<>();
                     resend.put(value, nameset);
                     json = new Gson().toJson(resend);
@@ -821,6 +821,25 @@ public class UserServlet extends HttpServlet {
                     }
                     json3 = new Gson().toJson("Requested Change Rejected");
                     json = "[" + json1 + "," + json2 + "," + json3 + "]";
+                    break;
+                }
+                case "RequestChangeDetails": {
+                    String[] data = request.getParameterValues("data[]");
+                    int UserID = Integer.parseInt(data[0]);
+                    String changeSubject = (data[1]);
+                    String oldDetail = (data[2]);
+                    String newDetail = (data[3]);
+                    result = GeneralUserManager.ChangeDetails(UserID, changeSubject, oldDetail, newDetail);
+                    json = new Gson().toJson(result);
+                    break;
+                }
+
+                case "DeleteUserAddress": {
+                    String params = request.getParameter("data");
+                    int AddressID = Integer.parseInt(params);
+//                    HistoryManager.LogActivity(UserID, "Address", "Deleted Address", "Deleted Address");
+                    result = GeneralAddressManager.DeleteUserAddress(AddressID);
+                    json = new Gson().toJson(result);
                     break;
                 }
 
