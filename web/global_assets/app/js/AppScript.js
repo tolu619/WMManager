@@ -1705,12 +1705,25 @@ function btnEvents() {
         GetData("Schemes", "SubmitMonetisationApplication", "LoadSubmitMonApp", data);
     });
     //Monetisation
+    $("#ChangeEmail").click(function () {
+        var newMail = $('#newMail').val();
+        var subject = "Change Email";
+        var data = [actualuserid, subject, localStorage.ActualEmail, newMail, "Email"];
+        GetData("User", "RequestChangeDetails", "LoadRequestChange", data);
+    });
+    $("#ChangePhoneNumber").click(function () {
+        var newPhone = $('#newPhone').val();
+        var subject = "Change Phone Number";
+        var data = [actualuserid, subject, localStorage.ActualPhone, newPhone, "Phone"];
+        GetData("User", "RequestChangeDetails", "LoadRequestChange", data);
+    });
 }//end of btnEvents
 
 function profilePageFundtions() {
     showLoader();
     GetData("User", "GetBanks", "LoadBanks");
     PopulateStates("");
+    PopulateAddressTypes("");
     showLoader();
     GetData("User", "GetMemberDetails", "LoadActualMemberDetails", actualuserid);
     GetData("Permissions", "GetUserPemissions", "LoadUserPermissions", actualuserid);
@@ -1829,8 +1842,8 @@ function profilePageFundtions() {
         var f = $(this);
         f.parsley().validate();
         if (f.parsley().isValid()) {
-            var checker = $("#checker").val();
-            var addressname = $("#addressname").val();
+            var addressType = $("#addressType").val();
+            var addressOwner = $("#addressOwner").val();
             var states = $("#states").val();
             var lgas = $("#lgas").val();
             var lcdas = $("#lcdas").val();
@@ -1838,13 +1851,8 @@ function profilePageFundtions() {
             var busstop = $("#busstops").val();
             var street = $("#streets").val();
             var desc = $("#desc").val();
-
-            if (checker === "add" || checker === "Add") {
-                var data = [addressname, states, lgas, lcdas, towns, busstop, street, desc, actualuserid];
-                GetData("Product", "AddNewUserAddress", "LoadAddUserAddress", data);
-                var data = [addressname, states, lgas, lcdas, towns, busstop, street, desc, checker];
-                GetData("Product", "EditNewUserAddress", "LoadAddUserAddressAfterEdit", data);
-            }
+            var data = [addressType, states, lgas, lcdas, towns, busstop, street, desc, actualuserid, addressOwner];
+            GetData("Product", "AddNewUserAddress", "LoadUserAddress", data);
 
         } else {
             swal({
@@ -1916,6 +1924,7 @@ function profilePageFundtions() {
     });
 
     GetData("Permissions", "GetUserRequestedPemissions", "LoadUserRequestedPemissions", actualuserid);
+    GetData("Permissions", "GetUserRequestedChanges", "LoadUserRequestedChanges", actualuserid);
 
 
 
@@ -3047,7 +3056,9 @@ function DisplayActualMemberDetails(data) {
         $(".actualUserFirstName").text(data["first_name"]);
         $(".actualUserLastName").text(data["last_name"]);
         $(".actualUserEmailAddress").text(data["email"]);
+        localStorage.ActualEmail = data["email"];
         $(".actualUserPhone").text(data["phone_number"]);
+        localStorage.ActualPhone = data["phone_number"];
         $("#actualUserPassword").text(data["password"]);
         $(".actualUserStatus").text(data["status"]);
         $(".actualUserofflineID").text(data["offlineID"]);
@@ -3106,7 +3117,8 @@ function DisplayActualMemberDetails(data) {
                 newchild.removeClass("clone");
                 count++;
                 newchild.find(".address-sn").text(count);
-                newchild.find(".address-name").text(item["addressType"]);
+                newchild.find(".addressOwner").text(item["addressOwner"]);
+                newchild.find(".addressType").text(item["addressType"] + " Address");
                 newchild.find(".UserAddress").text(item["addressString"]);
                 var btnDelete = newchild.find(".btnDeleteAdd");
                 btnDelete.click(function () {
@@ -3137,24 +3149,6 @@ function DisplayActualMemberDetails(data) {
                         }
                     });
                 });
-                var btnEdit = newchild.find(".btnEditAdd");
-                btnEdit.click(function () {
-                    var addID = item["id"];
-                    PopulateStates(item["state"]);
-                    PopulateLGAs(item["state"], item["lga"]); //populates the lga section
-                    PopulateLCDAsFromState(item["state"], item["lcda"]); //populates the lcda section
-                    PopulateTownsFromState(item["state"], item["town"]);
-                    PopulateBstopsFromTown(item["town"], item["busstop"]); //populates the bus stop section
-                    PopulateStreetsFromTown(item["town"], item["street"]);
-                    $(".bd-example-modaladdress").on("show.bs.modal", function () {
-
-                        $("#addressname").val(item["addressname"]);
-                        $("#checker").val(addID);
-                        $("#desc").val(item["desc"]);
-                        $("addbtn").html('Edit').button("refresh");
-                    });
-                });
-
                 newchild.appendTo(parent);
             });
             $(".useraddressCount").text(count);
@@ -5835,10 +5829,6 @@ function DisplayAddressTypes(data) {
             newcount++;
             newchild.find(".addtype-count").text(newcount);
             newchild.find(".addtype-name").text(details["name"]);
-            var editaddtype = newchild.find(".editaddtype");
-            editaddtype.click(function () {
-//                EditAddType(id, details["new_detail"], details["subject"], "Approved", details["userid"]);
-            });
             var deleteaddtype = newchild.find(".deleteaddtype");
             deleteaddtype.click(function () {
                 swal({
@@ -5866,11 +5856,9 @@ function DisplayAddressTypes(data) {
                         });
                     }
                 });
-//                RejectRequestedChanges(id, details["subject"], details["userid"], "Rejected");
             });
             newchild.appendTo(parent);
         });
-        $(".reqchangesCounticon").text(newcount);
         childClone.hide();
     }
 
@@ -8440,6 +8428,13 @@ function ManagePermission(loadedUserID, loadedUserType, loadedUserName) {
     window.location = extension + "ControllerServlet?action=Link&type=ManagePermissions&loadedUserID=" + loadedUserID + "&loadedUserType=" + loadedUserType + "&loadedUserName=" + loadedUserName;
 }
 
+function PopulateAddressTypes(returnValue) {
+    var Section = "AddressType";
+    var value = "0";
+    var data = [value, Section, returnValue];
+    GetData("User", "Populate", "LoadUserAddressTypes", data);
+}
+
 function PopulateStates(returnValue) {
     var Section = "State";
     var value = "157";
@@ -8738,6 +8733,29 @@ function DisplayNewSection(params) {
 //$("<option>").val(value).text(Section_Name).attr('selected', 'selected').appendTo(pickupsection);
 //pickupsection.append($('<option/>').val(value).text(Section_Name).attr('selected', 'selected'));
     $("<option>").val(value).text(Section_Name).attr('selected', 'selected').appendTo(pickupsection);
+}
+function DisplayUserAddressTypes(data) {
+//    hideLoader();
+    var ds = $("#addressType");
+    ds.empty();
+    if (data === "empty") {
+    } else {
+        $.each(data, function (index, value) {
+            $.each(value, function (key, value) {
+                $('<option>').val(key).text(value).appendTo(ds);
+            });
+            if (index === "") {
+
+            } else {
+                var fx = ds.children();
+                $.each(fx, function () {
+                    if ($(this).val() === index) {
+                        $(this).attr('selected', 'selected');
+                    }
+                });
+            }
+        });
+    }
 }
 
 function DisplayStates(data) {
@@ -11365,6 +11383,69 @@ function ResolveComplaint(data) {
     }
 
 }
+
+function DisplayUserRequestedChanges(data) {
+    hideLoader();
+    var parent = $(".UserRequestedChanges");
+    if (data === "none") {
+        parent.text("No result");
+    } else {
+        var childClone = parent.find(".clone");
+        var newcount = 0;
+        $.each(data, function (id, details) {
+            var newchild = childClone.clone();
+            newchild.removeClass("clone");
+            newcount++;
+            newchild.removeClass("hide");
+            newchild.find(".UserreqchangesCount").text(newcount);
+            newchild.find(".UserreqchangesSubject").text(details["subject"]);
+            newchild.find(".UserreqchangesOld").text(details["old_detail"]);
+            newchild.find(".UserreqchangesNew").text(details["new_detail"]);
+            newchild.find(".UserreqchangesDateAndTime").text(details["date"]);
+            newchild.find(".UserreqchangesStatus").text(details["status"]);
+            if (details["status"] === "Pending") {
+                newchild.find(".UserreqchangesStatus").text(details["status"]).addClass("badge bg-orange");
+            } else if (details["status"] === "Rejected") {
+                newchild.find(".UserreqchangesStatus").text(details["status"]).addClass("badge badge-danger");
+            } else if (details["status"] === "Approved") {
+                newchild.find(".UserreqchangesStatus").text(details["status"]).addClass("badge badge-success");
+            }
+            newchild.appendTo(parent);
+        });
+        $(".UserreqchangesCounticon").text(newcount);
+        childClone.hide();
+    }
+}
+
+function DisplayRequestChange(data) {
+    if (data === "success") {
+        swal({
+            title: "Request Success",
+            text: "Your Request has been made",
+            type: "success",
+            showCancelButton: false,
+            confirmButtonClass: 'btn btn-success',
+            confirmButtonText: 'Ok!',
+            onClose: function () {
+                window.location.reload();
+//                GetData("User", "GetMemberDetails", "LoadMemberDetails", userid);
+            }
+        });
+    } else {
+        swal({
+            title: "Oops!",
+            text: "something went wrong",
+            type: "info",
+            showCancelButton: false,
+            confirmButtonClass: 'btn btn-info',
+            confirmButtonText: 'Retry',
+            onClose: function () {
+                window.location.reload();
+//                GetData("User", "GetMemberDetails", "LoadMemberDetails", userid);
+            }
+        });
+    }
+}
 function DisplayRequestedChanges(data) {
     hideLoader();
     var parent = $(".RequestedChanges");
@@ -11470,6 +11551,11 @@ function RejectRequestedChanges(RequestedID, Status, subject, Userid) {
 //complaints and change details
 function linkToFunction(action, params) {
     switch (action) {
+        case "LoadUserAddressTypes":
+        {
+            DisplayUserAddressTypes(params);
+            break;
+        }
         case "LoadStates":
         {
             DisplayStates(params);
@@ -12217,6 +12303,16 @@ function linkToFunction(action, params) {
         case "LoadAllRequestedPemissions":
         {
             DisplayAllRequestedPemissions(params);
+            break;
+        }
+        case "LoadRequestChange":
+        {
+            DisplayRequestChange(params);
+            break;
+        }
+        case "LoadUserRequestedChanges":
+        {
+            DisplayUserRequestedChanges(params);
             break;
         }
         case "LoadStaffPermissions":

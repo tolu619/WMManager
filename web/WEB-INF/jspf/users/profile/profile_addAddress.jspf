@@ -11,8 +11,17 @@
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <label for="addressname">Address Name</label>
-                        <input type="text" required class="form-control" id="addressname" placeholder="Enter Address Name e.g Home Address">
+                        <label for="addressType">Address Type</label>
+                        <div class="input-group">
+                            <select class="form-control form-control-select2 select-search select-clear addType" id="addressType" required>
+                                <option></option>
+                            </select>
+                            <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-map-marker fa-fw"></i></span>
+                        </div>
+                    </div> 
+                    <div class="form-group">
+                        <label for="addressOwner">Address Owner</label>
+                        <input type="text" required class="form-control" id="addressOwner" placeholder="Enter Address Owner e.g Mr/Mrs Adeyemi Chinedu Barakat" required>
                     </div>
                     <div class="form-group">
                         <label for="State">State</label>
@@ -91,7 +100,7 @@
                     <div class="form-group">
                         <label for="descripton">Description</label>
                         <div class="input-group">
-                            <input type="text" required class="form-control" id="desc" placeholder="Type your Nearest BusStop">
+                            <input type="text" required class="form-control" id="desc" placeholder="Enter Address Description">
                             <span class="input-group-addon bg-primary b-0 text-white"><i class="fa fa-location-arrow fa-fw"></i></span>
                         </div>
                     </div>
