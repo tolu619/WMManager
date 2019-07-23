@@ -10382,7 +10382,17 @@ function DisplaySystemNewMonetisationRule(params) {
             var ChargeAmt = parseInt(value["ChargeAmt"]);
             var ApplicationFeeAmt = parseInt(value["ApplicationFeeAmt"]);
             var ChargeType = value["ChargeType"];
+            if(ChargeType === "fixed"){
+                ChargeAmt = PriceFormat(ChargeAmt);
+            }else{
+                ChargeAmt+="%";
+            }
             var ApplicationFeeType = value["ApplicationFeeType"];
+            if(ApplicationFeeType === "fixed"){
+                ApplicationFeeAmt = PriceFormat(ApplicationFeeAmt);
+            }else{
+                ApplicationFeeAmt+="%";
+            }
             var RuleName = value["RuleName"];
             var RuleDescription = value["RuleDescription"];
             var ID = value["optionId"];
@@ -10446,17 +10456,20 @@ function DisplaySystemNewMonetisationRule(params) {
             SwapVisibility.click(function(){
                 if(Visibility == 0){
                     Visibility = 1;
+                    visibility = "ON";
                 }else{
                     Visibility = 0;
+                    visibility = "OFF";
                 }
                 var data = [ID, Visibility];
                 GetData("Schemes", "ChangeMonOptionVisibility", "LoadMonOptionVisibility", data);
+                newCard.find(".MonOptionVisibility").text(visibility);
             });
             DeleteMonOption.click(function(){
                 swal({
                     title: "Delete?!",
                     text: "Do you want to proceed to delete this Monetisation Option?",
-                    type: 'danger',
+                    type: 'warning',
                     showCancelButton: true,
                     confirmButtonText: '<i class="icon-checkmark3 mr-2"></i> Yes ',
                     cancelButtonText: '<i class="icon-reading mr-2"></i> No',
@@ -10951,13 +10964,13 @@ function DisplayNewMonetisationOptionParameters(params){
         var chooseMonOptDpdParent2 = $("#monRuleChooseDependencies2");
         var chooseMonOptClone = $(".MonRuleDpdClone");
         $.each(dependencies, function(index, value){
-            var key = parseInt(value.split[1]);
+            var key = parseInt(value.split("-")[1]);
             var Child = chooseMonOptClone.clone();
             Child.removeClass("MonRuleDpdClone");
             Child.removeClass("hide");
-            Child.addClass("MonDependentOpts");
             Child.find(".monOptionDpdCheckbox").attr("id", "thisDpdChechBox"+key).val(key);
-            Child.find(".monOptionDpdChkbxLabel").attr("for", "thisDpdChechBox"+key).text(value.split[0]);
+            Child.find(".monOptionDpdCheckbox").addClass("MonDependentOpts");
+            Child.find(".monOptionDpdChkbxLabel").attr("for", "thisDpdChechBox"+key).text(value.split("-")[0]);
             
             var parent;
             if(index%2 === 0){
@@ -10974,13 +10987,13 @@ function DisplayNewMonetisationOptionParameters(params){
         var chooseMonAccesibilitiesParent = $("#monRuleChooseAccessibilitiesParent");
         var chooseMonAccClone = $(".MonRuleChooseAccessClone");
         $.each(accessibilities, function(index, value){
-            var key = parseInt(value.split[1]);
+            var key = parseInt(value.split("-")[1]);
             var Child = chooseMonAccClone.clone();
             Child.removeClass("MonRuleChooseAccessClone");
             Child.removeClass("hide");
-            Child.addClass("MonAccessGroupsOpts");
             Child.find(".MonRuleChooseAccChkbx").attr("id", "thisAccChechBox"+key).val(key);
-            Child.find(".MonRuleChooseAccChkbxLabel").attr("for", "thisAccChechBox"+key).text(value.split[0]);
+            Child.find(".MonRuleChooseAccChkbx").addClass("MonAccessGroupsOpts");
+            Child.find(".MonRuleChooseAccChkbxLabel").attr("for", "thisAccChechBox"+key).text(value.split("-")[0]);
             
             chooseMonAccesibilitiesParent.append(Child);
         });
@@ -10991,13 +11004,15 @@ function DisplayNewMonetisationOptionParameters(params){
 function DisplayMonOptionVisibility(params){
     if(params[0] === "success"){
         $.notify({
-            title: "<strong>Visibility Turned: "+params[1]+"</strong>"
+            title: "<strong>Visibility: </strong>",
+            message: params[1]
         },{
             type: 'success'
         });
     }else{
         $.notify({
-            title: "<strong>Something went wrong, Try again</strong>"
+            title: "<strong>Something went wrong</strong>",
+            message: "Try again"
         },{
             type: 'danger'
         });
@@ -11008,6 +11023,33 @@ function DisplayDeleteMonetisationOption(params){
         swal({
             title: "Deleted!",
             text: "Monetisation Option been deleted!!.",
+            type: "success",
+            showCancelButton: false,
+            confirmButtonClass: 'btn btn-success',
+            confirmButtonText: 'Ok!',
+            onClose: function () {
+                window.location.reload();
+            }
+        });
+    }else{
+        swal({
+            title: "Oops!!!",
+            text: "Something went wrong.",
+            type: "info",
+            showCancelButton: false,
+            confirmButtonClass: 'btn btn-success',
+            confirmButtonText: 'Ok!',
+            onClose: function () {
+                window.location.reload();
+            }
+        });
+    }
+}
+function DisplayNewMonetisationRule(params){
+    if(params === "success"){
+        swal({
+            title: "Created !!!",
+            text: "New monetisation option created.",
             type: "success",
             showCancelButton: false,
             confirmButtonClass: 'btn btn-success',

@@ -13,7 +13,6 @@
                         <div class="col-md-5 col-sm-12">
                             <label for="subCategoryName"><b>Select Scheme</b></label>
                             <select class="form-control form-control-select2" id="schemeType" placeholder="Select the parent category" required>
-                                <option value="0">Select Scheme</option>
                                 <option value="Monetisation">Monetisation</option>
                                 <option value="Commoditisation">Commoditisation</option>
                                 <option value="Mobilisation">Mobilisation</option>

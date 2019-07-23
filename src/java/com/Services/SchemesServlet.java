@@ -242,12 +242,13 @@ public class SchemesServlet extends HttpServlet {
                     String update = GeneralSchemesManager.ChangeMonetisationVisibility(Id, visible);
                     String visibility = "";
                     if(visible == 0){
-                        visibility = "ON";
-                    }else{
                         visibility = "OFF";
+                    }else{
+                        visibility = "ON";
                     }
-                    json1 = "["+ update + ", " + visible + "]";
-                    json = new Gson().toJson(json1);
+                    json1 = new Gson().toJson(update);
+                    json2 = new Gson().toJson(visibility);        
+                    json = "["+ json1 + ", " + json2 + "]";
                     break;
                 }
                 case "DeleteMonetisationOption":{

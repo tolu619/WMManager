@@ -22,8 +22,8 @@
             <div class="header-elements d-none">
                 <div class="breadcrumb justify-content-center cursor-pointer">
                     <a data-toggle="modal" data-target=".modal-new-monetisation-rule" class="create-new-monetisation-rule-modal breadcrumb-elements-item text-blue-400">
-                        <i class="icon-hand mr-2"></i>
-                        New Rule
+                        <i class="icon-plus3 mr-2"></i>
+                        Create New Rule
                     </a>
                 </div>
             </div>
@@ -135,7 +135,7 @@
                                 <a href="#" class="font-size-sm" rel="tag">No dependent monetisation</a>
                             </p>
                             <p class="post-tags MonOptionDpdcParent hide">
-                                <a href="#" class="font-size-sm MonOptionDpdcClone" rel="tag">test</a>
+                                <a href="#" class="font-size-sm MonOptionDpdcClone hide" rel="tag">test</a>
                                 
                             </p>
                         </div>
