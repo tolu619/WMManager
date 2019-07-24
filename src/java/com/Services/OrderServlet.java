@@ -215,7 +215,7 @@ public class OrderServlet extends HttpServlet {
 //                            } catch (UnsupportedEncodingException | ClassNotFoundException | SQLException e) {
 //                                e.printStackTrace();
 //                            }
-                            GeneralMessageManager.sendMemberMessage(BuyerID, Content, Subject, 1);
+                            GeneralMessageManager.sendMemberMessage(GeneralAccountManager.WealthMarketUserID, Content, Subject, BuyerID);
                             json1 = new Gson().toJson("Confirm");
                             json2 = new Gson().toJson(result);
                             json = "[" + json1 + "," + json2 + "]";
