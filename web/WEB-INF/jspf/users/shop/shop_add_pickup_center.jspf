@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="addressname">Center Name</label>
-                    <input type="text" required class="form-control" id="pickup-Centername" placeholder="Enter Address Name e.g Home Address">
+                    <input type="text" required class="form-control" id="pickup-Centername" placeholder="Enter PickUp Center Name E.g VGC PickUp Center">
                 </div>
                 <div class="form-group state">
                     <label for="State">State</label>
