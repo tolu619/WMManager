@@ -10499,18 +10499,52 @@ function DisplaySystemNewMonetisationRule(params) {
     }
 }
 function DisplayMonetisationApplications(params) {
-    $(".mon-table-title").text("Active Monetisation Applications");
-    var monAppParent = $("#monApplicationParent");
+    var monAppParent = "";
     var child = $(".monAppClone");
     if (params.length == 0 || params == "") {
-        $("<div>").text("No pending monetisation applications").addClass("text-center").appendTo(monAppParent);
+        $("<div>").text("No monetisation data").addClass("text-center").appendTo(monAppParent);
     } else {
-        monAppParent.empty();
         $.each(params, function (ind, val) {
+            var status = ind.split("-")[1];
             var newChild = child.clone();
             newChild.removeClass("monAppClone");
             newChild.removeClass("hide");
             newChild.addClass(ind);
+            var DetailsButton = newChild.find(".ViewMonetisationGoods");
+            var ApproveMonetisation = newChild.find(".ApproveMonetisation");
+            var DeclineMonetisation = newChild.find(".DeclineMonetisation");
+            var AppStatus = "";
+            switch(status){
+                case "pending":
+                    monAppParent = $("#monApplicationParent-Pending");
+                    AppStatus = "Pending";
+                    break;
+                case "approved":
+                    monAppParent = $("#monApplicationParent-approved");
+                    ApproveMonetisation.hide();
+                    DeclineMonetisation.hide();
+                    AppStatus = "Approved";
+                    break;
+                case "declined":
+                    monAppParent = $("#monApplicationParent-declined");
+                    AppStatus = "Declined";
+                    ApproveMonetisation.hide();
+                    DeclineMonetisation.hide();
+                    break;
+                case "completed":
+                    monAppParent = $("#monApplicationParent-completed");
+                    AppStatus = "Warrants Disbursed";
+                    ApproveMonetisation.hide();
+                    DeclineMonetisation.hide();
+                    break;
+                case "settled":
+                    monAppParent = $("#monApplicationParent-settled");
+                    AppStatus = "ODLine Settled";
+                    ApproveMonetisation.hide();
+                    DeclineMonetisation.hide();
+                    break;
+            }
+            
             var image_url = "../../../global_assets/app/img/ProfilePicture/user-" + val["userid"] + ".png";
             if (imageExists(image_url) === false) {
                 image_url = "../../../global_assets/app/img/ProfilePicture/user-0.png";
@@ -10535,13 +10569,9 @@ function DisplayMonetisationApplications(params) {
             } else if (goodsVerifed == 2) {
                 newChild.find(".verifiedBadge").removeClass("badge-secondary").addClass("badge-danger").text("Rejected");
             }
-            var AppStatus = "";
-            appStatus == 0 ? AppStatus = "pending" : appStatus == 1 ? AppStatus = "Approved" : appStatus == 2 ? AppStatus = "Declined" : AppStatus = "Not Recognised!!!";
             newChild.find(".monAppStatus").text(AppStatus);
             newChild.find(".monAppUserPayRef").text(val["payment_reference"]);
-            var DetailsButton = newChild.find(".ViewMonetisationGoods");
-            var ApproveMonetisation = newChild.find(".ApproveMonetisation");
-            var DeclineMonetisation = newChild.find(".DeclineMonetisation");
+            
             //Details Button
             DetailsButton.click(function () {
                 $(".modal-view-monetisation-goods").on("show.bs.modal", function () {
@@ -10617,6 +10647,7 @@ function MonetisationGoodsDetails(details) {
     var count = 0;
     var grandTotal = 0;
     var verified = details["verified"];
+    var ID = details["id"];
     $.each(productDetails, function (index, product) {
         count++;
         var newChild = child.clone();
@@ -10662,7 +10693,10 @@ function MonetisationGoodsDetails(details) {
     } else {
         $(".mon-verification").text("waiting for verification").removeClass("text-success").addClass("text-muted");
     }
-
+    var Reverify = $("#MonRequestReverification");
+    Reverify.click(function(){
+        GetData("Schemes", "RequestMonGoodsReverification", "LoadUnerifyMonetisationListing", ID);
+    });
 }
 function DisplayMonApplyPendingVerification(params) {
     var parent = $("#monVerifyParent");
@@ -10843,7 +10877,7 @@ function DisplayUnerifyMonetisationListing(data) {
     if (data == "sucess") {
         swal({
             title: 'Success!!',
-            text: "The monetisation has been approved!",
+            text: "Action Taken!",
             type: 'success',
             showCancelButton: false,
             confirmButtonText: 'Ok!',
@@ -10876,6 +10910,32 @@ function DisplayMonApplicationApprove(params) {
             title: 'Success!!',
             text: "The monetisation has been " + action + "!",
             type: 'success',
+            showCancelButton: false,
+            confirmButtonText: 'Ok!',
+            confirmButtonClass: 'btn btn-success',
+            buttonsStyling: false,
+            onClose: function () {
+                window.location.reload();
+            }
+        });
+    }else if(data === "Products confirmation failed"){
+        swal({
+            title: 'Error!!!',
+            text: "The products used for this application was not confirmed by the system!<br> Kindly decline the application",
+            type: 'danger',
+            showCancelButton: false,
+            confirmButtonText: 'Ok!',
+            confirmButtonClass: 'btn btn-warning',
+            buttonsStyling: false,
+            onClose: function () {
+                window.location.reload();
+            }
+        });
+    }else if(data === "Insufficient Balance to grant this monetisation Rights"){
+        swal({
+            title: 'Not Completed',
+            text: "You do not have sufficient balance to grant this monetisation Rights!<br>Add warrants and Try again",
+            type: 'warning',
             showCancelButton: false,
             confirmButtonText: 'Ok!',
             confirmButtonClass: 'btn btn-success',
@@ -11076,59 +11136,82 @@ function DisplayNewMonetisationRule(params){
 ////portal-features
 function schmVal(val) {
     $(".schmVal").val(val);
-    GetData("Schemes", "GetAllMonetisationRules", "LoadAllMonetisationRules");
+    var data = [actualuserid, val];
+    GetData("Schemes", "GetUserQualifiedMonOptions", "LoadUserQualifiedMonetisationOption", data);
+//    if(val === "Monetisation"){
+//        GetData("Product", "GetUserProducts", "LoadUserProductsMon", userid);
+//    }else if (schmVal === "Mobilisation" || schmVal === "Commoditisation") {
+//        //GetData("Product", "GetUserProducts", "LoadUserProductsMon", userid);
+//    }
     $(".monStep1").hide();
     $(".monStep2").removeClass("hide");
     $(".monSteps").text("Step 2");
 
 }
-function DisplayMonetisationRules(params) {
-    var parent = $("#monRulesParent");
-    parent.find(".newCloneElement").hide();
-    var cloneThis = parent.find(".monRulesClone");
-    var schmVal = $(".schmVal").val();
-    $.each(params, function (ind, value) {
+function DisplayUserQualifiedMonetisationOption(params) {
+    var parent = $("#monetisation-options-parent");
+    if(jQuery.isEmptyObject(params)){
+        $("<div></div>").html("<div class='text-center w-100'><b>Nothing to Show here yet! <br> Check back Later.</b></div>").appendTo(parent);
+        $(".MonOptNext").hide();
+    }else{
+        parent.find(".newCloneElement").hide();
+        var cloneThis = parent.find(".monetisation-options-clone");
+        var schmVal = $(".schmVal").val();
+        $.each(params, function (ind, value) {
         var schm = ind.split("-")[1];
-        var monType;
-        value["mon_type"] === 0 ? monType = "Not Specified!" : value["mon_type"] === 1 ? monType = "Full" : value["mon_type"] === 2 ? monType = "Half" : monType = "Quarter";
         if (schm === schmVal) {
             var childClone = cloneThis.clone();
             childClone.addClass("newCloneElement");
             childClone.removeClass("monRulesClone");
             childClone.removeClass("hide");
-            childClone.find(".monRuleName").text(value["rule_name"]);
-            childClone.find(".monRulePercent").text(value["percent"] + "%");
-            childClone.find(".monRuleDesc").text(value["rule_desc"]);
-            childClone.find(".monRuleMinVal").text(value["min_value"]);
-            childClone.find(".monRuleMaxStage").text(value["max_stage"]);
-            childClone.find(".monRuleMonType").text(monType);
-            childClone.find(".monRadio").attr("id", ind);
-            var radioVal = JSON.stringify(value);
-            childClone.find(".monRadio").attr("value", radioVal);
-            childClone.find(".monRadioLabel").attr("for", ind);
+            
+            var minVal = PriceFormat(parseInt(value["MinimumValue"]));
+            var maxVal = PriceFormat(parseInt(value["MaximumValue"]));
+            var PercentageMonetisation = parseInt(value["PercentageMonetisation"])+"%";
+            var ExpiryDateInDays = parseInt(value["ExpiryDateInDays"]);
+            var ChargeAmt = parseInt(value["ChargeAmt"]);
+            var ApplicationFeeAmt = parseInt(value["ApplicationFeeAmt"]);
+            var ChargeType = value["ChargeType"];
+            if(ChargeType === "fixed"){
+                ChargeAmt = PriceFormat(ChargeAmt);
+            }else{
+                ChargeAmt+="%";
+            }
+            var ApplicationFeeType = value["ApplicationFeeType"];
+            if(ApplicationFeeType === "fixed"){
+                ApplicationFeeAmt = PriceFormat(ApplicationFeeAmt);
+            }else{
+                ApplicationFeeAmt+="%";
+            }
+            var RuleName = value["RuleName"];
+            var RuleDescription = value["RuleDescription"];
+            var ID = value["optionId"];
+            
+            childClone.find(".MonOptName-p").html("<b>"+RuleName+"</b>");
+            childClone.find(".MonOptPercentMometised-p").text(PercentageMonetisation);
+            childClone.find(".MonOptDesc-p").text(RuleDescription);
+            childClone.find(".MonOptMinVal-p").text(minVal);
+            childClone.find(".MonOptMaxVal-p").text(maxVal);
+            childClone.find(".MonOptTenor-p").text(ExpiryDateInDays);
+            childClone.find(".MonOptCharges-p").text(ChargeAmt);
+            childClone.find(".MonOptAppFee-p").text(ApplicationFeeAmt);
+            childClone.find(".MonOptId-p").text(ID);
+            var Select = childClone.find(".MonOptSelectMon-p");
+            Select.click(function(){
+                GetData("Schemes", "GetUserEligibleMonetisationProducts", "LoadUserProductsMon", actualuserid);
+                var val = JSON.stringify(value);
+                $(".MonOptSelected-p").val(val);
+                $(".monSteps").text("Step 3");
+                $(".monStep2").addClass("hide");
+                $(".monStep3").removeClass("hide");
+                $(".monStep4").addClass("hide");
+            });
             childClone.appendTo(parent).show();
         }
         cloneThis.hide();
     });
-}
-function monStep3() {
-    var selectedMonRule = $("input[name='monRuleSelected']:checked").val();
-    if (selectedMonRule === "" || selectedMonRule === "on" || selectedMonRule == undefined) {
-        alert("You have not selected a rule");
-    } else {
-        var schmVal = $(".schmVal").val();
-        $(".monSteps").text("Step 3");
-        $(".monStep2").addClass("hide");
-        $(".monStep3").removeClass("hide");
-        $(".monStep4").addClass("hide");
-        if (schmVal === "Monetisation") {
-            GetData("Product", "GetUserProducts", "LoadUserProductsMon", actualuserid);
-        } else if (schmVal === "Mobilisation" || schmVal === "Commoditisation") {
-            //GetData("Product", "GetUserProducts", "LoadUserProductsMon", userid);
-        }
-
     }
-
+    
 }
 function monStep4() {
     var toMonitize = [];
@@ -11138,7 +11221,7 @@ function monStep4() {
         toMonitize.push($(this).val());
     });
     if (toMonitize.length === 0) {
-        monStep3();
+        //monStep3();
     } else {
         if (minValue > totalValue) {
 
@@ -11151,20 +11234,36 @@ function monStep4() {
                     StringifiedValue += ":";
                 }
             });
-            var selectedMonRule = $("input[name='monRuleSelected']:checked").val();
+            var selectedMonRule = $(".MonOptSelected-p").val();
             var monRule = JSON.parse(selectedMonRule);
-            var minValue = monRule["min_value"];
-            var feePercent = parseInt(monRule["percent"]);
-            var eqiVal = parseInt(monRule["mon_type"]);
-            var monRuleID = monRule["id"];
-            var charges = 0;
-            var appFee = ((feePercent / 100) * totalValue) + charges;
+            var minValue = monRule["MinimumValue"];
+            var maxValue = monRule["MaximumValue"];
+            var percentMonitized = parseInt(monRule["PercentageMonetisation"]);
+            var CashType = monRule["ApplicationFeeType"];
+            var ChargeType = monRule["ChargeType"];
+            var CashAmt = parseInt(monRule["ApplicationFeeAmt"]);
+            var ChargeAmt = parseInt(monRule["ChargeAmt"]);
+            var monRuleID = monRule["optionId"];
+            var monetisationAmt = Math.ceil((percentMonitized / 100) * totalValue);
+            var appFee;
+            if(CashType === "fixed"){
+                appFee = CashAmt;
+            }else if(CashType === "percent"){
+                appFee = Math.ceil((CashAmt / 100) * monetisationAmt);
+            }
+            var charge;
+            if(ChargeType === "fixed"){
+                charge = ChargeAmt;
+            }else if(ChargeType === "percent"){
+                charge = Math.ceil((ChargeAmt / 100) * monetisationAmt);
+            }
             $(".monAppFee").text(PriceFormat(appFee));
+            $(".monAppCharge").text(PriceFormat(charge));
             $(".monProdTotVal").text(PriceFormat(totalValue));
-            $(".monWarrant").text(PriceFormat(totalValue / eqiVal));
+            $(".monWarrant").text(PriceFormat(monetisationAmt));
             var schmVal = $(".schmVal").val();
             $(".schemeType").text(schmVal);
-            if (minValue > totalValue) {
+            if (minValue > totalValue && maxValue < totalValue) {
                 $(".monProdTotVal").removeClass("text-primary");
                 $(".monProdTotVal").addClass("text-danger");
                 $(".monPay").addClass("hide");
@@ -11181,7 +11280,6 @@ function monStep4() {
             var data = [StringifiedValue, monRuleID, actualuserid];
             data = JSON.stringify(data);
             $("#monSubmitData").val(data);
-            
         }
 
     }
@@ -11205,15 +11303,15 @@ function DisplaySubmitMonApplication(params){
 function DisplayUserProductsMon(params) {
     var parent = $("#monGoodParent");
     parent.find(".clone-child").remove();
-    var selectedMonRule = $("input[name='monRuleSelected']:checked").val();
-    var monRule = JSON.parse(selectedMonRule);
-    var minValue = monRule["min_value"];
+    var selectedMonRule = $(".MonOptSelected-p").val();
+    var monOptionSelected = JSON.parse(selectedMonRule);
+    var minValue = monOptionSelected["MinimumValue"];
+    var maxValue = monOptionSelected["MaximumValue"];
     if (params === "none") {
         $("<div />", {class: "padding", text: "No Product"}).appendTo(parent);
     } else {
         var count = 0;
         var childclone = parent.find(".monGoodClone");
-        var keys = Object.keys(params);
         $.each(params, function (id, details) {
             var status = details["status"];
             if (status === "Accepted") {
@@ -11272,7 +11370,7 @@ function DisplayUserProductsMon(params) {
                 goodChecked.click(function () {
                     var checked = !this.checked;
                     var thisClass = ".MonGoodCheckbox"+id;
-                    MarkCheck(id, thisClass, checked, minValue);
+                    MarkCheck(id, thisClass, checked, minValue, maxValue);
                 });
                 newchild.appendTo(parent).show();
             }
@@ -11283,14 +11381,13 @@ function DisplayUserProductsMon(params) {
                 var id = thisId.split("-")[1];
                 var checked = this.checked;
                 var thisClass = ".MonGoodCheckbox"+id;
-                MarkCheck(id, thisClass, checked, minValue);
+                MarkCheck(id, thisClass, checked, minValue, maxValue);
                 this.checked = !this.checked;
             });
         });
     }
 }
-function MarkCheck(id, thisClass, checked, minValue){
-    minValue = parseInt(minValue);
+function MarkCheck(id, thisClass, checked, minValue, maxValue){
     var quant = parseInt($(".monGoodQuantity"+id).val());
     var Total = parseInt($("#gTotalHidden").val());
     var subTotal = parseInt($(".hiddenMonSubtotal"+id).val());
@@ -11309,26 +11406,47 @@ function MarkCheck(id, thisClass, checked, minValue){
         $(thisClass).val(value);
         var vl = $(thisClass).val();
         vl = JSON.parse(vl);
-        
-        
         $(".monGoodQuantity"+id).prop('disabled', true);
         Total += subTotal;
+        minValue = parseInt(minValue);
+        maxValue = parseInt(maxValue);
+        var txtColor = "text-danger";
+        if(Total > minValue && Total < maxValue){
+            $(".MonApplGoToSummary").removeClass("hide");
+            txtColor = "text-success";
+        }else{
+            $(".MonApplGoToSummary").addClass("hide");
+        }
         $("#gTotalHidden").val(Total);
         $("#gTotal").text(PriceFormat(Total));
         $.notify({
             title: "<strong>Name:</strong> "+vl[1],
-            message: "<br/> <strong>Quantities added:</strong> "+quant+"<br/><strong>SubTotal:</strong> "+PriceFormat(vl[4])+"<hr/><strong>Total Added: </strong>"+PriceFormat(Total)+"<br/> <strong>Minimum Value:</strong> "+PriceFormat(minValue)
+            message: "<br/> <strong>Quantities added:</strong> "+quant+
+                    "<br/><strong>SubTotal:</strong> "+PriceFormat(vl[4])+"<hr/><strong>Total Added: </strong><span class='"+txtColor+"'>"+
+                    PriceFormat(Total)+
+                    "</span><br/> <strong>Minimum Value:</strong> "+PriceFormat(minValue)+"<br/> <strong>Maximum Value:</strong> "+PriceFormat(maxValue)
         },{
             type: 'success'
         });
     } else {
         $(".monGoodQuantity"+id).prop('disabled', false);
         Total -= subTotal;
+        minValue = parseInt(minValue);
+        maxValue = parseInt(maxValue);
+        var txtColor = "text-danger";
+        if(Total < minValue && Total > maxValue){
+            $(".MonApplGoToSummary").removeClass("hide");
+            txtColor = "text-success";
+        }else{
+            $(".MonApplGoToSummary").addClass("hide");
+        }
         $("#gTotalHidden").val(Total);
         $("#gTotal").text(PriceFormat(Total));
         $.notify({
             title: "<strong>Total:</strong>",
-            message: PriceFormat(Total),
+            message: "<strong>Total Added: </strong><span class='"+txtColor+"'>"+
+                    PriceFormat(Total)+
+                    "</span><br/> <strong>Minimum Value:</strong> "+PriceFormat(minValue)+"<br/> <strong>Maximum Value:</strong> "+PriceFormat(maxValue),
             allow_dismiss: true,
             placement: {
                 from: 'top',
@@ -11387,13 +11505,14 @@ function DisplayMyMonApplications(params){
             newChild.find(".monUserID").val(val["userid"]);
             newChild.find(".userUsedMonRuleName").text(val["monName"]);
             newChild.find(".userUsedMonRuleID").text(val["monRuleId"]);
-            var maxVal = PriceFormat(parseInt(val["warrants_calculated"]));
+            var maxVal = PriceFormat(parseInt(val["calculated_goods_value"]));
+            var actualamountMonetised = parseInt(val["warrants_calculated"]);
             newChild.find(".monExWarrants").text(maxVal);
+            newChild.find(".monAppAmtMonetised").text(PriceFormat(actualamountMonetised));
             newChild.find(".monAppFeePd").text(PriceFormat(parseInt(val["amount_paid"])));
             newChild.find(".monAppFeeStatus").text(val["payment_status"]);
             newChild.find(".monAppUserPayRef").text(val["payment_reference"]);
             var appStatus = val["application_status"];
-            var actualamount = parseInt(val["calculated_goods_value"]);
             var paymentamount = parseInt(val["AppFee_Calculated"]);
             var goodsVerifed = val["verified"];
             if(goodsVerifed == 1){
@@ -11409,10 +11528,7 @@ function DisplayMyMonApplications(params){
             var DetailsButton = newChild.find(".ViewMonetisationGoods");
             var PayButton = newChild.find(".PayMonAppFee");
             if(appStatus == 1){
-                PayButton.removeClass("hide");
-            }
-            if(appStatus == 1){
-                PayButton.removeClass("disableClick");
+                PayButton.removeClass("hide").removeClass("disableClick");
             }
             //Details Button
             DetailsButton.click(function(){
@@ -11422,7 +11538,7 @@ function DisplayMyMonApplications(params){
 
             });
             PayButton.click(function(){
-                payWithPaystack(val["id"], paymentamount, val["UserEmail"], actualamount, "Monetisation Application Fee");
+                payWithPaystack(val["id"], paymentamount, val["UserEmail"], actualamountMonetised, "Monetisation Application Fee");
             });
             newChild.appendTo(monAppParent).show();
         });
@@ -12567,9 +12683,9 @@ function linkToFunction(action, params) {
             DisplayApprovedMonApplications(params);
             break;
         }
-        case "LoadAllMonetisationRules":
+        case "LoadUserQualifiedMonetisationOption":
         {
-            DisplayMonetisationRules(params);
+            DisplayUserQualifiedMonetisationOption(params);
             break;
         }
         case "LoadUserProductsMon":

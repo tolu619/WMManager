@@ -51,8 +51,9 @@
                         <th>My Detail</th>
                         <th>Monetisation Applied</th>
                         <th>Goods Verification</th>
+                        <th>Amount Monetised</th>
                         <th>Payment Reference</th>
-                        <th>Application fee</th>
+                        <th>Cash</th>
                         <th>Status</th>
                         <th>Options</th>
                         <th></th>
@@ -89,7 +90,7 @@
                             <ul class="list-unstyled mb-0">
                                 <li>
                                     Value:
-                                    <a href="#" class="monExWarrants">N250,000.00</a>
+                                    <a href="#" class="monAppGoodsVal">N250,000.00</a>
                                 </li>
 
                                 <li>
@@ -97,6 +98,9 @@
                                     <span href="#" class="badge-secondary pl-2 pr-2 verifiedBadge">waiting</span>
                                 </li>
                             </ul>
+                        </td>
+                        <td class="monAppAmtMonetised">
+                            N250,000
                         </td>
                         <td class="monAppUserPayRef">
                             N/A
@@ -119,7 +123,22 @@
                         </td>
                         <td class="text-right">
                             <div class="list-icons">
-                                <div class="list-icons-item dropdown">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                            <i class="icon-menu9"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <button class="dropdown-item btn btn-primary btn-xs ViewMonetisationGoods"><i class="icon-microscope"></i> View Details</button>
+                                            <div class="dropdown-divider"></div>
+                                            <button class="dropdown-item btn btn-sm btn-danger PayMonAppFee disableClick hide" id=""><i class="icon-checkmark3"></i> Pay Application Fe</button>
+                                            <button class="dropdown-item btn btn-sm btn-danger DeclineMonetisation" id=""><i class="icon-trash"></i> Decline Listing</button>
+                                            <div class="dropdown-divider"></div>
+                                            <button href="#" class="dropdown-item btn btn-sm btn-danger"><i class="icon-warning2"></i> Report problem</button>
+                                        </div>
+                                    </div>
+                                </div>
+<!--                                <div class="list-icons-item dropdown">
                                     <a href="#" class="list-icons-item" data-toggle="dropdown">
                                         <i class="icon-menu7"></i>
                                     </a>
@@ -129,10 +148,9 @@
                                         <div class="dropdown-divider"></div>
                                         <a href="#" class="dropdown-item"><i class="icon-warning2"></i> Report problem</a>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </td>
-                        <td class="pl-0"></td>
                     </tr>
             </table>
         </div>

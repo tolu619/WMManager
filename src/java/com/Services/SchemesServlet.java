@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import wmengine.Managers.*;
+import wmengine.Tables.Tables;
 
 /**
  *
@@ -197,6 +198,13 @@ public class SchemesServlet extends HttpServlet {
                     json = new Gson().toJson(result);
                     break;
                 }
+                case "RequestMonGoodsReverification":{
+                    String[] data = request.getParameterValues("data[]");
+                    int applicationID = Integer.parseInt(data[0]);
+                    result = GeneralSchemesManager.RequestMonGoodsReverification(applicationID);
+                    json = new Gson().toJson(result);
+                    break;
+                }
                 case "ApproveMonApllication":{
                     String[] data = request.getParameterValues("data[]");
                     int applicationID = Integer.parseInt(data[0]);
@@ -217,22 +225,6 @@ public class SchemesServlet extends HttpServlet {
                     json1 = new Gson().toJson(applications);
                     json2 = new Gson().toJson(req);
                     json = "[" + json1 + ", " + json2 + "]"; 
-                    break;
-                }
-                //portal features
-                case "SubmitMonetisationApplication":{
-                    String[] data = request.getParameterValues("data[]");
-                    String appData = data[0];
-                    int MonRuleID = Integer.parseInt(data[1]);
-                    int userid = Integer.parseInt(data[2]);
-                    result = GeneralSchemesManager.SubmitMonetisationApplication(appData, MonRuleID, userid);
-                    json = new Gson().toJson(result);
-                    break;
-                }
-                case "GetMyMonApplications":{
-                    int data = Integer.parseInt(request.getParameter("data"));
-                    HashMap<String, HashMap<String, Object>> applications = GeneralSchemesManager.GetUserMonetisationApplications(data);
-                    json = new Gson().toJson(applications);
                     break;
                 }
                 case "ChangeMonOptionVisibility":{
@@ -259,6 +251,60 @@ public class SchemesServlet extends HttpServlet {
                     json = new Gson().toJson(update);
                     break;
                 }
+                //portal features
+                case "GetUserQualifiedMonOptions": {
+                    String[] data = request.getParameterValues("data[]");
+                    int userid = Integer.parseInt(data[0].trim());
+                    String scheme = data[1].trim();
+                    HashMap<String, HashMap<String, Object>> rules = GeneralSchemesManager.GetUserQualifiedMonetisationOptions(userid, scheme);
+                    json = new Gson().toJson(rules);
+                    break;
+                }
+                case "SubmitMonetisationApplication":{
+                    String[] data = request.getParameterValues("data[]");
+                    String appData = data[0];
+                    int MonRuleID = Integer.parseInt(data[1]);
+                    int userid = Integer.parseInt(data[2]);
+                    result = GeneralSchemesManager.SubmitMonetisationApplication(appData, MonRuleID, userid);
+                    json = new Gson().toJson(result);
+                    break;
+                }
+                case "GetMyMonApplications":{
+                    int data = Integer.parseInt(request.getParameter("data"));
+                    HashMap<String, HashMap<String, Object>> applications = GeneralSchemesManager.GetUserMonetisationApplications(data);
+                    json = new Gson().toJson(applications);
+                    break;
+                }
+                case "GetUserEligibleMonetisationProducts":{
+                    ArrayList<Integer> proIds = new ArrayList<>();
+                    HashMap<Integer, HashMap<String, String>> ProdDetailsList = new HashMap<>();
+                    String userid = request.getParameter("data");
+                    int UserID = Integer.parseInt(userid);
+                    proIds = GeneralProductManager.GetSellerProductIds(UserID);
+                    if (!proIds.isEmpty()) {
+                        for (int pid : proIds) {
+                            HashMap<String, String> res = GeneralProductManager.GetPoolProductDetails(pid);
+                            String productStatus = res.get(Tables.ProductPool.Status);
+                            if(productStatus.equals("Accepted")){
+                                String availableQuantity = GeneralSchemesManager.VerifyProductFormonetisation(res, UserID);
+                                if(!availableQuantity.equals("false-0")){
+                                    if(availableQuantity.equals("true-0")){
+                                        ProdDetailsList.put(pid, res);
+                                    }else{
+                                        String newQuantity = availableQuantity.split("-")[1];
+                                        res.replace(Tables.ProductPool.Quantity, newQuantity);
+                                        ProdDetailsList.put(pid, res);
+                                    }
+                                }
+                            }
+                        }
+                        json = new Gson().toJson(ProdDetailsList);
+                    } else {
+                        json = new Gson().toJson(empty);
+                    }
+                    break;
+                }
+                
             }
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
