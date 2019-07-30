@@ -391,6 +391,100 @@ public class AccountServlet extends HttpServlet {
                     json = new Gson().toJson(result);
                     break;
                 }
+                case "ValidatePaystackTransaction": {
+                    String[] data = request.getParameterValues("data[]");
+                    String userid = data[0].trim();
+                    String actualamount = data[1].trim();
+                    String trxref = data[2].trim();
+                    String transcode = data[3].trim();
+                    String paytype = data[4].trim();
+                    String json1 = "";
+                    String json2 = "";
+                    String result = "";
+                    int MemberUserID = Integer.parseInt(userid);
+                    int Amount = Integer.parseInt(actualamount);
+                    String message = "";
+//                    String payresult = PayStackManager.getInstance().PayStackPay(trxref);
+//                    JSONParser parser = new JSONParser();
+//                    JSONObject jsonParameter = null;
+//                    try {
+//                        jsonParameter = (JSONObject) parser.parse(payresult);
+//                    } catch (Exception e) {
+//                        message = "Your payment validation was not successful, Please contact the admin if your account was debited and send prove of payment!";
+//                        json1 = new Gson().toJson(paytype);
+//                        json2 = new Gson().toJson(result);
+//                        String json3 = new Gson().toJson(message);
+//                        json = "[" + json1 + "," + json2 + "," + json3 + "]";
+//                        e.printStackTrace();
+//                    }
+//                    String Status = jsonParameter.get("status").toString();
+                    String Status = "true";
+                    if (Status.equals("false")) {
+                        message = "Your payment validation was not successful, Please contact the admin if your account was debited and send prove of payment!";
+                        json1 = new Gson().toJson(paytype);
+                        json2 = new Gson().toJson(result);
+                        String json3 = new Gson().toJson(message);
+                        json = "[" + json1 + "," + json2 + "," + json3 + "]";
+
+                    } else if (Status.equals("true")) {
+                        if (paytype.equals("Inspection Fees")) {
+                            result = GeneralAccountManager.CreateNewInventory(MemberUserID, 0, Amount, trxref, transcode, paytype, 0, "Cash");
+                            if (result.equals("success")) {
+                                message = "Your Payment was Successful.";
+                            } else {
+                                result = "warning";
+                                message = "Something went wrong! We would fix it in no time!";
+                            }
+                            json1 = new Gson().toJson(paytype);
+                            json2 = new Gson().toJson(result);
+                            String json3 = new Gson().toJson(message);
+                            json = "[" + json1 + "," + json2 + "," + json3 + "]";
+                        } else if (paytype.equals("Validation Fees")) {
+                            result = GeneralUserManager.ActivateUser(MemberUserID, Amount, trxref, transcode, paytype);
+                            if (result.equals("success")) {
+                                String email = GeneralUserManager.GetMemberEmail(MemberUserID);
+                                String password = GeneralUserManager.GetMemberPassword(MemberUserID);
+                                json1 = new Gson().toJson(paytype);
+                                json2 = new Gson().toJson(result);
+                                String json3 = new Gson().toJson(email);
+                                String json4 = new Gson().toJson(password);
+                                json = "[" + json1 + "," + json2 + "," + json3 + "," + json4 + "]";
+                            } else {
+                                json1 = new Gson().toJson(paytype);
+                                json2 = new Gson().toJson(result);
+                                String json3 = new Gson().toJson("Account validation was not successful!");
+                                json = "[" + json1 + "," + json2 + "," + json3 + "]";
+                            }
+
+                        } else if (paytype.equals("Buy Warrants With Cash")) {
+                            result = GeneralAccountManager.CreateNewInventory(MemberUserID, 0, Amount, trxref, transcode, paytype, 0, "Cash");
+                            if (result.equals("success")) {
+                                message = "Your Payment was Successful. Check your Messages for details";
+                            } else {
+                                result = "warning";
+                                message = "Something went wrong! We would fix it in no time!";
+                            }
+                            json1 = new Gson().toJson(paytype);
+                            json2 = new Gson().toJson(result);
+                            String json3 = new Gson().toJson(message);
+                            json = "[" + json1 + "," + json2 + "," + json3 + "]";
+                        } else if (paytype.equals("Monetisation Application Fee")) {
+                            int applicationID = MemberUserID;
+                            result = GeneralSchemesManager.ImplementMoneisation(applicationID, Amount, Amount, trxref, transcode, Status, paytype);
+                            if (result.equals("success")) {
+                                message = "Your Monetisation Application Has been fulfilled \n Check your Messages and Market warrants account";
+                            } else {
+                                result = "warning";
+                                message = "Something went wrong! We would fix it in no time!";
+                            }
+                            json1 = new Gson().toJson(paytype);
+                            json2 = new Gson().toJson(result);
+                            String json3 = new Gson().toJson(message);
+                            json = "[" + json1 + "," + json2 + "," + json3 + "]";
+                        }
+                    }
+                    break;
+                }
             }
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
