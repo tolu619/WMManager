@@ -24,10 +24,10 @@
             </div>
 
             <div class="header-elements d-none">
-                <div class="breadcrumb justify-content-center ml-2 cursor-pointer">
+                <div class="breadcrumb justify-content-center ml-2 cursor-pointer mr-2">
                     <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Monetisation" class="breadcrumb-elements-item">
                         <i class="icon-hand  mr-2"></i>
-                        Pending Monetisations
+                        Monetisations Applications
                     </a>
                 </div>
                         

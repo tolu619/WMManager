@@ -23,6 +23,7 @@
         <link href="../../../global_assets/app/css/layout.min.css" rel="stylesheet" type="text/css">
         <link href="../../../global_assets/app/css/components.min.css" rel="stylesheet" type="text/css">
         <link href="../../../global_assets/app/css/colors.min.css" rel="stylesheet" type="text/css">
+        <link href="../../../global_assets/css/extras/animate.css-master/animate.min.css" rel="stylesheet" type="text/css"/>
         <!-- /global stylesheets -->
 
     </head>
@@ -74,6 +75,7 @@
         <!-- /theme JS files -->
         <script src="../../../global_assets/app/js/custom.js"></script>
         <script src="../../../global_assets/js/demo_pages/ecommerce_customers.js"></script>
+        <script src="../../../global_assets/js/plugins/bootstrap-notify-master/bootstrap-notify.min.js" type="text/javascript"></script>
 
     </body>
 </html>

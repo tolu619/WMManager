@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -21,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import wmengine.Managers.*;
+import wmengine.Tables.Tables;
 
 /**
  *
@@ -139,16 +142,33 @@ public class SchemesServlet extends HttpServlet {
                     String ruleName = data[1].trim();
                     String ruleDesc = data[2].trim();
                     int minMonVal = Integer.parseInt(data[3].trim());
-                    int percent = Integer.parseInt(data[4].trim());
-                    int monMaxstage = Integer.parseInt(data[5].trim());
-                    int monType = Integer.parseInt(data[6].trim());
-                    result = GeneralSchemesManager.CreateMonetisationRule(schemeType, ruleName, ruleDesc, minMonVal, percent, monMaxstage, monType);
+                    int maxMonVal = Integer.parseInt(data[4].trim());
+                    int percentToMonetise = Integer.parseInt(data[5].trim());
+                    int ContractTenor = Integer.parseInt(data[6].trim());
+                    String appFeeDetail = data[7].trim();
+                    appFeeDetail = appFeeDetail.split("-")[0]+"~"+appFeeDetail.split("-")[1];
+                    String chargeDetail = data[8].trim();
+                    chargeDetail = chargeDetail.split("-")[0]+"~"+chargeDetail.split("-")[1];
+                    String monRuleAccesibleGroups = data[9].trim();
+                    String monRuleDependentMonetisations = data[10].trim();
+                    int visibility = Integer.parseInt(data[11].trim());
+                    result = GeneralSchemesManager.CreateMonetisationRule(schemeType, ruleName, ruleDesc, minMonVal, maxMonVal, percentToMonetise, 
+                            ContractTenor, appFeeDetail, chargeDetail, monRuleAccesibleGroups, monRuleDependentMonetisations, visibility);
                     json = new Gson().toJson(result);
                     break;
                 }
+                case "GetNewMonetisationOptionParameters":{
+                    HashMap<String, ArrayList<String>> NewOptParams = new HashMap<>();
+                    ArrayList<String> options = GeneralSchemesManager.GetAllMonetisationOptionNames();
+                    ArrayList<String> usergroups = GeneralUserManager.GetAllUsergroups();
+                    NewOptParams.put("DependencyParameters", options);
+                    NewOptParams.put("AccessParameters", usergroups);
+                    json = new Gson().toJson(NewOptParams);
+                    break;
+                }
                 case "GetAllMonetisationRules":{
-                    HashMap<String, HashMap<String, Object>> rules = GeneralSchemesManager.GetMonetisationRules();
-                    json = new Gson().toJson(rules);
+                    HashMap<String, HashMap<String, Object>> options = GeneralSchemesManager.GetMonetisationRules();
+                    json = new Gson().toJson(options);
                     break;
                 }
                 case "GetAllMonetisationApplication":{
@@ -178,6 +198,13 @@ public class SchemesServlet extends HttpServlet {
                     json = new Gson().toJson(result);
                     break;
                 }
+                case "RequestMonGoodsReverification":{
+                    String data = request.getParameter("data");
+                    int applicationID = Integer.parseInt(data);
+                    result = GeneralSchemesManager.RequestMonGoodsReverification(applicationID);
+                    json = new Gson().toJson(result);
+                    break;
+                }
                 case "ApproveMonApllication":{
                     String[] data = request.getParameterValues("data[]");
                     int applicationID = Integer.parseInt(data[0]);
@@ -200,59 +227,37 @@ public class SchemesServlet extends HttpServlet {
                     json = "[" + json1 + ", " + json2 + "]"; 
                     break;
                 }
-                //portal features
-                case "ApplyForMonetisation":{
+                case "ChangeMonOptionVisibility":{
                     String[] data = request.getParameterValues("data[]");
-                    String userid = data[0].trim();
-                    String actualamount = data[1].trim();
-                    int AmountPD = Integer.parseInt(actualamount.split(":")[1]);
-                    actualamount = actualamount.split(":")[0];
-                    String trxref = data[2].trim();
-                    String transcode = data[3].trim();
-                    String paytype = data[4].trim();
-                    String AppData = data[5].trim();
-                    int MonRuleId = Integer.parseInt(AppData.split(";")[1]);
-                    String appData = AppData.split(";")[0];
-                    int UserID = Integer.parseInt(userid);
-                    int WarrantsExpected = Integer.parseInt(actualamount);
-                    String message = "";
-                    /*String payresult = PayStackManager.getInstance().PayStackPay(trxref);
-                    JSONParser parser = new JSONParser();
-                    JSONObject jsonParameter = null;
-                    try {
-                        jsonParameter = (JSONObject) parser.parse(payresult);
-                    } catch (Exception e) {
-                        message = "Your payment validation was not successful, Please contact the admin if your account was debited and send prove of payment!";
-                        json1 = new Gson().toJson(paytype);
-                        json2 = new Gson().toJson(result);
-                        String json3 = new Gson().toJson(message);
-                        json = "[" + json1 + "," + json2 + "," + json3 + "]";
-                        e.printStackTrace();
+                    int Id = Integer.parseInt(data[0]);
+                    int visible = Integer.parseInt(data[1]);
+                    String update = GeneralSchemesManager.ChangeMonetisationVisibility(Id, visible);
+                    String visibility = "";
+                    if(visible == 0){
+                        visibility = "OFF";
+                    }else{
+                        visibility = "ON";
                     }
-                    String Status = jsonParameter.get("status").toString();*/
-                    String Status = "true";
-                    if (Status.equals("false")) {
-                        message = "Your payment validation was not successful, Please contact the admin if your account was debited and send prove of payment!";
-                        json1 = new Gson().toJson(paytype);
-                        json2 = new Gson().toJson(result);
-                        json3 = new Gson().toJson(message);
-                        json = "[" + json1 + "," + json2 + "," + json3 + "]";
-
-                    }else if (Status.equals("true")) {
-                        if (paytype.equals("Monetisation Application Fee")) {
-                            result = GeneralSchemesManager.LogMonetisationApplication(MonRuleId, appData, UserID, AmountPD, WarrantsExpected, Status, transcode);
-                            if(result.equals("success")){
-                                message = "Successful";
-                            }else{
-                                message = "Failed";
-                            }
-                            
-                            json1 = new Gson().toJson(paytype);
-                            json2 = new Gson().toJson(result);
-                            json3 = new Gson().toJson(message);
-                            json = "[" + json1 + "," + json2 + "," + json3 + "]";
-                        }
-                    }
+                    json1 = new Gson().toJson(update);
+                    json2 = new Gson().toJson(visibility);        
+                    json = "["+ json1 + ", " + json2 + "]";
+                    break;
+                }
+                case "DeleteMonetisationOption":{
+                    String[] data = request.getParameterValues("data[]");
+                    int Id = Integer.parseInt(data[0]);
+                    int delete = Integer.parseInt(data[1]);
+                    String update = GeneralSchemesManager.DeleteMonetisationOption(Id, delete);
+                    json = new Gson().toJson(update);
+                    break;
+                }
+                //portal features
+                case "GetUserQualifiedMonOptions": {
+                    String[] data = request.getParameterValues("data[]");
+                    int userid = Integer.parseInt(data[0].trim());
+                    String scheme = data[1].trim();
+                    HashMap<String, HashMap<String, Object>> rules = GeneralSchemesManager.GetUserQualifiedMonetisationOptions(userid, scheme);
+                    json = new Gson().toJson(rules);
                     break;
                 }
                 case "SubmitMonetisationApplication":{
@@ -270,6 +275,36 @@ public class SchemesServlet extends HttpServlet {
                     json = new Gson().toJson(applications);
                     break;
                 }
+                case "GetUserEligibleMonetisationProducts":{
+                    ArrayList<Integer> proIds = new ArrayList<>();
+                    HashMap<Integer, HashMap<String, String>> ProdDetailsList = new HashMap<>();
+                    String userid = request.getParameter("data");
+                    int UserID = Integer.parseInt(userid);
+                    proIds = GeneralProductManager.GetSellerProductIds(UserID);
+                    if (!proIds.isEmpty()) {
+                        for (int pid : proIds) {
+                            HashMap<String, String> res = GeneralProductManager.GetPoolProductDetails(pid);
+                            String productStatus = res.get(Tables.ProductPool.Status);
+                            if(productStatus.equals("Accepted")){
+                                String availableQuantity = GeneralSchemesManager.VerifyProductFormonetisation(res, UserID);
+                                if(!availableQuantity.equals("false-0")){
+                                    if(availableQuantity.equals("true-0")){
+                                        ProdDetailsList.put(pid, res);
+                                    }else{
+                                        String newQuantity = availableQuantity.split("-")[1];
+                                        res.replace(Tables.ProductPool.Quantity, newQuantity);
+                                        ProdDetailsList.put(pid, res);
+                                    }
+                                }
+                            }
+                        }
+                        json = new Gson().toJson(ProdDetailsList);
+                    } else {
+                        json = new Gson().toJson(empty);
+                    }
+                    break;
+                }
+                
             }
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");

@@ -1671,16 +1671,30 @@ function btnEvents() {
         GetData("User", "GetBusinessTypes", "LoadBusinessTypes", data);
     });
     //Monetisation
-    $("Form[name=NewMonetisationRule]").submit(function () {
+    $("Form[name=NewMonetisationRule]").submit(function (e) {
         var schemeType = $("#schemeType").val();
         var ruleName = $("#ruleName").val();
         var ruleDesc = $("#ruleDesc").val();
         var minMonVal = $("#minMonVal").val();
-        var percent = $("#monPercent").val();
-        var monMaxstage = $("#monMaxstage").val();
-        var monType = $("#monType").val();
-        var data = [schemeType, ruleName, ruleDesc, minMonVal, percent, monMaxstage, monType];
+        var maxMonVal = $("#maxMonVal").val();
+        var percentToMonetise = $("#monRulePercentMonetised").val();
+        var ContractTenor = $("#monRuleExpirationInDays").val();
+        var appFeeType = $("input[name='monRuleAppFeeType']:checked").val();
+        var appFeeAmount = $("#monRuleApplyFeeAmount").val();
+        var appFeeDetail = appFeeType+"-"+appFeeAmount;
+        var chargeType = $("input[name='monRuleChargesType']:checked").val();
+        var chargeAmount = $("#monRuleChargeAmount").val();
+        var chargeDetail = chargeType+"-"+chargeAmount;
+        var monRuleAccesibleGroups = $("#monRuleAccesibleGroups").val();
+        var monRuleDependentMonetisations = $("#monRuleDependentMonetisations").val();
+        var visibility = 1;
+        if(!$('#monRuleVisibile').is(":checked")){
+            visibility = 0;
+        }
+        var data = [schemeType, ruleName, ruleDesc, minMonVal, maxMonVal, percentToMonetise, ContractTenor, appFeeDetail, chargeDetail,
+        monRuleAccesibleGroups, monRuleDependentMonetisations, visibility];
         GetData("Schemes", "CreateNewMonetisationRule", "LoadNewMonetisationRule", data);
+        e.preventDefault();
     });
     $(".callApprovedMonetisations").click(function () {
         var data = [1, "Approved"];
@@ -1703,6 +1717,46 @@ function btnEvents() {
         var data = $("#monSubmitData").val();
         data = JSON.parse(data);
         GetData("Schemes", "SubmitMonetisationApplication", "LoadSubmitMonApp", data);
+    });
+    $(".create-new-monetisation-rule-modal").click(function(){
+        $(".modal-new-monetisation-rule").on("show.bs.modal", function(){
+            GetData("Schemes", "GetNewMonetisationOptionParameters", "LoadNewMonetisationOptionParameters"); 
+        }).modal("show");
+    });
+    $(".monRuleDependency").click(function(){
+        $(".monRuleDependencyDiv").removeClass("hide");
+    });
+    $(".CancelMonRuleDependency").click(function(){
+        $(".monRuleDependencyDiv").addClass("hide");
+    });
+    $(".SetMonRuleDependency").click(function(){
+        var dpdSave = "";
+        $(".MonDependentOpts").each(function() {
+            if(this.checked){
+                var val = $(this).val();
+                dpdSave += val+",";
+            }
+        });
+        $("#monRuleDependentMonetisations").val(dpdSave);
+        $(".monRuleDependencyDiv").addClass("hide");
+    });
+    
+    $(".monRuleAccesibility").click(function(){
+        $(".monRuleAccessibilityDiv").removeClass("hide");
+    });
+    $(".CancelMonRuleAccessibility").click(function(){
+        $(".monRuleAccessibilityDiv").addClass("hide");
+    });
+    $(".SetMonRuleAccessibility").click(function(){
+        var accSave = "";
+        $(".MonAccessGroupsOpts").each(function() {
+            if(this.checked){
+                var val = $(this).val();
+                accSave += val+",";
+            }
+        });
+        $("#monRuleAccesibleGroups").val(accSave);
+        $(".monRuleAccessibilityDiv").addClass("hide");
     });
     //Monetisation
     $("#ChangeEmail").click(function () {
@@ -2794,7 +2848,7 @@ function semplePageFunctions() {
 }
 
 function monetisationPageFunctions() {
-    GetData("Schemes", "GetAllMonetisationRules", "LoadMonetisationRules");
+    GetData("Schemes", "GetAllMonetisationRules", "LoadSystemMonetisationRules");
     GetData("Schemes", "GetAllMonetisationApplication", "LoadMonetisationApplications");
     GetData("Schemes", "GetAllMonApplyPendingVerification", "LoadMonApplyPendingVerification");
     GetData("Schemes", "GetMyMonApplications", "LoadMyMonApplications", actualuserid);
@@ -10347,7 +10401,7 @@ function DisplayLoadNewServiceType(params) {
 
 
 //Monetisation
-function DisplayNewMonetisationRule(params) {
+function DisplayMonetisationRules(params) {
     alert(params);
     if (params === "success") {
         swal({
@@ -10375,62 +10429,215 @@ function DisplayNewMonetisationRule(params) {
         });
     }
 }
-function DisplayMonetisationRules(params) {
+function DisplaySystemNewMonetisationRule(params) {
     if (params != "nuil") {
-        var parent = $("#monParent");
-        var childCard = parent.find(".monCard");
+        var parent = $("#MonOptionParent");
+        var childCard = parent.find(".MonOptionClone");
         $.each(params, function (key, value) {
             var title = key.split("-")[1];
-            //key === "monetisation"? CloneMonetisation(value): key === "commoditisation"? CloneCommoditisation(value): CloneMobilisation(value);
             var newCard = childCard.clone();
             newCard.removeClass("hide");
-            newCard.removeClass("monCard");
+            newCard.removeClass("MonOptionClone");
             var bg = "bg-secondary-400";
-            var monType = "Full";
-            var minVal = PriceFormat(parseInt(value["min_value"]));
+            var minVal = PriceFormat(parseInt(value["MinimumValue"]));
+            var maxVal = PriceFormat(parseInt(value["MaximumValue"]));
+            var PercentageMonetisation = parseInt(value["PercentageMonetisation"])+"%";
+            var ExpiryDateInDays = parseInt(value["ExpiryDateInDays"]);
+            var ChargeAmt = parseInt(value["ChargeAmt"]);
+            var ApplicationFeeAmt = parseInt(value["ApplicationFeeAmt"]);
+            var ChargeType = value["ChargeType"];
+            if(ChargeType === "fixed"){
+                ChargeAmt = PriceFormat(ChargeAmt);
+            }else{
+                ChargeAmt+="%";
+            }
+            var ApplicationFeeType = value["ApplicationFeeType"];
+            if(ApplicationFeeType === "fixed"){
+                ApplicationFeeAmt = PriceFormat(ApplicationFeeAmt);
+            }else{
+                ApplicationFeeAmt+="%";
+            }
+            var RuleName = value["RuleName"];
+            var RuleDescription = value["RuleDescription"];
+            var ID = value["optionId"];
+            
+            
+            var AccessibleGroups = value["AccessibleGroups"];
+            var DependentMonetisations = value["DependentMonetisations"];
+            var chkAcc = AccessibleGroups[0];
+            var chkDpd = DependentMonetisations[0];
+            
+            var visibility = "ON";
+            var Visibility = parseInt(value["Visibility"]);
+            if(Visibility == 0){
+                visibility = "OFF";
+            }
             title === "Monetisation" ? bg = "bg-violet-400" : title === "Commoditisation" ? bg = "bg-brown-400" : bg = "bg-primary-400";
-            value["mon_type"] === 1 ? monType = "Full" : value["mon_type"] === 2 ? monType = "Half" : monType = "Quater";
-            newCard.addClass(bg);
-            newCard.find(".monGroup").text(title);
-            newCard.find(".monTitle").text(value["rule_name"]);
-            newCard.find(".monDesc").text(value["rule_desc"]);
-            newCard.find(".monMinVal").text(minVal);
-            newCard.find(".monPercent").text(value["percent"] + "%");
-            newCard.find(".monCycle").text(value["max_stage"]);
-            newCard.find(".monType").text(monType);
+            newCard.find(".card-heading0").addClass(bg);
+            newCard.find(".MonOptionType").text(title);
+            newCard.find(".MonOptionVisibility").text(visibility);
+            newCard.find(".MonOptionName").text(RuleName);
+            newCard.find(".MonOptionDesc").text(RuleDescription);
+            newCard.find(".MonOptionMinVal").text(minVal);
+            newCard.find(".MonOptionMaxVal").text(maxVal);
+            newCard.find(".MonOptionPercentMonetised").text(PercentageMonetisation);
+            newCard.find(".MonOptionAppFeeType").text(ApplicationFeeType);
+            newCard.find(".MonOptionAppFeeAmt").text(ApplicationFeeAmt);
+            newCard.find(".MonOptionExpDays").text(ExpiryDateInDays);
+            newCard.find(".MonOptionChargesType").text(ChargeType);
+            newCard.find(".MonOptionChargesAmt").text(ChargeAmt);
+            if(chkAcc === "0-none"){
+                newCard.find(".MonOptionNoAcc").removeClass("hide");
+            }else{
+                var accParent = newCard.find(".MonOptionAccParent");
+                var accClone = newCard.find(".MonOptionAccClone");
+                $.each(AccessibleGroups, function(index, val){
+                    var newAccClone = accClone.clone();
+                    newAccClone.removeClass("hide");
+                    newAccClone.removeClass("MonOptionAccClone");
+                    newAccClone.text(val.split("-")[1]);
+                    accParent.append(newAccClone);
+                });
+                accParent.removeClass("hide");
+            }
+            if(chkDpd === "0-none"){
+                newCard.find(".MonOptionNoDpdc").removeClass("hide");
+            }else{
+                var dpdParent = newCard.find(".MonOptionDpdcParent");
+                var dpdClone = newCard.find(".MonOptionAccClone");
+                $.each(DependentMonetisations, function(index, val){
+                    var newDpdClone = dpdClone.clone();
+                    newDpdClone.removeClass("hide");
+                    newDpdClone.removeClass("MonOptionAccClone");
+                    newDpdClone.text(val.split("-")[1]);
+                    dpdParent.append(newDpdClone);
+                });
+                dpdParent.removeClass("hide");
+            }
+            
+            var SwapVisibility = newCard.find(".SwapOptVisibility");
+            var DeleteMonOption = newCard.find(".MonDeleteOption");
+            SwapVisibility.click(function(){
+                if(Visibility == 0){
+                    Visibility = 1;
+                    visibility = "ON";
+                }else{
+                    Visibility = 0;
+                    visibility = "OFF";
+                }
+                var data = [ID, Visibility];
+                GetData("Schemes", "ChangeMonOptionVisibility", "LoadMonOptionVisibility", data);
+                newCard.find(".MonOptionVisibility").text(visibility);
+            });
+            DeleteMonOption.click(function(){
+                swal({
+                    title: "Delete?!",
+                    text: "Do you want to proceed to delete this Monetisation Option?",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: '<i class="icon-checkmark3 mr-2"></i> Yes ',
+                    cancelButtonText: '<i class="icon-reading mr-2"></i> No',
+                    confirmButtonClass: 'btn btn-info',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: false
+                }).then(function (dismiss) {
+                    if (dismiss.value) {
+                        var data = [ID, 1];
+                        GetData("Schemes", "DeleteMonetisationOption", "LoadDeleteMonetisationOption", data);
+                    } else {
+                        swal({
+                            title: 'Not Deleted',
+                            text: "No action taken!",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonText: 'Ok!',
+                            confirmButtonClass: 'btn btn-success',
+                            buttonsStyling: false
+                        });
+                    }
+                });
+                
+            });
             parent.prepend(newCard);
         });
     }
 }
 function DisplayMonetisationApplications(params) {
-    $(".mon-table-title").text("Active Monetisation Applications");
-    var monAppParent = $("#monApplicationParent");
+    var monAppParent = "";
     var child = $(".monAppClone");
+    var count, count1, count2, count3, count4, count5, r;
+    count = count1 = count2 = count3 = count4 = count5 = r = 1;
     if (params.length == 0 || params == "") {
-        $("<div>").text("No pending monetisation applications").addClass("text-center").appendTo(monAppParent);
+        $("<div>").text("No monetisation data").addClass("text-center").appendTo(monAppParent);
     } else {
-        monAppParent.empty();
         $.each(params, function (ind, val) {
+            var status = ind.split("-")[1];
             var newChild = child.clone();
             newChild.removeClass("monAppClone");
             newChild.removeClass("hide");
             newChild.addClass(ind);
+            var DetailsButton = newChild.find(".ViewMonetisationGoods");
+            var ApproveMonetisation = newChild.find(".ApproveMonetisation");
+            var DeclineMonetisation = newChild.find(".DeclineMonetisation");
+            var ReverifyGoods = newChild.find(".MonRequestReverification");
+            var AppStatus = "";
+            switch(status){
+                case "pending":
+                    count = count1++;
+                    monAppParent = $("#monApplicationParent-Pending");
+                    AppStatus = "Pending";
+                    break;
+                case "approved":
+                    count = count2++;
+                    monAppParent = $("#monApplicationParent-approved");
+                    ApproveMonetisation.hide();
+                    DeclineMonetisation.hide();
+                    ReverifyGoods.hide();
+                    AppStatus = "Approved";
+                    break;
+                case "declined":
+                    count = count3++;
+                    monAppParent = $("#monApplicationParent-declined");
+                    AppStatus = "Declined";
+                    ApproveMonetisation.hide();
+                    DeclineMonetisation.hide();
+                    ReverifyGoods.hide();
+                    break;
+                case "completed":
+                    count = count4++;
+                    monAppParent = $("#monApplicationParent-completed");
+                    AppStatus = "Warrants Disbursed";
+                    ApproveMonetisation.hide();
+                    DeclineMonetisation.hide();
+                    ReverifyGoods.hide();
+                    break;
+                case "settled":
+                    count = count5++;
+                    monAppParent = $("#monApplicationParent-settled");
+                    AppStatus = "ODLine Settled";
+                    ApproveMonetisation.hide();
+                    DeclineMonetisation.hide();
+                    ReverifyGoods.hide();
+                    break;
+            }
+            
             var image_url = "../../../global_assets/app/img/ProfilePicture/user-" + val["userid"] + ".png";
             if (imageExists(image_url) === false) {
                 image_url = "../../../global_assets/app/img/ProfilePicture/user-0.png";
             }
             newChild.find(".monAppUserImg").attr("src", image_url);
             var Name = val["UserName"];
+            newChild.find(".MonApplCount").text(count);
             newChild.find(".monAppUserName").text(Name);
             newChild.find(".monAppDateTime").text(val["date_applied"]);
             newChild.find(".monUserID").val(val["userid"]);
             newChild.find(".userUsedMonRuleName").text(val["monName"]);
             newChild.find(".userUsedMonRuleID").text(val["monRuleId"]);
             var maxVal = PriceFormat(parseInt(val["warrants_calculated"]));
-            newChild.find(".monExWarrants").text(maxVal);
+            newChild.find(".monExWarrants").text(PriceFormat(parseInt(val["calculated_goods_value"])));
             newChild.find(".monAppFeePd").text(PriceFormat(parseInt(val["amount_paid"])));
             newChild.find(".monAppFeeStatus").text(val["payment_status"]);
-            newChild.find(".monAppUserPayRef").text(val["payment_reference"]);
+            newChild.find(".monAppAmtToMonitise").text(PriceFormat(parseInt(val["warrants_calculated"])));
             var appStatus = val["application_status"];
             var goodsVerifed = val["verified"];
             if (goodsVerifed == 1) {
@@ -10439,13 +10646,9 @@ function DisplayMonetisationApplications(params) {
             } else if (goodsVerifed == 2) {
                 newChild.find(".verifiedBadge").removeClass("badge-secondary").addClass("badge-danger").text("Rejected");
             }
-            var AppStatus = "";
-            appStatus == 0 ? AppStatus = "pending" : appStatus == 1 ? AppStatus = "Approved" : appStatus == 2 ? AppStatus = "Declined" : AppStatus = "Not Recognised!!!";
             newChild.find(".monAppStatus").text(AppStatus);
             newChild.find(".monAppUserPayRef").text(val["payment_reference"]);
-            var DetailsButton = newChild.find(".ViewMonetisationGoods");
-            var ApproveMonetisation = newChild.find(".ApproveMonetisation");
-            var DeclineMonetisation = newChild.find(".DeclineMonetisation");
+            
             //Details Button
             DetailsButton.click(function () {
                 $(".modal-view-monetisation-goods").on("show.bs.modal", function () {
@@ -10508,6 +10711,34 @@ function DisplayMonetisationApplications(params) {
                     }
                 });
             });
+            ReverifyGoods.click(function(){
+                swal({
+                    title: 'Send for Reverification',
+                    text: "Do you want to request that these products be reverified?",
+                    type: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: '<i class="icon-checkmark3 mr-2"></i> Yes ',
+                    cancelButtonText: '<i class="icon-reading mr-2"></i> No',
+                    confirmButtonClass: 'btn btn-info',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: false
+                }).then(function (dismiss) {
+                    if (dismiss.value) {
+                        var ID = val["id"];
+                        GetData("Schemes", "RequestMonGoodsReverification", "LoadUnerifyMonetisationListing", ID);
+                    } else {
+                        swal({
+                            title: "Cancelled!!",
+                            text: "No action taken",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonText: 'Ok!',
+                            confirmButtonClass: 'btn btn-success',
+                            buttonsStyling: false
+                        });
+                    }
+                });
+            });
             newChild.appendTo(monAppParent).show();
         });
         child.hide();
@@ -10554,7 +10785,6 @@ function MonetisationGoodsDetails(details) {
     var percentAmt = (monetisationPercent / 100) * grandTotal;
     var amtPaid = parseInt(details["amount_paid"]);
     var calcWarrants = parseInt(details["warrants_calculated"]);
-    var expWarrants = parseInt(details["warrants_expected"]);
     $(".amt-paid").text(PriceFormat(amtPaid));
     $(".calc-percent").text(PriceFormat(percentAmt));
     $(".exp-warrant").text(PriceFormat(expWarrants));
@@ -10566,7 +10796,7 @@ function MonetisationGoodsDetails(details) {
     } else {
         $(".mon-verification").text("waiting for verification").removeClass("text-success").addClass("text-muted");
     }
-
+    
 }
 function DisplayMonApplyPendingVerification(params) {
     var parent = $("#monVerifyParent");
@@ -10744,10 +10974,10 @@ function DisplayVerifyMonetisationListing(data) {
     }
 }
 function DisplayUnerifyMonetisationListing(data) {
-    if (data == "sucess") {
+    if (data == "success") {
         swal({
             title: 'Success!!',
-            text: "The monetisation has been approved!",
+            text: "Action Taken!",
             type: 'success',
             showCancelButton: false,
             confirmButtonText: 'Ok!',
@@ -10780,6 +11010,32 @@ function DisplayMonApplicationApprove(params) {
             title: 'Success!!',
             text: "The monetisation has been " + action + "!",
             type: 'success',
+            showCancelButton: false,
+            confirmButtonText: 'Ok!',
+            confirmButtonClass: 'btn btn-success',
+            buttonsStyling: false,
+            onClose: function () {
+                window.location.reload();
+            }
+        });
+    }else if(data === "Products confirmation failed"){
+        swal({
+            title: 'Error!!!',
+            text: "The products used for this application was not confirmed by the system! Kindly decline the application",
+            type: 'danger',
+            showCancelButton: false,
+            confirmButtonText: 'Ok!',
+            confirmButtonClass: 'btn btn-warning',
+            buttonsStyling: false,
+            onClose: function () {
+                window.location.reload();
+            }
+        });
+    }else if(data === "Insufficient Balance to grant this monetisation Rights"){
+        swal({
+            title: 'Not Completed',
+            text: "You do not have sufficient balance to grant this monetisation Rights!<br>Add warrants and Try again",
+            type: 'warning',
             showCancelButton: false,
             confirmButtonText: 'Ok!',
             confirmButtonClass: 'btn btn-success',
@@ -10860,62 +11116,202 @@ function DisplayApprovedMonApplications(params) {
         child.hide();
     }
 }
+function DisplayNewMonetisationOptionParameters(params){
+    var dependencies = params["DependencyParameters"];
+    var accessibilities = params["AccessParameters"];
+    if(dependencies.length >= 1){
+        var chooseMonOptDpdParent1 = $("#monRuleChooseDependencies1");
+        var chooseMonOptDpdParent2 = $("#monRuleChooseDependencies2");
+        var chooseMonOptClone = $(".MonRuleDpdClone");
+        $.each(dependencies, function(index, value){
+            var key = parseInt(value.split("-")[1]);
+            var Child = chooseMonOptClone.clone();
+            Child.removeClass("MonRuleDpdClone");
+            Child.removeClass("hide");
+            Child.find(".monOptionDpdCheckbox").attr("id", "thisDpdChechBox"+key).val(key);
+            Child.find(".monOptionDpdCheckbox").addClass("MonDependentOpts");
+            Child.find(".monOptionDpdChkbxLabel").attr("for", "thisDpdChechBox"+key).text(value.split("-")[0]);
+            
+            var parent;
+            if(index%2 === 0){
+                parent = chooseMonOptDpdParent1;
+            }else{
+                parent = chooseMonOptDpdParent2;
+            }
+            parent.append(Child);
+        });
+    }else{
+        $("<div></div>").text("No existent Monetisation options yet").appendTo($(".monRuleChooseDependencies1"));
+    }
+    if(accessibilities.length >= 1){
+        var chooseMonAccesibilitiesParent = $("#monRuleChooseAccessibilitiesParent");
+        var chooseMonAccClone = $(".MonRuleChooseAccessClone");
+        $.each(accessibilities, function(index, value){
+            var key = parseInt(value.split("-")[1]);
+            var Child = chooseMonAccClone.clone();
+            Child.removeClass("MonRuleChooseAccessClone");
+            Child.removeClass("hide");
+            Child.find(".MonRuleChooseAccChkbx").attr("id", "thisAccChechBox"+key).val(key);
+            Child.find(".MonRuleChooseAccChkbx").addClass("MonAccessGroupsOpts");
+            Child.find(".MonRuleChooseAccChkbxLabel").attr("for", "thisAccChechBox"+key).text(value.split("-")[0]);
+            
+            chooseMonAccesibilitiesParent.append(Child);
+        });
+    }else{
+        $("<div></div>").text("No user groups created yet").appendTo($(".monRuleChooseDependencies1"));
+    }
+}
+function DisplayMonOptionVisibility(params){
+    if(params[0] === "success"){
+        $.notify({
+            title: "<strong>Visibility: </strong>",
+            message: params[1]
+        },{
+            type: 'success'
+        });
+    }else{
+        $.notify({
+            title: "<strong>Something went wrong</strong>",
+            message: "Try again"
+        },{
+            type: 'danger'
+        });
+    }
+}
+function DisplayDeleteMonetisationOption(params){
+    if(params === "success"){
+        swal({
+            title: "Deleted!",
+            text: "Monetisation Option been deleted!!.",
+            type: "success",
+            showCancelButton: false,
+            confirmButtonClass: 'btn btn-success',
+            confirmButtonText: 'Ok!',
+            onClose: function () {
+                window.location.reload();
+            }
+        });
+    }else{
+        swal({
+            title: "Oops!!!",
+            text: "Something went wrong.",
+            type: "info",
+            showCancelButton: false,
+            confirmButtonClass: 'btn btn-success',
+            confirmButtonText: 'Ok!',
+            onClose: function () {
+                window.location.reload();
+            }
+        });
+    }
+}
+function DisplayNewMonetisationRule(params){
+    if(params === "success"){
+        swal({
+            title: "Created !!!",
+            text: "New monetisation option created.",
+            type: "success",
+            showCancelButton: false,
+            confirmButtonClass: 'btn btn-success',
+            confirmButtonText: 'Ok!',
+            onClose: function () {
+                window.location.reload();
+            }
+        });
+    }else{
+        swal({
+            title: "Oops!!!",
+            text: "Something went wrong.",
+            type: "info",
+            showCancelButton: false,
+            confirmButtonClass: 'btn btn-success',
+            confirmButtonText: 'Ok!',
+            onClose: function () {
+                window.location.reload();
+            }
+        });
+    }
+}
+
+////portal-features
 function schmVal(val) {
     $(".schmVal").val(val);
-    GetData("Schemes", "GetAllMonetisationRules", "LoadAllMonetisationRules");
+    var data = [actualuserid, val];
+    GetData("Schemes", "GetUserQualifiedMonOptions", "LoadUserQualifiedMonetisationOption", data);
+//    if(val === "Monetisation"){
+//        GetData("Product", "GetUserProducts", "LoadUserProductsMon", userid);
+//    }else if (schmVal === "Mobilisation" || schmVal === "Commoditisation") {
+//        //GetData("Product", "GetUserProducts", "LoadUserProductsMon", userid);
+//    }
     $(".monStep1").hide();
     $(".monStep2").removeClass("hide");
     $(".monSteps").text("Step 2");
 
 }
-////portal-features
-function DisplayMonetisationRules(params) {
-    var parent = $("#monRulesParent");
-    parent.find(".newCloneElement").hide();
-    var cloneThis = parent.find(".monRulesClone");
-    var schmVal = $(".schmVal").val();
-    $.each(params, function (ind, value) {
+function DisplayUserQualifiedMonetisationOption(params) {
+    var parent = $("#monetisation-options-parent");
+    if(jQuery.isEmptyObject(params)){
+        $("<div></div>").html("<div class='text-center w-100'><b>Nothing to Show here yet! <br> Check back Later.</b></div>").appendTo(parent);
+        $(".MonOptNext").hide();
+    }else{
+        parent.find(".newCloneElement").hide();
+        var cloneThis = parent.find(".monetisation-options-clone");
+        var schmVal = $(".schmVal").val();
+        $.each(params, function (ind, value) {
         var schm = ind.split("-")[1];
-        var monType;
-        value["mon_type"] === 0 ? monType = "Not Specified!" : value["mon_type"] === 1 ? monType = "Full" : value["mon_type"] === 2 ? monType = "Half" : monType = "Quarter";
         if (schm === schmVal) {
             var childClone = cloneThis.clone();
             childClone.addClass("newCloneElement");
             childClone.removeClass("monRulesClone");
             childClone.removeClass("hide");
-            childClone.find(".monRuleName").text(value["rule_name"]);
-            childClone.find(".monRulePercent").text(value["percent"] + "%");
-            childClone.find(".monRuleDesc").text(value["rule_desc"]);
-            childClone.find(".monRuleMinVal").text(value["min_value"]);
-            childClone.find(".monRuleMaxStage").text(value["max_stage"]);
-            childClone.find(".monRuleMonType").text(monType);
-            childClone.find(".monRadio").attr("id", ind);
-            var radioVal = JSON.stringify(value);
-            childClone.find(".monRadio").attr("value", radioVal);
-            childClone.find(".monRadioLabel").attr("for", ind);
+            
+            var minVal = PriceFormat(parseInt(value["MinimumValue"]));
+            var maxVal = PriceFormat(parseInt(value["MaximumValue"]));
+            var PercentageMonetisation = parseInt(value["PercentageMonetisation"])+"%";
+            var ExpiryDateInDays = parseInt(value["ExpiryDateInDays"]);
+            var ChargeAmt = parseInt(value["ChargeAmt"]);
+            var ApplicationFeeAmt = parseInt(value["ApplicationFeeAmt"]);
+            var ChargeType = value["ChargeType"];
+            if(ChargeType === "fixed"){
+                ChargeAmt = PriceFormat(ChargeAmt);
+            }else{
+                ChargeAmt+="%";
+            }
+            var ApplicationFeeType = value["ApplicationFeeType"];
+            if(ApplicationFeeType === "fixed"){
+                ApplicationFeeAmt = PriceFormat(ApplicationFeeAmt);
+            }else{
+                ApplicationFeeAmt+="%";
+            }
+            var RuleName = value["RuleName"];
+            var RuleDescription = value["RuleDescription"];
+            var ID = value["optionId"];
+            
+            childClone.find(".MonOptName-p").html("<b>"+RuleName+"</b>");
+            childClone.find(".MonOptPercentMometised-p").text(PercentageMonetisation);
+            childClone.find(".MonOptDesc-p").text(RuleDescription);
+            childClone.find(".MonOptMinVal-p").text(minVal);
+            childClone.find(".MonOptMaxVal-p").text(maxVal);
+            childClone.find(".MonOptTenor-p").text(ExpiryDateInDays);
+            childClone.find(".MonOptCharges-p").text(ChargeAmt);
+            childClone.find(".MonOptAppFee-p").text(ApplicationFeeAmt);
+            childClone.find(".MonOptId-p").text(ID);
+            var Select = childClone.find(".MonOptSelectMon-p");
+            Select.click(function(){
+                GetData("Schemes", "GetUserEligibleMonetisationProducts", "LoadUserProductsMon", actualuserid);
+                var val = JSON.stringify(value);
+                $(".MonOptSelected-p").val(val);
+                $(".monSteps").text("Step 3");
+                $(".monStep2").addClass("hide");
+                $(".monStep3").removeClass("hide");
+                $(".monStep4").addClass("hide");
+            });
             childClone.appendTo(parent).show();
         }
         cloneThis.hide();
     });
-}
-function monStep3() {
-    var selectedMonRule = $("input[name='monRuleSelected']:checked").val();
-    if (selectedMonRule === "" || selectedMonRule === "on" || selectedMonRule == undefined) {
-        alert("You have not selected a rule");
-    } else {
-        var schmVal = $(".schmVal").val();
-        $(".monSteps").text("Step 3");
-        $(".monStep2").addClass("hide");
-        $(".monStep3").removeClass("hide");
-        $(".monStep4").addClass("hide");
-        if (schmVal === "Monetisation") {
-            GetData("Product", "GetUserProducts", "LoadUserProductsMon", actualuserid);
-        } else if (schmVal === "Mobilisation" || schmVal === "Commoditisation") {
-            //GetData("Product", "GetUserProducts", "LoadUserProductsMon", userid);
-        }
-
     }
-
+    
 }
 function monStep4() {
     var toMonitize = [];
@@ -10925,7 +11321,7 @@ function monStep4() {
         toMonitize.push($(this).val());
     });
     if (toMonitize.length === 0) {
-        monStep3();
+        //monStep3();
     } else {
         if (minValue > totalValue) {
 
@@ -10938,20 +11334,36 @@ function monStep4() {
                     StringifiedValue += ":";
                 }
             });
-            var selectedMonRule = $("input[name='monRuleSelected']:checked").val();
+            var selectedMonRule = $(".MonOptSelected-p").val();
             var monRule = JSON.parse(selectedMonRule);
-            var minValue = monRule["min_value"];
-            var feePercent = parseInt(monRule["percent"]);
-            var eqiVal = parseInt(monRule["mon_type"]);
-            var monRuleID = monRule["id"];
-            var charges = 0;
-            var appFee = ((feePercent / 100) * totalValue) + charges;
+            var minValue = monRule["MinimumValue"];
+            var maxValue = monRule["MaximumValue"];
+            var percentMonitized = parseInt(monRule["PercentageMonetisation"]);
+            var CashType = monRule["ApplicationFeeType"];
+            var ChargeType = monRule["ChargeType"];
+            var CashAmt = parseInt(monRule["ApplicationFeeAmt"]);
+            var ChargeAmt = parseInt(monRule["ChargeAmt"]);
+            var monRuleID = monRule["optionId"];
+            var monetisationAmt = Math.ceil((percentMonitized / 100) * totalValue);
+            var appFee;
+            if(CashType === "fixed"){
+                appFee = CashAmt;
+            }else if(CashType === "percent"){
+                appFee = Math.ceil((CashAmt / 100) * monetisationAmt);
+            }
+            var charge;
+            if(ChargeType === "fixed"){
+                charge = ChargeAmt;
+            }else if(ChargeType === "percent"){
+                charge = Math.ceil((ChargeAmt / 100) * monetisationAmt);
+            }
             $(".monAppFee").text(PriceFormat(appFee));
+            $(".monAppCharge").text(PriceFormat(charge));
             $(".monProdTotVal").text(PriceFormat(totalValue));
-            $(".monWarrant").text(PriceFormat(totalValue / eqiVal));
+            $(".monWarrant").text(PriceFormat(monetisationAmt));
             var schmVal = $(".schmVal").val();
             $(".schemeType").text(schmVal);
-            if (minValue > totalValue) {
+            if (minValue > totalValue && maxValue < totalValue) {
                 $(".monProdTotVal").removeClass("text-primary");
                 $(".monProdTotVal").addClass("text-danger");
                 $(".monPay").addClass("hide");
@@ -10968,7 +11380,6 @@ function monStep4() {
             var data = [StringifiedValue, monRuleID, actualuserid];
             data = JSON.stringify(data);
             $("#monSubmitData").val(data);
-            
         }
 
     }
@@ -10992,15 +11403,15 @@ function DisplaySubmitMonApplication(params){
 function DisplayUserProductsMon(params) {
     var parent = $("#monGoodParent");
     parent.find(".clone-child").remove();
-    var selectedMonRule = $("input[name='monRuleSelected']:checked").val();
-    var monRule = JSON.parse(selectedMonRule);
-    var minValue = monRule["min_value"];
+    var selectedMonRule = $(".MonOptSelected-p").val();
+    var monOptionSelected = JSON.parse(selectedMonRule);
+    var minValue = monOptionSelected["MinimumValue"];
+    var maxValue = monOptionSelected["MaximumValue"];
     if (params === "none") {
         $("<div />", {class: "padding", text: "No Product"}).appendTo(parent);
     } else {
         var count = 0;
         var childclone = parent.find(".monGoodClone");
-        var keys = Object.keys(params);
         $.each(params, function (id, details) {
             var status = details["status"];
             if (status === "Accepted") {
@@ -11059,7 +11470,7 @@ function DisplayUserProductsMon(params) {
                 goodChecked.click(function () {
                     var checked = !this.checked;
                     var thisClass = ".MonGoodCheckbox"+id;
-                    MarkCheck(id, thisClass, checked, minValue);
+                    MarkCheck(id, thisClass, checked, minValue, maxValue);
                 });
                 newchild.appendTo(parent).show();
             }
@@ -11070,14 +11481,13 @@ function DisplayUserProductsMon(params) {
                 var id = thisId.split("-")[1];
                 var checked = this.checked;
                 var thisClass = ".MonGoodCheckbox"+id;
-                MarkCheck(id, thisClass, checked, minValue);
+                MarkCheck(id, thisClass, checked, minValue, maxValue);
                 this.checked = !this.checked;
             });
         });
     }
 }
-function MarkCheck(id, thisClass, checked, minValue){
-    minValue = parseInt(minValue);
+function MarkCheck(id, thisClass, checked, minValue, maxValue){
     var quant = parseInt($(".monGoodQuantity"+id).val());
     var Total = parseInt($("#gTotalHidden").val());
     var subTotal = parseInt($(".hiddenMonSubtotal"+id).val());
@@ -11096,26 +11506,47 @@ function MarkCheck(id, thisClass, checked, minValue){
         $(thisClass).val(value);
         var vl = $(thisClass).val();
         vl = JSON.parse(vl);
-        
-        
         $(".monGoodQuantity"+id).prop('disabled', true);
         Total += subTotal;
+        minValue = parseInt(minValue);
+        maxValue = parseInt(maxValue);
+        var txtColor = "text-danger";
+        if(Total > minValue && Total < maxValue){
+            $(".MonApplGoToSummary").removeClass("hide");
+            txtColor = "text-success";
+        }else{
+            $(".MonApplGoToSummary").addClass("hide");
+        }
         $("#gTotalHidden").val(Total);
         $("#gTotal").text(PriceFormat(Total));
         $.notify({
             title: "<strong>Name:</strong> "+vl[1],
-            message: "<br/> <strong>Quantities added:</strong> "+quant+"<br/><strong>SubTotal:</strong> "+PriceFormat(vl[4])+"<hr/><strong>Total Added: </strong>"+PriceFormat(Total)+"<br/> <strong>Minimum Value:</strong> "+PriceFormat(minValue)
+            message: "<br/> <strong>Quantities added:</strong> "+quant+
+                    "<br/><strong>SubTotal:</strong> "+PriceFormat(vl[4])+"<hr/><strong>Total Added: </strong><span class='"+txtColor+"'>"+
+                    PriceFormat(Total)+
+                    "</span><br/> <strong>Minimum Value:</strong> "+PriceFormat(minValue)+"<br/> <strong>Maximum Value:</strong> "+PriceFormat(maxValue)
         },{
             type: 'success'
         });
     } else {
         $(".monGoodQuantity"+id).prop('disabled', false);
         Total -= subTotal;
+        minValue = parseInt(minValue);
+        maxValue = parseInt(maxValue);
+        var txtColor = "text-danger";
+        if(Total < minValue && Total > maxValue){
+            $(".MonApplGoToSummary").removeClass("hide");
+            txtColor = "text-success";
+        }else{
+            $(".MonApplGoToSummary").addClass("hide");
+        }
         $("#gTotalHidden").val(Total);
         $("#gTotal").text(PriceFormat(Total));
         $.notify({
             title: "<strong>Total:</strong>",
-            message: PriceFormat(Total),
+            message: "<strong>Total Added: </strong><span class='"+txtColor+"'>"+
+                    PriceFormat(Total)+
+                    "</span><br/> <strong>Minimum Value:</strong> "+PriceFormat(minValue)+"<br/> <strong>Maximum Value:</strong> "+PriceFormat(maxValue),
             allow_dismiss: true,
             placement: {
                 from: 'top',
@@ -11174,13 +11605,14 @@ function DisplayMyMonApplications(params){
             newChild.find(".monUserID").val(val["userid"]);
             newChild.find(".userUsedMonRuleName").text(val["monName"]);
             newChild.find(".userUsedMonRuleID").text(val["monRuleId"]);
-            var maxVal = PriceFormat(parseInt(val["warrants_calculated"]));
-            newChild.find(".monExWarrants").text(maxVal);
+            var maxVal = PriceFormat(parseInt(val["calculated_goods_value"]));
+            var actualamountMonetised = parseInt(val["warrants_calculated"]);
+            newChild.find(".monAppGoodsVal").text(maxVal);
+            newChild.find(".monAppAmtMonetised").text(PriceFormat(actualamountMonetised));
             newChild.find(".monAppFeePd").text(PriceFormat(parseInt(val["amount_paid"])));
             newChild.find(".monAppFeeStatus").text(val["payment_status"]);
             newChild.find(".monAppUserPayRef").text(val["payment_reference"]);
             var appStatus = val["application_status"];
-            var actualamount = parseInt(val["calculated_goods_value"]);
             var paymentamount = parseInt(val["AppFee_Calculated"]);
             var goodsVerifed = val["verified"];
             if(goodsVerifed == 1){
@@ -11196,30 +11628,27 @@ function DisplayMyMonApplications(params){
             var DetailsButton = newChild.find(".ViewMonetisationGoods");
             var PayButton = newChild.find(".PayMonAppFee");
             if(appStatus == 1){
-                PayButton.removeClass("hide");
-            }
-            if(appStatus == 1){
-                PayButton.removeClass("disableClick");
+                PayButton.removeClass("hide").removeClass("disableClick");
             }
             //Details Button
             DetailsButton.click(function(){
-                $(".modal-view-monetisation-goods").on("show.bs.modal", function(){
-                    MonetisationGoodsDetails(val);
+                $(".modal-view-user-monetisation-goods").on("show.bs.modal", function(){
+                    MonetisationGoodsDetailsP(val);
                 }).modal("show");
 
             });
             PayButton.click(function(){
-                payWithPaystack(val["id"], paymentamount, val["UserEmail"], actualamount, "Monetisation Application Fee");
+                payWithPaystack(val["id"], paymentamount, val["UserEmail"], paymentamount, "Monetisation Application Fee");
             });
             newChild.appendTo(monAppParent).show();
         });
         child.hide();
     }
 }
-function MonetisationGoodsDetails(details){
-    var parent = $("#mon-inv-property");
+function MonetisationGoodsDetailsP(details){
+    var parent = $("#mon-inv-details");
     parent.empty();
-    var child = $(".monGoodClone");
+    var child = $(".monGoodCloneP");
     var productDetails = details['ProductDetails'];
     var count = 0;
     var grandTotal = 0;
@@ -11252,16 +11681,14 @@ function MonetisationGoodsDetails(details){
         newChild.find(".monGoodSubtotal").text(PriceFormat(subTotal));
         newChild.appendTo(parent).show();
     });
-    $("#gTotal").text(PriceFormat(grandTotal));
+    $("#gTotalP").text(PriceFormat(grandTotal));
     
     var monetisationPercent = parseInt(details["MonetisationDetails"]["percent"]);
     var percentAmt = (monetisationPercent/100) * grandTotal;
     var amtPaid = parseInt(details["amount_paid"]);
     var calcWarrants = parseInt(details["warrants_calculated"]);
-    var expWarrants = parseInt(details["warrants_expected"]);
     $(".amt-paid").text(PriceFormat(amtPaid));
     $(".calc-percent").text(PriceFormat(percentAmt));
-    $(".exp-warrant").text(PriceFormat(expWarrants));
     $(".calc-warrants").text(PriceFormat(calcWarrants));
     if(verified == 1){
         $(".mon-verification").text("Verified on "+details["date_verified"]).removeClass("text-muted").addClass("text-success");
@@ -12330,9 +12757,9 @@ function linkToFunction(action, params) {
             DisplayNewMonetisationRule(params);
             break;
         }
-        case "LoadMonetisationRules":
+        case "LoadSystemMonetisationRules":
         {
-            DisplayMonetisationRules(params);
+            DisplaySystemNewMonetisationRule(params);
             break;
         }
         case "LoadMonetisationApplications":
@@ -12432,9 +12859,9 @@ function linkToFunction(action, params) {
             DisplayApprovedMonApplications(params);
             break;
         }
-        case "LoadAllMonetisationRules":
+        case "LoadUserQualifiedMonetisationOption":
         {
-            DisplayMonetisationRules(params);
+            DisplayUserQualifiedMonetisationOption(params);
             break;
         }
         case "LoadUserProductsMon":
@@ -12455,6 +12882,21 @@ function linkToFunction(action, params) {
         case "LoadPaymentResponse":
         {
             DisplayPaymentResponse(params);
+            break;
+        }
+        case "LoadNewMonetisationOptionParameters":
+        {
+            DisplayNewMonetisationOptionParameters(params);
+            break;
+        }
+        case "LoadMonOptionVisibility":
+        {
+            DisplayMonOptionVisibility(params);
+            break;
+        }
+        case "LoadDeleteMonetisationOption":
+        {
+            DisplayDeleteMonetisationOption(params);
             break;
         }
     }
