@@ -353,6 +353,7 @@ public class AccountServlet extends HttpServlet {
                             }
                             transids = new ArrayList<Integer>(new LinkedHashSet<Integer>(transids));
                             transids = UtilityManager.removeDuplicatesIntegerArrayList(transids);
+                            transids = UtilityManager.SortAndReverseIntegerArrayList(transids);
                         }
                     } else {
                         json = new Gson().toJson("Please select Date");
