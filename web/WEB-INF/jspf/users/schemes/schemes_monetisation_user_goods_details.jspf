@@ -42,7 +42,7 @@
                                     <th scope="col">Subtotal</th>
                                 </tr>
                             </thead>
-                            <tbody id="mon-inv-property">
+                            <tbody id="mon-inv-details">
 
                             </tbody>
                             <tfoot>
@@ -61,12 +61,12 @@
                                     <td class="">
                                         Total:
                                     </td>
-                                    <td id="gTotal">
+                                    <td id="gTotalP">
                                         0
                                     </td>
                                 </tr>
                             </tfoot>
-                                <tr class="monGoodClone hide">
+                                <tr class="monGoodCloneP hide">
                                     <td class="monGoodCount rm">1</td>
                                     <td class="p-1 rm" style="width: 45px;">
                                         <a href="#">

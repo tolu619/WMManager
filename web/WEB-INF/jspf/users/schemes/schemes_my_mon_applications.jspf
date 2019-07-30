@@ -131,9 +131,7 @@
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <button class="dropdown-item btn btn-primary btn-xs ViewMonetisationGoods"><i class="icon-microscope"></i> View Details</button>
                                             <div class="dropdown-divider"></div>
-                                            <button class="dropdown-item btn btn-sm btn-danger PayMonAppFee disableClick hide" id=""><i class="icon-checkmark3"></i> Pay Application Fe</button>
-                                            <button class="dropdown-item btn btn-sm btn-danger DeclineMonetisation" id=""><i class="icon-trash"></i> Decline Listing</button>
-                                            <div class="dropdown-divider"></div>
+                                            <button class="dropdown-item btn btn-sm btn-danger PayMonAppFee disableClick hide" id=""><i class="icon-checkmark3"></i> Pay Application Fee</button>
                                             <button href="#" class="dropdown-item btn btn-sm btn-danger"><i class="icon-warning2"></i> Report problem</button>
                                         </div>
                                     </div>

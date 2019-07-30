@@ -10501,6 +10501,8 @@ function DisplaySystemNewMonetisationRule(params) {
 function DisplayMonetisationApplications(params) {
     var monAppParent = "";
     var child = $(".monAppClone");
+    var count, count1, count2, count3, count4, count5, r;
+    count = count1 = count2 = count3 = count4 = count5 = r = 1;
     if (params.length == 0 || params == "") {
         $("<div>").text("No monetisation data").addClass("text-center").appendTo(monAppParent);
     } else {
@@ -10513,35 +10515,45 @@ function DisplayMonetisationApplications(params) {
             var DetailsButton = newChild.find(".ViewMonetisationGoods");
             var ApproveMonetisation = newChild.find(".ApproveMonetisation");
             var DeclineMonetisation = newChild.find(".DeclineMonetisation");
+            var ReverifyGoods = newChild.find(".MonRequestReverification");
             var AppStatus = "";
             switch(status){
                 case "pending":
+                    count = count1++;
                     monAppParent = $("#monApplicationParent-Pending");
                     AppStatus = "Pending";
                     break;
                 case "approved":
+                    count = count2++;
                     monAppParent = $("#monApplicationParent-approved");
                     ApproveMonetisation.hide();
                     DeclineMonetisation.hide();
+                    ReverifyGoods.hide();
                     AppStatus = "Approved";
                     break;
                 case "declined":
+                    count = count3++;
                     monAppParent = $("#monApplicationParent-declined");
                     AppStatus = "Declined";
                     ApproveMonetisation.hide();
                     DeclineMonetisation.hide();
+                    ReverifyGoods.hide();
                     break;
                 case "completed":
+                    count = count4++;
                     monAppParent = $("#monApplicationParent-completed");
                     AppStatus = "Warrants Disbursed";
                     ApproveMonetisation.hide();
                     DeclineMonetisation.hide();
+                    ReverifyGoods.hide();
                     break;
                 case "settled":
+                    count = count5++;
                     monAppParent = $("#monApplicationParent-settled");
                     AppStatus = "ODLine Settled";
                     ApproveMonetisation.hide();
                     DeclineMonetisation.hide();
+                    ReverifyGoods.hide();
                     break;
             }
             
@@ -10551,16 +10563,17 @@ function DisplayMonetisationApplications(params) {
             }
             newChild.find(".monAppUserImg").attr("src", image_url);
             var Name = val["UserName"];
+            newChild.find(".MonApplCount").text(count);
             newChild.find(".monAppUserName").text(Name);
             newChild.find(".monAppDateTime").text(val["date_applied"]);
             newChild.find(".monUserID").val(val["userid"]);
             newChild.find(".userUsedMonRuleName").text(val["monName"]);
             newChild.find(".userUsedMonRuleID").text(val["monRuleId"]);
             var maxVal = PriceFormat(parseInt(val["warrants_calculated"]));
-            newChild.find(".monExWarrants").text(maxVal);
+            newChild.find(".monExWarrants").text(PriceFormat(parseInt(val["calculated_goods_value"])));
             newChild.find(".monAppFeePd").text(PriceFormat(parseInt(val["amount_paid"])));
             newChild.find(".monAppFeeStatus").text(val["payment_status"]);
-            newChild.find(".monAppUserPayRef").text(val["payment_reference"]);
+            newChild.find(".monAppAmtToMonitise").text(PriceFormat(parseInt(val["warrants_calculated"])));
             var appStatus = val["application_status"];
             var goodsVerifed = val["verified"];
             if (goodsVerifed == 1) {
@@ -10634,6 +10647,34 @@ function DisplayMonetisationApplications(params) {
                     }
                 });
             });
+            ReverifyGoods.click(function(){
+                swal({
+                    title: 'Send for Reverification',
+                    text: "Do you want to request that these products be reverified?",
+                    type: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: '<i class="icon-checkmark3 mr-2"></i> Yes ',
+                    cancelButtonText: '<i class="icon-reading mr-2"></i> No',
+                    confirmButtonClass: 'btn btn-info',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: false
+                }).then(function (dismiss) {
+                    if (dismiss.value) {
+                        var ID = val["id"];
+                        GetData("Schemes", "RequestMonGoodsReverification", "LoadUnerifyMonetisationListing", ID);
+                    } else {
+                        swal({
+                            title: "Cancelled!!",
+                            text: "No action taken",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonText: 'Ok!',
+                            confirmButtonClass: 'btn btn-success',
+                            buttonsStyling: false
+                        });
+                    }
+                });
+            });
             newChild.appendTo(monAppParent).show();
         });
         child.hide();
@@ -10647,7 +10688,6 @@ function MonetisationGoodsDetails(details) {
     var count = 0;
     var grandTotal = 0;
     var verified = details["verified"];
-    var ID = details["id"];
     $.each(productDetails, function (index, product) {
         count++;
         var newChild = child.clone();
@@ -10681,7 +10721,6 @@ function MonetisationGoodsDetails(details) {
     var percentAmt = (monetisationPercent / 100) * grandTotal;
     var amtPaid = parseInt(details["amount_paid"]);
     var calcWarrants = parseInt(details["warrants_calculated"]);
-    var expWarrants = parseInt(details["warrants_expected"]);
     $(".amt-paid").text(PriceFormat(amtPaid));
     $(".calc-percent").text(PriceFormat(percentAmt));
     $(".exp-warrant").text(PriceFormat(expWarrants));
@@ -10693,10 +10732,7 @@ function MonetisationGoodsDetails(details) {
     } else {
         $(".mon-verification").text("waiting for verification").removeClass("text-success").addClass("text-muted");
     }
-    var Reverify = $("#MonRequestReverification");
-    Reverify.click(function(){
-        GetData("Schemes", "RequestMonGoodsReverification", "LoadUnerifyMonetisationListing", ID);
-    });
+    
 }
 function DisplayMonApplyPendingVerification(params) {
     var parent = $("#monVerifyParent");
@@ -10874,7 +10910,7 @@ function DisplayVerifyMonetisationListing(data) {
     }
 }
 function DisplayUnerifyMonetisationListing(data) {
-    if (data == "sucess") {
+    if (data == "success") {
         swal({
             title: 'Success!!',
             text: "Action Taken!",
@@ -10921,7 +10957,7 @@ function DisplayMonApplicationApprove(params) {
     }else if(data === "Products confirmation failed"){
         swal({
             title: 'Error!!!',
-            text: "The products used for this application was not confirmed by the system!<br> Kindly decline the application",
+            text: "The products used for this application was not confirmed by the system! Kindly decline the application",
             type: 'danger',
             showCancelButton: false,
             confirmButtonText: 'Ok!',
@@ -11507,7 +11543,7 @@ function DisplayMyMonApplications(params){
             newChild.find(".userUsedMonRuleID").text(val["monRuleId"]);
             var maxVal = PriceFormat(parseInt(val["calculated_goods_value"]));
             var actualamountMonetised = parseInt(val["warrants_calculated"]);
-            newChild.find(".monExWarrants").text(maxVal);
+            newChild.find(".monAppGoodsVal").text(maxVal);
             newChild.find(".monAppAmtMonetised").text(PriceFormat(actualamountMonetised));
             newChild.find(".monAppFeePd").text(PriceFormat(parseInt(val["amount_paid"])));
             newChild.find(".monAppFeeStatus").text(val["payment_status"]);
@@ -11532,23 +11568,23 @@ function DisplayMyMonApplications(params){
             }
             //Details Button
             DetailsButton.click(function(){
-                $(".modal-view-monetisation-goods").on("show.bs.modal", function(){
-                    MonetisationGoodsDetails(val);
+                $(".modal-view-user-monetisation-goods").on("show.bs.modal", function(){
+                    MonetisationGoodsDetailsP(val);
                 }).modal("show");
 
             });
             PayButton.click(function(){
-                payWithPaystack(val["id"], paymentamount, val["UserEmail"], actualamountMonetised, "Monetisation Application Fee");
+                payWithPaystack(val["id"], paymentamount, val["UserEmail"], paymentamount, "Monetisation Application Fee");
             });
             newChild.appendTo(monAppParent).show();
         });
         child.hide();
     }
 }
-function MonetisationGoodsDetails(details){
-    var parent = $("#mon-inv-property");
+function MonetisationGoodsDetailsP(details){
+    var parent = $("#mon-inv-details");
     parent.empty();
-    var child = $(".monGoodClone");
+    var child = $(".monGoodCloneP");
     var productDetails = details['ProductDetails'];
     var count = 0;
     var grandTotal = 0;
@@ -11581,16 +11617,14 @@ function MonetisationGoodsDetails(details){
         newChild.find(".monGoodSubtotal").text(PriceFormat(subTotal));
         newChild.appendTo(parent).show();
     });
-    $("#gTotal").text(PriceFormat(grandTotal));
+    $("#gTotalP").text(PriceFormat(grandTotal));
     
     var monetisationPercent = parseInt(details["MonetisationDetails"]["percent"]);
     var percentAmt = (monetisationPercent/100) * grandTotal;
     var amtPaid = parseInt(details["amount_paid"]);
     var calcWarrants = parseInt(details["warrants_calculated"]);
-    var expWarrants = parseInt(details["warrants_expected"]);
     $(".amt-paid").text(PriceFormat(amtPaid));
     $(".calc-percent").text(PriceFormat(percentAmt));
-    $(".exp-warrant").text(PriceFormat(expWarrants));
     $(".calc-warrants").text(PriceFormat(calcWarrants));
     if(verified == 1){
         $(".mon-verification").text("Verified on "+details["date_verified"]).removeClass("text-muted").addClass("text-success");

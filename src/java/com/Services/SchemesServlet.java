@@ -199,8 +199,8 @@ public class SchemesServlet extends HttpServlet {
                     break;
                 }
                 case "RequestMonGoodsReverification":{
-                    String[] data = request.getParameterValues("data[]");
-                    int applicationID = Integer.parseInt(data[0]);
+                    String data = request.getParameter("data");
+                    int applicationID = Integer.parseInt(data);
                     result = GeneralSchemesManager.RequestMonGoodsReverification(applicationID);
                     json = new Gson().toJson(result);
                     break;
