@@ -137,7 +137,7 @@
                                 <div class="col-6">
                                     <span class="text-green">User groups</span>
                                     <div class="row" id="monRuleChooseAccessibilitiesParent">
-                                        <div class="custom-control custom-checkbox MonRuleChooseAccessClone">
+                                        <div class="custom-control custom-checkbox MonRuleChooseAccessClone hide">
                                             <input type="checkbox" class="custom-control-input MonRuleChooseAccChkbx" id="thisMonRule">
                                             <label class="custom-control-label MonRuleChooseAccChkbxLabel" for="thisMonRule">Standard Monetisation</label>
                                         </div>
