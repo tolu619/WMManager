@@ -19,14 +19,6 @@
                 <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
             </div>
 
-            <div class="header-elements d-none">
-                <div class="breadcrumb justify-content-center cursor-pointer">
-                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=MyMonetisationApplications" class="breadcrumb-elements-item">
-                        <i class="icon-hand mr-2"></i>
-                        My Monetisation Applications
-                    </a>
-                </div>
-            </div>
         </div>
     </div>
     <!-- /page header -->
@@ -126,7 +118,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
-                                <button type="button" class="btn btn-sm ml-auto btn-outline-primary selectAllMonProducts">Select all Products</button>
+                                <button type="button" class="btn btn-sm ml-auto btn-outline-primary selectAllMonProducts">(Un)Select all Products</button>
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>

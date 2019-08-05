@@ -23,71 +23,28 @@
 
         </div>
         <!-- /page header -->
-
-
         <!-- Content area -->
         <div class="content">
             <!-- Tabs -->
             <div class="nav-tabs-responsive mb-3">
-               <%@include file="profile_sublinks.jspf" %>
+                <%@include file="profile_sublinks.jspf" %>
             </div>
             <!-- /tabs -->
-
-            <!-- Timeline -->
-            <div class="timeline timeline-center">
-                <div class="timeline-container" id="userHistory">
-
-                    <!-- Blog post -->
-                    <div class="timeline-row timeline-row-full clone hide" id="timelinearray">
-                        <div class="timeline-icon">
-                            <img  class="histUserImage" alt="">
-                        </div>
-
-                        <div class="timeline-time">
-                            <a href="#" class="histUserName">Lucy</a>
-                            <div class="text-muted histTime">49 minutes ago</div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header header-elements-sm-inline">
-                                <h6 class="card-title histTitle">Himalayan sunset</h6>
-                            </div>
-
-                            <div class="card-body">
-                                <div class="card-img-actions mb-3">
-                                    <img class="card-img img-fluid histUserImage"  alt="" style="width: 48px; height: 48px;">
-                                    <div class="card-img-actions-overlay card-img">
-                                        <a href="#" class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round">
-                                            <i class="icon-link"></i>
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <h6 class="mb-3">
-                                    <i class="icon-comment-discussion mr-2"></i>
-                                    <a href="#" class="histUserName">Jason Ansley</a> <span class="histUserType ml-3 text-muted italics"></span>
-                                </h6>
-
-                                <blockquote class="blockquote blockquote-bordered py-2 pl-3 mb-0">
-                                    <p class="mb-2 font-size-base histDetails">When suspiciously goodness labrador understood rethought yawned grew piously endearingly inarticulate oh goodness jeez trout distinct hence cobra despite taped laughed the much audacious less inside tiger groaned darn stuffily metaphoric unihibitedly inside cobra.</p>
-                                    <footer class="blockquote-footer histDate">Jason</footer>
-                                </blockquote>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card card-body border-top-teal"  id="userHistory">
+                        <div class="list-feed">
+                            <div class="list-feed-item clone hide">
+                                <div class=" "><span class="histDate text-muted"></span> <span class="histTime text-muted"></span> </div>
+                                <a href="#"  class="histUserName">loading username</a> <span class="histTitle ml-1 mr-3 bold"></span> <span class="histDetails"></span>
                             </div>
                         </div>
                     </div>
-                    <!-- /blog post -->
-                    <!-- /video post -->
-
+                    <!-- /circle empty -->
                 </div>
             </div>
-            <!-- /timeline -->
-
-
-
         </div>
         <!-- /content area -->
-
-
         <!-- Footer -->
         <%@include file="../../general/footer1.jspf" %>
         <!-- /footer -->

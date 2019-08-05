@@ -60,28 +60,28 @@
                     <li class="nav-item">
                         <a href="#ApprovedMonetisation" class="navbar-nav-link" data-toggle="tab">
                             <i class="icon-bag mr-2"></i>
-                            Approved Monetisation
+                            Approved
                             <span class="badge badge-pill bg-success position-static ml-auto ml-lg-2 userListedProductsNum">0</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#DeclinedMonetisation" class="navbar-nav-link" data-toggle="tab">
                             <i class="icon-bag mr-2"></i>
-                            Declined Monetisation
+                            Declined
                             <span class="badge badge-pill bg-success position-static ml-auto ml-lg-2 shopListedProductsNum">0</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#CompletedMonetisation" class="navbar-nav-link" data-toggle="tab">
                             <i class="icon-bag mr-2"></i>
-                            Completed Monetisation
+                            Completed
                             <span class="badge badge-pill bg-success position-static ml-auto ml-lg-2 shopListedProductsNum">0</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#SettledMOnetisation" class="navbar-nav-link" data-toggle="tab">
                             <i class="icon-bag mr-2"></i>
-                            Settled Monetisation
+                            Settled
                             <span class="badge badge-pill bg-success position-static ml-auto ml-lg-2 shopListedProductsNum">0</span>
                         </a>
                     </li>

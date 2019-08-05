@@ -6297,9 +6297,7 @@ function DisplayUserHistory(data, parent) {
     if (data === "none") {
         parent.text("No History");
     } else {
-        var i = 0;
         $.each(data, function (id, details) {
-            i++;
             var newchild = parent.find(".clone").clone();
             newchild.removeClass("clone");
             newchild.removeClass("hide");
@@ -6315,19 +6313,6 @@ function DisplayUserHistory(data, parent) {
             newchild.find(".histDetails").text(details["Details"]);
             newchild.find(".histDate").text(details["Date"]);
             newchild.find(".histTime").text(details["Time"]);
-            if (i && (i % 3 === 0)) {
-                $("#timelinearray").removeClass("timeline-row-full");
-                $("#timelinearray").removeClass("timeline-row-right");
-                $("#timelinearray").addClass("timeline-row-left");
-            } else if (i && (i % 5 === 0)) {
-                $("#timelinearray").removeClass("timeline-row-full");
-                $("#timelinearray").removeClass("timeline-row-left");
-                $("#timelinearray").addClass("timeline-row-right");
-            } else {
-                $("#timelinearray").removeClass("timeline-row-left");
-                $("#timelinearray").removeClass("timeline-row-right");
-                $("#timelinearray").addClass("timeline-row-full");
-            }
             newchild.appendTo(parent).show();
         });
     }
@@ -10787,7 +10772,6 @@ function MonetisationGoodsDetails(details) {
     var calcWarrants = parseInt(details["warrants_calculated"]);
     $(".amt-paid").text(PriceFormat(amtPaid));
     $(".calc-percent").text(PriceFormat(percentAmt));
-    $(".exp-warrant").text(PriceFormat(expWarrants));
     $(".calc-warrants").text(PriceFormat(calcWarrants));
     if (verified == 1) {
         $(".mon-verification").text("Verified on " + details["date_verified"]).removeClass("text-muted").addClass("text-success");
@@ -11034,7 +11018,7 @@ function DisplayMonApplicationApprove(params) {
     }else if(data === "Insufficient Balance to grant this monetisation Rights"){
         swal({
             title: 'Not Completed',
-            text: "You do not have sufficient balance to grant this monetisation Rights!<br>Add warrants and Try again",
+            html: "You do not have sufficient balance to grant this monetisation Rights!<br>Add warrants and Try again",
             type: 'warning',
             showCancelButton: false,
             confirmButtonText: 'Ok!',
