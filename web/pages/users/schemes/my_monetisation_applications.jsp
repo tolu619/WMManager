@@ -11,7 +11,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>WM-Portal - My Monetisation Applications</title>
+        <title>WM-Manager - My Monetisation Applications</title>
         <!--<link href="../../../global_assets/app/css/helpers.css" rel="stylesheet" type="text/css">-->
         <link rel="icon" type="image/png" href="../../../global_assets/images/wm/favicon-16x16.png"/>
 
