@@ -1,0 +1,237 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Schemes</span> - Create New Monetisation Type</h4>
+            </div>
+
+
+        </div>
+
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Semple" class="breadcrumb-item">Schemes</a>
+                    <span class="breadcrumb-item active">Monetisation Rules</span>
+                </div>
+
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+            <div class="header-elements d-none">
+                <div class="breadcrumb justify-content-center cursor-pointer mr-2">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=MonetisationRules" class="create-new-monetisation-rule-modal breadcrumb-elements-item text-blue-400">
+                        <i class="icon-plus3 mr-2"></i>
+                        All Monetisation Types
+                    </a>
+                </div>
+                <div class="breadcrumb justify-content-center cursor-pointer">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Monetisation" class="create-new-monetisation-rule-modal breadcrumb-elements-item text-blue-400">
+                        <i class="icon-plus3 mr-2"></i>
+                        Monetisation Applications
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
+
+
+    <!-- Content area -->
+    <div class="content">
+        <form name="NewMonetisationRule">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-5 col-sm-12">
+                        <label for="subCategoryName"><b>Select Scheme</b></label>
+                        <select class="form-control form-control-select2" id="schemeType" placeholder="Select the parent category" required>
+                            <option value="Monetisation">Monetisation</option>
+                            <option value="Commoditisation">Commoditisation</option>
+                            <option value="Mobilisation">Mobilisation</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="subCategoryDesc"><b>Rule Name:</b></label>
+                <input type="text" class="form-control" id="ruleName" rows="1" placeholder="Give this monetisation type a namee" required/>
+            </div>
+            <div class="form-group">
+                <label for="subCategoryDesc"><b>Type a Description:</b></label>
+                <textarea class="form-control" id="ruleDesc" rows="1" placeholder="Enter a brief description" required></textarea>
+            </div>
+            <div class="form-group">                    <div class="row">
+
+                    <div class="col-md-6">
+                        <label for="minMonVal"><b>Minimum Value (₦):</b></label>
+                        <input type="text" class="form-control" id="minMonVal" placeholder="eg. ₦200,000" required/>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="maxMonVal"><b>Maximum Value (₦):</b></label>
+                        <input type="number" class="form-control" id="maxMonVal" placeholder="eg. ₦1,000,000" required/>
+                    </div>
+                </div>
+            </div> 
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="categoryID"><b>Percent to Monetised (%):</b></label>
+                        <input type="number" class="form-control" id="monRulePercentMonetised" max="100" placeholder="100%" required/>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="monRuleIssueDate"><b>Issue Date</b></label>
+                        <select id="monRuleIssueDate" class="form-control form-control-select2">
+                            <option>Not Applicable</option>
+                            <option>Date of Application</option>
+                            <option>Date of Approval</option>
+                            <option>Date Availment cash paid</option>
+                            <option>Pick  a Day</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="monRuleExpirationInDays"><b>Tenor of Contract (in Days):</b></label>
+                        <input type="number" class="form-control" id="monRuleExpirationInDays" placeholder="365" required/>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="monRuleIssueDate"><b>Expiry Date</b></label>
+                        <select id="monRuleIssueDate" class="form-control form-control-select2">
+                            <option>Not Applicable</option>
+                            <option>Calculate from Tenor with Application date</option>
+                            <option>Calculate from Tenor with Approval datel</option>
+                            <option>Calculate from Tenor with date availment cash paid</option>
+                            <option>Pick  a Day</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="minMonVal"><b>Availment cash:</b></label>
+                        <div class="custom-control custom-radio custom-control-inline ml-1">
+                            <input type="radio" class="custom-control-input" id="monRuleAppFeePercent" name="monRuleAppFeeType" value="percent" checked="checked">
+                            <label class="custom-control-label" for="monRuleAppFeePercent">Percentage</label>
+                        </div>
+
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="monRuleAppFeeFixed" name="monRuleAppFeeType" value="fixed">
+                            <label class="custom-control-label" for="monRuleAppFeeFixed">Fixed Amount</label>
+                        </div>
+
+                        <input type="number" class="form-control" id="monRuleApplyFeeAmount" placeholder="15" required/>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="categoryID"><b>Charges:</b></label>
+                        <div class="custom-control custom-radio custom-control-inline ml-1">
+                            <input type="radio" class="custom-control-input" id="monRuleChargesPercent" name="monRuleChargesType" value="percent">
+                            <label class="custom-control-label" for="monRuleChargesPercent">Percentage</label>
+                        </div>
+
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="monRuleChargesFixed" name="monRuleChargesType" value="fixed" checked="checked">
+                            <label class="custom-control-label" for="monRuleChargesFixed">Fixed Amount</label>
+                        </div>
+                        <input type="number" class="form-control" id="monRuleChargeAmount" placeholder="50" required/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex p-2">
+                <div class="p-2">
+                    <h6>Do you want to set a dependency to this monetisation?</h6>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-outline-primary monRuleDependency btn-sm">Yes</button>
+                        <input type="hidden" id="monRuleDependentMonetisations" value="none"/>
+                    </div>
+                </div>
+                <div class="d-flex flex-column p-2 ml-auto monRuleDependencyDiv hide">
+                    <div class="ml-auto text-info">Select all that apply</div>
+                    <div class="">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-6">
+                                <span class="text-green">Existing Monetisations</span>
+                                <div class="row">
+                                    <div class="col-6 " id="monRuleChooseDependencies1">
+                                        <div class="custom-control custom-checkbox MonRuleDpdClone hide">
+                                            <input type="checkbox" class="custom-control-input monOptionDpdCheckbox" id="thisMonRule">
+                                            <label class="custom-control-label monOptionDpdChkbxLabel" for="thisMonRule">Standard Monetisation</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 " id="monRuleChooseDependencies2">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="mt-2 ml-auto">
+                        <span class="text-primary mt-2"><a href="#" class="SetMonRuleDependency">Done</a></span>
+                        <span class="ml-2"><a href="#" class="text-brown CancelMonRuleDependency">Cancel</a></span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex p-2">
+                <div class="p-2">
+                    <h6>Set select groups only to access this monetisation</h6>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-outline-primary monRuleAccesibility btn-sm">Yes</button>
+                        <input type="hidden" id="monRuleAccesibleGroups" value="none"/>
+                    </div>
+                </div>
+                <div class="d-flex flex-column p-2 ml-auto monRuleAccessibilityDiv hide">
+                    <div class="ml-auto text-info">Select all that apply</div>
+                    <div class="">
+                        <div class="row">
+                            <div class="col-3 ">
+
+                            </div>
+                            <div class="col-6">
+                                <span class="text-green">User groups</span>
+                                <div class="row" id="monRuleChooseAccessibilitiesParent">
+                                    <div class="custom-control custom-checkbox MonRuleChooseAccessClone hide">
+                                        <input type="checkbox" class="custom-control-input MonRuleChooseAccChkbx" id="thisMonRule">
+                                        <label class="custom-control-label MonRuleChooseAccChkbxLabel" for="thisMonRule">Standard Monetisation</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-3"></div>
+                        </div>  
+                    </div>
+                    <div class="mt-2 ml-auto">
+                        <span class="text-primary mt-2"><a href="#" class="SetMonRuleAccessibility">Done</a></span>
+                        <span class="ml-2"><a href="#" class="text-brown CancelMonRuleAccessibility">Cancel</a></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex p-2 modal-footer">
+                <div class="p-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="monRuleVisibile" name="monRuleVisibility" checked>
+                        <label class="custom-control-label" for="monRuleVisibile">Make this Option Visible to members</label>
+                    </div>
+                </div>
+
+                <div class="ml-auto p-2">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal" id="Cancel">Close</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <!-- /content area -->
+
+
+    <!-- Footer -->
+    <%@include file="../../general/footer1.jspf" %>
+    <!-- /footer -->
+
+</div>

@@ -20,10 +20,16 @@
             </div>
 
             <div class="header-elements d-none">
-                <div class="breadcrumb justify-content-center cursor-pointer">
-                    <a data-toggle="modal" data-target=".modal-new-monetisation-rule" class="create-new-monetisation-rule-modal breadcrumb-elements-item text-blue-400">
+                <div class="breadcrumb justify-content-center cursor-pointer mr-2">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=MonetisationNewRule" class="create-new-monetisation-rule-modal breadcrumb-elements-item text-blue-400">
                         <i class="icon-plus3 mr-2"></i>
-                        Create New Rule
+                        Create New Monetisation Type
+                    </a>
+                </div>
+                <div class="breadcrumb justify-content-center cursor-pointer">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Monetisation" class="create-new-monetisation-rule-modal breadcrumb-elements-item text-blue-400">
+                        <i class="icon-plus3 mr-2"></i>
+                        Monetisation Applications
                     </a>
                 </div>
             </div>

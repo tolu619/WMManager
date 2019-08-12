@@ -376,6 +376,11 @@ function performPageActions() {
         monetisationPageFunctions();
         $("#id_main_semple").addClass("active");
         $("#id_main_money").addClass("active");
+    } else if (page === "monetisation_new_rule.jsp") {
+        extension = "../../../";
+        monetisationPageFunctions();
+        $("#id_main_semple").addClass("active");
+        $("#id_main_money").addClass("active");
     } else if (page === "my_monetisation_applications.jsp") {
         extension = "../../../";
         monetisationPageFunctions();
@@ -1696,14 +1701,6 @@ function btnEvents() {
         GetData("Schemes", "CreateNewMonetisationRule", "LoadNewMonetisationRule", data);
         e.preventDefault();
     });
-    $(".callApprovedMonetisations").click(function () {
-        var data = [1, "Approved"];
-        GetData("Schemes", "GetCompletedMonApplications", "LoadApprovedMonApplications", data);
-    });
-    $(".callDeclinedMonetisations").click(function () {
-        var data = [2, "Declined"];
-        GetData("Schemes", "GetCompletedMonApplications", "LoadApprovedMonApplications", data);
-    });
     $(".callMonApplications").click(function () {
         GetData("Schemes", "GetAllMonetisationApplication", "LoadMonetisationApplications");
     });
@@ -1717,11 +1714,6 @@ function btnEvents() {
         var data = $("#monSubmitData").val();
         data = JSON.parse(data);
         GetData("Schemes", "SubmitMonetisationApplication", "LoadSubmitMonApp", data);
-    });
-    $(".create-new-monetisation-rule-modal").click(function(){
-        $(".modal-new-monetisation-rule").on("show.bs.modal", function(){
-            GetData("Schemes", "GetNewMonetisationOptionParameters", "LoadNewMonetisationOptionParameters"); 
-        }).modal("show");
     });
     $(".monRuleDependency").click(function(){
         $(".monRuleDependencyDiv").removeClass("hide");
@@ -2849,6 +2841,7 @@ function semplePageFunctions() {
 
 function monetisationPageFunctions() {
     GetData("Schemes", "GetAllMonetisationRules", "LoadSystemMonetisationRules");
+    GetData("Schemes", "GetNewMonetisationOptionParameters", "LoadNewMonetisationOptionParameters");
     GetData("Schemes", "GetAllMonetisationApplication", "LoadMonetisationApplications");
     GetData("Schemes", "GetAllMonApplyPendingVerification", "LoadMonApplyPendingVerification");
     GetData("Schemes", "GetMyMonApplications", "LoadMyMonApplications", actualuserid);
