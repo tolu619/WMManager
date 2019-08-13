@@ -152,8 +152,10 @@ public class SchemesServlet extends HttpServlet {
                     String monRuleAccesibleGroups = data[9].trim();
                     String monRuleDependentMonetisations = data[10].trim();
                     int visibility = Integer.parseInt(data[11].trim());
+                    String issue_date = data[12].trim();
+                    String expiry_date = data[13].trim();
                     result = GeneralSchemesManager.CreateMonetisationRule(schemeType, ruleName, ruleDesc, minMonVal, maxMonVal, percentToMonetise, 
-                            ContractTenor, appFeeDetail, chargeDetail, monRuleAccesibleGroups, monRuleDependentMonetisations, visibility);
+                            ContractTenor, appFeeDetail, chargeDetail, issue_date, expiry_date, monRuleAccesibleGroups, monRuleDependentMonetisations, visibility);
                     json = new Gson().toJson(result);
                     break;
                 }

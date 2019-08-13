@@ -65,6 +65,8 @@
         <script src="../../../global_assets/js/plugins/forms/selects/select2.min.js"></script>
         <script src="../../../global_assets/js/plugins/tables/datatables/extensions/buttons.min.js"></script>
         <script src="../../../global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+        <script src="../../../global_assets/js/plugins/ui/moment/moment.min.js"></script>
+        <script src="../../../global_assets/js/plugins/pickers/daterangepicker.js"></script>
 
 
         <script src="../../../global_assets/app/js/app.js"></script>

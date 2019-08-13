@@ -85,12 +85,12 @@
                     </div>
                     <div class="col-md-3">
                         <label for="monRuleIssueDate"><b>Issue Date</b></label>
-                        <select id="monRuleIssueDate" class="form-control form-control-select2 select-search">
+                        <select id="monRuleIssueDateSelect" class="form-control form-control-select2 select-search">
                             <option value="N/a">Not Applicable</option>
                             <option value="ApplDate">Date of Application</option>
                             <option value="ApprovDate">Date of Approval</option>
                             <option value="AvailmDate">Date Availment cash paid</option>
-                            <option id="MonIssueDate" value="specific date">Pick  a Day</option>
+                            <option  value="specific_date">Pick  a Day</option>
                         </select>
                     </div>
                     <div class="col-md-3">
@@ -99,12 +99,12 @@
                     </div>
                     <div class="col-md-3">
                         <label for="monRuleIssueDate"><b>Expiry Date</b></label>
-                        <select id="monRuleIssueDate" class="form-control form-control-select2 select-search">
+                        <select id="monRuleExpirationDateSelect" class="form-control form-control-select2 select-search">
                             <option value="N/A">Not Applicable</option>
                             <option value="fromIssueDate">Calculate with Tenor from Issue date</option>
                             <option value="fromApprovaldate">Calculate with Tenor from Approval datel</option>
                             <option value="fromAvailmDate">Calculate with Tenor from date Availment cash paid</option>
-                            <option id="MonExpDate" value="specific date">Pick  a Day</option>
+                            <option  value="specific_date">Pick  a Day</option>
                         </select>
                     </div>
                 </div>
@@ -112,11 +112,11 @@
             </div>
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-6 issuedaterange">
-                        <input class="form-control daterange-buttons" id="MonIssueDateRange2" type="text" name="mondaterange1" value="2018-05-01 : 2018-12-31"/>
+                    <div class="col-md-6 issuedaterange hide">
+                        <input class="form-control daterange-buttons" id="MonIssueDateRange" type="text" name="mondaterange1" value="08/20/2019"/>
                     </div>
-                    <div class="col-md-6 expdaterange">
-                        <input class="form-control daterange-buttons" id="MonExpDateRange" type="text" name="mondaterange1" value="2018-05-01 : 2018-12-31"/>
+                    <div class="col-md-6 expdaterange hide">
+                        <input class="form-control daterange-buttons" id="MonExpDateRange" type="text" name="mondaterange2" value="08/20/2019"/>
                     </div>
                 </div>
             </div>

@@ -1693,10 +1693,18 @@ function btnEvents() {
         var monRuleAccesibleGroups = $("#monRuleAccesibleGroups").val();
         var monRuleDependentMonetisations = $("#monRuleDependentMonetisations").val();
         var visibility = 1;
+        var issueDate = $("#monRuleIssueDateSelect").val();
+        var ExpirationDate = $("#monRuleExpirationDateSelect").val();
+        if(ExpirationDate === "specific_date"){
+            ExpirationDate = $("#MonExpDateRange").val();
+        }
+        if(issueDate === "specific_date"){
+            issueDate = $("#MonIssueDateRange").val();
+        }
         if(!$('#monRuleVisibile').is(":checked")){
             visibility = 0;
         }
-        var data = [schemeType, ruleName, ruleDesc, minMonVal, maxMonVal, percentToMonetise, ContractTenor, appFeeDetail, chargeDetail,
+        var data = [schemeType, ruleName, ruleDesc, minMonVal, maxMonVal, percentToMonetise, ContractTenor, appFeeDetail, chargeDetail, issueDate, ExpirationDate,
         monRuleAccesibleGroups, monRuleDependentMonetisations, visibility];
         GetData("Schemes", "CreateNewMonetisationRule", "LoadNewMonetisationRule", data);
         e.preventDefault();
@@ -1750,20 +1758,19 @@ function btnEvents() {
         $("#monRuleAccesibleGroups").val(accSave);
         $(".monRuleAccessibilityDiv").addClass("hide");
     });
-    $("#monRuleIssueDate").change(function(){
-        if(this.val() === "specific date"){
-            $('#monRuleIssueDate').daterangepicker(
-            {
-                locale: {
-                    format: 'YYYY-MM-DD',
-                    buttonClasses: ['btn', 'btn-sm'],
-                    applyLabel: 'Pick',
-                    applyClass: 'btn-success',
-                    cancelClass: 'btn-primary',
-                    separator: ' : '
-                }
-            });
-        }
+    $("#monRuleExpirationDateSelect").change(function(){
+       if($(this).val() === "specific_date"){
+           $(".issuedaterange").removeClass("hide");
+       }else{
+           $(".issuedaterange").addClass("hide");
+       }
+    });
+    $("#monRuleIssueDateSelect").on('change', function(){
+       if($(this).val() === "specific_date"){
+           $(".expdaterange").removeClass("hide");
+       }else{
+           $(".expdaterange").addClass("hide");
+       }
     });
     //Monetisation
     $("#ChangeEmail").click(function () {
@@ -2860,6 +2867,20 @@ function monetisationPageFunctions() {
     GetData("Schemes", "GetAllMonetisationApplication", "LoadMonetisationApplications");
     GetData("Schemes", "GetAllMonApplyPendingVerification", "LoadMonApplyPendingVerification");
     GetData("Schemes", "GetMyMonApplications", "LoadMyMonApplications", actualuserid);
+    $('input[name="mondaterange1"]').daterangepicker(
+            {
+                singleDatePicker: true,
+                showDropdowns: true,
+                minYear: 1901,
+                maxYear: parseInt(moment().format('YYYY'),10)
+            });
+    $('input[name="mondaterange2"]').daterangepicker(
+            {
+                singleDatePicker: true,
+                showDropdowns: true,
+                minYear: 1901,
+                maxYear: parseInt(moment().format('YYYY'),10)
+            });
 }
 
 function CallSempleContract(data) {
@@ -10435,7 +10456,7 @@ function DisplaySystemNewMonetisationRule(params) {
             var minVal = PriceFormat(parseInt(value["MinimumValue"]));
             var maxVal = PriceFormat(parseInt(value["MaximumValue"]));
             var PercentageMonetisation = parseInt(value["PercentageMonetisation"])+"%";
-            var ExpiryDateInDays = parseInt(value["ExpiryDateInDays"]);
+            var ContractTenor = value["ContractTenor"];
             var ChargeAmt = parseInt(value["ChargeAmt"]);
             var ApplicationFeeAmt = parseInt(value["ApplicationFeeAmt"]);
             var ChargeType = value["ChargeType"];
@@ -10476,7 +10497,7 @@ function DisplaySystemNewMonetisationRule(params) {
             newCard.find(".MonOptionPercentMonetised").text(PercentageMonetisation);
             newCard.find(".MonOptionAppFeeType").text(ApplicationFeeType);
             newCard.find(".MonOptionAppFeeAmt").text(ApplicationFeeAmt);
-            newCard.find(".MonOptionExpDays").text(ExpiryDateInDays);
+            newCard.find(".MonOptionExpDays").text(ContractTenor);
             newCard.find(".MonOptionChargesType").text(ChargeType);
             newCard.find(".MonOptionChargesAmt").text(ChargeAmt);
             if(chkAcc === "0-none"){
@@ -11123,7 +11144,6 @@ function DisplayNewMonetisationOptionParameters(params){
             Child.find(".monOptionDpdCheckbox").attr("id", "thisDpdChechBox"+key).val(key);
             Child.find(".monOptionDpdCheckbox").addClass("MonDependentOpts");
             Child.find(".monOptionDpdChkbxLabel").attr("for", "thisDpdChechBox"+key).text(value.split("-")[0]);
-            
             var parent;
             if(index%2 === 0){
                 parent = chooseMonOptDpdParent1;
@@ -11260,7 +11280,7 @@ function DisplayUserQualifiedMonetisationOption(params) {
             var minVal = PriceFormat(parseInt(value["MinimumValue"]));
             var maxVal = PriceFormat(parseInt(value["MaximumValue"]));
             var PercentageMonetisation = parseInt(value["PercentageMonetisation"])+"%";
-            var ExpiryDateInDays = parseInt(value["ExpiryDateInDays"]);
+            var ContractTenor = value["ContractTenor"];
             var ChargeAmt = parseInt(value["ChargeAmt"]);
             var ApplicationFeeAmt = parseInt(value["ApplicationFeeAmt"]);
             var ChargeType = value["ChargeType"];
@@ -11284,7 +11304,7 @@ function DisplayUserQualifiedMonetisationOption(params) {
             childClone.find(".MonOptDesc-p").text(RuleDescription);
             childClone.find(".MonOptMinVal-p").text(minVal);
             childClone.find(".MonOptMaxVal-p").text(maxVal);
-            childClone.find(".MonOptTenor-p").text(ExpiryDateInDays);
+            childClone.find(".MonOptTenor-p").text(ContractTenor);
             childClone.find(".MonOptCharges-p").text(ChargeAmt);
             childClone.find(".MonOptAppFee-p").text(ApplicationFeeAmt);
             childClone.find(".MonOptId-p").text(ID);
