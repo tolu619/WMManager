@@ -1750,6 +1750,21 @@ function btnEvents() {
         $("#monRuleAccesibleGroups").val(accSave);
         $(".monRuleAccessibilityDiv").addClass("hide");
     });
+    $("#monRuleIssueDate").change(function(){
+        if(this.val() === "specific date"){
+            $('#monRuleIssueDate').daterangepicker(
+            {
+                locale: {
+                    format: 'YYYY-MM-DD',
+                    buttonClasses: ['btn', 'btn-sm'],
+                    applyLabel: 'Pick',
+                    applyClass: 'btn-success',
+                    cancelClass: 'btn-primary',
+                    separator: ' : '
+                }
+            });
+        }
+    });
     //Monetisation
     $("#ChangeEmail").click(function () {
         var newMail = $('#newMail').val();
