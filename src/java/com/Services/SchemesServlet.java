@@ -306,6 +306,16 @@ public class SchemesServlet extends HttpServlet {
                     }
                     break;
                 }
+                case "EditMonParameters":{
+                    String[] data = request.getParameterValues("data[]");
+                    String valueDate = data[0].trim();
+                    String percent = data[1].trim();
+                    int id = Integer.parseInt(data[2]);
+                    int AdminID = Integer.parseInt(data[3]);
+                    result = GeneralSchemesManager.EditMonetisationParameters(valueDate, percent, id, AdminID);
+                    json = new Gson().toJson(result);
+                    break;
+                }
                 
             }
             response.setContentType("application/json");
