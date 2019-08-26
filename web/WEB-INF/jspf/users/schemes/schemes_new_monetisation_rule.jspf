@@ -42,13 +42,33 @@
                 </div> 
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-6">
-                            <label for="categoryID"><b>Percentage to be Monetised (%):</b></label>
+                        <div class="col-md-3">
+                            <label for="categoryID"><b>Percent to Monetised (%):</b></label>
                             <input type="number" class="form-control" id="monRulePercentMonetised" max="100" placeholder="100%" required/>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
+                            <label for="monRuleIssueDate"><b>Issue Date</b></label>
+                            <select id="monRuleIssueDate" class="form-control form-control-select2">
+                                <option>Not Applicable</option>
+                                <option>Date of Application</option>
+                                <option>Date of Approval</option>
+                                <option>Date Availment cash paid</option>
+                                <option>Pick  a Day</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
                             <label for="monRuleExpirationInDays"><b>Tenor of Contract (in Days):</b></label>
                             <input type="number" class="form-control" id="monRuleExpirationInDays" placeholder="365" required/>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="monRuleIssueDate"><b>Expiry Date</b></label>
+                            <select id="monRuleIssueDate" class="form-control form-control-select2">
+                                <option>Not Applicable</option>
+                                <option>Calculate from Tenor with Application date</option>
+                                <option>Calculate from Tenor with Approval datel</option>
+                                <option>Calculate from Tenor with date availment cash paid</option>
+                                <option>Pick  a Day</option>
+                            </select>
                         </div>
                     </div>
                     
@@ -56,7 +76,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="minMonVal"><b>Application fee:</b></label>
+                            <label for="minMonVal"><b>Availment cash:</b></label>
                             <div class="custom-control custom-radio custom-control-inline ml-1">
                                 <input type="radio" class="custom-control-input" id="monRuleAppFeePercent" name="monRuleAppFeeType" value="percent" checked="checked">
                                 <label class="custom-control-label" for="monRuleAppFeePercent">Percentage</label>

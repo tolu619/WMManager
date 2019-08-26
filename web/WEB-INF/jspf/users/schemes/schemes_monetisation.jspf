@@ -44,7 +44,7 @@
             <div class="text-center d-lg-none w-100">
                 <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-monetisation">
                     <i class="icon-menu7 mr-2"></i>
-                    Services Navigation
+                    Monetisation Navigation
                 </button>
             </div>
 
@@ -74,7 +74,7 @@
                     <li class="nav-item">
                         <a href="#CompletedMonetisation" class="navbar-nav-link" data-toggle="tab">
                             <i class="icon-bag mr-2"></i>
-                            Completed
+                            Availed Monetisations
                             <span class="badge badge-pill bg-success position-static ml-auto ml-lg-2 shopListedProductsNum">0</span>
                         </a>
                     </li>
@@ -117,6 +117,7 @@
                                         <th>S/N</th>
                                         <th>User Detail</th>
                                         <th>Monetisation Applied</th>
+                                        <th>Issue Date</th>
                                         <th>Goods Verification</th>
                                         <th>Amount to Monetise</th>
                                         <th>Application fee</th>
@@ -152,6 +153,11 @@
                                             </span>
                                             <input type="hidden" class="userUsedMonRuleID"/>
                                         </td>
+                                        <td>
+                                            <span class="MonIssueDate">
+                                                Not Issued
+                                            </span>
+                                        </td>
                                         <td >
                                             <ul class="list-unstyled mb-0">
                                                 <li>
@@ -160,7 +166,7 @@
                                                 </li>
 
                                                 <li>
-                                                    Verified:
+                                                    Status:
                                                     <span href="#" class="badge-secondary padding-horizontal verifiedBadge">waiting</span>
                                                 </li>
                                             </ul>
@@ -191,7 +197,8 @@
                                                         <i class="icon-menu9"></i>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                        <button class="dropdown-item btn btn-primary btn-xs ViewMonetisationGoods"><i class="icon-microscope"></i> View Details</button>
+                                                        <button class="dropdown-item btn btn-primary btn-xs ViewMonetisationDetails"><i class="icon-microscope"></i> Edit parameters before approval</button>
+                                                        <button class="dropdown-item btn btn-primary btn-xs ViewMonetisationGoods"><i class="icon-microscope"></i> View Goods</button>
                                                         <button class="dropdown-item btn btn-primary btn-xs MonRequestReverification"><i class="icon-microscope"></i> Request Goods Reverification</button>
                                                         <div class="dropdown-divider"></div>
                                                         <button class="dropdown-item btn btn-sm btn-danger ApproveMonetisation disableClick" id=""><i class="icon-checkmark3"></i> Approve Listing</button>
@@ -227,6 +234,7 @@
                                         <th>S/N</th>
                                         <th>User Detail</th>
                                         <th>Monetisation Applied</th>
+                                        <th>Issue Date</th>
                                         <th>Goods Verification</th>
                                         <th>Amount to Monetise</th>
                                         <th>Application fee</th>
@@ -261,6 +269,7 @@
                                         <th>S/N</th>
                                         <th>User Detail</th>
                                         <th>Monetisation Applied</th>
+                                        <th>Issue Date</th>
                                         <th>Goods Verification</th>
                                         <th>Amount to Monetise</th>
                                         <th>Application fee</th>
@@ -295,6 +304,7 @@
                                         <th>S/N</th>
                                         <th>User Detail</th>
                                         <th>Monetisation Applied</th>
+                                        <th>Issue Date</th>
                                         <th>Goods Verification</th>
                                         <th>Amount to Monetise</th>
                                         <th>Application fee</th>
@@ -329,6 +339,7 @@
                                         <th>S/N</th>
                                         <th>User Detail</th>
                                         <th>Monetisation Applied</th>
+                                        <th>Issue Date</th>
                                         <th>Goods Verification</th>
                                         <th>Amount to Monetise</th>
                                         <th>Application fee</th>

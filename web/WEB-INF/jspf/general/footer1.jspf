@@ -160,6 +160,9 @@
     <div  class="modal fade modal-view-user-monetisation-goods">
         <%@include file="../users/schemes/schemes_monetisation_user_goods_details.jspf" %>
     </div>
+    <div  class="modal fade modal-view-monetisation-details">
+        <%@include file="../users/schemes/schemes_monetisationApplicationDetails.jspf" %>
+    </div>
     <div class="text-center d-lg-none w-100">
         <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
             <i class="icon-unfold mr-2"></i>

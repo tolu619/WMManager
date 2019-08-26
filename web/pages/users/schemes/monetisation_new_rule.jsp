@@ -1,6 +1,6 @@
 <%-- 
-    Document   : monetisation_rules
-    Created on : May 8, 2019, 11:58:21 AM
+    Document   : monetisation_new_rule
+    Created on : Aug 12, 2019, 10:50:32 PM
     Author     : Ebuka
 --%>
 
@@ -11,7 +11,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>WM-Manager - Monetisation Rules</title>
+        <title>WM-Manager - Create Monetisation Type</title>
         <link href="../../../global_assets/app/css/helpers.css" rel="stylesheet" type="text/css">
         <link rel="icon" type="image/png" href="../../../global_assets/images/wm/favicon-16x16.png"/>
 
@@ -41,7 +41,7 @@
             <!-- /main sidebar -->
 
             <!-- Main content -->
-            <jsp:include page="../../../WEB-INF/static_pages/users/schemes/monetisation_rules.jsp"></jsp:include>
+            <jsp:include page="../../../WEB-INF/static_pages/users/schemes/monetisation_new_rules.jsp"></jsp:include>
             <!-- /main content -->
         </div>
         <!-- /page content -->
