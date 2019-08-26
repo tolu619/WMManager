@@ -371,7 +371,7 @@ function performPageActions() {
         shopPageFunctions();
         $("#id_main_shop").addClass("active");
         $("#id_shop_complaints").addClass("active bg-white blacktext");
-    }else if (page === "monetisation_application.jsp") {
+    } else if (page === "monetisation_application.jsp") {
         extension = "../../../";
         monetisationPageFunctions();
         $("#id_main_semple").addClass("active");
@@ -1686,10 +1686,10 @@ function btnEvents() {
         var ContractTenor = $("#monRuleExpirationInDays").val();
         var appFeeType = $("input[name='monRuleAppFeeType']:checked").val();
         var appFeeAmount = $("#monRuleApplyFeeAmount").val();
-        var appFeeDetail = appFeeType+"-"+appFeeAmount;
+        var appFeeDetail = appFeeType + "-" + appFeeAmount;
         var chargeType = $("input[name='monRuleChargesType']:checked").val();
         var chargeAmount = $("#monRuleChargeAmount").val();
-        var chargeDetail = chargeType+"-"+chargeAmount;
+        var chargeDetail = chargeType + "-" + chargeAmount;
         var monRuleAccesibleGroups = $("#monRuleAccesibleGroups").val();
         var monRuleDependentMonetisations = $("#monRuleDependentMonetisations").val();
         var visibility = 1;
@@ -1712,10 +1712,10 @@ function btnEvents() {
     $(".callMonApplications").click(function () {
         GetData("Schemes", "GetAllMonetisationApplication", "LoadMonetisationApplications");
     });
-    $(".prof_mon_app").click(function(){
+    $(".prof_mon_app").click(function () {
         window.location = extension + "ControllerServlet?action=Link&type=MonetisationApplication&actualUserID=" + actualuserid;
     });
-    $(".prof_user_mon_apps").click(function(){
+    $(".prof_user_mon_apps").click(function () {
         window.location = extension + "ControllerServlet?action=Link&type=MonetisationUserApplications&actualUserID=" + actualuserid;
     });
     $(".monPay").click(function () {
@@ -1723,36 +1723,36 @@ function btnEvents() {
         data = JSON.parse(data);
         GetData("Schemes", "SubmitMonetisationApplication", "LoadSubmitMonApp", data);
     });
-    $(".monRuleDependency").click(function(){
+    $(".monRuleDependency").click(function()
         $(".monRuleDependencyDiv").removeClass("hide");
     });
-    $(".CancelMonRuleDependency").click(function(){
+    $(".CancelMonRuleDependency").click(function () {
         $(".monRuleDependencyDiv").addClass("hide");
     });
-    $(".SetMonRuleDependency").click(function(){
+    $(".SetMonRuleDependency").click(function () {
         var dpdSave = "";
-        $(".MonDependentOpts").each(function() {
-            if(this.checked){
+        $(".MonDependentOpts").each(function () {
+            if (this.checked) {
                 var val = $(this).val();
-                dpdSave += val+",";
+                dpdSave += val + ",";
             }
         });
         $("#monRuleDependentMonetisations").val(dpdSave);
         $(".monRuleDependencyDiv").addClass("hide");
     });
-    
-    $(".monRuleAccesibility").click(function(){
+
+    $(".monRuleAccesibility").click(function () {
         $(".monRuleAccessibilityDiv").removeClass("hide");
     });
-    $(".CancelMonRuleAccessibility").click(function(){
+    $(".CancelMonRuleAccessibility").click(function () {
         $(".monRuleAccessibilityDiv").addClass("hide");
     });
-    $(".SetMonRuleAccessibility").click(function(){
+    $(".SetMonRuleAccessibility").click(function () {
         var accSave = "";
-        $(".MonAccessGroupsOpts").each(function() {
-            if(this.checked){
+        $(".MonAccessGroupsOpts").each(function () {
+            if (this.checked) {
                 var val = $(this).val();
-                accSave += val+",";
+                accSave += val + ",";
             }
         });
         $("#monRuleAccesibleGroups").val(accSave);
@@ -1788,6 +1788,8 @@ function btnEvents() {
 }//end of btnEvents
 
 function profilePageFundtions() {
+    var str = "abc's test#s";
+    alert(str.replace(/[^a-zA-Z ]/g, ""));
     showLoader();
     GetData("User", "GetBanks", "LoadBanks");
     PopulateStates("");
@@ -10468,30 +10470,30 @@ function DisplaySystemNewMonetisationRule(params) {
             var ChargeAmt = parseInt(value["ChargeAmt"]);
             var ApplicationFeeAmt = parseInt(value["ApplicationFeeAmt"]);
             var ChargeType = value["ChargeType"];
-            if(ChargeType === "fixed"){
+            if (ChargeType === "fixed") {
                 ChargeAmt = PriceFormat(ChargeAmt);
-            }else{
-                ChargeAmt+="%";
+            } else {
+                ChargeAmt += "%";
             }
             var ApplicationFeeType = value["ApplicationFeeType"];
-            if(ApplicationFeeType === "fixed"){
+            if (ApplicationFeeType === "fixed") {
                 ApplicationFeeAmt = PriceFormat(ApplicationFeeAmt);
-            }else{
-                ApplicationFeeAmt+="%";
+            } else {
+                ApplicationFeeAmt += "%";
             }
             var RuleName = value["RuleName"];
             var RuleDescription = value["RuleDescription"];
             var ID = value["optionId"];
-            
-            
+
+
             var AccessibleGroups = value["AccessibleGroups"];
             var DependentMonetisations = value["DependentMonetisations"];
             var chkAcc = AccessibleGroups[0];
             var chkDpd = DependentMonetisations[0];
-            
+
             var visibility = "ON";
             var Visibility = parseInt(value["Visibility"]);
-            if(Visibility == 0){
+            if (Visibility == 0) {
                 visibility = "OFF";
             }
             title === "Monetisation" ? bg = "bg-violet-400" : title === "Commoditisation" ? bg = "bg-brown-400" : bg = "bg-primary-400";
@@ -10508,12 +10510,12 @@ function DisplaySystemNewMonetisationRule(params) {
             newCard.find(".MonOptionExpDays").text(ContractTenor);
             newCard.find(".MonOptionChargesType").text(ChargeType);
             newCard.find(".MonOptionChargesAmt").text(ChargeAmt);
-            if(chkAcc === "0-none"){
+            if (chkAcc === "0-none") {
                 newCard.find(".MonOptionNoAcc").removeClass("hide");
-            }else{
+            } else {
                 var accParent = newCard.find(".MonOptionAccParent");
                 var accClone = newCard.find(".MonOptionAccClone");
-                $.each(AccessibleGroups, function(index, val){
+                $.each(AccessibleGroups, function (index, val) {
                     var newAccClone = accClone.clone();
                     newAccClone.removeClass("hide");
                     newAccClone.removeClass("MonOptionAccClone");
@@ -10522,12 +10524,12 @@ function DisplaySystemNewMonetisationRule(params) {
                 });
                 accParent.removeClass("hide");
             }
-            if(chkDpd === "0-none"){
+            if (chkDpd === "0-none") {
                 newCard.find(".MonOptionNoDpdc").removeClass("hide");
-            }else{
+            } else {
                 var dpdParent = newCard.find(".MonOptionDpdcParent");
                 var dpdClone = newCard.find(".MonOptionAccClone");
-                $.each(DependentMonetisations, function(index, val){
+                $.each(DependentMonetisations, function (index, val) {
                     var newDpdClone = dpdClone.clone();
                     newDpdClone.removeClass("hide");
                     newDpdClone.removeClass("MonOptionAccClone");
@@ -10536,14 +10538,14 @@ function DisplaySystemNewMonetisationRule(params) {
                 });
                 dpdParent.removeClass("hide");
             }
-            
+
             var SwapVisibility = newCard.find(".SwapOptVisibility");
             var DeleteMonOption = newCard.find(".MonDeleteOption");
-            SwapVisibility.click(function(){
-                if(Visibility == 0){
+            SwapVisibility.click(function () {
+                if (Visibility == 0) {
                     Visibility = 1;
                     visibility = "ON";
-                }else{
+                } else {
                     Visibility = 0;
                     visibility = "OFF";
                 }
@@ -10551,7 +10553,7 @@ function DisplaySystemNewMonetisationRule(params) {
                 GetData("Schemes", "ChangeMonOptionVisibility", "LoadMonOptionVisibility", data);
                 newCard.find(".MonOptionVisibility").text(visibility);
             });
-            DeleteMonOption.click(function(){
+            DeleteMonOption.click(function () {
                 swal({
                     title: "Delete?!",
                     text: "Do you want to proceed to delete this Monetisation Option?",
@@ -10578,7 +10580,7 @@ function DisplaySystemNewMonetisationRule(params) {
                         });
                     }
                 });
-                
+
             });
             parent.prepend(newCard);
         });
@@ -10604,7 +10606,7 @@ function DisplayMonetisationApplications(params) {
             var ReverifyGoods = newChild.find(".MonRequestReverification");
             var EditParams = newChild.find(".ViewMonetisationDetails");
             var AppStatus = "";
-            switch(status){
+            switch (status) {
                 case "pending":
                     count = count1++;
                     monAppParent = $("#monApplicationParent-Pending");
@@ -10648,7 +10650,7 @@ function DisplayMonetisationApplications(params) {
                     EditParams.hide();
                     break;
             }
-            
+
             var image_url = "../../../global_assets/app/img/ProfilePicture/user-" + val["userid"] + ".png";
             if (imageExists(image_url) === false) {
                 image_url = "../../../global_assets/app/img/ProfilePicture/user-0.png";
@@ -10680,7 +10682,7 @@ function DisplayMonetisationApplications(params) {
             }
             newChild.find(".monAppStatus").text(AppStatus);
             newChild.find(".monAppUserPayRef").text(val["payment_reference"]);
-            
+
             //Details Button
             DetailsButton.click(function () {
                 $(".modal-view-monetisation-goods").on("show.bs.modal", function () {
@@ -10743,7 +10745,7 @@ function DisplayMonetisationApplications(params) {
                     }
                 });
             });
-            ReverifyGoods.click(function(){
+            ReverifyGoods.click(function () {
                 swal({
                     title: 'Send for Reverification',
                     text: "Do you want to request that these products be reverified?",
@@ -10832,7 +10834,7 @@ function MonetisationGoodsDetails(details) {
     } else {
         $(".mon-verification").text("waiting for verification").removeClass("text-success").addClass("text-muted");
     }
-    
+
 }
 function MonetisationEditParams(detail){    
     var ptMonetosed = $(".newMonPercentMonetised");
@@ -11099,7 +11101,7 @@ function DisplayMonApplicationApprove(params) {
                 window.location.reload();
             }
         });
-    }else if(data === "Products confirmation failed"){
+    } else if (data === "Products confirmation failed") {
         swal({
             title: 'Error!!!',
             text: "The products used for this application was not confirmed by the system! Kindly decline the application",
@@ -11112,7 +11114,7 @@ function DisplayMonApplicationApprove(params) {
                 window.location.reload();
             }
         });
-    }else if(data === "Insufficient Balance to grant this monetisation Rights"){
+    } else if (data === "Insufficient Balance to grant this monetisation Rights") {
         swal({
             title: 'Not Completed',
             html: "You do not have sufficient balance to grant this monetisation Rights!<br>Add warrants and Try again",
@@ -11197,69 +11199,70 @@ function DisplayApprovedMonApplications(params) {
         child.hide();
     }
 }
-function DisplayNewMonetisationOptionParameters(params){
+function DisplayNewMonetisationOptionParameters(params) {
     var dependencies = params["DependencyParameters"];
     var accessibilities = params["AccessParameters"];
-    if(dependencies.length >= 1){
+    if (dependencies.length >= 1) {
         var chooseMonOptDpdParent1 = $("#monRuleChooseDependencies1");
         var chooseMonOptDpdParent2 = $("#monRuleChooseDependencies2");
         var chooseMonOptClone = $(".MonRuleDpdClone");
-        $.each(dependencies, function(index, value){
+        $.each(dependencies, function (index, value) {
             var key = parseInt(value.split("-")[1]);
             var Child = chooseMonOptClone.clone();
             Child.removeClass("MonRuleDpdClone");
             Child.removeClass("hide");
-            Child.find(".monOptionDpdCheckbox").attr("id", "thisDpdChechBox"+key).val(key);
+            Child.find(".monOptionDpdCheckbox").attr("id", "thisDpdChechBox" + key).val(key);
             Child.find(".monOptionDpdCheckbox").addClass("MonDependentOpts");
             Child.find(".monOptionDpdChkbxLabel").attr("for", "thisDpdChechBox"+key).text(value.split("-")[0]);
+
             var parent;
-            if(index%2 === 0){
+            if (index % 2 === 0) {
                 parent = chooseMonOptDpdParent1;
-            }else{
+            } else {
                 parent = chooseMonOptDpdParent2;
             }
             parent.append(Child);
         });
-    }else{
+    } else {
         $("<div></div>").text("No existent Monetisation options yet").appendTo($(".monRuleChooseDependencies1"));
     }
-    if(accessibilities.length >= 1){
+    if (accessibilities.length >= 1) {
         var chooseMonAccesibilitiesParent = $("#monRuleChooseAccessibilitiesParent");
         var chooseMonAccClone = $(".MonRuleChooseAccessClone");
-        $.each(accessibilities, function(index, value){
+        $.each(accessibilities, function (index, value) {
             var key = parseInt(value.split("-")[1]);
             var Child = chooseMonAccClone.clone();
             Child.removeClass("MonRuleChooseAccessClone");
             Child.removeClass("hide");
-            Child.find(".MonRuleChooseAccChkbx").attr("id", "thisAccChechBox"+key).val(key);
+            Child.find(".MonRuleChooseAccChkbx").attr("id", "thisAccChechBox" + key).val(key);
             Child.find(".MonRuleChooseAccChkbx").addClass("MonAccessGroupsOpts");
-            Child.find(".MonRuleChooseAccChkbxLabel").attr("for", "thisAccChechBox"+key).text(value.split("-")[0]);
-            
+            Child.find(".MonRuleChooseAccChkbxLabel").attr("for", "thisAccChechBox" + key).text(value.split("-")[0]);
+
             chooseMonAccesibilitiesParent.append(Child);
         });
-    }else{
+    } else {
         $("<div></div>").text("No user groups created yet").appendTo($(".monRuleChooseDependencies1"));
     }
 }
-function DisplayMonOptionVisibility(params){
-    if(params[0] === "success"){
+function DisplayMonOptionVisibility(params) {
+    if (params[0] === "success") {
         $.notify({
             title: "<strong>Visibility: </strong>",
             message: params[1]
-        },{
+        }, {
             type: 'success'
         });
-    }else{
+    } else {
         $.notify({
             title: "<strong>Something went wrong</strong>",
             message: "Try again"
-        },{
+        }, {
             type: 'danger'
         });
     }
 }
-function DisplayDeleteMonetisationOption(params){
-    if(params === "success"){
+function DisplayDeleteMonetisationOption(params) {
+    if (params === "success") {
         swal({
             title: "Deleted!",
             text: "Monetisation Option been deleted!!.",
@@ -11271,7 +11274,7 @@ function DisplayDeleteMonetisationOption(params){
                 window.location.reload();
             }
         });
-    }else{
+    } else {
         swal({
             title: "Oops!!!",
             text: "Something went wrong.",
@@ -11285,8 +11288,8 @@ function DisplayDeleteMonetisationOption(params){
         });
     }
 }
-function DisplayNewMonetisationRule(params){
-    if(params === "success"){
+function DisplayNewMonetisationRule(params) {
+    if (params === "success") {
         swal({
             title: "Created !!!",
             text: "New monetisation option created.",
@@ -11298,7 +11301,7 @@ function DisplayNewMonetisationRule(params){
                 window.location.reload();
             }
         });
-    }else{
+    } else {
         swal({
             title: "Oops!!!",
             text: "Something went wrong.",
@@ -11357,14 +11360,15 @@ function schmVal(val) {
 }
 function DisplayUserQualifiedMonetisationOption(params) {
     var parent = $("#monetisation-options-parent");
-    if(jQuery.isEmptyObject(params)){
+    if (jQuery.isEmptyObject(params)) {
         $("<div></div>").html("<div class='text-center w-100'><b>Nothing to Show here yet! <br> Check back Later.</b></div>").appendTo(parent);
         $(".MonOptNext").hide();
-    }else{
+    } else {
         parent.find(".newCloneElement").hide();
         var cloneThis = parent.find(".monetisation-options-clone");
         var schmVal = $(".schmVal").val();
         $.each(params, function (ind, value) {
+
         var schm = ind.split("-")[1];
         if (schm === schmVal) {
             var childClone = cloneThis.clone();
@@ -11418,7 +11422,7 @@ function DisplayUserQualifiedMonetisationOption(params) {
         cloneThis.hide();
     });
     }
-    
+
 }
 function monStep4() {
     var toMonitize = [];
@@ -11453,15 +11457,15 @@ function monStep4() {
             var monRuleID = monRule["optionId"];
             var monetisationAmt = Math.ceil((percentMonitized / 100) * totalValue);
             var appFee;
-            if(CashType === "fixed"){
+            if (CashType === "fixed") {
                 appFee = CashAmt;
-            }else if(CashType === "percent"){
+            } else if (CashType === "percent") {
                 appFee = Math.ceil((CashAmt / 100) * monetisationAmt);
             }
             var charge;
-            if(ChargeType === "fixed"){
+            if (ChargeType === "fixed") {
                 charge = ChargeAmt;
-            }else if(ChargeType === "percent"){
+            } else if (ChargeType === "percent") {
                 charge = Math.ceil((ChargeAmt / 100) * monetisationAmt);
             }
             $(".monAppFee").text(PriceFormat(appFee));
@@ -11492,8 +11496,8 @@ function monStep4() {
     }
 
 }
-function DisplaySubmitMonApplication(params){
-    if(params === "success"){
+function DisplaySubmitMonApplication(params) {
+    if (params === "success") {
         swal({
             title: "Submitted!",
             text: "Application submitted and awaiting approval.",
@@ -11532,35 +11536,35 @@ function DisplayUserProductsMon(params) {
                     image_url = extension + "global_assets/app/img/ProductImages/product-0.png";
                 }
                 newchild.find(".monGoodCount").text(count);
-                newchild.find(".MonGoodProductId").addClass("MonGoodProductId"+count).val(id);
+                newchild.find(".MonGoodProductId").addClass("MonGoodProductId" + count).val(id);
                 newchild.find(".monGoodImage").attr("src", image_url);
                 newchild.find(".monGoodImage").attr("alt", "Product " + count + " Listied by " + id + " on the wealth market");
                 var name = capitaliseFirstLetter(details["product_name"]);
-                newchild.find(".monGoodName").addClass("monGoodName"+id).text(name);
+                newchild.find(".monGoodName").addClass("monGoodName" + id).text(name);
                 newchild.find(".monGoodDesc").text(details["description"]);
                 var checkid = "check-" + id;
                 newchild.find(".monGoodCheck").attr("id", checkid);
-                newchild.find(".monGoodCheck").addClass("MonGoodCheckbox").addClass("MonGoodCheckbox"+id);
+                newchild.find(".monGoodCheck").addClass("MonGoodCheckbox").addClass("MonGoodCheckbox" + id);
                 newchild.find(".monGoodCheckLabel").attr("for", checkid);
-                newchild.find(".monGoodQuantity").addClass("monGoodQuantity"+id);
-                newchild.find(".monGoodSubtotal").addClass("monGoodSubtotal"+id);
+                newchild.find(".monGoodQuantity").addClass("monGoodQuantity" + id);
+                newchild.find(".monGoodSubtotal").addClass("monGoodSubtotal" + id);
                 var price = details["proposed_price"];
                 var newprice = PriceFormat(price);
                 newchild.find(".monGoodPrice").text(newprice);
-                newchild.find(".hiddenMonPrice").addClass("hiddenMonPrice"+id).val(price);
+                newchild.find(".hiddenMonPrice").addClass("hiddenMonPrice" + id).val(price);
                 var Quantity = parseInt(details["quantity"]);
-                newchild.find(".hiddenListedQuantity").addClass("hiddenListedQuantity"+id).val(Quantity);
+                newchild.find(".hiddenListedQuantity").addClass("hiddenListedQuantity" + id).val(Quantity);
                 var subTotal;
                 if (Quantity > 0) {
                     newchild.find(".monGoodQuantity").text(Quantity).val(Quantity).attr("max", Quantity);
                     subTotal = Quantity * parseInt(price);
-                    newchild.find(".monGoodSubtotal"+id).text(PriceFormat(subTotal));
-                    newchild.find(".hiddenMonSubtotal").addClass("hiddenMonSubtotal"+id).val(subTotal);
+                    newchild.find(".monGoodSubtotal" + id).text(PriceFormat(subTotal));
+                    newchild.find(".hiddenMonSubtotal").addClass("hiddenMonSubtotal" + id).val(subTotal);
                 } else {
                     newchild.find(".monGoodQuantity").text("Invalid").prop("disabled", true);
                 }
 
-                var quantInput = newchild.find(".monGoodQuantity"+id);
+                var quantInput = newchild.find(".monGoodQuantity" + id);
                 var goodChecked = newchild.find("#" + checkid);
                 quantInput.change(function () {
                     var quant = parseInt($(this).val());
@@ -11569,35 +11573,35 @@ function DisplayUserProductsMon(params) {
                     } else {
                         var amt = parseInt(price);
                         var subTtl = quant * amt;
-                        newchild.find(".monGoodSubtotal"+id).text(PriceFormat(subTtl));
-                        newchild.find(".hiddenMonSubtotal"+id).val(subTtl);
+                        newchild.find(".monGoodSubtotal" + id).text(PriceFormat(subTtl));
+                        newchild.find(".hiddenMonSubtotal" + id).val(subTtl);
                         //goodChecked.click();
                     }
                 });
                 goodChecked.click(function () {
                     var checked = !this.checked;
-                    var thisClass = ".MonGoodCheckbox"+id;
+                    var thisClass = ".MonGoodCheckbox" + id;
                     MarkCheck(id, thisClass, checked, minValue, maxValue);
                 });
                 newchild.appendTo(parent).show();
             }
         });
-        $(".selectAllMonProducts").click(function(){
-            $(".MonGoodCheckbox").each(function() {
+        $(".selectAllMonProducts").click(function () {
+            $(".MonGoodCheckbox").each(function () {
                 var thisId = $(this).attr('id');
                 var id = thisId.split("-")[1];
                 var checked = this.checked;
-                var thisClass = ".MonGoodCheckbox"+id;
+                var thisClass = ".MonGoodCheckbox" + id;
                 MarkCheck(id, thisClass, checked, minValue, maxValue);
                 this.checked = !this.checked;
             });
         });
     }
 }
-function MarkCheck(id, thisClass, checked, minValue, maxValue){
-    var quant = parseInt($(".monGoodQuantity"+id).val());
+function MarkCheck(id, thisClass, checked, minValue, maxValue) {
+    var quant = parseInt($(".monGoodQuantity" + id).val());
     var Total = parseInt($("#gTotalHidden").val());
-    var subTotal = parseInt($(".hiddenMonSubtotal"+id).val());
+    var subTotal = parseInt($(".hiddenMonSubtotal" + id).val());
     var image_url = extension + "global_assets/app/img/UnlistedProductImages/product-" + id + ".png";
     if (imageExists(image_url) === false) {
         image_url = extension + "global_assets/app/img/ProductImages/product-0.png";
@@ -11605,55 +11609,55 @@ function MarkCheck(id, thisClass, checked, minValue, maxValue){
     if (!checked) {
         var arr = new Array();
         arr[0] = id;
-        arr[1] = $(".monGoodName"+id).text();
-        arr[2] = parseInt($(".hiddenMonPrice"+id).val());
-        arr[3] = parseInt($(".monGoodQuantity"+id).val());
+        arr[1] = $(".monGoodName" + id).text();
+        arr[2] = parseInt($(".hiddenMonPrice" + id).val());
+        arr[3] = parseInt($(".monGoodQuantity" + id).val());
         arr[4] = subTotal;
         var value = JSON.stringify(arr);
         $(thisClass).val(value);
         var vl = $(thisClass).val();
         vl = JSON.parse(vl);
-        $(".monGoodQuantity"+id).prop('disabled', true);
+        $(".monGoodQuantity" + id).prop('disabled', true);
         Total += subTotal;
         minValue = parseInt(minValue);
         maxValue = parseInt(maxValue);
         var txtColor = "text-danger";
-        if(Total > minValue && Total < maxValue){
+        if (Total > minValue && Total < maxValue) {
             $(".MonApplGoToSummary").removeClass("hide");
             txtColor = "text-success";
-        }else{
+        } else {
             $(".MonApplGoToSummary").addClass("hide");
         }
         $("#gTotalHidden").val(Total);
         $("#gTotal").text(PriceFormat(Total));
         $.notify({
-            title: "<strong>Name:</strong> "+vl[1],
-            message: "<br/> <strong>Quantities added:</strong> "+quant+
-                    "<br/><strong>SubTotal:</strong> "+PriceFormat(vl[4])+"<hr/><strong>Total Added: </strong><span class='"+txtColor+"'>"+
-                    PriceFormat(Total)+
-                    "</span><br/> <strong>Minimum Value:</strong> "+PriceFormat(minValue)+"<br/> <strong>Maximum Value:</strong> "+PriceFormat(maxValue)
-        },{
+            title: "<strong>Name:</strong> " + vl[1],
+            message: "<br/> <strong>Quantities added:</strong> " + quant +
+                    "<br/><strong>SubTotal:</strong> " + PriceFormat(vl[4]) + "<hr/><strong>Total Added: </strong><span class='" + txtColor + "'>" +
+                    PriceFormat(Total) +
+                    "</span><br/> <strong>Minimum Value:</strong> " + PriceFormat(minValue) + "<br/> <strong>Maximum Value:</strong> " + PriceFormat(maxValue)
+        }, {
             type: 'success'
         });
     } else {
-        $(".monGoodQuantity"+id).prop('disabled', false);
+        $(".monGoodQuantity" + id).prop('disabled', false);
         Total -= subTotal;
         minValue = parseInt(minValue);
         maxValue = parseInt(maxValue);
         var txtColor = "text-danger";
-        if(Total < minValue && Total > maxValue){
+        if (Total < minValue && Total > maxValue) {
             $(".MonApplGoToSummary").removeClass("hide");
             txtColor = "text-success";
-        }else{
+        } else {
             $(".MonApplGoToSummary").addClass("hide");
         }
         $("#gTotalHidden").val(Total);
         $("#gTotal").text(PriceFormat(Total));
         $.notify({
             title: "<strong>Total:</strong>",
-            message: "<strong>Total Added: </strong><span class='"+txtColor+"'>"+
-                    PriceFormat(Total)+
-                    "</span><br/> <strong>Minimum Value:</strong> "+PriceFormat(minValue)+"<br/> <strong>Maximum Value:</strong> "+PriceFormat(maxValue),
+            message: "<strong>Total Added: </strong><span class='" + txtColor + "'>" +
+                    PriceFormat(Total) +
+                    "</span><br/> <strong>Minimum Value:</strong> " + PriceFormat(minValue) + "<br/> <strong>Maximum Value:</strong> " + PriceFormat(maxValue),
             allow_dismiss: true,
             placement: {
                 from: 'top',
@@ -11689,14 +11693,14 @@ function DisplayMonetisationAppFee(data) {
         });
     }
 }
-function DisplayMyMonApplications(params){
+function DisplayMyMonApplications(params) {
     var monAppParent = $("#myMonApplicationParent");
     var child = $(".myMonAppClone");
-    if(params.length == 0 || params == ""){
+    if (params.length == 0 || params == "") {
         $("<div>").text("No pending monetisation applications").addClass("text-center").appendTo(monAppParent);
-    }else{
+    } else {
         monAppParent.empty();
-        $.each(params, function(ind, val){
+        $.each(params, function (ind, val) {
             var newChild = child.clone();
             newChild.removeClass("myMonAppClone");
             newChild.removeClass("hide");
@@ -11722,24 +11726,24 @@ function DisplayMyMonApplications(params){
             var appStatus = val["application_status"];
             var paymentamount = parseInt(val["AppFee_Calculated"]);
             var goodsVerifed = val["verified"];
-            if(goodsVerifed == 1){
+            if (goodsVerifed == 1) {
                 newChild.find(".verifiedBadge").removeClass("badge-secondary").addClass("badge-success").text("verified");
                 newChild.find(".ApproveMonetisation").removeClass("disableClick");
-            }else if(goodsVerifed == 2){
+            } else if (goodsVerifed == 2) {
                 newChild.find(".verifiedBadge").removeClass("badge-secondary").addClass("badge-danger").text("Rejected");
             }
             var AppStatus = "";
-            appStatus == 0 ? AppStatus = "pending" : appStatus == 1 ? AppStatus = "Approved" : appStatus == 2 ? AppStatus = "Declined": appStatus == 3 ? AppStatus = "Rights Granted": appStatus == 4 ? AppStatus = "Completed": AppStatus = "Not Recognised!!!";
+            appStatus == 0 ? AppStatus = "pending" : appStatus == 1 ? AppStatus = "Approved" : appStatus == 2 ? AppStatus = "Declined" : appStatus == 3 ? AppStatus = "Rights Granted" : appStatus == 4 ? AppStatus = "Completed" : AppStatus = "Not Recognised!!!";
             newChild.find(".monAppStatus").text(AppStatus);
             newChild.find(".monAppUserPayRef").text(val["payment_reference"]);
             var DetailsButton = newChild.find(".ViewMonetisationGoods");
             var PayButton = newChild.find(".PayMonAppFee");
-            if(appStatus == 1){
+            if (appStatus == 1) {
                 PayButton.removeClass("hide").removeClass("disableClick");
             }
             //Details Button
-            DetailsButton.click(function(){
-                $(".modal-view-user-monetisation-goods").on("show.bs.modal", function(){
+            DetailsButton.click(function () {
+                $(".modal-view-user-monetisation-goods").on("show.bs.modal", function () {
                     MonetisationGoodsDetailsP(val);
                 }).modal("show");
 
@@ -11776,7 +11780,7 @@ function DisplayMyMonApplications(params){
         child.hide();
     }
 }
-function MonetisationGoodsDetailsP(details){
+function MonetisationGoodsDetailsP(details) {
     var parent = $("#mon-inv-details");
     parent.empty();
     var child = $(".monGoodCloneP");
@@ -11784,7 +11788,7 @@ function MonetisationGoodsDetailsP(details){
     var count = 0;
     var grandTotal = 0;
     var verified = details["verified"];
-    $.each(productDetails, function(index, product){
+    $.each(productDetails, function (index, product) {
         count++;
         var newChild = child.clone();
         newChild.removeClass("monGoodClone");
@@ -11796,7 +11800,7 @@ function MonetisationGoodsDetailsP(details){
         }
         newChild.find(".monGoodCount").text(count);
         newChild.find(".monGoodImage").attr("src", image_url);
-        newChild.find(".monGoodImage").attr("alt", "Product "+ count+ " Listied by " + details["UserName"] + " on the wealth market");
+        newChild.find(".monGoodImage").attr("alt", "Product " + count + " Listied by " + details["UserName"] + " on the wealth market");
         var name = capitaliseFirstLetter(product["product_name"]);
         newChild.find(".monGoodName").text(name);
         newChild.find(".monGoodDesc").text(product["description"]);
@@ -11813,25 +11817,25 @@ function MonetisationGoodsDetailsP(details){
         newChild.appendTo(parent).show();
     });
     $("#gTotalP").text(PriceFormat(grandTotal));
-    
+
     var monetisationPercent = parseInt(details["MonetisationDetails"]["percent"]);
-    var percentAmt = (monetisationPercent/100) * grandTotal;
+    var percentAmt = (monetisationPercent / 100) * grandTotal;
     var amtPaid = parseInt(details["amount_paid"]);
     var calcWarrants = parseInt(details["warrants_calculated"]);
     $(".amt-paid").text(PriceFormat(amtPaid));
     $(".calc-percent").text(PriceFormat(percentAmt));
     $(".calc-warrants").text(PriceFormat(calcWarrants));
-    if(verified == 1){
-        $(".mon-verification").text("Verified on "+details["date_verified"]).removeClass("text-muted").addClass("text-success");
-    }else if(verified == 2){
+    if (verified == 1) {
+        $(".mon-verification").text("Verified on " + details["date_verified"]).removeClass("text-muted").addClass("text-success");
+    } else if (verified == 2) {
         $(".mon-verification").text("Goods were not verified by the agent.").removeClass("text-muted").addClass("text-danger");
-    }else{
+    } else {
         $(".mon-verification").text("waiting for verification").removeClass("text-success").addClass("text-muted");
-        
+
     }
-    
+
 }
-function DisplayMonPayAppFee(data){
+function DisplayMonPayAppFee(data) {
     swal({
         title: data[0],
         text: data[2],
