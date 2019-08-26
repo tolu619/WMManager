@@ -1723,8 +1723,9 @@ function btnEvents() {
         data = JSON.parse(data);
         GetData("Schemes", "SubmitMonetisationApplication", "LoadSubmitMonApp", data);
     });
-    $(".monRuleDependency").click(function()
-        $(".monRuleDependencyDiv").removeClass("hide");
+
+    $(".monRuleDependency").click(function () {
+         $(".monRuleDependencyDiv").removeClass("hide");
     });
     $(".CancelMonRuleDependency").click(function () {
         $(".monRuleDependencyDiv").addClass("hide");
