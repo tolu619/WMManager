@@ -823,6 +823,22 @@ public class UserServlet extends HttpServlet {
                     json = "[" + json1 + "," + json2 + "," + json3 + "]";
                     break;
                 }
+                
+                case "SearchMembers": {
+                    String searchtxt = request.getParameter("data");
+                    ArrayList<Integer> ids = GeneralUserManager.findMember(searchtxt);
+                    HashMap<Integer, HashMap<String, Object>> det = new HashMap<>();
+                    if (!ids.isEmpty()) {
+                        for (int id : ids) {
+                            HashMap<String, Object> details = GeneralUserManager.getUserDetails(id);
+                            det.put(id, details);
+                        }
+                        json = new Gson().toJson(det);
+                    } else {
+                        json = new Gson().toJson(empty);
+                    }
+                    break;
+                }
 
             }
 

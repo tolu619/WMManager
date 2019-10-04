@@ -189,13 +189,13 @@ public class CategoryServlet extends HttpServlet {
                 case "GetCategoryVariantValues": {
                     String variantid = request.getParameter("data");
                     int variantId = Integer.parseInt(variantid);
-                    HashMap<Integer, String> List = new HashMap<>();
+                    HashMap<String, String> List = new HashMap<>();
                     String Values = GeneralCategoryManager.GetCategoryPropertyValues(variantId);
-                    if (!Values.isEmpty()) {
-                        List.put(variantId, Values);
-                        json = new Gson().toJson(List);
-                    } else {
+                    if (Values == "none") {
                         json = new Gson().toJson(empty);
+                    } else {
+                        List.put("values", Values);
+                        json = new Gson().toJson(List);
                     }
                     break;
                 }
