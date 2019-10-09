@@ -396,6 +396,7 @@ and open the template in the editor.
 }
 .right{
     float: right !important;
+    /*right: 100% !important;*/
 }
 .textleft{
     text-align: left !important;
@@ -981,6 +982,9 @@ a{
 .vertical-center-child{
     display: table-cell;
     vertical-align: middle;
+}
+.auto-margin {
+    margin: auto !important;
 }
 
 

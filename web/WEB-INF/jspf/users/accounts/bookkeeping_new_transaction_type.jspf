@@ -1,0 +1,401 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+        <div class="modal-header bg-primary">
+            <h6 class="modal-title">Create new Transaction Type</h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+            <div class="card padding-horizontal">
+                <div id="TransactionList" class="hide">
+                    <input id="NewTransactionButton" type="submit" value="Create New Transaction Type" />
+                    <table border="1" cellspacing="2" cellpadding="5" class="table table-responsive-lg">
+                        <thead>
+                            <tr>
+                                <th>Transaction Code</th>
+                                <th>Transaction Name</th>
+                                <th>Description</th>
+                                <th>Journal Entry Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="TransactionTypeParent">
+                            <tr class="clone">
+                                <td class="TransactionCode"></td>
+                                <td class="TransactionName"></td>
+                                <td class="TransactionDescription"></td>
+                                <td>
+                                    <input class="CreditAccountTypeIDs hide" />
+                                    <input class="DebitAccountTypeIDs hide" />
+                                    <input class="ThirdPartyCreditAccountTypeIDs hide" />
+                                    <input class="ThirdPartyDebitAccountTypeIDs hide" />
+                                    <input class="JournalEntryDetailsButton" type="submit" value="View Details" />
+                                    <input class="JournalEntryExecuteButton" type="submit" value="Execute" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <hr><br>
+                <div id="JournalEntryDetails" class="hide">
+                    <h2><span id="JournalEntryTransactionName"></span>Actions</h2><br>
+                    <h3>Market Operator</h3>
+                    <table border="1" cellspacing="2" cellpadding="5" id="MOEJournalEntriesTable" class="hide">
+                        <thead>
+                            <tr>
+                                <th>Sub Account</th>
+                                <th>Account Type</th>
+                                <th>Entry Type</th>
+                                <!-- <th >Debit</th>
+                                <th>Credit</th> -->
+                            </tr>
+                        </thead>
+                        <tbody id="MOEJournalEntryDetailsParent">
+                            <tr class="clone">
+                                <td class="SubAccountText"></td>
+                                <td class="AccountTypeText"></td>
+                                <td class="EntryTypeText"></td>
+                                <!-- <td><input class="CreditRadioButton" type="radio" value="" /></td>
+                                <td><input class="DebitRadioButton" type="radio" value="" /></td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <h3>Others</h3>
+                    <table border="1" cellspacing="2" cellpadding="5"  id="OthersJournalEntriesTable" class="hide">
+                        <thead>
+                            <tr>
+                                <th>Sub Account</th>
+                                <th>Account Type</th>
+                                <th>Entry Type</th>
+                                <!-- <th >Debit</th>
+                                <th>Credit</th> -->
+                            </tr>
+                        </thead>
+                        <tbody  id="ThirdPartyJournalEntryDetailsParent">
+                            <tr class="clone">
+                                <td class="SubAccountText"></td>
+                                <td class="AccountTypeText"></td>
+                                <td class="EntryTypeText"></td>
+                                <!-- <td><input class="CreditRadioButton" type="radio" value="" /></td>
+                                <td><input class="DebitRadioButton" type="radio" value="" /></td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="NewTransactionUI">
+                    <div class="tilebar padding-horizontal ">
+                        <div id="NewTransactionBasicInfo" class="tiletablerow padding-horizontal">
+                            <div class="form-group row padding">
+                                <label for="NewTransactionName" class="col-sm-2">Transaction Name</label>
+                                <input type="text" class="form-control col-sm-10" id="NewTransactionName" placeholder="enter transaction name">
+                            </div>
+                            <div class="form-group row padding">
+                                <label for="NewTransactionCode" class="col-sm-2">Transaction Code</label>
+                                <input type="text" class="form-control NewTransactionCode col-sm-10" id="NewTransactionCode" placeholder="enter transaction Code">
+                            </div>
+                            <div class="form-group">
+                                <label for="NewTransactionDescription">Background (The context and effect on which parties and parameters)</label>
+                                <textarea class="form-control" id="NewTransactionDescription" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="NewTransactionRegulatoryIssues">Regulatory Issues</label>
+                                <textarea class="form-control" id="NewTransactionRegulatoryIssues" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="NewTransactionRisksAndControls">Risks and Controls</label>
+                                <textarea class="form-control" id="NewTransactionRisksAndControls" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="text-center margin" id="NewProcessButtonDiv">
+                            <p>
+                                <button id="NewProcessButton" class="btn btn-sm btn-primary margintop" type="submit"><i class="icon-add mr-2"></i> New Process </button>
+                            </p>
+                            <p class="marginbottom">(A process is a set of accounting entries with its own transaction code)</p>
+                        </div>
+
+                        <div id="NewProcessParent">
+
+                        </div>
+
+                        <div class="hide NewProcessDiv margintop padding-horizontal">
+                            <p>
+                                <button id="ImportExistingTransactionButton" class="btn btn-sm btn-info" disabled="true" ><i class="icon-add mr-2"></i> Import Existing Transaction</button>
+                                (for importing existing transaction codes: Last thing to be implemented)
+                            </p>
+
+                            <div class="custom-control custom-checkbox mr-sm-2 double-margintop">
+                                <input type="checkbox" class="custom-control-input " id="IsSalesRadioButton">
+                                <label class="custom-control-label" for="IsSalesRadioButton"> Please check if VAT (Value Added Tax) applies to this Transaction </label>
+                            </div>
+
+                            <div class="form-group row margintop">
+                                <label for="NewProcessTransactionCode" class="col-sm-2">Transaction Code</label>
+                                <input type="text" class="form-control NewProcessTransactionCode col-sm-10" id="NewProcessTransactionCode" placeholder="Leave blank if main transaction has only one process">
+                            </div>
+
+                            <h4 class="text-center margintop bold">Add New transaction Parameter(s)</h4>
+
+                            <div class="NewParameterUIDiv">
+                                <div class="row">
+                                    <label class="col-sm-2" for="parameterTypeSelect">Parameter Type</label>
+                                    <select class="custom-select col-sm-10" id="parameterTypeSelect">
+                                        <option selected>select parameter type</option>
+                                        <option ></option>
+                                        <option value="1">Independent Parameter (completely up to the person making the transaction)</option>
+                                        <option value="2">Fixed Value Parameter (always has the exact same numerical value)</option>
+                                        <option value="3">Derived Value Parameter (calculated by a formula dependent on values of other parameters and percentages)</option>
+                                    </select>
+                                </div>
+
+                                <div class="hide NewIndependentParamDiv card padding margintop">
+                                    <div class=" form-group row">
+                                        <label for="NewIndependentParamTextBox" class="col-sm-4">value of Independent parameter</label>
+                                        <input type="text" class="form-control NewIndependentParamTextBox col-sm-5" id="NewIndependentParamTextBox" placeholder="enter new parameter name">
+                                        <button class="btn btn-sm btn-primary AddNewIndependentParamButton margin-horizontal" type="submit">Create</button>
+                                    </div>
+                                </div>
+
+                                <div class="hide NewFixedParamDiv card padding margintop">
+                                    <label for="NewFixedParamNameTextBox" >value of fixed parameter</label>
+                                    <div class=" form-group row">
+                                        <input type="text" class="form-control NewFixedParamNameTextBox col-sm-5 marginleft" id="NewIndependentParamTextBox" placeholder="enter new parameter name">
+                                        <input class="form-control NewFixedParamTextBox col-sm-5 marginleft" type="number" placeholder="Input parameter value">
+                                        <button class="btn btn-sm btn-primary AddNewFixedParamButton margin-horizontal" type="submit">Create</button>
+                                    </div>
+                                </div>
+
+                                <div class="hide NewDerivedParamDiv card padding margintop">
+
+                                    <h5 class=" text-center">create new derived parameter</h5>
+                                    <div class="row padding">
+                                        <label class='col-sm-3' for="NewDerivedParamTextBox">derived parameter name</label>
+                                        <input class="NewDerivedParamTextBox col-sm-8" placeholder="enter the derived parameter name" id="NewDerivedParamTextBox">
+                                    </div>
+                                    <div class="row padding">
+                                        <label class="col-sm-3" for="parameterTypeSelect">Existing Parameters</label>
+                                        <select class="FormulaParametersSelect"></select>
+                                        <button class=" AddParamToFormulaButton btn btn-sm btn-primary marginleft" type="submit" value="Add To Formula">Add To Formula</button>
+                                    </div>
+                                    <div class="row padding">
+                                        <label class="col-sm-2" for="parameterTypeSelect">Pick Operator</label>
+                                        <select class="custom-select col-sm-5 FormulaOperatorsSelect" id="FormulaOperatorsSelect">
+                                            <option selected>select operator</option>
+                                            <option value="+">+ (Addition)</option>
+                                            <option value="-">- (Subtraction)</option>
+                                            <option value="*">ˣ (Multiplication)</option>
+                                            <option value="/">÷ (Division)</option>
+                                            <option value="%">% (Modulus)</option>
+                                            <option value="(">( (Open Bracket)</option>
+                                            <option value=")">) (Close Bracket)</option>
+                                        </select>
+                                        <button class=" AddParamToFormulaButton btn btn-sm btn-primary margin-horizontal" type="submit" value="Add To Formula">Add to formula</button>
+                                        <button class=" BackspaceFormulaButton btn btn-sm btn-danger" type="submit" value="backspace">backspace</button>
+                                    </div>
+
+                                    <h4>Formula: <label class="FormulaLabel"></label></h4><br>
+                                    <div class="row text-center padding center">
+                                        <button class=" ResetFormulaStringButton btn btn-sm btn-danger" type="submit" value="Reset Formula">Reset Formula</button>
+                                        <button class=" TestFormulaButton btn btn-sm btn-info margin-horizontal" type="submit" value="Test Formula">Test Formula</button>
+                                        <button class=" AddNewDerivedParamButton btn btn-sm btn-primary" type="submit" value="Create Derived Parameter">Create Derived Parameter</button>
+                                    </div>
+
+                                </div>                             
+                            </div>    
+
+                            <h4><b>Parameters:</b> <label class="ParametersLabel"></label></h4><br>
+
+                            <h4 class="text-center bold margintop">Accounting Entries 
+                                <button class="NewAccountingEntryButton btn btn-sm btn-primary" type="submit" value="+" tooltip="Add New Accounting Entry"><i class="icon-add mr-2"></i>Add new</button>
+                            </h4>
+
+                            <div class=" hide ShowNewProcessesDiv card padding table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Step #</th>
+                                            <th>Description</th>
+                                            <th>Debit (Amount)</th>
+                                            <th>Debit (Account)</th>
+                                            <th>Debit Account owner</th>
+                                            <th>Credit (Amount)</th>
+                                            <th>Credit (Account)</th>
+                                            <th>Credit Account owner</th>
+                                        </tr>
+                                        <tr class="ShowInTableRowOriginal">
+                                            <td class="ShowInTableStepNo">Step #</td>
+                                            <td class="ShowInTableDescription">Step #</td>
+                                            <td class="ShowInTableDebitAmount">Step #</td>
+                                            <td class="ShowInTableDebitAccount">Step #</td>
+                                            <td class="ShowInTableDebitAccountOwner">Step #</td>
+                                            <td class="ShowInTableCreditAmount">Step #</td>
+                                            <td class="ShowInTableCreditAccount">Step #</td>
+                                            <td class="ShowInTableCreditOwner">Step #</td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
+                            <div class="card padding table-responsive">
+                                <table class="NewProcessAccountingEntries TableHorizontalScroll table table-hover">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Step #</th>
+                                            <th>Description</th>
+                                            <th>Debit (Amount)</th>
+                                            <th>Debit (Account)</th>
+                                            <th>Debit Account owner</th>
+                                            <th>Credit (Amount)</th>
+                                            <th>Credit (Account)</th>
+                                            <th>Credit Account owner</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="AccountingEntriesTableRowClone">
+                                            <td class="AccountingEntriesIndexNumber">1</td>
+                                            <td><input class="AccountingEntryDescription" placeholder="Brief description of this step of the transaction" /></td>
+                                            <td>
+                                                <div class="DebitAmountParent">
+                                                    <div>
+                                                        <select class="ParametersSelect DebitAmount"></select> 
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <select class="AccountTypesDropdown DebitAccount "></select>
+                                                <select class="SubAccountTypesDropdown DebitSubAccount "></select><br>
+                                            </td>
+                                            <td>
+                                                <select class="DebitAccountOwner">
+                                                    <option>MOE</option>
+                                                    <option>Party A</option>
+                                                    <option>Party B</option>
+                                                    <option>Party C</option>
+                                                    <option>Party D</option>
+                                                    <option>Party E</option>
+                                                    <option>Party F</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <div class="ThirdPartyRecieveListParent">
+                                                    <div>
+                                                        <select class="ParametersSelect CreditAmount"></select> 
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <select class="AccountTypesDropdown CreditAccount "></select>
+                                                <select class="SubAccountTypesDropdown CreditSubAccount "></select><br>
+                                            </td>
+                                            <td>
+                                                <select class="CreditAccountOwner">
+                                                    <option>MOE</option>
+                                                    <option>Party A</option>
+                                                    <option>Party B</option>
+                                                    <option>Party C</option>
+                                                    <option>Party D</option>
+                                                    <option>Party E</option>
+                                                    <option>Party F</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="text-center double-marginbottom right">                          
+                                <button class="SaveNewProcessButton btn btn-primary btn-sm" type="submit" value="Save New Process" >Save New Process</button>
+                            </div>
+                        </div>
+
+                            <div class="card padding table-responsive double-margintop">
+                                <h5 class="text-center bold"> Saved accounting enteries</h5>
+                                <table class="AccountingEntriesDisplayTable table table-hover" >
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Step #</th>
+                                            <th>Description</th>
+                                            <th>Debit (Amount)</th>
+                                            <th>Debit (Account)</th>
+                                            <th>Debit (Sub Account)</th>
+                                            <th>Debit Account Owner</th>
+                                            <th>Credit (Amount)</th>
+                                            <th>Credit (Account)</th>
+                                            <th>Credit (Sub Account)</th>
+                                            <th>Credit Account Owner</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="AccountingEntriesDisplayTableDataParent">
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="card padding table-responsive">
+                                <table class="hide table table-hover">
+                                    <thead class="thead-dark"></thead>
+                                    <tbody>
+                                        <tr class="AccountingEntriesDisplayTableDataClone hide">
+                                            <td class="AccountingEntriesIndexNumber"></td>
+                                            <td class="AccountingEntryDescription"></td>
+                                            <td class="DebitAmount"></td>
+                                            <td class="DebitAccount"></td>
+                                            <td class="DebitSubAccount"></td>
+                                            <td class="DebitAccountOwner"></td>
+                                            <td class="CreditAmount"></td>
+                                            <td class="CreditAccount"></td>
+                                            <td class="CreditSubAccount"></td>
+                                            <td class="CreditAccountOwner"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        <div class="form-group">
+                            <label for="NewTransactionComments">Other Notes and Comments</label>
+                            <textarea class="form-control" id="NewTransactionComments" rows="3"></textarea>
+                        </div>
+
+                        <div class=" margin padding row">
+                            <button class=" CancelNewTransactionButton btn btn-sm btn-danger" id="CancelNewTransactionButton" type="submit" value="Cancel New Transaction Type">Cancel New Transaction Type</button>
+                            <div class="right">     
+                                <button class="SaveNewTransactionButton btn btn-primary btn-sm marginleft" id="SaveNewTransactionButton" type="submit" value="Save New Transaction Type" >Save New Transaction Type</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="padding">
+                        <div class="card padding">
+                            Number of processes: <label id="NumberOfProcessLabel"></label><br>
+                            Accounts required: <label id="AccountsRequiredCountLabel"></label><br>
+                            Total number of accounts debited: <label id="NumberOfAccountsDebitedLabel"></label><br>
+                            Total number of accounts credited: <label id="NumberOfAccountsCreditedLabel"></label><br>
+                            Number of derived parameters: <label id="NumberOfProcessLabel"></label>
+                        </div>
+
+                        <div id="FormulaTestDiv" class="hide">
+                            <h3>Formula Test</h3>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+    </div>
+</div>
+
+
+

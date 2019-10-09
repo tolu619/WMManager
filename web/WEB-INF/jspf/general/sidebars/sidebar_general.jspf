@@ -26,6 +26,7 @@
             <ul class="nav nav-group-sub" data-submenu-title="Accounts & Transaction">
                 <li class="nav-item"><a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Accounts" class="nav-link" id="id_acctandtrans_accct"><i class="icon-cash2"></i>All Accounts</a></li>
                 <li class="nav-item"><a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Transactions" class="nav-link" id="id_acctandtrans_trans"><i class="icon-cash3"></i>All Transactions</a></li>
+                <li class="nav-item"><a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Bookkeeping" class="nav-link" id="id_acctandtrans_book"><i class="icon-book3"></i>Book keeping</a></li>
                 <li class="nav-item cursor-pointer"><a id="QTransferBtn"  class="nav-link"><i class="icon-transmission"></i>Quick Transfer</a></li>
                 <li class="nav-item cursor-pointer"><a class="nav-link GenerateAcctStmt"><i class="icon-rotate-cw2"></i>Generate Statement</a></li>
                 <li class="nav-item cursor-pointer"><a class="nav-link SMSTransactions"><i class="icon-mail5"></i>SMS Instructions</a></li>
