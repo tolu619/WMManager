@@ -834,12 +834,14 @@ public class UserServlet extends HttpServlet {
                     break;
                 }
 
-                case "DeleteUserAddress": {
+                case "DeleteUserAddress": 
+                {
                     String params = request.getParameter("data");
                     int AddressID = Integer.parseInt(params);
 //                    HistoryManager.LogActivity(UserID, "Address", "Deleted Address", "Deleted Address");
                     result = GeneralAddressManager.DeleteUserAddress(AddressID);
                     json = new Gson().toJson(result);
+                }
                 
                 case "SearchMembers": {
                     String searchtxt = request.getParameter("data");

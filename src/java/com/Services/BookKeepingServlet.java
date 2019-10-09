@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import wmengine.Managers.DBManager;
-import wmengine.Managers.GeneralAccountManager;
 import wmengine.Tables.Tables;
 
 /**
@@ -43,7 +42,8 @@ public class BookKeepingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) 
+        {
             HttpSession session = request.getSession(true);
             String type = request.getParameter("type");
             String json = "";
@@ -51,13 +51,16 @@ public class BookKeepingServlet extends HttpServlet {
             String json2 = "";
             String json3 = "";
             String empty = "none";
-            switch (type) {
-                case "GetAllTransactionTypes": {
+            switch (type) 
+            {
+                case "GetAllTransactionTypes": 
+                {
                     HashMap<Integer, HashMap<String, String>> TransactionTypes = BookKeeper.GetAllTransactionTypes();
                     json = new Gson().toJson(TransactionTypes);
                     break;
                 }
-                case "GetMOEJournalEntryDetailsForTransactionType": {
+                case "GetMOEJournalEntryDetailsForTransactionType": 
+                {
                     String Parameters = request.getParameter("data");
                     String[] SubLedgerIDs = Parameters.split("~");
                     ArrayList MOEJournalEntries = BookKeeper.GetJournalEntriesForMarketOperatorEntity(SubLedgerIDs[0], SubLedgerIDs[1]);
@@ -71,24 +74,28 @@ public class BookKeepingServlet extends HttpServlet {
                     json = new Gson().toJson(ThirdPartyJournalEntries);
                     break;
                 }
-                case "GetAllLedgerAccounts": {
+                case "GetAllLedgerAccounts": 
+                {
                     HashMap<Integer, HashMap<String, String>> LedgerAccounts = BookKeeper.GetAllLedgerAccounts();
                     json = new Gson().toJson(LedgerAccounts);
                     break;
                 }
-                case "GetSubLedgersByLedgerID": {
+                case "GetSubLedgersByLedgerID": 
+                {
                     String IDString = request.getParameter("data");
                     Integer LedgerID = Integer.parseInt(IDString);
                     HashMap<Integer, HashMap<String, String>> LedgerAccounts = BookKeeper.GetSubLedgerAccountsByLedgerID(LedgerID);
                     json = new Gson().toJson(LedgerAccounts);
                     break;
                 }
-                case "GetTransactionParameters": {
+                case "GetTransactionParameters": 
+                {
                     HashMap<Integer, HashMap<String, String>> TransactionParameters = DBManager.GetAllCollumnsLimitNumberOfRows(0, 50, Tables.TransactionParameters.Table, "");
                     json = new Gson().toJson(TransactionParameters);
                     break;
                 }
-                case "CreateNewIndependentParam": {
+                case "CreateNewIndependentParam": 
+                {
                     String ParamName = request.getParameter("data");
                     String Result = DBManager.InsertStringData(Tables.TransactionParameters.Table, Tables.TransactionParameters.ParamName, ParamName, "");
                     if (Result.equals("success")) {
@@ -99,7 +106,8 @@ public class BookKeepingServlet extends HttpServlet {
                     }
                     break;
                 }
-                case "CreateNewFixedParam": {
+                case "CreateNewFixedParam": 
+                {
                     String Data = request.getParameter("data");
                     String ParamName = Data.split(",")[0];
                     String ParamValue = Data.split(",")[1];
@@ -107,10 +115,13 @@ public class BookKeepingServlet extends HttpServlet {
                     ParamData.put(Tables.TransactionParameters.ParamName, ParamName);
                     ParamData.put(Tables.TransactionParameters.ParamValue, ParamValue);
                     Integer NewParamID = DBManager.insertTableDataReturnID(Tables.TransactionParameters.Table, ParamData, "");
-                    if (NewParamID > 0) {
+                    if (NewParamID > 0) 
+                    {
                         HashMap<Integer, HashMap<String, String>> TransactionParameters = DBManager.GetAllCollumnsLimitNumberOfRows(0, 50, Tables.TransactionParameters.Table, "");
                         json = new Gson().toJson(TransactionParameters);
-                    } else {
+                    } 
+                    else 
+                    {
                         json = new Gson().toJson("failed");
                     }
                     break;
@@ -123,15 +134,19 @@ public class BookKeepingServlet extends HttpServlet {
                     ParamData.put(Tables.TransactionParameters.ParamName, ParamName);
                     ParamData.put(Tables.TransactionParameters.ParamValue, ParamFormula);
                     Integer NewParamID = DBManager.insertTableDataReturnID(Tables.TransactionParameters.Table, ParamData, "");
-                    if (NewParamID > 0) {
+                    if (NewParamID > 0) 
+                    {
                         HashMap<Integer, HashMap<String, String>> TransactionParameters = DBManager.GetAllCollumnsLimitNumberOfRows(0, 50, Tables.TransactionParameters.Table, "");
                         json = new Gson().toJson(TransactionParameters);
-                    } else {
+                    } 
+                    else 
+                    {
                         json = new Gson().toJson("failed");
                     }
                     break;
                 }
-                case "CreateNewTransactionType": {
+                case "CreateNewTransactionType": 
+                {
                     String[] JSONArray = request.getParameterValues("data[]");
                     HashMap<String, Object> TableDataHashMap = new HashMap<>();
                     TableDataHashMap.put(Tables.TransactionType.NameOfTransaction, JSONArray[0]);
@@ -145,7 +160,8 @@ public class BookKeepingServlet extends HttpServlet {
                     json = new Gson().toJson(NewTransactionID);
                     break;
                 }
-                case "NewAccountingEntry": {
+                case "NewAccountingEntry": 
+                {
                     String[] JSONArray = request.getParameterValues("data[]");
                     HashMap<String, Object> TableDataHashMap = new HashMap<>();
                     TableDataHashMap.put(Tables.AccountingEntryDefinitions.indexNo, JSONArray[0]);
@@ -162,10 +178,11 @@ public class BookKeepingServlet extends HttpServlet {
                     json = new Gson().toJson(NewAccountingEntryID);
                     break;
                 }
-                case "GetPartiesInvolvedInTransaction": {
+                case "GetPartiesInvolvedInTransaction": 
+                {
                     String transactiontypeID = request.getParameter("data");
                     int TransactionTypeID = Integer.parseInt(transactiontypeID);
-                    LinkedHashSet<String> Parties = GeneralAccountManager.GetPartiesInvolvedInTransaction(TransactionTypeID);
+                    LinkedHashSet<String> Parties = BookKeeper.GetPartiesInvolvedInTransaction(TransactionTypeID);
                     if (Parties.isEmpty()) {
                         json = new Gson().toJson(empty);
                     } else {
@@ -186,29 +203,35 @@ public class BookKeepingServlet extends HttpServlet {
                     String transactiontypeID = request.getParameter("data");
                     int TransactionTypeID = Integer.parseInt(transactiontypeID);
                     LinkedHashSet<Integer> ParametersInvolvedInTransaction = BookKeeper.GetParametersInvolvedInTransaction(TransactionTypeID);
-                    if (!ParametersInvolvedInTransaction.isEmpty()) {
+                    if (!ParametersInvolvedInTransaction.isEmpty()) 
+                    {
                         HashMap<Integer, HashMap<String, String>> ParamValues = BookKeeper.GetParamValuesInvolvedInTransaction(ParametersInvolvedInTransaction);
                         json = new Gson().toJson(ParamValues);
-                    } else {
+                    } 
+                    else 
+                    {
                         json = "none";
                     }
                     break;
                 }
-                case "GetAccountsInvolvedInTransaction": {
+                case "GetAccountsInvolvedInTransaction": 
+                {
                     String transactiontypeID = request.getParameter("data");
                     int TransactionTypeID = Integer.parseInt(transactiontypeID);
                     HashMap<Integer, String> AccountIDs = BookKeeper.GetAccountsInvolvedInTransaction(TransactionTypeID);
                     json = new Gson().toJson(AccountIDs);
                     break;
                 }
-                case "GetAccountingEntriesInvolvedInTransaction": {
+                case "GetAccountingEntriesInvolvedInTransaction": 
+                {
                     String transactiontypeID = request.getParameter("data");
                     int TransactionTypeID = Integer.parseInt(transactiontypeID);
                     HashMap<Integer, HashMap<String, String>> AccountingEntries = BookKeeper.GetAccountingEntriesInvolvedInTransaction(TransactionTypeID);
                     json = new Gson().toJson(AccountingEntries);
                     break;
                 }
-                case "ExecuteAccountingEntries": {
+                case "ExecuteAccountingEntries": 
+                {
                     String[] JSONArray = request.getParameterValues("data[]");
                     HashMap<Integer, HashMap<String, Object>> TransactionMap = new HashMap<>();
                     for (int i = 0; i < JSONArray.length; i++) {
