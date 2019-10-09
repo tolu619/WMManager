@@ -840,6 +840,20 @@ public class UserServlet extends HttpServlet {
 //                    HistoryManager.LogActivity(UserID, "Address", "Deleted Address", "Deleted Address");
                     result = GeneralAddressManager.DeleteUserAddress(AddressID);
                     json = new Gson().toJson(result);
+                
+                case "SearchMembers": {
+                    String searchtxt = request.getParameter("data");
+                    ArrayList<Integer> ids = GeneralUserManager.findMember(searchtxt);
+                    HashMap<Integer, HashMap<String, Object>> det = new HashMap<>();
+                    if (!ids.isEmpty()) {
+                        for (int id : ids) {
+                            HashMap<String, Object> details = GeneralUserManager.getUserDetails(id);
+                            det.put(id, details);
+                        }
+                        json = new Gson().toJson(det);
+                    } else {
+                        json = new Gson().toJson(empty);
+                    }
                     break;
                 }
 
