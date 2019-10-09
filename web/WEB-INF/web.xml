@@ -76,6 +76,10 @@
         <servlet-name>SchemesServlet</servlet-name>
         <servlet-class>com.Services.SchemesServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BookKeepingServlet</servlet-name>
+        <servlet-class>com.Services.BookKeepingServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
@@ -151,6 +155,10 @@
     <servlet-mapping>
         <servlet-name>SchemesServlet</servlet-name>
         <url-pattern>/SchemesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookKeepingServlet</servlet-name>
+        <url-pattern>/BookKeepingServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

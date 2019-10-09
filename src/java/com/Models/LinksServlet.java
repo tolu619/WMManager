@@ -97,6 +97,14 @@ public class LinksServlet extends HttpServlet {
                     response.sendRedirect("pages/users/shop/product_listing.jsp");
                     break;
                 }
+                case "Single-Product-Listing": {
+                    response.sendRedirect("pages/users/shop/single_prod_listing.jsp");
+                    break;
+                }
+//                case "Products-Listing": {
+//                    response.sendRedirect("pages/users/shop/product_listing.jsp");
+//                    break;
+//                }
                 case "Services": {
                     response.sendRedirect("pages/users/shop/services.jsp");
                     break;
@@ -251,6 +259,10 @@ public class LinksServlet extends HttpServlet {
                 }
                 case "Accounts": {
                     response.sendRedirect("pages/users/accounts/accounts.jsp");
+                    break;
+                }
+                case "Bookkeeping": {
+                    response.sendRedirect("pages/users/accounts/bookkeeping.jsp");
                     break;
                 }
                 case "Transactions": {

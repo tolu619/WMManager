@@ -1,0 +1,223 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header bg-primary">
+            <h6 class="modal-title">Quick Transaction with Code</h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+
+            <div id="transactionCodeStep1">
+                <div class="text-center center">
+                    <h4 class="bold">Transaction Details</h4>
+                    <p class="nomargintop">select the transaction type to be executed and the parties involved in it</p>    
+                </div>
+                
+                <div class="row mb-3 double-margintop">
+                    <div class="col-md-12" id="transactionSelection">
+                        <div class="form-group margintop">
+                            <label>Transaction Type</label>
+                            <select id="transactionTypeSelect" class="form-control form-control-select2 select-search select-clear " data-fouc>
+                                <option>select transaction type</option>
+                                <option></option>
+                                <option>NEPA Bill</option>
+                                <option>Hospital Bill</option>
+                                <option>Payment to WealthMarket</option>
+                                <option>Peer to Peer payment</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hide card padding text-center" id="transactionParties">
+                    <h5 class="bold">Parties involved in transaction<h5>
+                    <p class="smalltext marginbottom"> please click on each party involved to fill in their details</p>
+                    <p id="transactionPartiesBtn" class="padding text-center"></p>
+                </div>
+
+                <div class="col-md-12 hide" id="partySearchInput">
+                    <div class="row">
+                        <h5>search for <span class="partyTitle"></span></h5>
+                        <span class="right"><i class="fas fa-cog"></i></span>
+                    </div>
+                        <div class="input-group mb-3">
+                            <div class=" form-group-feedback form-group-feedback-left">
+                                <input type="search" parsley-type="search" class="form-control" id="partySearchText"
+                                    name="email"
+                                    placeholder="Who are you looking for? Search with Phone/Email/Account Number"
+                                    required parsley-trigger="change">
+                                <div class="form-control-feedback">
+                                    <i class="icon-search4 text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="row hide" id="partySearchResult">
+                        <!-- List with text -->
+                        <div class="col-md-12">
+                           <div class="card">
+                            <div class="card-header header-elements-inline">
+                                <h5 class="card-title"><span class="partyTitle" id="partyTitle"></span><span> search Result</span>
+                                </h5>
+                                <div class="header-elements">
+                                    <div class="list-icons">
+                                        <a class="list-icons-item" data-action="collapse"></a>
+                                        <a class="list-icons-item" data-action="reload"></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <ul class="media-list media-list-linked" id="searchedParty-list">
+                                <li class="partyClone hide-on-load searchedParty">
+                                    <a href="#" class="media">
+                                        <div class="mr-2"><img class="rounded-circle user-list-Image" width="40"
+                                                height="40" alt=""></div>
+                                        <div class="media-body">
+                                            <div class="media-title font-weight-semibold user-list-name">
+                                            </div>
+                                            <span class="text-muted user-list-email"></span>
+                                            <span class="user-list-id d-none" id="beneficiaryID"></span>
+                                        </div>
+                                        <div class="align-self-center ml-3">
+                                            <span class="badge badge-primary user-list-phone"></span>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div> 
+                        </div>
+                        
+                </div>
+                
+                <div class="row hide double-margintop" id="selectedPartiesResult">
+                    
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header header-elements-inline">
+                                <h5 class="card-title">Selected <span id="selectedPartyCount">Parties</span></h5>
+                                <div class="header-elements">
+                                    <div class="list-icons">
+                                        <a class="list-icons-item" data-action="collapse"></a>
+                                        <a class="list-icons-item" data-action="reload"></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <ul class="media-list media-list-linked" id="selectedParty-list">
+                                <li class="hide-on-load selectedParty">
+                                    <a href="#" class="media">
+                                        <span class="selectedPartyTitle btn-sm btn-primary double-marginright"></span>
+                                        <div class="mr-2 double-marginleft"><img class="rounded-circle user-list-Image" width="40" height="40" alt="selected party image"></div>
+                                        <div class="media-body">
+                                            <div class="media-title font-weight-semibold user-list-name">
+                                            </div>
+                                            <span class="text-muted user-list-email"></span>
+                                            <span class="user-list-id d-none" id="beneficiaryID"></span>
+                                        </div>
+                                        <div class="align-self-center ml-3">
+                                            <span class="badge badge-primary user-list-phone"></span>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                        <!-- List with text -->
+                        
+                </div>
+                
+                <div class="right">
+                    <button class="btn btn-outline-primary hideall" id="transactionStep2forward">next<b><i class="icon-arrow-right13 ml-1"></i></b></button>
+                </div>
+                
+                <div class="alert alert-success alert-dismissible fade show hide partyAlert" role="alert">
+                    <strong>Party Added!</strong> You have successfully added <span class="alertPartyName">Party A</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="transactionCodeStep2" class="hide">
+                <div class="text-center center">
+                    <h4 class="bold">Transaction Parameters</h4>
+                    <p>enter and set the parameter values as required by the transaction, then include comments if any</p>    
+                </div>
+                
+                <div class="form-group row double-margintop double-marginbottom text-center" id="transParameters">
+                    <div class="col-md-6 paramClone">
+                        <label class="paramName">Actual Payment Amount</label>
+                        <div class="input-group txnParam">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text font-size-lg font-weight-bold">₦</span>
+                            </div>
+                            <input type="number" class="form-control paramValue" required placeholder="enter value">
+                            <input type="number" class="form-control paramId hide" required placeholder="enter value">
+                            <div class="input-group-append">
+                                <span class="input-group-text font-weight-bold">.00</span><span class="btn btn-sm paramValueSet btn-primary">set value</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group doublemargintop hide" id="transactionCommentForm">
+                    <label for="TransactionComment" class="margintop">Comment (Optional comments for transaction parameters or transaction in general)</label>
+                    <textarea class="form-control" id="TransactionComment" rows="5"></textarea>
+                </div>
+                
+                <span><button class="btn btn-outline-primary hideall" id="transactionStep1back"><b><i class="icon-arrow-left8 mr-1"></i></b>previous</button></span>
+                <span class="right"><button class="btn btn-outline-primary hideall" id="transactionStep3forward">next<b><i class="icon-arrow-right13 ml-1"></i></b></button></span>
+            </div>
+            
+            <div id="transactionCodeStep3" class="hide">
+                <div class="text-center center double-marginbottom nomargintop" id="step3title">
+                    <h4 class="bold">Accounting Details</h4>
+                    <p class='double-marginbottom'>review the accounting entries to be made for this transaction before executing it</p>    
+                </div>
+                
+                <div class="card text-center double-margintop" id="txnAccountingEnteries">
+                    <div class="card-header bg-default blacktext bold">
+                        Accounting Entries
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-striped table-responsive">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">credit Account owner</th>
+                                    <th scope="col">credit Account type</th>
+                                    <th scope="col">credit Amount (#)</th>
+                                    <th scope="col">debit Account owner</th>
+                                    <th scope="col">debit Account type</th>
+                                    <th scope="col">debit Amount (#)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transAccountEnteries">
+                                <tr class="accountClone">
+                                    <td class="txnDescription"></td>
+                                    <td class="txnCreditOwner"></td>
+                                    <td class="txnCreditAccType"></td>
+                                    <td class="creditAmount"></td>
+                                    <td class="txnDebitOwner"></td>
+                                    <td class="txnDebitAccType"></td>
+                                    <td class="debitAmount"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                    
+                <button class="btn btn-outline-primary hideall" id="transactionStep2back" ><b><i class="icon-arrow-left8 mr-1"></i></b>previous</button></span>
+                <span class="right"><button class="btn btn-outline-success hideall" id="executeTransactionBtn"><b><i class="icon-transmission mr-1"></i></b>Execute Transaction</button></span>
+            </div>       
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>
