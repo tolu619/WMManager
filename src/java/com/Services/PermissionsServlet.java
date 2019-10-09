@@ -560,6 +560,24 @@ public class PermissionsServlet extends HttpServlet {
                     json = "[" + json1 + "," + json2 + "," + json3 + "]";
                     break;
                 }
+                case "GetUserRequestedChanges": {
+                    String userid = request.getParameter("data");
+                    int UserID = Integer.parseInt(userid);
+                    HashMap<Integer, Object> List = new HashMap<>();
+                    ArrayList<Integer> IDs = GeneralUserManager.GetRequestedChanges(UserID);
+                    if (!IDs.isEmpty()) {
+                        for (int id : IDs) {
+                            HashMap<String, String> changes = GeneralUserManager.GetRequestedChangesDetails(id);
+                            if (!changes.isEmpty()) {
+                                List.put(id, changes);
+                            }
+                        }
+                        json = new Gson().toJson(List);
+                    } else {
+                        json = new Gson().toJson("empty");
+                    }
+                    break;
+                }
             }
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");

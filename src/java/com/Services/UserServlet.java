@@ -123,7 +123,7 @@ public class UserServlet extends HttpServlet {
                                 GeneralUserManager.UpdateActivationDate(MemberUserID);
                                 GeneralUserManager.CreateMember(userfirstname, userlastname, DateOfBirth, usergender, MemberUserID);
                                 String membermsgbdy = "Congratulations!!! You have been successfully registered as a member of The WealthMarket.";
-                                GeneralMessageManager.sendMemberMessage(1, membermsgbdy, "Member Created", MemberUserID);
+                                GeneralMessageManager.sendMemberMessage(GeneralAccountManager.WealthMarketUserID, membermsgbdy, "Member Created", MemberUserID);
                                 result = GeneralAccountManager.CreateAccountRecord(MemberUserID);
 //                                String emailmsg = "Congratulations!!! You have been successfully registered as a member of The WealthMarket. Welcome to the WealthMarket";
 //                                SMSManager.sendMsg(emailmsg, userphone);
@@ -168,7 +168,7 @@ public class UserServlet extends HttpServlet {
                                 GeneralUserManager.UpdateActivationDate(AdminUserID);
                                 GeneralUserManager.CreateAdminAccount(userfirstname, userlastname, DateOfBirth, usergender, AdminUserID);
                                 String membermsgbdy = "Congratulations!!! You have been successfully registered as an Admin of The WealthMarket.";
-                                GeneralMessageManager.sendMemberMessage(1, membermsgbdy, "Admin Created", AdminUserID);
+                                GeneralMessageManager.sendMemberMessage(GeneralAccountManager.WealthMarketUserID, membermsgbdy, "Admin Created", AdminUserID);
                                 result = GeneralAccountManager.CreateAccountRecord(AdminUserID);
 //                                String emailmsg = "Congratulations!!! You have been successfully registered as a member of The WealthMarket. Welcome to the WealthMarket";
 //                                SMSManager.sendMsg(emailmsg, userphone);
@@ -220,7 +220,7 @@ public class UserServlet extends HttpServlet {
                                 GeneralUserManager.CreateBusiness(BizUserID, bizname, BizTypeID, DateFounded, bizcacnumber, BizIndustryID, bizwebadd, BizDescription);
                                 GeneralUserManager.LinkToUser(UserID, BizUserID, "Member", "Business");
                                 String membermsgbdy = "Congratulations!!! You have successfully registered your business on The WealthMarket.";
-                                GeneralMessageManager.sendMemberMessage(1, membermsgbdy, "Business Created", BizUserID);
+                                GeneralMessageManager.sendMemberMessage(GeneralAccountManager.WealthMarketUserID, membermsgbdy, "Business Created", BizUserID);
                                 result = GeneralAccountManager.CreateAccountRecord(BizUserID);
                                 String emailmsg = "Congratulations!!! You have successfully registered your business on The WealthMarket. Welcome to the WealthMarket";
 //                                String emailmsg = "Congratulations!!! You have been successfully registered as a member of The WealthMarket. Activation Code: " + regCode;
@@ -266,7 +266,7 @@ public class UserServlet extends HttpServlet {
                                 GeneralUserManager.CreateAgency(AgencyUserID, AgencyName, AgencyID, AgencyTypeID, CreatedByID);
                                 GeneralUserManager.LinkToUser(AgencyAdminUserID, AgencyUserID, "Member", "Agency");
                                 String membermsgbdy = "Congratulations!!! You have beenn successfully registered as an Agent of The WealthMarket.";
-                                GeneralMessageManager.sendMemberMessage(1, membermsgbdy, "Agency Created", AgencyUserID);
+                                GeneralMessageManager.sendMemberMessage(GeneralAccountManager.WealthMarketUserID, membermsgbdy, "Agency Created", AgencyUserID);
                                 result = GeneralAccountManager.CreateAccountRecord(AgencyUserID);
                                 String emailmsg = "Congratulations!!! You have been successfully registered as an Agent of The WealthMarket. Welcome to the WealthMarket";
 //                                String emailmsg = "Congratulations!!! You have been successfully registered as a member of The WealthMarket. Activation Code: " + regCode;
@@ -324,7 +324,7 @@ public class UserServlet extends HttpServlet {
                     String userpass = data[1];
                     result = GeneralUserManager.UpdatePassword(UserID, userpass);
                     if (result.equals("success")) {
-                        GeneralMessageManager.sendMemberMessage(1, "Password reset occurred on your account", "Password Reset", UserID);
+                        GeneralMessageManager.sendMemberMessage(GeneralAccountManager.WealthMarketUserID, "Password reset occurred on your account", "Password Reset", UserID);
 //                         String bdy = "New Password: " + userpass;
 //                        MessageManager.SendEmail(email, "Password Recovery Code", bdy);
 //                        String UserPhoneNumber = DBManager.GetString(Tables.UserTable.PhoneNumber, Tables.UserTable.Table, "where" + Tables.UserTable.ID + " = " + MemberUserID);
@@ -469,7 +469,7 @@ public class UserServlet extends HttpServlet {
                                 GeneralUserManager.UpdateActivationDate(MemberUserID);
                                 GeneralUserManager.CreateMember(userfirstname, userlastname, DateOfBirth, usergender, MemberUserID);
                                 String membermsgbdy = "Congratulations!!! You have been successfully registered as a member of The WealthMarket.";
-                                GeneralMessageManager.sendMemberMessage(1, membermsgbdy, "Member Created", MemberUserID);
+                                GeneralMessageManager.sendMemberMessage(GeneralAccountManager.WealthMarketUserID, membermsgbdy, "Member Created", MemberUserID);
                                 GeneralAccountManager.CreateAccountRecord(MemberUserID);
 //                                String emailmsg = "Congratulations!!! You have been successfully registered as a member of The WealthMarket. Welcome to the WealthMarket";
 //                                SMSManager.sendMsg(emailmsg, userphone);
@@ -480,7 +480,7 @@ public class UserServlet extends HttpServlet {
                                     GeneralUserManager.CreateBusiness(BizUserID, bizname, BizTypeID, DateFounded, bizcacnumber, BizIndustryID, bizwebadd, BizDescription);
                                     GeneralUserManager.LinkToUser(MemberUserID, BizUserID, "Member", "Business");
                                     String bizmsgbdy = "Congratulations!!! You have been successfully registered your business of The WealthMarket.";
-                                    GeneralMessageManager.sendMemberMessage(1, bizmsgbdy, "Business Created", BizUserID);
+                                    GeneralMessageManager.sendMemberMessage(GeneralAccountManager.WealthMarketUserID, bizmsgbdy, "Business Created", BizUserID);
                                     GeneralAccountManager.CreateAccountRecord(BizUserID);
 //                                    String bizemailmsg = "Congratulations!!! You have been successfully your business on The WealthMarket. Welcome to the WealthMarket";
 //                                  SMSManager.sendMsg(bizemailmsg, bixphone);
@@ -599,7 +599,7 @@ public class UserServlet extends HttpServlet {
                     int PIN = Integer.parseInt(pin);
                     result = GeneralUserManager.UpdateTransactionPIN(UserID, PIN);
                     String msgbox = "Your New Transaction Pin is: " + PIN;
-                    GeneralMessageManager.sendMemberMessage(1, msgbox, "New Transaction Pin", UserID);
+                    GeneralMessageManager.sendMemberMessage(GeneralAccountManager.WealthMarketUserID, msgbox, "New Transaction Pin", UserID);
                     GeneralHistoryManager.LogActivity(UserID, "Transaction PIN", "Changed Transaction PIN", "Changed Transaction PIN");
                     json = new Gson().toJson(result);
                     break;
@@ -715,7 +715,7 @@ public class UserServlet extends HttpServlet {
                     int val = Integer.parseInt(data[0]);
                     String Section = data[1];
                     String value = data[2];
-                    HashMap<Integer, String> nameset = GeneralUserManager.GetTableOptions(val, Section);
+                    HashMap<Integer, String> nameset = GeneralAddressManager.GetTableOptions(val, Section);
                     HashMap<String, HashMap<Integer, String>> resend = new HashMap<>();
                     resend.put(value, nameset);
                     json = new Gson().toJson(resend);
@@ -789,7 +789,7 @@ public class UserServlet extends HttpServlet {
                         result = GeneralUserManager.UpdateRequestedChanges(ReqID, Status);
                         if (result.equals("successful") || result.equals("success")) {
                             String body = "Your Request to "+ subject + " was Approved";
-                            GeneralMessageManager.sendMemberMessage(1, body, subject, UserID);
+                            GeneralMessageManager.sendMemberMessage(GeneralAccountManager.WealthMarketUserID, body, subject, UserID);
                             json1 = new Gson().toJson("Successful.");
                             json2 = new Gson().toJson("success");
                         }
@@ -812,7 +812,7 @@ public class UserServlet extends HttpServlet {
                     result = GeneralUserManager.UpdateRequestedChanges(Id, Status);
                     if (result.equals("successful") || result.equals("success")) {
                         String body = "Your Request to "+ subject + " was Rejected";
-                        GeneralMessageManager.sendMemberMessage(1, body, subject, UserID);
+                        GeneralMessageManager.sendMemberMessage(GeneralAccountManager.WealthMarketUserID, body, subject, UserID);
                         json1 = new Gson().toJson("Successful.");
                         json2 = new Gson().toJson("success");
                     } else {
@@ -823,6 +823,23 @@ public class UserServlet extends HttpServlet {
                     json = "[" + json1 + "," + json2 + "," + json3 + "]";
                     break;
                 }
+                case "RequestChangeDetails": {
+                    String[] data = request.getParameterValues("data[]");
+                    int UserID = Integer.parseInt(data[0]);
+                    String changeSubject = (data[1]);
+                    String oldDetail = (data[2]);
+                    String newDetail = (data[3]);
+                    result = GeneralUserManager.ChangeDetails(UserID, changeSubject, oldDetail, newDetail);
+                    json = new Gson().toJson(result);
+                    break;
+                }
+
+                case "DeleteUserAddress": {
+                    String params = request.getParameter("data");
+                    int AddressID = Integer.parseInt(params);
+//                    HistoryManager.LogActivity(UserID, "Address", "Deleted Address", "Deleted Address");
+                    result = GeneralAddressManager.DeleteUserAddress(AddressID);
+                    json = new Gson().toJson(result);
                 
                 case "SearchMembers": {
                     String searchtxt = request.getParameter("data");

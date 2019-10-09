@@ -90,6 +90,10 @@
     <div  class="modal fade add-pickup-centre-modal">
         <%@include file="../users/shop/shop_add_pickup_center.jspf" %>
     </div>
+    </div>
+    <div  class="modal fade add-address-type-modal">
+        <%@include file="../users/shop/shop_add_address_type.jspf" %>
+    </div>
     <div  class="modal fade register-business-modal">
         <%@include file="../users/members/members_register_business.jspf" %>
     </div>
@@ -159,6 +163,12 @@
     <div  class="modal fade modal-view-mon-verify-goods">
         <%@include file="../users/schemes/schemes_goodsVerificationDetails.jspf" %>
     </div>
+    <div  class="modal fade modal-view-user-monetisation-goods">
+        <%@include file="../users/schemes/schemes_monetisation_user_goods_details.jspf" %>
+    </div>
+    <div  class="modal fade modal-view-monetisation-details">
+        <%@include file="../users/schemes/schemes_monetisationApplicationDetails.jspf" %>
+    </div>
     <div class="text-center d-lg-none w-100">
         <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
             <i class="icon-unfold mr-2"></i>
@@ -168,7 +178,7 @@
 
     <div class="navbar-collapse collapse" id="navbar-footer">
         <span class="navbar-text">
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> <a href="http://thewealthmarket.com/" target="_blank"> | TheWealthMarket</a>
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> <a href="/WMHome" target="_blank"> | TheWealthMarket</a>
         </span>
 
         <ul class="navbar-nav ml-lg-auto">

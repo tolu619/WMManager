@@ -1,0 +1,287 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="content-wrapper">
+    <!-- Page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Schemes</span> - Apply for Monetisation</h4>
+            </div>
+        </div>
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=MYCA" class="breadcrumb-item">Schemes</a>
+                    <span class="breadcrumb-item active">Monetisation</span>
+                </div>
+
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+        </div>
+    </div>
+    <!-- /page header -->
+    
+    <!-- Content area -->
+    <div class="content">
+        <form class="wizard-form monetization-form">
+            <div class="jumbotron bg-white">
+                <h3 class="header-elements">Monetisation Application!!!</h3>
+                <span class=" monSteps text-blue">Step 1</span>
+                <hr>
+                <fieldset class="monStep1 mt-4">
+                    <h5>Select Scheme Type</h5>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="card gradient-card bg-orange round" style="cursor: pointer" onclick="schmVal('Monetisation')">
+                                <div class="text-white d-flex h-100 mask blue-gradient-rgba">
+                                    <div class="first-content align-self-center p-3">
+                                        <h3 class="card-title">Monetisation</h3>
+                                        <hr/>
+                                        <p class="lead mb-0">Bring goods to get an upfront payment</p>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card gradient-card bg-brown round" style="cursor: pointer" onclick="schmVal('Commoditisation')">
+                                <div class="text-white d-flex h-100 mask blue-gradient-rgba">
+                                    <div class="first-content align-self-center p-3">
+                                        <h3 class="card-title">Commoditisation</h3>
+                                        <hr/>
+                                        <p class="lead mb-0">Offer unit services for an upfront pay</p>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card gradient-card bg-pink-400 round" style="cursor: pointer" onclick="schmVal('Mobilisation')">
+                                <div class="text-white d-flex h-100 mask blue-gradient-rgba">
+                                    <div class="first-content align-self-center p-3">
+                                        <h3 class="card-title">Mobilisation</h3>
+                                        <hr/>
+                                        <p class="lead mb-0">Offer other services for upfromt fee</p>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" class="schmVal" value="">
+                    </div>
+                </fieldset>
+
+
+                <fieldset class="monStep2 hide mt-3">
+                    <h5>Select Monetisation Option</h5>
+                    <div class="d-flex flex-column m-2" id="monetisation-options-parent">
+                        <div class="border-bottom-1 mt-2 p-2 monetisation-options-clone hide w-100">
+                            <div class="row ">
+                                    <div class="col-lg-3 text-center">
+                                        <h6 class="MonOptName-p">Name of Monetisation</h6>
+                                        <span class="MonOptDesc-p">this is the description of this monetisation experience</span>
+                                    </div>
+                                    <div class="col-lg-3 text-center">
+                                        <h6 class=""><b>Value Range</b></h6><span class="MonOptMinVal-p">N300,000.00</span> - 
+                                        <span class="MonOptMaxVal-p">N10,300,000.00</span>
+                                    </div>
+                                    <div class="col-lg-2 text-center">
+                                        <h6><b>Percentage Monetised</b></h6> <span class="MonOptPercentMometised-p">25%</span>
+                                    </div>
+                                    <div class="col-lg-1 text-center">
+                                        <h6><b>Tenor</b></h6> <span class="MonOptTenor-p">720 days</span>
+                                    </div>
+                                    <div class="col-lg-1 text-center">
+                                        <h6><b>Charges</b></h6> <span class="MonOptCharges-p">N200</span>
+                                    </div>
+                                    <div class="col-lg-1 text-center">
+                                        <h6><b>Cash</b></h6> <span class="MonOptAppFee-p">N1000</span>
+                                    </div>
+                                    <div class="col-lg-1 text-center p-2">
+                                        <input type="hidden" class="MonOptId-p">
+                                        <input type="hidden" class="MonOptSelected-p">
+                                        <button type="button" class="btn btn-secondary MonOptSelectMon-p">Select</button>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-around mt-4">
+                        <button type="button" class="btn btn-sm btn-danger" onclick='window.location.reload();'><< Back </button>
+<!--                        <button type="button" class="btn btn-sm btn-primary MonOptNext" onclick='monStep3()'>Next >></button>-->
+                    </div>
+                </fieldset>
+
+                <fieldset class="monStep3 mt-3 hide">
+                    <h5>Pick Product/Service</h5>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="button" class="btn btn-sm ml-auto btn-outline-primary selectAllMonProducts">(Un)Select all Products</button>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">S/N</th>
+                                            <th scope="col">Picture</th>
+                                            <th scope="col">Product/Service Name</th>
+                                            <th scope="col">Avail* Quantity</th>
+                                            <th scope="col">Unit Price()</th>
+                                            <th scope="col">Select</th>
+                                            <th scope="col">Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="monGoodParent">
+                                        <tr class="monGoodClone hide">
+                                            <input type="hidden" class="MonGoodProductId">
+                                            <td class="monGoodCount rm">1</td>
+                                            <td class="p-1 rm" style="width: 45px;">
+                                                <a href="#">
+                                                    <img class="monGoodImage"  src="https://www.indiafilings.com/learn/wp-content/uploads/2019/03/Composition-Scheme-for-Service-Providers.jpg" height="60" alt="">
+                                                </a>
+                                            </td>
+                                            <td class="rm">
+                                                <a href="#" class="font-weight-semibold monGoodName">Fathom Backpack</a>
+                                                <div class="text-muted font-size-sm overflow-auto"   style="width: 280px;">
+                                                    <div class="monGoodDesc">This id the product/Service description</div
+                                                </div>
+                                            </td>
+                                            <td class="pt-2 pb-1 rm">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control-styled-lg w-100 monGoodQuantity" id="" min="1">
+                                                    <input type="hidden" class="hiddenMonQuantity">
+                                                    <input type="hidden" class="hiddenListedQuantity">
+                                                </div>
+                                            </td>
+                                            <input type="hidden" class="hiddenMonPrice">
+                                            <td class="monGoodPrice rm">
+                                                N25,000
+                                            </td>
+                                            <td class="tm1">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input monGoodCheck" name="monSelectedGoods" id="try">
+                                                    <label class="custom-control-label monGoodCheckLabel" for="try">Add</label>
+                                                </div>
+                                            </td>
+                                            <input type="hidden" class="hiddenMonSubtotal">
+                                            <input type="hidden" class="monCheckedStore"/>
+                                            <td class="monGoodSubtotal total">
+                                                913
+                                                
+                                            </td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="">
+                                            <td class=""></td>
+                                            <td class="">
+                                               
+                                            </td>
+                                            <td class="">
+                                                
+                                            </td>
+                                            <td class="">
+                                                
+                                            </td>
+                                            <td class=""></td>
+                                            <td class="">
+                                                Total:
+                                            </td>
+                                            <input type="hidden" id="gTotalHidden" value="0">
+                                            <td id="gTotal">
+                                                0
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-around mt-3">
+                        <button type="button" class="btn btn-sm btn-danger" onclick='window.location.reload()'><< Back </button>
+                        <button type="button" class="btn btn-sm btn-primary MonApplGoToSummary hide" onclick='monStep4()'>Next >></button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="monStep4 mt-3 hide">
+                    <h5>Application Summary</h5>
+                    <div class="row">
+                        
+                        <div class="col-md-12 flex-column">
+                            <div class="d-flex justify-content-center">
+                                <div class="card mb-3" style="max-width: 100rem;">
+                                    <div class="card-header schemeType">Header</div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">Application details</h3>
+                                        <h6 class="hide errMsg text-danger">Value of goods is not up to the Minimun value required</h6>
+                                        <table class="table table-hover table-lg">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Detail</th>
+                                                    <th scope="col">Value</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Total value of Product/Service selected</td>
+                                                    <td class="monProdTotVal text-primary">N50,000.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Amount to receive in Warrants</td>
+                                                    <td class="monWarrant">N50,000.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Application Fee (Payable)</td>
+                                                    <td class="monAppFee">N50,000.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Charges Applicable</td>
+                                                    <td class="monAppCharge">N50</td>
+                                                </tr>
+                                                
+                                                
+                                            </tbody>
+                                        </table>
+                                        <div class="d-flex justify-content-around mt-3">
+                                            <input type="hidden" value="" id="monSubmitData"/>
+                                            <button type="button" class="btn btn-sm btn-danger" onclick='$(".monStep4").addClass("hide"); $(".monStep3").removeClass("hide");'><< Back </button>
+                                            <button type="button" class="btn btn-sm btn-primary hide monPay">Submit <i class="icon-cash4"></i> </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                </fieldset>
+
+                <fieldset class="monStep5 mt-3 hide">
+                    <h5>Complete Application fee</h5>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group" id="">
+                                <label>prop: <span class="text-danger">*</span></label>
+                                <input type="text" name="prop" placeholder="Properties" class="form-control required">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="monStep6 mt-3 hide">
+                    <h5 class="text-center text-green-400">Success</h5>
+                    <h5>Success</h5>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group" id="">
+                                <label>prop: <span class="text-danger">*</span></label>
+                                <input type="text" name="prop" placeholder="Properties" class="form-control required">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </form>
+    </div>
+</div>
