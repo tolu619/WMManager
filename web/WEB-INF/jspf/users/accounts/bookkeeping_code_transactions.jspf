@@ -1,0 +1,104 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light border-bottom-0">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Accounts</span> - Book Keeping</h4>
+            </div>
+        </div>
+        <!-- Top breadcrumb line -->
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Dashboard" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Accounts" class="breadcrumb-item">Accounts</a>
+                    <span class="breadcrumb-item active">Book Keeping - code transactions </span>
+                </div>
+
+            </div>
+            <div class="header-elements d-none">
+                <div class="breadcrumb justify-content-center">
+                    <a href=".create-transactionType-modal" class="breadcrumb-elements-item" data-toggle="modal">
+                        <i class="icon-plus3 mr-2"></i>
+                        create New Code
+                    </a>
+                </div>
+                <div class="breadcrumb justify-content-center ml-2">
+                    <a href=".create-codeTransaction-modal" class="breadcrumb-elements-item" data-toggle="modal" id="createtransactionBtn">
+                        <i class="icon-plus3 mr-2"></i>
+                        create New Transaction from code
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- /breadcrumb line -->
+
+    </div>
+    <!-- /page header -->
+
+    <!-- Content area -->
+    <div class="content">
+
+        <div class="card">
+            <div class="card-header header-elements-inline">
+                <h5 class="card-title">All Accounts</h5>
+                <div class="header-elements">
+                    <div class="list-icons">
+                        <a class="list-icons-item mr-3"> <span class="acctTotalCount badge badge-primary rounded-circle p-2"></span></a> 
+
+                    </div>
+                </div>
+            </div>
+
+
+            <table class="table datatable-basic table-hover table-bordered table-responsive-lg ">
+                <thead class="bg-primary-400">
+                    <tr class="text-center">
+                        <th>S/N</th>
+                        <th>Account Name</th>
+                        <th colspan="4">Accounts Balances (Warrants | Reflation Rights | Par Cash Rights | Total)</th>
+                        <th colspan="3">Transaction Limits (Daily limits | Debit Limits | Credit Limits)</th>
+                        <th >Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="AllAccounts">
+                    <tr class="clone hide">
+                        <td class="acctCount">1</td>
+                        <td class="acctID hide" >Marth</td>
+                        <td><a href="#" class="acctName">Saint</a></td>
+                        <td class=""><span class="WacctBalances">Active</span></td>
+                        <td class="RacctBalances">22 Jun 1972</td>
+                        <td class="PacctBalances">22 Jun 1972</td>
+                        <td class="TotalBalances font-weight-bold">22 Jun 1972</td>
+                        <td class="DailyLimit font-weight-bold">22 Jun 1972</td>
+                        <td class="DebitLimit font-weight-bold">22 Jun 1972</td>
+                        <td class="CreditLimit font-weight-bold">22 Jun 1972</td>
+                        <td class="text-center">
+                            <div class="list-icons">
+                                <div class="dropdown">
+                                    <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                        <i class="icon-menu9"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <button class="dropdown-item btn btn-primary btn-xs acctDetailBtn"><i class="icon-microscope"></i> View Details</button>
+                                        <button class="dropdown-item btn btn-sm btn-danger changeLimitsBtn" ><i class="icon-warning2"></i> Change Transaction Limits</button>
+                                        <button class="dropdown-item btn btn-sm btn-danger generateStmtBtn"><i class="icon-credit-card"></i> Generate Account Statement</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <!-- /Content area -->
+
+    <!-- Footer -->
+    <%@include file="../../general/footer1.jspf" %>
+    <!-- /footer -->
+</div>

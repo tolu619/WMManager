@@ -17,6 +17,35 @@ username = $("#username").val();
 var cardblock1 = $('.cardblock');
 var cardblock2 = $('.cardblock2');
 var cardblock3 = $('.cardblock3');
+var transactionParties = {};
+var transactionPartiesIds = {};
+var transactionAccounts = {};
+var TransactionCodes = {};
+var transactionPartyCounts = 0;
+var editableParamsCounts = 0;
+var transactionParams = {};
+var editableTransactionParams = {};
+var ParamsCount = 0;
+var finalAccountingEnteries = [];
+
+//variable declarations for transactions and book keeping from Tolu
+var Parameters = [];
+var ParametersString;
+var IndependentParameters = [];
+var FixedValueParameters = [];
+var DerivedParameters = [];
+var FormulaString, FormulaDisplayString;
+var FormulaArray = [];
+FormulaDisplayArray = [];
+var AccountsRequired = [];
+var NumberOfAccountsDebited, NumberOfAccountsCredited, NumberOfDerivedParameters = 0;
+var NumberOfProcesses = 0;
+var NumberOfAccountingEntriesInCurrentProcess = 0;
+var AttachedAlert = function ()
+{
+    alert("attached alert");
+};
+//end of transactions variable decalrations
 
 function performPageActions() {
     verifyUser();
@@ -63,6 +92,11 @@ function performPageActions() {
         profilePageFundtions();
         $("#prof_serv_id").addClass("active");
     } else if (page === "product_listing.jsp") {
+        extension = "../../../";
+        $("#id_main_shop").addClass("active");
+        $("#id_shop_products_listing").addClass("active bg-white blacktext");
+        productListingPageFunctions();
+    } else if (page === "single_prod_listing.jsp") {
         extension = "../../../";
         $("#id_main_shop").addClass("active");
         $("#id_shop_products_listing").addClass("active bg-white blacktext");
@@ -386,6 +420,11 @@ function performPageActions() {
         monetisationPageFunctions();
         $("#id_main_semple").addClass("active");
         $("#id_main_money").addClass("active");
+    } else if (page === "bookkeeping.jsp" || page === "bookkeepingtest.jsp")
+    {
+        extension = "../../../";
+        BookKeepingPageFunctions();
+        $("#id_acctandtrans_book").addClass("active bg-white blacktext");
     }
 
     CheckUser();
@@ -2002,23 +2041,17 @@ function profilePageFundtions() {
 function productListingPageFunctions() {
     GetData("Category", "GetTopCategories", "LoadTopCategories");
     GetData("Product", "GetProductMeasurementUnits", "LoadProductUnits");
-    GetData("Product", "GetProductHscodes", "LoadProductHscodes");
 
-    $("#single-btn").click(function () {
-        listingDefault();
-        $("#single-listing").removeClass("hide");
-        $("#single-listing").show();
 
-    });
-    $("#batch-btn").click(function () {
-        listingDefault();
-        $("#batch-listing").removeClass("hide");
-        $("#batch-listing").show();
-    });
-    $(".back").click(function () {
-        $(".first-content").show();
-        $(".second-content").hide();
-    });
+//    $("#batch-btn").click(function () {
+//        listingDefault();
+//        $("#batch-listing").removeClass("hide");
+//        $("#batch-listing").show();
+//    });
+//    $(".back").click(function () {
+//        $(".first-content").show();
+//        $(".second-content").hide();
+//    });
 
     $("#warrantyCheck").click(function () {
         if ($(this).prop("checked") == true) {
@@ -2032,12 +2065,10 @@ function productListingPageFunctions() {
 
     $("#prodSearch").click(function () {
 
-    })
-    $("#searchProduct").keyup(function () {
-        var txt = $(this).text();
-        if (txt.length > 2) {
-            alert(txt);
-        }
+    });
+    $("#searchProduct").focus(function () {
+        alert("hiii");
+        GetData("Product", "GetProductHscodes", "LoadProductHscodes");
     });
     $('#searchProduct').keypress(function (e) {
         if (e.which === 13) {
@@ -2054,6 +2085,21 @@ function productListingPageFunctions() {
         $("#single-listing").hide();
         $(".second-content").show();
     }
+}
+
+function singleListingPageFunctions() {
+    GetData("Category", "GetTopCategories", "LoadTopCategories");
+    GetData("Product", "GetProductMeasurementUnits", "LoadProductUnits");
+
+    $("#warrantyCheck").click(function () {
+        if ($(this).prop("checked") == true) {
+            $("#prod-warranty-type").removeClass("hide");
+            $("#prod-warranty-type").show();
+        } else {
+            $("#prod-warranty-type").hide();
+        }
+
+    });
 }
 
 function manageStaffPermissionPage() {
@@ -6244,9 +6290,8 @@ function DisplaySearchResultUserDetails(data) {
     }
 }
 
-function DisplaySearchUserDetails(data) {
+function DisplaySearchUserDetails(data, parent) {
     hideLoader();
-    var parent = $(".verifyUser-list");
     parent.find(".newclone").remove();
     if (data["BeneficiaryName"] === "none") {
         parent.text("No Members match your search");
@@ -6825,22 +6870,42 @@ function DisplayProductCategoryVariants(data, parent) {
         var variantValue = parent.find(".variantValueSelect");
         var variantValue1 = parent.find("#variantValueSelect1");
         var variantValue2 = parent.find("#variant2ValueSelect");
-        $.each(data, function (id, name) {
-            $("<option />", {
-                text: capitaliseFirstLetter(name),
-                value: id
-            }).appendTo(variant);
+
+        variant1.focus(function () {
+            variant1.empty();
+            appendVariants(variant1);
         });
+        variant2.focus(function () {
+            variant2.empty();
+            appendVariants(variant2);
+        });
+
         variant1.change(function () {
             var variantID = variant1.val();
-            GetData("Category", "GetCategoryVariantValues", "LoadCategoryVariantValues", variantID);
+            GetData("Category", "GetCategoryVariantValues", "LoadCategoryVariantValue1", variantID);
         });
+        variant2.change(function () {
+            var variantID = variant2.val();
+            GetData("Category", "GetCategoryVariantValues", "LoadCategoryVariantValue2", variantID);
+        });
+
+        function appendVariants(variantParent) {
+            $("<option/>", {text: "select variant"}).appendTo(variantParent);
+            $("<option/>", {text: " "}).appendTo(variantParent);
+            $.each(data, function (id, name) {
+                $("<option />", {
+                    text: capitaliseFirstLetter(name),
+                    value: id
+                }).appendTo(variantParent);
+            });
+        }
     }
 }
 
 function DisplayProductCategoryVariantValues(data, parent) {
-//        parent.empty();
+    parent.empty();
     if (data === "none") {
+        parent.append("no results");
     } else {
         var values = data["values"].split(",");
         $.each(values, function (id, value) {
@@ -6870,7 +6935,7 @@ function DisplayProductUnits(data, parent) {
 
 function DisplayProductHscodes(data, parent) {
     parent.empty();
-    if (data == "none") {
+    if (data === "none") {
         parent.text("No codes");
     } else {
         parent.append($('<option/>').val(0).text("type hscode or product name"));
@@ -12116,6 +12181,821 @@ function RejectRequestedChanges(RequestedID, Status, subject, Userid) {
     });
 }
 //complaints and change details
+
+// from Tolu for Transactions code
+function BookKeepingPageFunctions()
+{
+    GetData("BookKeeping", "GetAllTransactionTypes", "DisplayAllTransactionTypes", "");
+    GetData("BookKeeping", "GetAllLedgerAccounts", "PopulateLedgerDropDowns", "");
+
+    $("#createtransactionBtn").click(function () {
+        GetData("BookKeeping", "GetAllTransactionTypes", "LoadAllTransactionTypes", "");
+    });
+
+    $("#NewTransactionButton").click(function ()
+    {
+        $("#TransactionList").addClass("hide");
+        $("#JournalEntryDetails").addClass("hide");
+        $("#ExecuteTransactionUI").addClass("hide");
+        $("#NewTransactionUI").removeClass("hide");
+    });
+    $("#CancelNewTransactionButton").click(function ()
+    {
+        $("#TransactionList").removeClass("hide");
+        $("#JournalEntryDetails").removeClass("hide");
+        $("#NewProcessButton").removeClass("hide");
+        $("#NewProcessParent").empty();
+        $("#NewTransactionUI").addClass("hide");
+        if (NumberOfProcesses > 0)
+            NumberOfProcesses--;
+        NumberOfAccountingEntriesInCurrentProcess = 0;
+        $("#NumberOfProcessLabel").text(NumberOfProcesses);
+    });
+    $("#NewProcessButton").click(function ()
+    {
+        NumberOfProcesses++;
+        NumberOfAccountingEntriesInCurrentProcess++;
+        $("#NumberOfProcessLabel").text(NumberOfProcesses);
+        $("#NewProcessButtonDiv").addClass("hide");
+        var Parent = $("#NewProcessParent");
+        var CloneTemplate = $(".NewProcessDiv");
+        var ThisChild = CloneTemplate.clone();
+        InstantiateNewProcessDivUI(ThisChild);
+        ThisChild.appendTo(Parent).show();
+        CloneTemplate.hide();
+//        DeleteAllCookies();
+//        alert(document.cookie);
+//        document.getElementsByClassName("NewAccountingEntryButton")[0].addEventListener('click', AddNewAccountingEntryTableRow, false);
+//        document.getElementsByClassName("IndependentParamUIButton")[0].addEventListener('click', AttachedAlert, false);
+    });
+    $("#SaveNewTransactionButton").click(function ()
+    {
+        swal({
+            title: "Are you sure you want to save this Transaction Type?",
+            text: "Press No if you still want to review the parameters. Press Yes to execute Transaction.",
+            type: 'info',
+            showCancelButton: true,
+            confirmButtonText: '<i class="icon-checkmark3 mr-2"></i> Yes ',
+            cancelButtonText: '<i class="icon-cancel-circle2 mr-2"></i> No',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false
+        }).then(function (dismiss) {
+            if (dismiss.value) {
+                var NewTransactionCode = DivClone.find(".NewTransactionCode").val();
+                alert (NewTransactionCode);
+                if (NewTransactionCode === "")
+                    return alert("You must have a transaction code");
+                $("#NewProcessButton").removeClass("hide");
+                DivClone.remove();
+            } else {
+                swal({
+                    title: 'Transaction Type not created',
+                    text: "Transaction Type has not been created yet,you can review your parameters !",
+                    type: 'info',
+                    showCancelButton: false,
+                    confirmButtonText: 'Ok!',
+                    confirmButtonClass: 'btn btn-info',
+                    buttonsStyling: false
+                });
+            }
+        });
+    });
+
+    $("#transactionStep2forward").click(function ()
+    {
+        transactionBtnDefault();
+        $("#transactionStep1back").removeClass("hideall").show();
+        $("#transactionCodeStep2").removeClass("hide").show();
+
+        if (editableParamsCounts !== 0 && ParamsCount !== 0) {
+            if (editableParamsCounts === ParamsCount) {
+                $("#transactionStep3forward").removeClass("hideall").show();
+            }
+        }
+
+    });
+    $("#transactionStep1back").click(function ()
+    {
+        transactionBtnDefault();
+        $("#transactionStep2forward").removeClass("hideall").show();
+        $("#transactionCodeStep1").removeClass("hide").show();
+    });
+    $("#transactionStep2back").click(function ()
+    {
+        transactionBtnDefault();
+        $("#transactionStep1back").removeClass("hideall").show();
+        $("#transactionStep3forward").removeClass("hideall").show();
+        $("#transactionCodeStep2").removeClass("hide").show();
+    });
+    $("#transactionStep3forward").click(function ()
+    {
+        var transactiontypeId = $("#transactionTypeSelect").val();
+        GetData("BookKeeping", "GetAccountingEntriesInvolvedInTransaction", "LoadAccountingEntriesInvolvedInTransaction", transactiontypeId);
+        transactionBtnDefault();
+        $("#transactionCodeStep3").removeClass("hide").show();
+        $("#executeTransactionBtn").removeClass("hideall").show();
+        $("#transactionStep2back").removeClass("hideall").show();
+    });
+    $("#executeTransactionBtn").click(function () {
+        swal({
+            title: "Are you sure you want to execute Transaction?",
+            text: "Press No if you still want to review the entries. Press Yes to execute Transaction.",
+            type: 'info',
+            showCancelButton: true,
+            confirmButtonText: '<i class="icon-checkmark3 mr-2"></i> Yes ',
+            cancelButtonText: '<i class="icon-cancel-circle2 mr-2"></i> No',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false
+        }).then(function (dismiss) {
+            if (dismiss.value) {
+                GetData("BookKeeping", "ExecuteAccountingEntries", "LoadCodeTransactions", finalAccountingEnteries);
+            } else {
+                swal({
+                    title: 'Transaction not Executed',
+                    text: "Transaction has not been Executed yet,you can review your transaction !",
+                    type: 'info',
+                    showCancelButton: false,
+                    confirmButtonText: 'Ok!',
+                    confirmButtonClass: 'btn btn-info',
+                    buttonsStyling: false
+                });
+            }
+        });
+    });
+
+    function transactionBtnDefault() {
+        $("#transactionStep1back").addClass("hideall").hide();
+        $("#transactionStep2back").addClass("hideall").hide();
+        $("#transactionStep2forward").addClass("hideall").hide();
+        $("#transactionStep3forward").addClass("hideall").hide();
+        $("#executeTransactionBtn").addClass("hideall").hide();
+        $("#transactionCodeStep1").addClass("hide").hide();
+        $("#transactionCodeStep2").addClass("hide").hide();
+        $("#transactionCodeStep3").addClass("hide").hide();
+    }
+
+}
+
+function InstantiateNewProcessDivUI(DivClone)
+{
+    DivClone.removeClass("NewProcessDiv");
+    DivClone.removeClass("hide");
+    DivClone.addClass("clearclone");
+    DivClone.find("tbody").addClass("AccountingEntriesTableBody");
+    DivClone.find(".AccountingEntriesTableRowClone").addClass("clearclone ProcessWIP"); //Use this to identify Work In Progress UI for accounting entries
+    DivClone.find("tr").removeClass("AccountingEntriesTableRowClone");
+    DivClone.find(".NewAccountingEntryButton").click(AddNewAccountingEntryTableRow);
+    GetData("BookKeeping", "GetTransactionParameters", "PopulateParametersSelect");
+    DivClone.find("#parameterTypeSelect").change(function ()
+    {
+        var parameterTypeOption = $("#parameterTypeSelect").val();
+        if (parameterTypeOption == 1) {
+            DivClone.find(".NewIndependentParamDiv").removeClass("hide");
+            DivClone.find(".NewFixedParamDiv").addClass("hide");
+            DivClone.find(".NewDerivedParamDiv").addClass("hide");
+        } else if (parameterTypeOption == 2) {
+            DivClone.find(".NewFixedParamDiv").removeClass("hide");
+            DivClone.find(".NewIndependentParamDiv").addClass("hide");
+            DivClone.find(".NewDerivedParamDiv").addClass("hide");
+        } else if (parameterTypeOption == 3) {
+            DivClone.find(".NewDerivedParamDiv").removeClass("hide");
+            DivClone.find(".NewIndependentParamDiv").addClass("hide");
+            DivClone.find(".NewFixedParamDiv").addClass("hide");
+        } else {
+            DivClone.find(".NewDerivedParamDiv").addClass("hide");
+            DivClone.find(".NewIndependentParamDiv").addClass("hide");
+            DivClone.find(".NewFixedParamDiv").addClass("hide");
+        }
+
+    });
+
+    DivClone.find(".AddNewIndependentParamButton").click(function ()
+    {
+        AddNewIndependentParam(DivClone);
+    });
+    DivClone.find(".AddNewFixedParamButton").click(function ()
+    {
+        AddNewFixedParam(DivClone);
+    });
+    DivClone.find(".AddNewDerivedParamButton").click(function ()
+    {
+        AddNewDerivedParam(DivClone);
+    });
+    DivClone.find(".AddParamToFormulaButton").click(function ()
+    {
+        AddParamToFormula(DivClone);
+    });
+    DivClone.find(".AddOperatorToFormulaButton").click(function ()
+    {
+        AddOperatorToFormula(DivClone);
+    });
+    DivClone.find(".BackspaceFormulaButton").click(function ()
+    {
+        BackspaceFormula(DivClone);
+    });
+    DivClone.find(".ResetFormulaStringButton").click(function ()
+    {
+        ResetFormulaString(DivClone);
+    });
+    DivClone.find(".AccountTypesDropdown").change(function ()
+    {
+        LedgerDropDownValueChanged(this.value, this);
+    });
+    DivClone.find(".SaveNewProcessButton").click(function ()
+    {
+        alert("Saving New Transaction. In updated version, this will save only the current process's accounting entries. This will not save the new transaction");
+        SaveNewTransactionType(DivClone);
+    });
+}
+function AddNewIndependentParam(DivClone)
+{
+    var NewParam = DivClone.find(".NewIndependentParamTextBox").val();
+    if (NewParam === "")
+    {
+        alert("You must give your new parameter a name");
+        return;
+    }
+    GetData("BookKeeping", "CreateNewIndependentParam", "PopulateParametersSelect", NewParam);
+}
+function AddNewFixedParam(DivClone)
+{
+    var NewParamValue = DivClone.find(".NewFixedParamTextBox").val();
+    var NewParam = DivClone.find(".NewFixedParamNameTextBox").val();
+    if (NewParamValue === "")
+    {
+        alert("You must give your new parameter a numerical value. If you want a fraction,\n\
+        create a derived parameter and create the fraction by dividing two parameters in the formula.");
+        return;
+    }
+    if (NewParam === "")
+    {
+        alert("You must give your new parameter a name");
+        return;
+    }
+    GetData("BookKeeping", "CreateNewFixedParam", "PopulateParametersSelect", NewParam + "," + NewParamValue);
+}
+function AddNewDerivedParam(DivClone)
+{
+    var NewParam = DivClone.find(".NewDerivedParamTextBox").val();
+//    var NewFormula = DivClone.find(".ParametersLabel").val();
+    if (NewParam === "")
+    {
+        alert("You must give your new parameter a name");
+        return;
+    }
+    if (FormulaArray.length < 3)
+    {
+        alert("Please specify a formula for deriving the value of this parameter");
+        return;
+    }
+
+    Parameters.push(NewParam); //Add it to both the list of all parameters 
+//    DerivedParameters.push(NewParam + ":" + NewFormula); //and the list of derived parameters
+    ParametersString = "";
+    Parameters.forEach(RefreshParametersListString);
+    DivClone.find(".ParametersLabel").text(ParametersString);
+    FormulaString = "";
+    FormulaDisplayString = "";
+    FormulaArray.forEach(RefreshFormulaListString);
+    FormulaArray.forEach(RefreshFormulaDisplayString);
+    DivClone.find(".FormulaLabel").text(FormulaDisplayString);
+    GetData("BookKeeping", "CreateNewDerivedParam", "PopulateParametersSelect", NewParam + "," + FormulaString);
+//    RefreshParametersSelect(DivClone);
+}
+function AddParamToFormula(DivClone)
+{
+    var NewParam = DivClone.find(".FormulaParametersSelect").val();
+    var NewParamText = DivClone.find(".FormulaParametersSelect :selected").text();
+    FormulaArray.push(NewParam);
+    FormulaDisplayArray.push(NewParamText);
+    FormulaString = "";
+    FormulaDisplayString = "";
+    FormulaArray.forEach(RefreshFormulaListString); //String that will be sent to back end. Contains IDs
+    FormulaDisplayArray.forEach(RefreshFormulaDisplayString); //String that will be shown on the web page. Contains names of parameters as text
+    DivClone.find(".FormulaLabel").text(FormulaDisplayString);
+}
+function AddOperatorToFormula(DivClone)
+{
+    var NewOperator = DivClone.find(".FormulaOperatorsSelect :selected").val();
+    FormulaArray.push(NewOperator);
+    FormulaDisplayArray.push(NewOperator);
+    FormulaString = "";
+    FormulaDisplayString = "";
+    FormulaArray.forEach(RefreshFormulaListString); //String that will be sent to back end. Contains IDs
+    FormulaDisplayArray.forEach(RefreshFormulaDisplayString); //String that will be shown on the web page. Contains names of parameters as text
+    DivClone.find(".FormulaLabel").text(FormulaDisplayString);
+}
+function BackspaceFormula(DivClone)
+{
+    FormulaArray.pop();
+    FormulaDisplayArray.pop(); //remove the last element added to the arrays
+    FormulaString = "";
+    FormulaDisplayString = "";
+    FormulaArray.forEach(RefreshFormulaListString);
+    FormulaDisplayArray.forEach(RefreshFormulaDisplayString);
+    DivClone.find(".FormulaLabel").text(FormulaDisplayString);
+}
+function ResetFormulaString(DivClone)
+{
+    FormulaArray = [];
+    FormulaDisplayArray = [];
+    FormulaString = "";
+    FormulaDisplayString = "";
+    DivClone.find(".FormulaLabel").text(FormulaDisplayString);
+}
+function RefreshParametersListString(ThisParameter)
+{
+    if (ParametersString !== "")
+    {
+        ParametersString += ", ";
+    }
+    ParametersString += ThisParameter;
+}
+function RefreshFormulaListString(ThisParameter)
+{
+    FormulaString += ThisParameter;
+}
+function RefreshFormulaDisplayString(ThisParameter)
+{
+    if (FormulaDisplayString !== "")
+    {
+        FormulaDisplayString += " ";
+    }
+    FormulaDisplayString += ThisParameter;
+}
+function RefreshParametersSelect(DivClone)
+{
+    var optionsAsString = "";
+    $(".ParametersSelect").html("");
+    DivClone.find(".FormulaParametersSelect").html("");
+    for (var i = 0; i < Parameters.length; i++)
+    {
+        optionsAsString += "<option value='" + Parameters[i] + "'>" + Parameters[i] + "</option>";
+    }
+    $(".ParametersSelect").append(optionsAsString); //$( 'select[class="ParametersSelect"]' ).append(optionsAsString); doesn't work when the select has more than one class
+    $('select[class="FormulaParametersSelect"]').append(optionsAsString);
+}
+function SaveNewTransactionType(DivClone)
+{
+    var NewTransactionName = $("#NewTransactionName").val();
+    var NewTransactionCode = $(".NewTransactionCode").val();
+    var NewTransactionDescription = $("#NewTransactionDescription").val();
+    var NewTransactionRegulatoryIssues = $("#NewTransactionRegulatoryIssues").val();
+    var NewTransactionRisksAndControls = $("#NewTransactionRisksAndControls").val();
+    var NewTransactionComments = $("#NewTransactionComments").val();
+    var data = [NewTransactionName, NewTransactionCode, NewTransactionDescription, NewTransactionRegulatoryIssues,
+        NewTransactionRisksAndControls, NewTransactionComments];
+    GetData("BookKeeping", "CreateNewTransactionType", "SaveNewTransactionProcessResponse", data, DivClone);
+}
+
+function DisplayAllTransactionTypes(data)
+{
+    var Parent = $("#TransactionTypeParent");
+    var ChildClone = Parent.find(".clone");
+    $.each(data, function (key, value)
+    {
+        var ThisChild = ChildClone.clone();
+        ThisChild.removeClass("clone");
+        ThisChild.removeClass("hide");
+        ThisChild.addClass("clearclone");
+
+        ThisChild.find(".TransactionCode").text(value["TransactionCode"]);
+        ThisChild.find(".TransactionName").text(value["NameOfTransaction"]);
+        ThisChild.find(".TransactionDescription").text(value["Description"]);
+        ThisChild.find(".CreditAccountTypeIDs").val(value["CreditAccountTypeIDs"]);
+        ThisChild.find(".DebitAccountTypeIDs").val(value["DebitAccountTypeIDs"]);
+        ThisChild.find(".ThirdPartyCreditAccountTypeIDs").val(value["ThirdPartyCreditAccountTypeIDs"]);
+        ThisChild.find(".ThirdPartyDebitAccountTypeIDs").val(value["ThirdPartyDebitAccountTypeIDs"]);
+
+        ThisChild.find(".JournalEntryDetailsButton").click(function ()
+        {
+            var IDsSeparatedByTilda = ThisChild.find(".CreditAccountTypeIDs").val() + "~";
+            IDsSeparatedByTilda += ThisChild.find(".DebitAccountTypeIDs").val() + "~";
+            IDsSeparatedByTilda += ThisChild.find(".ThirdPartyCreditAccountTypeIDs").val() + "~";
+            IDsSeparatedByTilda += ThisChild.find(".ThirdPartyDebitAccountTypeIDs").val();
+            GetData("BookKeeping", "GetMOEJournalEntryDetailsForTransactionType", "LinkToDisplayJournalEntryDetailsForTransactionType", IDsSeparatedByTilda);
+            GetData("BookKeeping", "GetThirdPartyJournalEntryDetailsForTransactionType", "LinkToDisplayTPJournalEntryDetailsForTransactionType", IDsSeparatedByTilda);
+        });
+        ThisChild.find(".JournalEntryExecuteButton").click(function ()
+        {
+            var TransactionCode = ThisChild.find(".TransactionCode").text();
+            GetData("BookKeeping", "", "", TransactionCode);
+            $("#TransactionList").addClass("hide");
+            $("#JournalEntryDetails").addClass("hide");
+            $("#NewTransactionUI").addClass("hide");
+            $("#ExecuteTransactionUI").removeClass("hide");
+            $("#ExecuteTransactionUI").show();
+        });
+        ThisChild.appendTo(Parent).show();
+    });
+    ChildClone.hide();
+}
+
+function DisplayJournalEntryDetailsForTransactionType(data)
+{
+    var count = 0;
+    var Parent = $("#MOEJournalEntryDetailsParent");
+    var ChildClone = Parent.find(".clone");
+    $("#MOEJournalEntriesTable").removeClass("hide");
+    $.each(data, function (key, value)
+    {
+        var ThisChild = ChildClone.clone();
+        ThisChild.removeClass("clone");
+        ThisChild.removeClass("hide");
+        ThisChild.addClass("clearclone");
+        var CreditRadioButton = ThisChild.find(".CreditRadioButton");
+        CreditRadioButton.name = "CreditOrDebit" + count;
+        var DebitRadioButton = ThisChild.find(".DebitRadioButton");
+        DebitRadioButton.name = "CreditOrDebit" + count;
+
+        var EntryType = value["EntryType"];
+        ThisChild.find(".SubAccountText").text(value["SubLedgerAccount"]);
+        ThisChild.find(".AccountTypeText").text(value["AccountType"]);
+        ThisChild.find(".EntryTypeText").text(value["EntryType"]);
+//        if (EntryType === "Credit") 
+//        {
+//            alert(CreditRadioButton.name);
+//            CreditRadioButton.checked = true;
+//        }
+//        else if (EntryType === "Debit") 
+//        {
+//            alert(DebitRadioButton.name);
+//            DebitRadioButton.checked = true;
+//        }
+
+        count++;
+        ThisChild.appendTo(Parent).show();
+    });
+    ChildClone.hide();
+}
+
+var AddNewAccountingEntryTableRow = function ()
+{
+    var Parent = $(".AccountingEntriesTableBody");
+    var ChildClone = $(".AccountingEntriesTableRowClone");
+    var ThisChild = ChildClone.clone();
+    ThisChild.removeClass("AccountingEntriesTableRowClone");
+    ThisChild.addClass("clearclone");
+    ThisChild.addClass("ProcessWIP"); //Use this to identify Work In Progress UI for accounting entries
+    ThisChild.find(".AccountTypesDropdown").change(function ()
+    {
+        LedgerDropDownValueChanged(this.value, this);
+    });
+    NumberOfAccountingEntriesInCurrentProcess++;
+    ThisChild.find(".AccountingEntriesIndexNumber").text(NumberOfAccountingEntriesInCurrentProcess);
+    ThisChild.appendTo(Parent).show();
+};
+function PopulateLedgerDropDownsMethod(data)
+{
+    var AccountTypesDropDownLists = $(".AccountTypesDropdown");
+    var SubDropDownList = $(".SubAccountTypesDropdown");
+    $("<option />", {text: "--Please select a Ledger Account--", value: 0}).appendTo(AccountTypesDropDownLists);
+    $.each(data, function (index, Value)
+    {
+//        var SubLedgers = Value["BookKeepingAccountType"];  just work
+        $("<option />", {text: capitaliseFirstLetter(Value["name"]), value: Value["id"]}).appendTo(AccountTypesDropDownLists);
+    });
+}
+
+function LedgerDropDownValueChanged(ID, ThisDropDown)
+{
+    var SubDropDownList = $(ThisDropDown).closest("td").find(".SubAccountTypesDropdown");
+    SubDropDownList.empty();
+    GetData("BookKeeping", "GetSubLedgersByLedgerID", "PopulateSubLedgerDropDowns", ID);
+}
+function PopulateSubLedgerDropDownsMethod(data)
+{
+    var SubAccountTypesDropDownLists = $(".SubAccountTypesDropdown");
+    $.each(data, function (i, Val)
+    {
+        $("<option />", {text: capitaliseFirstLetter(Val["name"]), value: Val["id"]}).
+                appendTo(SubAccountTypesDropDownLists);
+    });
+}
+
+function DisplayThirdPartyJournalEntryDetailsForTransactionType(data)
+{
+    var count = 0;
+    var Parent = $("#ThirdPartyJournalEntryDetailsParent");
+    var ChildClone = Parent.find(".clone");
+    $("#OthersJournalEntriesTable").removeClass("hide");
+    $.each(data, function (key, value)
+    {
+        var ThisChild = ChildClone.clone();
+        ThisChild.removeClass("clone");
+        ThisChild.removeClass("hide");
+        ThisChild.addClass("clearclone");
+        var CreditRadioButton = ThisChild.find(".CreditRadioButton");
+        CreditRadioButton.name = "CreditOrDebit" + count;
+        var DebitRadioButton = ThisChild.find(".DebitRadioButton");
+        DebitRadioButton.name = "CreditOrDebit" + count;
+
+        var EntryType = value["EntryType"];
+        ThisChild.find(".SubAccountText").text(value["SubLedgerAccount"]);
+        ThisChild.find(".AccountTypeText").text(value["AccountType"]);
+        ThisChild.find(".EntryTypeText").text(value["EntryType"]);
+//        if (EntryType === "Credit") 
+//        {
+//            alert(CreditRadioButton.name);
+//            CreditRadioButton.checked = true;
+//        }
+//        else if (EntryType === "Debit") 
+//        {
+//            alert(DebitRadioButton.name);
+//            DebitRadioButton.checked = true;
+//        }
+
+        count++;
+        ThisChild.appendTo(Parent).show();
+    });
+    ChildClone.hide();
+}
+
+function DisplayAllTransactionTypes(data, parent) {
+    var txnparent = parent.find($("#transactionTypeSelect"));
+    var partySearch = $("#partySearchText");
+    txnparent.empty();
+    if (data === "none") {
+        parent.text("No codes");
+    } else {
+        txnparent.append($('<option/>').val(0).text("Select transaction type"));
+        $.each(data, function (id, txn) {
+            var transactionCode = txn["TransactionCode"];
+            TransactionCodes[id] = transactionCode;
+            var transactionType = txn["NameOfTransaction"] + " - " + " (" + transactionCode + ") " + " : " + txn["Description"];
+            $("<option />", {
+                text: capitaliseFirstLetter(transactionType),
+                value: id
+            }).appendTo(txnparent);
+        });
+
+    }
+
+    txnparent.change(function () {
+        var transactiontypeId = txnparent.val();
+        $("#partySearchInput").addClass("hide");
+        $("#selectedParty-list").find(".newPartyclone").remove();
+        $("#selectedPartiesResult").addClass("hide").hide();
+        GetData("BookKeeping", "GetPartiesInvolvedInTransaction", "LoadPartiesInvolvedInTransaction", transactiontypeId);
+        GetData("BookKeeping", "GetParamValuesInvolvedInTransaction", "LoadParamsInvolvedInTransaction", transactiontypeId);
+        GetData("BookKeeping", "GetAccountsInvolvedInTransaction", "LoadAccountsInvolvedInTransaction", transactiontypeId);
+    });
+
+    partySearch.keydown(function () {
+        var data = $("#partySearchText").val();
+        if (data.length < 4) {
+            parent.find($("#partySearchResult")).addClass("hide").hide();
+        }
+    });
+    partySearch.keypress(function () {
+        searchPartyDetails();
+    });
+
+    function searchPartyDetails() {
+        var data = $("#partySearchText").val();
+        if (data.length >= 4) {
+            $("#partySearchResult").removeClass("hide").show();
+            GetData("User", "SearchMembers", "LoadSearchResultPartyDetails", data);
+        } else {
+            parent.find($("#partySearchResult")).addClass("hide").hide();
+        }
+    }
+}
+
+function DisplayPartiesInvolvedInTransaction(data) {
+    var parent = $("#transactionParties");
+    var buttonSpace = parent.find($("#transactionPartiesBtn"));
+    buttonSpace.empty();
+    parent.removeClass("hide");
+    if (data === "none") {
+        buttonSpace.append("No result");
+    } else {
+
+        $.each(data, function (id, party) {
+            if (party === "MOE") {
+                $("<button />", {text: party, class: "btn btn-outline-primary btn-sm disabled disable margin", disabled: true}).appendTo(buttonSpace);
+            } else {
+                $("<button />", {text: party, class: "btn btn-primary btn-sm margin partySelectionBtn"}).appendTo(buttonSpace);
+                transactionParties[party] = "";
+            }
+        });
+    }
+
+    var partyBtn = parent.find($(".partySelectionBtn"));
+    partyBtn.click(function () {
+        var partyTitle = $(this).text();
+        $("#partySearchInput").removeClass("hide").show();
+        $(".partyTitle").text(partyTitle);
+    });
+}
+
+function DisplaySearchPartyDetails(data, parent) {
+    if (data === "none") {
+        parent.text("No Members match your search");
+    } else {
+        $.each(data, function (id, details) {
+            parent.find(".newclone").remove();
+            var childclone = parent.find(".partyClone");
+            var newchild = childclone.clone();
+            newchild.removeClass("partyClone");
+            newchild.addClass("newclone");
+            var image_url = extension + "global_assets/app/img/ProfilePicture/user-" + details["userID"] + ".png";
+            if (imageExists(image_url) === false) {
+                image_url = extension + "global_assets/app/img/ProfilePicture/user-0.png";
+            }
+            newchild.find(".user-list-Image").attr("src", image_url);
+            newchild.find(".user-list-name").text(details["user_name"]);
+            newchild.find(".user-list-phone").text(details["phone_number"]);
+            newchild.find(".user-list-email").text(details["email"]);
+            newchild.find(".user-list-id").text(id);
+            newchild.appendTo(parent).show();
+            childclone.hide();
+        });
+    }
+
+    parent.find(".searchedParty").click(function () {
+        var partyId = parent.find(".user-list-id").text().charAt(0);
+        var partyName = parent.find(".user-list-name").text();
+        var partyPhone = parent.find(".user-list-phone").text();
+        var partyEmail = parent.find(".user-list-email").text();
+        var partyTitle = $("#partyTitle").text();
+        transactionParties[partyTitle] = partyName;
+        transactionPartiesIds[partyTitle] = partyId;
+        var partiesCount = 0;
+        var i;
+        for (i in transactionParties) {
+            if (transactionParties.hasOwnProperty(i)) {
+                partiesCount++;
+            }
+        }
+        transactionPartyCounts++;
+        if (transactionPartyCounts < 2) {
+            $("#selectedPartyCount").text("Party");
+        } else {
+            $("#selectedPartyCount").text("Parties");
+        }
+        $("#partySearchResult").hide();
+        $("#partySearchInput").hide();
+        var selectedParty = {"id": partyId, "name": partyName, "phone": partyPhone, "email": partyEmail, "title": partyTitle};
+        var selectedPartiesParent = $("#selectedParty-list");
+        displaySelectedPartyDetails(selectedParty, selectedPartiesParent);
+        $("#selectedPartiesResult").removeClass("hide").show();
+        if (partiesCount === transactionPartyCounts) {
+            $("#transactionStep2forward").removeClass("hideall").show();
+            $('alert').alert();
+            window.setTimeout(function () {
+                $(".partyAlert").fadeTo(500, 0).slideUp(500, function () {
+                    $(this).remove();
+                });
+            }, 3000);
+        } else {
+
+        }
+    });
+}
+
+function displaySelectedPartyDetails(data, parent) {
+    if (data === "none") {
+        parent.text("details of selected party not sent");
+    } else {
+        var selectedClone = parent.find(".selectedParty");
+        var newchild = selectedClone.clone();
+        newchild.removeClass("selectedParty");
+        newchild.addClass("newPartyclone");
+        var image_url = extension + "global_assets/app/img/ProfilePicture/user-" + data["id"] + ".png";
+        if (imageExists(image_url) === false) {
+            image_url = extension + "global_assets/app/img/ProfilePicture/user-0.png";
+        }
+        newchild.find(".user-list-Image").attr("src", image_url);
+        newchild.find(".user-list-name").text(data["name"]);
+        newchild.find(".user-list-phone").text(data["phone"]);
+        newchild.find(".user-list-email").text(data["email"]);
+        newchild.find(".user-list-id").text(data["id"]);
+        newchild.find(".selectedPartyTitle").text(data["title"]);
+        newchild.appendTo(parent).show();
+        selectedClone.hide();
+    }
+}
+
+function DisplayParamsInvolvedInTransaction(data, parent) {
+    parent.find(".newClone").remove();
+    if (data === "none") {
+        parent.empty();
+        parent.text("no parameters given for this transaction");
+    } else {
+        $.each(data, function (id, parameter) {
+            var childclone = parent.find(".paramClone");
+            var newchild = childclone.clone();
+            newchild.removeClass("paramClone");
+            newchild.addClass("newClone");
+            var value = parameter["value"];
+            newchild.find(".paramName").text(parameter["name"]);
+            newchild.find(".paramId").val(id);
+            if (value !== "set value") {
+                newchild.find(".paramValue").val(value);
+                transactionParams[id] = value;
+                newchild.find(".paramValueSet").remove();
+                newchild.find(".paramValue").prop("disabled", true);
+            } else {
+                transactionParams[id] = "";
+                editableTransactionParams[id] = "";
+            }
+            newchild.appendTo(parent).show();
+            childclone.hide();
+        });
+
+        var paramSet = $(".paramValueSet");
+        paramSet.click(function () {
+            var paramValue = $(this).closest(".txnParam").find(".paramValue").val();
+            var paramId = $(this).closest(".txnParam").find(".paramId").val();
+            if (paramValue.length > 0) {
+                transactionParams[paramId] = paramValue;
+                editableParamsCounts++;
+            }
+
+            var i;
+            for (i in editableTransactionParams) {
+                if (editableTransactionParams.hasOwnProperty(i)) {
+                    ParamsCount++;
+                }
+            }
+            if (editableParamsCounts !== 0 && ParamsCount !== 0) {
+                if (editableParamsCounts === ParamsCount) {
+                    $("#transactionCommentForm").removeClass("hide").show();
+                    $("#transactionStep3forward").removeClass("hideall").show();
+                }
+            }
+        });
+    }
+
+
+}
+
+function PopulateAccountsInvolvedInTransaction(data) {
+    if (data === "none") {
+        alert("no accounts involved in this transaction");
+    } else {
+        $.each(data, function (id, account) {
+            transactionAccounts[id] = account;
+        });
+    }
+}
+
+function DisplayAccountingEntriesInvolvedInTransaction(data, parent) {
+    if (data === "none") {
+        parent.text("No accounts involved in this transacton");
+    } else {
+        parent.find(".newClone").remove();
+        $.each(data, function (id, details) {
+            var comment = $("#TransactionComment").val();
+            var transactionTypeId = $("#transactionTypeSelect").val();
+            var transactionCode = TransactionCodes[transactionTypeId];
+            var childclone = parent.find(".accountClone");
+            var newchild = childclone.clone();
+            newchild.removeClass("accountClone");
+            newchild.addClass("newClone");
+            newchild.find(".txnDescription").text(details["Description"]);
+            var creditOwner = details["CreditAccountOwner"];
+            var creditOwnerId;
+            if (creditOwner !== "MOE") {
+                creditOwnerId = transactionPartiesIds[creditOwner];
+                var creditOwner = transactionParties[creditOwner];
+            }else{
+                creditOwnerId = "1";
+            }
+            newchild.find(".txnCreditOwner").text(creditOwner);
+            var creditAccId = details["CreditAccountID"];
+            var creditAccType = transactionAccounts[creditAccId];
+            newchild.find(".txnCreditAccType").text(creditAccType);
+            var debitOwner = details["DebitAccountOwner"];
+            var debitOwnerId = transactionPartiesIds[debitOwner];
+            if (debitOwner !== "MOE") {
+                var debitOwner = transactionParties[debitOwner];
+            }
+            newchild.find(".txnDebitOwner").text(debitOwner);
+            var debitAccId = details["DebitAccountID"];
+            var debitAccType = transactionAccounts[debitAccId];
+            newchild.find(".txnDebitAccType").text(debitAccType);
+            var creditAmountId = details["CreditAmount"];
+            var creditAmount = transactionParams[creditAmountId];
+            var debitAmountId = details["DebitAmount"];
+            var debitAmount = transactionParams[debitAmountId];
+            newchild.find(".creditAmount").text(creditAmount);
+            newchild.find(".debitAmount").text(debitAmount);
+            var AccountingEntry = {"TransactionCode": transactionCode, "CreditAmount": creditAmount, "DebitAmount": debitAmount, 
+                CreditAccountTypeID: creditAccId, DebitAccountTypeID: debitAccId, "TransactionTypeID": transactionTypeId, "Comment": comment, 
+                "credit_AccountOwner": creditOwnerId, "debit_AccountOwner": debitOwnerId};
+            var accountingEntry = JSON.stringify(AccountingEntry);
+            finalAccountingEnteries.push(accountingEntry);
+            newchild.appendTo(parent).show();
+            childclone.hide();
+        });
+    }
+}
+
+///END BOOKKEEPING FUNCTIONS
 function linkToFunction(action, params) {
     switch (action) {
         case "LoadUserAddressTypes":
@@ -12359,7 +13239,7 @@ function linkToFunction(action, params) {
         }
         case "LoadSearchUserDetails":
         {
-            DisplaySearchUserDetails(params);
+            DisplaySearchUserDetails(params, $(".verifyUser-list"));
             break;
         }
         case "LoadUsersList":
@@ -12665,9 +13545,14 @@ function linkToFunction(action, params) {
             DisplayProductCategoryVariants(params, $("#prodVariants"));
             break;
         }
-        case "LoadCategoryVariantValues":
+        case "LoadCategoryVariantValue1":
         {
-            DisplayProductCategoryVariantValues(params, $(".variantValueSelect"));
+            DisplayProductCategoryVariantValues(params, $("#variantValueSelect1"));
+            break;
+        }
+        case "LoadCategoryVariantValue2":
+        {
+            DisplayProductCategoryVariantValues(params, $("#variantValue2Select"));
             break;
         }
         case "LoadUnreadMessages":
@@ -13044,6 +13929,145 @@ function linkToFunction(action, params) {
             DisplayLoadEditParameters(params);
             break;
         }
+        case "LoadAllTransactionTypes":
+        {
+            DisplayAllTransactionTypes(params, $("#transactionSelection"));
+            break;
+        }
+        case "LoadPartiesInvolvedInTransaction":
+        {
+            DisplayPartiesInvolvedInTransaction(params);
+            break;
+        }
+        case "LoadParamsInvolvedInTransaction":
+        {
+            DisplayParamsInvolvedInTransaction(params, $("#transParameters"));
+            break;
+        }
+        case "LoadAccountsInvolvedInTransaction":
+        {
+            PopulateAccountsInvolvedInTransaction(params);
+            break;
+        }
+        case "LoadAccountingEntriesInvolvedInTransaction":
+        {
+            DisplayAccountingEntriesInvolvedInTransaction(params, $("#transAccountEnteries"));
+            break;
+        }
+        case "LoadSearchResultPartyDetails":
+        {
+            DisplaySearchPartyDetails(params, $("#searchedParty-list"));
+            break;
+        }
+        case "LoadCodeTransactions":
+        {
+            swal({
+                title: 'Transaction Executed',
+                text: "Transaction has been successfully Executed!",
+                type: 'success',
+                showCancelButton: false,
+                confirmButtonText: 'Ok!',
+                confirmButtonClass: 'btn btn-success',
+                onClose: function () {
+                    window.location.reload();
+                }
+            });
+            break;
+        }
+
+//from Tolu for transactions code
+//BOOK KEEPING FUNCTIONS
+        case "PopulateParametersSelect":
+        {
+            $(".ParametersSelect").html("");
+            $(".FormulaParametersSelect").html("");
+            $.each(params, function (index, value)
+            {
+                var optionsAsString = "";
+                optionsAsString += "<option value='" + value["id"] + "'>" + value["name"] + "</option>";
+                $(".ParametersSelect").append(optionsAsString); //$( 'select[class="ParametersSelect"]' ).append(optionsAsString); doesn't work when the select has more than one class
+                $('select[class="FormulaParametersSelect"]').append(optionsAsString);
+            });
+            break;
+        }
+        case "SaveNewTransactionProcessResponse":
+        {
+            alert("New transaction ID is " + params);
+            if (params === "0")
+                return alert("failed");
+            var NewTransactionID = params;
+            //Code Group One. Replace this with the code block of the same name from Evernote 
+            var Parent = $(".AccountingEntriesDisplayTableDataParent");
+            var ChildClone = $(".AccountingEntriesDisplayTableDataClone");
+            $.each($(".ProcessWIP"), function (index, TextBox)
+            {
+                if (index < NumberOfAccountingEntriesInCurrentProcess) //To avoid picking values from the hidden DOM elements that were cloned to create this UI
+                {
+                    var ThisChild = ChildClone.clone();
+                    ThisChild.removeClass("AccountingEntriesDisplayTableDataClone");
+                    ThisChild.removeClass("hide");
+                    ThisChild.addClass("clearclone");
+                    var AccountingEntriesIndexNumber = $(this).find(".AccountingEntriesIndexNumber").text();
+                    var AccountingEntryDescription = $(this).find(".AccountingEntryDescription").val();
+                    var DebitAmount = $(this).find(".DebitAmount").val();
+                    var DebitAccount = $(this).find(".DebitAccount").val();
+                    var DebitSubAccount = $(this).find(".DebitSubAccount").val();
+                    var DebitAccountOwner = $(this).find(".DebitAccountOwner").val();
+                    var CreditAmount = $(this).find(".CreditAmount").val();
+                    var CreditAccount = $(this).find(".CreditAccount").val();
+                    var CreditSubAccount = $(this).find(".CreditSubAccount").val();
+                    var CreditAccountOwner = $(this).find(".CreditAccountOwner").val();
+                    var data = [AccountingEntriesIndexNumber, AccountingEntryDescription, DebitAmount, DebitSubAccount,
+                        DebitAccountOwner, CreditAmount, CreditSubAccount, CreditAccountOwner, NewTransactionID];
+                    GetData("BookKeeping", "NewAccountingEntry", "SaveNewAccountingEntryResponse", data);
+                    ThisChild.find(".AccountingEntriesIndexNumber").text(AccountingEntriesIndexNumber);
+                    ThisChild.find(".AccountingEntryDescription").text(AccountingEntryDescription);
+                    ThisChild.find(".DebitAmount").text(DebitAmount);
+                    ThisChild.find(".DebitAccount").text(DebitAccount);
+                    ThisChild.find(".DebitSubAccount").text(DebitSubAccount);
+                    ThisChild.find(".DebitAccountOwner").text(DebitAccountOwner);
+                    ThisChild.find(".CreditAmount").text(CreditAmount);
+                    ThisChild.find(".CreditAccount").text(CreditAccount);
+                    ThisChild.find(".CreditSubAccount").text(CreditSubAccount);
+                    ThisChild.find(".CreditAccountOwner").text(CreditAccountOwner);
+                    ThisChild.appendTo(Parent).show();
+                }
+            });
+            //Code group two. Replace this with the code block of the same name from Evernote 
+            DOM_Element.remove();
+            break;
+        }
+        case "SaveNewAccountingEntryResponse":
+        {
+            alert("New accounting entry ID is " + params);
+            break;
+        }
+        case "DisplayAllTransactionTypes":
+        {
+            DisplayAllTransactionTypes(params);
+            break;
+        }
+        case "LinkToDisplayJournalEntryDetailsForTransactionType":
+        {
+            DisplayJournalEntryDetailsForTransactionType(params);
+            break;
+        }
+        case "LinkToDisplayTPJournalEntryDetailsForTransactionType":
+        {
+            DisplayThirdPartyJournalEntryDetailsForTransactionType(params);
+            break;
+        }
+        case "PopulateLedgerDropDowns":
+        {
+            PopulateLedgerDropDownsMethod(params);
+            break;
+        }
+        case "PopulateSubLedgerDropDowns":
+        {
+            PopulateSubLedgerDropDownsMethod(params);
+            break;
+        }
+//END OF BOOK KEEPING FUNCTIONS
     }
 }
 

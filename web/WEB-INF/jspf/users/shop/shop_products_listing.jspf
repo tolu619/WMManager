@@ -50,7 +50,10 @@
                         <div class="card-body">
                             <h4 class="card-title blacktext">Single listing</h4>
                             <p class="card-text" style="height: 60px">List a single product on the Wealthmarket</p>
-                            <span class="btn btn-warning btn-sm" id="single-btn"><i class="icon-add mr-2"></i> List product now</span>
+                            <a href="${pageContext.request.contextPath}/ControllerServlet?action=Link&type=Single-Product-Listing" class="breadcrumb-elements-item">
+                                <span class="btn btn-warning btn-sm" id="single-btn"><i class="icon-add mr-2"></i> List product now</span>
+                            </a>
+                            
                         </div>
                     </div>
 
@@ -64,21 +67,21 @@
                 </div>
 
             </div>   
-            </div>
-        
-            <div class="second-content padding">
-                <div id="single-listing" class="hide ">
-                    <h6>List a product on the WealthMarket</h6>
-                    <%@include file="shop_list_product.jspf" %>
-                </div>
-                <div id="batch-listing" class="hide">
-                    <h6>List bulk/batch products on the WealthMarket</h6>
-                    <%@include file="shop_batch_product_listing.jspf" %>
-                </div>
-            </div>   
         </div>
 
-        <!-- Footer -->
-        <%@include file="../../general/footer1.jspf" %>
-        <!-- /footer -->
+        <div class="second-content padding">
+            <div id="single-listing" class="hide ">
+                
+                <%@include file="shop_list_product.jspf" %>
+            </div>
+            <div id="batch-listing" class="hide">
+                <h6>List bulk/batch products on the WealthMarket</h6>
+                <%@include file="shop_batch_product_listing.jspf" %>
+            </div>
+        </div>   
     </div>
+
+    <!-- Footer -->
+    <%@include file="../../general/footer1.jspf" %>
+    <!-- /footer -->
+</div>

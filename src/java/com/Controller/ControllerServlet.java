@@ -89,11 +89,15 @@ public class ControllerServlet extends HttpServlet {
                 }
                 case "Address": {
                     getServletContext().getRequestDispatcher("/AddressServlet").forward(request, response);
+                case "BookKeeping": 
+                {
+                    getServletContext().getRequestDispatcher("/BookKeepingServlet").forward(request, response);
                     break;
                 }
                 default: {
                     response.sendRedirect(request.getHeader("referer"));
                 }
+                
             }
         }
     }

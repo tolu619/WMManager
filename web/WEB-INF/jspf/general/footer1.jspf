@@ -142,6 +142,12 @@
     <div  class="modal fade product-detail-modal">
         <%@include file="../users/profile/profile_product_details.jspf" %>
     </div>
+    <div  class="modal fade create-transactionType-modal">
+        <%@include file="../users/accounts/bookkeeping_new_transaction_type.jspf" %>
+    </div>
+    <div  class="modal fade create-codeTransaction-modal">
+        <%@include file="../users/accounts/bookkeeping_create_code_transaction.jspf" %>
+    </div>
     <div  class="modal fade change-transaction-limit-modal">
         <%@include file="../users/accounts/accounts_change_transaction_limit.jspf" %>
     </div>

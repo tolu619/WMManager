@@ -104,6 +104,44 @@ var CustomScript = function () {
                 listProduct();
             }
         });
+        
+        $('.CodeTransactionForm').steps({
+            headerTag: 'h6',
+            bodyTag: 'fieldset',
+            titleTemplate: '<span class="number">#index#</span> #title#',
+            labels: {
+                previous: '<i class="icon-arrow-left13 mr-2" /> Previous',
+                next: 'Next <i class="icon-arrow-right14 ml-2" />',
+                finish: 'Execute Transaction <i class="icon-checkmark-circle ml-2" />'
+            },
+            transitionEffect: 'fade',
+            autoFocus: true,
+            onStepChanging: function (event, currentIndex, newIndex) {
+
+                // Allways allow previous action even if the current form is not valid!
+                if (currentIndex > newIndex) {
+                    return true;
+                }
+
+                // Needed in some cases if the user went back (clean up)
+                if (currentIndex < newIndex) {
+                    // To remove error styles
+                    form.find('.body:eq(' + newIndex + ') label.error').remove();
+                    form.find('.body:eq(' + newIndex + ') .error').removeClass('error');
+                }
+
+                form.validate().settings.ignore = ':disabled,:hidden';
+                return form.valid();
+            },
+//            onFinishing: function (event, currentIndex) {
+//                form.validate().settings.ignore = ':disabled';
+//                alert(form.valid());
+//                return form.valid();
+//            },
+            onFinished: function (event, currentIndex) {
+                event.preventDefault();
+            }
+        });
 
 
         // Initialize validation
