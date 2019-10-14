@@ -33,7 +33,7 @@ public class ControllerServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String actionPerformed = request.getParameter("action").trim();           
+            String actionPerformed = request.getParameter("action").trim();
             switch (actionPerformed) {
                 case "Accounts": {
                     getServletContext().getRequestDispatcher("/AccountServlet").forward(request, response);
@@ -87,6 +87,8 @@ public class ControllerServlet extends HttpServlet {
                     getServletContext().getRequestDispatcher("/PermissionsServlet").forward(request, response);
                     break;
                 }
+                case "Address": {
+                    getServletContext().getRequestDispatcher("/AddressServlet").forward(request, response);
                 case "BookKeeping": 
                 {
                     getServletContext().getRequestDispatcher("/BookKeepingServlet").forward(request, response);

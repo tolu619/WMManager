@@ -6,12 +6,7 @@
 package com.Models;
 
 import wmengine.Tables.Tables.ServicesType;
-import wmengine.Tables.Tables.ServiceCategories;
-import wmengine.Tables.Tables.ServicePlans;
-import wmengine.Tables.Tables.ServiceSubCategories;
 import wmengine.Tables.Tables.ServicesJoin;
-import wmengine.Tables.Tables.ServicePlans;
-import wmengine.Tables.Tables.ServicesOrdersTable;
 import wmengine.Tables.Tables.ServiceListings;
 import java.sql.Date;
 import java.sql.Time;
@@ -41,7 +36,6 @@ public class Service
     public String ServiceProviderName;
     public String ServiceProviderEmail;
     public ArrayList<Integer> AddressIds;
-    public ArrayList<Address> Addresses; //Not yet done
     public int WaitTime;
     public String WaitTimeLabel;
     public String AvailabilityStartTime;
