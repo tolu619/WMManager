@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import wmengine.Managers.DBManager;
 import wmengine.Tables.Tables;
+import java.util.regex.*;
 
 /**
  *
@@ -234,20 +235,19 @@ public class BookKeepingServlet extends HttpServlet {
                 {
                     String[] JSONArray = request.getParameterValues("data[]");
                     HashMap<Integer, HashMap<String, Object>> TransactionMap = new HashMap<>();
-                    for (int i = 0; i < JSONArray.length; i++) {
+                    for (int i = 0; i < JSONArray.length; i++) 
+                    {
                         String[] AccountingEntriesArray = JSONArray[i].split(",");
                         HashMap<String, Object> TableDataHashMap = new HashMap<>();
-                        String TransactionCode = AccountingEntriesArray[0].split(":")[1];
-                        String Comment = AccountingEntriesArray[7].split(":")[1];
-                        TableDataHashMap.put(Tables.Transaction.TransactionCode, AccountingEntriesArray[0].split(":")[1]);
-                        TableDataHashMap.put(Tables.Transaction.CreditAmount, AccountingEntriesArray[1].split(":")[1]);
-                        TableDataHashMap.put(Tables.Transaction.DebitAmount, AccountingEntriesArray[2].split(":")[1]);
-                        TableDataHashMap.put("CreditAccountTypeID", AccountingEntriesArray[3].split(":")[1]);
-                        TableDataHashMap.put("DebitAccountTypeID", AccountingEntriesArray[4].split(":")[1]);
-                        TableDataHashMap.put(Tables.Transaction.TransactionID, AccountingEntriesArray[5].split(":")[1]);
-                        TableDataHashMap.put(Tables.Transaction.Comment, AccountingEntriesArray[6].split(":")[1]);
-                        TableDataHashMap.put(Tables.AccountingEntryDefinitions.credit_AccountOwner, AccountingEntriesArray[7].split(":")[1]);
-                        TableDataHashMap.put(Tables.AccountingEntryDefinitions.debit_AccountOwner, AccountingEntriesArray[8].split(":")[1]);
+                        TableDataHashMap.put(Tables.Transaction.TransactionCode, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[0]).split(":")[1]);
+                        TableDataHashMap.put(Tables.Transaction.CreditAmount, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[1]).split(":")[1]);
+                        TableDataHashMap.put(Tables.Transaction.DebitAmount, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[2]).split(":")[1]);
+                        TableDataHashMap.put(BookKeeper.CreditAccountTypeID, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[3]).split(":")[1]);
+                        TableDataHashMap.put(BookKeeper.DebitAccountTypeID, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[4]).split(":")[1]);
+                        TableDataHashMap.put(Tables.Transaction.TransactionID, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[5]).split(":")[1]);
+                        TableDataHashMap.put(Tables.Transaction.Comment, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[6]).split(":")[1]);
+                        TableDataHashMap.put(Tables.AccountingEntryDefinitions.credit_AccountOwner, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[7]).split(":")[1]);
+                        TableDataHashMap.put(Tables.AccountingEntryDefinitions.debit_AccountOwner, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[8]).split(":")[1]);
                         TransactionMap.put(i, TableDataHashMap);
                     }
 
