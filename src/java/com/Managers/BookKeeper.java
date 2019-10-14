@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import wmengine.Managers.DBManager;
 import wmengine.Managers.GeneralAccountManager;
 import wmengine.Managers.UtilityManager;
@@ -22,7 +24,12 @@ import wmengine.Tables.Tables;
  *
  * @author DELL
  */
-public class BookKeeper {
+public class BookKeeper 
+{
+    public static String CreditAccountTypeID = "CreditAccountTypeID";
+    public static String DebitAccountTypeID = "DebitAccountTypeID";
+    public static String CreditAccountOwnerIDString = "CreditAccountOwnerID";
+    public static String DebitAccountOwnerIDString = "DebitAccountOwnerID";
 
     public static HashMap<Integer, HashMap<String, String>> GetAllTransactionTypes() throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
         return DBManager.GetAllCollumnsLimitNumberOfRows(0, 50, Tables.TransactionType.Table, "");
@@ -30,6 +37,19 @@ public class BookKeeper {
 
     public static HashMap<Integer, HashMap<String, String>> GetAccountingEntriesInvolvedInTransaction(int TransactionID) throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
         return DBManager.GetAllCollumnsLimitNumberOfRows(0, 50, Tables.AccountingEntryDefinitions.Table, "where " + Tables.AccountingEntryDefinitions.transaction_ID + "=" + TransactionID);
+    }
+    
+    public static String RemoveSpecialCharactersExceptColon(String Original)
+    {
+        Pattern MyRegex = Pattern.compile("[a-zA-Z0-9s:]");
+        Matcher match= MyRegex.matcher(Original);
+        String Result = "";
+        while (match.find())
+        {
+            String NextCharacter = match.group();
+            Result += NextCharacter;
+        }
+        return Result;
     }
 
     public static ArrayList<JournalEntry> GetJournalEntriesForMarketOperatorEntity(String CreditAccountIDs, String DebitAccountIDs) throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
@@ -246,8 +266,8 @@ public class BookKeeper {
         while (iterator.hasNext()) {
             int nextKey = iterator.next();
             HashMap<String, Object> TransactionTableData = TransactionMap.get(nextKey);
-            String DebitAccountOwnerID = TransactionTableData.get("debit_AccountOwner").toString();
-            String CreditAccountOwnerID = TransactionTableData.get("credit_AccountOwner").toString();
+            String DebitAccountOwnerID = TransactionTableData.get(Tables.AccountingEntryDefinitions.debit_AccountOwner).toString();
+            String CreditAccountOwnerID = TransactionTableData.get(Tables.AccountingEntryDefinitions.credit_AccountOwner).toString();
             String TransactionID = GenerateTransactionID(TransactionTableData.get(Tables.Transaction.TransactionCode).toString(), DebitAccountOwnerID);
             TransactionTableData.put(Tables.Transaction.TransactionID, TransactionID);
             //Get Credit and Debit account numbers
@@ -255,11 +275,17 @@ public class BookKeeper {
             String DebitAccountNumber = GeneralAccountManager.GetUserAccountNumber(Integer.parseInt(DebitAccountOwnerID), Integer.parseInt(TransactionTableData.get("DebitAccountTypeID").toString()));
             TransactionTableData.put(Tables.Transaction.CreditAccountNumber, CreditAccountNumber);
             TransactionTableData.put(Tables.Transaction.DebitAccountNumber, DebitAccountNumber);
+            
+            HashMap<String, Object> TransactionHistoryTableData = new HashMap<>();
+            TransactionHistoryTableData.putAll(TransactionTableData);  //Copy this out before removing some items from it
+            TransactionTableData.remove(Tables.AccountingEntryDefinitions.credit_AccountOwner);
+            TransactionTableData.remove(Tables.AccountingEntryDefinitions.debit_AccountOwner);
+            TransactionTableData.remove(CreditAccountTypeID);
+            TransactionTableData.remove(DebitAccountTypeID);
             int TransactionRecordID = DBManager.insertTableDataReturnID(Tables.Transaction.Table, TransactionTableData, "");
             //Log Transaction History
-            HashMap<String, Object> TransactionHistoryTableData = TransactionTableData;
-            TransactionHistoryTableData.put("CreditAccountOwnerID", CreditAccountOwnerID);
-            TransactionHistoryTableData.put("DebitAccountOwnerID", DebitAccountOwnerID);
+            TransactionHistoryTableData.put(BookKeeper.CreditAccountOwnerIDString, CreditAccountOwnerID);
+            TransactionHistoryTableData.put(BookKeeper.DebitAccountOwnerIDString, DebitAccountOwnerID);
             String HistoryResult = LogTransactionHistory(TransactionHistoryTableData);
             //Get Old balance and new balance
         }
@@ -360,21 +386,26 @@ public class BookKeeper {
         return PartiesInvolvedInTransaction;
     }
 
-    public static String LogTransactionHistory(HashMap<String, Object> TransactionHistoryTableData) throws SQLException, ClassNotFoundException, UnsupportedEncodingException, ParseException {
+    public static String LogTransactionHistory(HashMap<String, Object> TransactionData) throws SQLException, ClassNotFoundException, UnsupportedEncodingException, ParseException {
         String result = "failed";
+        HashMap<String, Object> TransactionHistoryTableData = new HashMap<>();
         String dateNow = "" + UtilityManager.CurrentDate();
         String timeNow = "" + UtilityManager.CurrentTime();
         dateNow = dateNow.replace("-", "");
         timeNow = timeNow.replace(":", "");
         TransactionHistoryTableData.put(Tables.TransactionHistory.Date, dateNow);
         TransactionHistoryTableData.put(Tables.TransactionHistory.Time, timeNow);
-        TransactionHistoryTableData.put(Tables.TransactionHistory.Status, "Completed");
-        String DebitName = DBManager.GetString(Tables.Member.FirstName, Tables.Member.Table, "where " + Tables.Member.UserID + "=" + TransactionHistoryTableData.get("DebitAccountOwnerID"));
-        DebitName += " " + DBManager.GetString(Tables.Member.LastName, Tables.Member.Table, "where " + Tables.Member.UserID + "=" + TransactionHistoryTableData.get("DebitAccountOwnerID"));
-        String CreditName = DBManager.GetString(Tables.Member.FirstName, Tables.Member.Table, "where " + Tables.Member.UserID + "=" + TransactionHistoryTableData.get("CreditAccountOwnerID"));
-        DebitName += " " + DBManager.GetString(Tables.Member.LastName, Tables.Member.Table, "where " + Tables.Member.UserID + "=" + TransactionHistoryTableData.get("CreditAccountOwnerID"));
-        String Description = "Debit " + DebitName + " " + TransactionHistoryTableData.get(Tables.Transaction.DebitAccountNumber) + TransactionHistoryTableData.get(Tables.Transaction.DebitAmount)
-                + " Credit " + CreditName + " " + TransactionHistoryTableData.get(Tables.Transaction.CreditAccountNumber) + TransactionHistoryTableData.get(Tables.Transaction.CreditAmount);
+        TransactionHistoryTableData.put(Tables.TransactionHistory.TransactionId, TransactionData.get(Tables.TransactionHistory.TransactionId));
+        TransactionHistoryTableData.put(Tables.TransactionHistory.TransactionCode, TransactionData.get(Tables.TransactionHistory.TransactionCode));
+//        TransactionHistoryTableData.put(Tables.TransactionHistory.Status, "Completed");
+        String DebitName = DBManager.GetString(Tables.Member.FirstName, Tables.Member.Table, "where " + Tables.Member.UserID + "=" + TransactionData.get(BookKeeper.DebitAccountOwnerIDString));
+        DebitName += " " + DBManager.GetString(Tables.Member.LastName, Tables.Member.Table, "where " + Tables.Member.UserID + "=" + TransactionData.get(BookKeeper.DebitAccountOwnerIDString));
+        String CreditName = DBManager.GetString(Tables.Member.FirstName, Tables.Member.Table, "where " + Tables.Member.UserID + "=" + TransactionData.get(BookKeeper.CreditAccountOwnerIDString));
+        CreditName += " " + DBManager.GetString(Tables.Member.LastName, Tables.Member.Table, "where " + Tables.Member.UserID + "=" + TransactionData.get(BookKeeper.CreditAccountOwnerIDString));
+        String Description = "Debit " + DebitName + " " + TransactionData.get(Tables.Transaction.DebitAmount)
+                + " Credit " + CreditName + " " + TransactionData.get(Tables.Transaction.CreditAmount);
+        TransactionHistoryTableData.put(Tables.TransactionHistory.Description, Description);
+        
         try {
             result = DBManager.insertTableData(Tables.TransactionHistory.Table, TransactionHistoryTableData, "");
         } catch (SQLException e) {

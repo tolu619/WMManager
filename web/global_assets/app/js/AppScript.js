@@ -12980,8 +12980,9 @@ function DisplayAccountingEntriesInvolvedInTransaction(data, parent) {
             var debitAmount = transactionParams[debitAmountId];
             newchild.find(".creditAmount").text(creditAmount);
             newchild.find(".debitAmount").text(debitAmount);
-            var AccountingEntry = {"TransactionCode": transactionCode, "CreditAmount": creditAmount, "DebitAmount": debitAmount,
-                "TransactionTypeID": transactionTypeId, "Comment": comment, "credit_AccountOwner": creditOwnerId, "debit_AccountOwner": debitOwnerId};
+            var AccountingEntry = {"TransactionCode": transactionCode, "CreditAmount": creditAmount, "DebitAmount": debitAmount, 
+                CreditAccountTypeID: creditAccId, DebitAccountTypeID: debitAccId, "TransactionTypeID": transactionTypeId, "Comment": comment, 
+                "credit_AccountOwner": creditOwnerId, "debit_AccountOwner": debitOwnerId};
             var accountingEntry = JSON.stringify(AccountingEntry);
             finalAccountingEnteries.push(accountingEntry);
             newchild.appendTo(parent).show();
