@@ -1695,17 +1695,17 @@ function btnEvents() {
         var visibility = 1;
         var issueDate = $("#monRuleIssueDateSelect").val();
         var ExpirationDate = $("#monRuleExpirationDateSelect").val();
-        if(ExpirationDate === "specific_date"){
+        if (ExpirationDate === "specific_date") {
             ExpirationDate = $("#MonExpDateRange").val();
         }
-        if(issueDate === "specific_date"){
+        if (issueDate === "specific_date") {
             issueDate = $("#MonIssueDateRange").val();
         }
-        if(!$('#monRuleVisibile').is(":checked")){
+        if (!$('#monRuleVisibile').is(":checked")) {
             visibility = 0;
         }
         var data = [schemeType, ruleName, ruleDesc, minMonVal, maxMonVal, percentToMonetise, ContractTenor, appFeeDetail, chargeDetail,
-        monRuleAccesibleGroups, monRuleDependentMonetisations, visibility, issueDate, ExpirationDate];
+            monRuleAccesibleGroups, monRuleDependentMonetisations, visibility, issueDate, ExpirationDate];
         GetData("Schemes", "CreateNewMonetisationRule", "LoadNewMonetisationRule", data);
         e.preventDefault();
     });
@@ -1725,7 +1725,7 @@ function btnEvents() {
     });
 
     $(".monRuleDependency").click(function () {
-         $(".monRuleDependencyDiv").removeClass("hide");
+        $(".monRuleDependencyDiv").removeClass("hide");
     });
     $(".CancelMonRuleDependency").click(function () {
         $(".monRuleDependencyDiv").addClass("hide");
@@ -1759,19 +1759,19 @@ function btnEvents() {
         $("#monRuleAccesibleGroups").val(accSave);
         $(".monRuleAccessibilityDiv").addClass("hide");
     });
-    $("#monRuleExpirationDateSelect").change(function(){
-       if($(this).val() === "specific_date"){
-           $(".issuedaterange").removeClass("hide");
-       }else{
-           $(".issuedaterange").addClass("hide");
-       }
+    $("#monRuleExpirationDateSelect").change(function () {
+        if ($(this).val() === "specific_date") {
+            $(".issuedaterange").removeClass("hide");
+        } else {
+            $(".issuedaterange").addClass("hide");
+        }
     });
-    $("#monRuleIssueDateSelect").on('change', function(){
-       if($(this).val() === "specific_date"){
-           $(".expdaterange").removeClass("hide");
-       }else{
-           $(".expdaterange").addClass("hide");
-       }
+    $("#monRuleIssueDateSelect").on('change', function () {
+        if ($(this).val() === "specific_date") {
+            $(".expdaterange").removeClass("hide");
+        } else {
+            $(".expdaterange").addClass("hide");
+        }
     });
     //Monetisation
     $("#ChangeEmail").click(function () {
@@ -1789,8 +1789,6 @@ function btnEvents() {
 }//end of btnEvents
 
 function profilePageFundtions() {
-    var str = "abc's test#s";
-    alert(str.replace(/[^a-zA-Z ]/g, ""));
     showLoader();
     GetData("User", "GetBanks", "LoadBanks");
     PopulateStates("");
@@ -1798,7 +1796,6 @@ function profilePageFundtions() {
     showLoader();
     GetData("User", "GetMemberDetails", "LoadActualMemberDetails", actualuserid);
     GetData("Permissions", "GetUserPemissions", "LoadUserPermissions", actualuserid);
-
     if (actualusertype === "Member" || actualusertype === "Admin") {
         $(".ForAll").show();
         $(".ForAll").removeClass("hide");
@@ -2875,23 +2872,23 @@ function monetisationPageFunctions() {
                 singleDatePicker: true,
                 showDropdowns: true,
                 minYear: 1901,
-                maxYear: parseInt(moment().format('YYYY'),10)
+                maxYear: parseInt(moment().format('YYYY'), 10)
             });
     $('input[name="mondaterange2"]').daterangepicker(
             {
                 singleDatePicker: true,
                 showDropdowns: true,
                 minYear: 1901,
-                maxYear: parseInt(moment().format('YYYY'),10)
+                maxYear: parseInt(moment().format('YYYY'), 10)
             });
-            
+
     $('input[name="setMonValuedate"]').daterangepicker(
-    {
-        singleDatePicker: true,
-        showDropdowns: true,
-        minYear: 1901,
-        maxYear: parseInt(moment().format('YYYY'),10)
-    });
+            {
+                singleDatePicker: true,
+                showDropdowns: true,
+                minYear: 1901,
+                maxYear: parseInt(moment().format('YYYY'), 10)
+            });
 }
 
 function CallSempleContract(data) {
@@ -10427,7 +10424,6 @@ function DisplayLoadNewServiceType(params) {
 
 //Monetisation
 function DisplayMonetisationRules(params) {
-    alert(params);
     if (params === "success") {
         swal({
             title: "Created!",
@@ -10466,7 +10462,7 @@ function DisplaySystemNewMonetisationRule(params) {
             var bg = "bg-secondary-400";
             var minVal = PriceFormat(parseInt(value["MinimumValue"]));
             var maxVal = PriceFormat(parseInt(value["MaximumValue"]));
-            var PercentageMonetisation = parseInt(value["PercentageMonetisation"])+"%";
+            var PercentageMonetisation = parseInt(value["PercentageMonetisation"]) + "%";
             var ContractTenor = value["ContractTenor"];
             var ChargeAmt = parseInt(value["ChargeAmt"]);
             var ApplicationFeeAmt = parseInt(value["ApplicationFeeAmt"]);
@@ -10612,7 +10608,7 @@ function DisplayMonetisationApplications(params) {
                     count = count1++;
                     monAppParent = $("#monApplicationParent-Pending");
                     AppStatus = "Pending";
-                    
+
                     break;
                 case "approved":
                     count = count2++;
@@ -10663,10 +10659,10 @@ function DisplayMonetisationApplications(params) {
             newChild.find(".monAppDateTime").text(val["date_applied"]);
             newChild.find(".monUserID").val(val["userid"]);
             newChild.find(".userUsedMonRuleName").text(val["monName"]);
-            if (val["date_approved"] != undefined){
+            if (val["date_approved"] != undefined) {
                 newChild.find(".MonIssueDate").text(val["date_approved"]);
             }
-            
+
             newChild.find(".userUsedMonRuleID").text(val["monRuleId"]);
             var maxVal = PriceFormat(parseInt(val["warrants_calculated"]));
             newChild.find(".monExWarrants").text(PriceFormat(parseInt(val["calculated_goods_value"])));
@@ -10774,7 +10770,7 @@ function DisplayMonetisationApplications(params) {
                     }
                 });
             });
-            EditParams.click(function(){
+            EditParams.click(function () {
                 $(".modal-view-monetisation-details").on("show.bs.modal", function () {
                     MonetisationEditParams(val);
                 }).modal("show");
@@ -10837,48 +10833,48 @@ function MonetisationGoodsDetails(details) {
     }
 
 }
-function MonetisationEditParams(detail){    
+function MonetisationEditParams(detail) {
     var ptMonetosed = $(".newMonPercentMonetised");
     var valDate = $(".MonValDate");
-    
+
     var goodsValue = detail["calculated_goods_value"];
     var MonTypeDetails = detail["MonetisationDetails"];
     var percent = MonTypeDetails["percentage_to_monetise"];
     var cashfee = MonTypeDetails["ApplicationFee"];
     var cashType = cashfee.split("~")[0];
     var cashamt = parseInt(cashfee.split("~")[1]);
-    
+
     var initamt = parseInt(detail["warrants_calculated"]);
     var temp = 0;
     var newpercent = 0;
-    if(cashType === "percent"){
+    if (cashType === "percent") {
         temp = (100 * initamt) / (100 + cashamt);
         percent = (temp * 100) / goodsValue;
     }
     var prevVD = detail["value_date"];
     var tVD = prevVD.split("-");
-    if (prevVD !== "none"){
+    if (prevVD !== "none") {
         var newVD = tVD[2] + "/" + tVD[1] + "/" + tVD[0];
         valDate.val(newVD);
-    }else{
+    } else {
         valDate.val("08/20/2019");
     }
-    
+
     ptMonetosed.val(percent);
-    $(".editmonpercent").click(function(){
-       ptMonetosed.attr('disabled', false); 
+    $(".editmonpercent").click(function () {
+        ptMonetosed.attr('disabled', false);
     });
-    $(".setValDateBtn").click(function(){
-       valDate.attr('disabled', false); 
+    $(".setValDateBtn").click(function () {
+        valDate.attr('disabled', false);
     });
-    
-    $("#ChangeMonParameters").click(function(){
+
+    $("#ChangeMonParameters").click(function () {
         var vd = valDate.val();
-        if (vd === "08/20/2019"){
+        if (vd === "08/20/2019") {
             vd = "none";
         }
-       var data = [vd, ptMonetosed.val(), detail["id"], userid];
-       GetData("Schemes", "EditMonParameters", "LoadEditParameters", data);
+        var data = [vd, ptMonetosed.val(), detail["id"], userid];
+        GetData("Schemes", "EditMonParameters", "LoadEditParameters", data);
     });
 }
 
@@ -10967,7 +10963,15 @@ function VerifyMonetisationGoods(details, applicationID) {
                 selectedIDs += ":" + selectedID;
             });
             if (selectedIDs == "") {
-                alert("Select at least one product");
+                swal({
+                    title: 'Errot',
+                    text: "Select at least one product!",
+                    type: 'success',
+                    showCancelButton: false,
+                    confirmButtonText: 'Ok!',
+                    confirmButtonClass: 'btn btn-success',
+                    buttonsStyling: false
+                });
             } else {
                 swal({
                     title: "Only selected goods will be verified!",
@@ -11214,7 +11218,7 @@ function DisplayNewMonetisationOptionParameters(params) {
             Child.removeClass("hide");
             Child.find(".monOptionDpdCheckbox").attr("id", "thisDpdChechBox" + key).val(key);
             Child.find(".monOptionDpdCheckbox").addClass("MonDependentOpts");
-            Child.find(".monOptionDpdChkbxLabel").attr("for", "thisDpdChechBox"+key).text(value.split("-")[0]);
+            Child.find(".monOptionDpdChkbxLabel").attr("for", "thisDpdChechBox" + key).text(value.split("-")[0]);
 
             var parent;
             if (index % 2 === 0) {
@@ -11316,8 +11320,8 @@ function DisplayNewMonetisationRule(params) {
         });
     }
 }
-function DisplayLoadEditParameters(params){
-    if(params === "success"){
+function DisplayLoadEditParameters(params) {
+    if (params === "success") {
         swal({
             title: "Editted !!!",
             text: "Successfully editted.",
@@ -11329,7 +11333,7 @@ function DisplayLoadEditParameters(params){
                 window.location.reload();
             }
         });
-    }else{
+    } else {
         swal({
             title: "Oops!!!",
             text: "Something went wrong.",
@@ -11370,58 +11374,58 @@ function DisplayUserQualifiedMonetisationOption(params) {
         var schmVal = $(".schmVal").val();
         $.each(params, function (ind, value) {
 
-        var schm = ind.split("-")[1];
-        if (schm === schmVal) {
-            var childClone = cloneThis.clone();
-            childClone.addClass("newCloneElement");
-            childClone.removeClass("monRulesClone");
-            childClone.removeClass("hide");
-            
-            var minVal = PriceFormat(parseInt(value["MinimumValue"]));
-            var maxVal = PriceFormat(parseInt(value["MaximumValue"]));
-            var PercentageMonetisation = parseInt(value["PercentageMonetisation"])+"%";
-            var ContractTenor = value["ContractTenor"];
-            var ChargeAmt = parseInt(value["ChargeAmt"]);
-            var ApplicationFeeAmt = parseInt(value["ApplicationFeeAmt"]);
-            var ChargeType = value["ChargeType"];
-            if(ChargeType === "fixed"){
-                ChargeAmt = PriceFormat(ChargeAmt);
-            }else{
-                ChargeAmt+="%";
+            var schm = ind.split("-")[1];
+            if (schm === schmVal) {
+                var childClone = cloneThis.clone();
+                childClone.addClass("newCloneElement");
+                childClone.removeClass("monRulesClone");
+                childClone.removeClass("hide");
+
+                var minVal = PriceFormat(parseInt(value["MinimumValue"]));
+                var maxVal = PriceFormat(parseInt(value["MaximumValue"]));
+                var PercentageMonetisation = parseInt(value["PercentageMonetisation"]) + "%";
+                var ContractTenor = value["ContractTenor"];
+                var ChargeAmt = parseInt(value["ChargeAmt"]);
+                var ApplicationFeeAmt = parseInt(value["ApplicationFeeAmt"]);
+                var ChargeType = value["ChargeType"];
+                if (ChargeType === "fixed") {
+                    ChargeAmt = PriceFormat(ChargeAmt);
+                } else {
+                    ChargeAmt += "%";
+                }
+                var ApplicationFeeType = value["ApplicationFeeType"];
+                if (ApplicationFeeType === "fixed") {
+                    ApplicationFeeAmt = PriceFormat(ApplicationFeeAmt);
+                } else {
+                    ApplicationFeeAmt += "%";
+                }
+                var RuleName = value["RuleName"];
+                var RuleDescription = value["RuleDescription"];
+                var ID = value["optionId"];
+
+                childClone.find(".MonOptName-p").html("<b>" + RuleName + "</b>");
+                childClone.find(".MonOptPercentMometised-p").text(PercentageMonetisation);
+                childClone.find(".MonOptDesc-p").text(RuleDescription);
+                childClone.find(".MonOptMinVal-p").text(minVal);
+                childClone.find(".MonOptMaxVal-p").text(maxVal);
+                childClone.find(".MonOptTenor-p").text(ContractTenor);
+                childClone.find(".MonOptCharges-p").text(ChargeAmt);
+                childClone.find(".MonOptAppFee-p").text(ApplicationFeeAmt);
+                childClone.find(".MonOptId-p").text(ID);
+                var Select = childClone.find(".MonOptSelectMon-p");
+                Select.click(function () {
+                    GetData("Schemes", "GetUserEligibleMonetisationProducts", "LoadUserProductsMon", actualuserid);
+                    var val = JSON.stringify(value);
+                    $(".MonOptSelected-p").val(val);
+                    $(".monSteps").text("Step 3");
+                    $(".monStep2").addClass("hide");
+                    $(".monStep3").removeClass("hide");
+                    $(".monStep4").addClass("hide");
+                });
+                childClone.appendTo(parent).show();
             }
-            var ApplicationFeeType = value["ApplicationFeeType"];
-            if(ApplicationFeeType === "fixed"){
-                ApplicationFeeAmt = PriceFormat(ApplicationFeeAmt);
-            }else{
-                ApplicationFeeAmt+="%";
-            }
-            var RuleName = value["RuleName"];
-            var RuleDescription = value["RuleDescription"];
-            var ID = value["optionId"];
-            
-            childClone.find(".MonOptName-p").html("<b>"+RuleName+"</b>");
-            childClone.find(".MonOptPercentMometised-p").text(PercentageMonetisation);
-            childClone.find(".MonOptDesc-p").text(RuleDescription);
-            childClone.find(".MonOptMinVal-p").text(minVal);
-            childClone.find(".MonOptMaxVal-p").text(maxVal);
-            childClone.find(".MonOptTenor-p").text(ContractTenor);
-            childClone.find(".MonOptCharges-p").text(ChargeAmt);
-            childClone.find(".MonOptAppFee-p").text(ApplicationFeeAmt);
-            childClone.find(".MonOptId-p").text(ID);
-            var Select = childClone.find(".MonOptSelectMon-p");
-            Select.click(function(){
-                GetData("Schemes", "GetUserEligibleMonetisationProducts", "LoadUserProductsMon", actualuserid);
-                var val = JSON.stringify(value);
-                $(".MonOptSelected-p").val(val);
-                $(".monSteps").text("Step 3");
-                $(".monStep2").addClass("hide");
-                $(".monStep3").removeClass("hide");
-                $(".monStep4").addClass("hide");
-            });
-            childClone.appendTo(parent).show();
-        }
-        cloneThis.hide();
-    });
+            cloneThis.hide();
+        });
     }
 
 }
@@ -11749,20 +11753,20 @@ function DisplayMyMonApplications(params) {
                 }).modal("show");
 
             });
-            PayButton.click(function(){
+            PayButton.click(function () {
                 var valueDate = val["value_date"];
                 var d = new Date();
-                var year = ""+d.getFullYear();
-                var month = d.getMonth()+1; 
-                month < 10 ? month = '0'+ month : month = '' + month;
-                var day = d.getDate(); 
-                day<10 ? '0' + day : '' + day;
-                if(valueDate != "none"){
+                var year = "" + d.getFullYear();
+                var month = d.getMonth() + 1;
+                month < 10 ? month = '0' + month : month = '' + month;
+                var day = d.getDate();
+                day < 10 ? '0' + day : '' + day;
+                if (valueDate != "none") {
                     var vDate = valueDate.split("/")[0];
                     var vDT = vDate.split("-");
-                    if(vDT[0] === year && parseInt(vDT[1]) <= parseInt(month) && parseInt(vDT[2]) <= parseInt(day)){
+                    if (vDT[0] === year && parseInt(vDT[1]) <= parseInt(month) && parseInt(vDT[2]) <= parseInt(day)) {
                         payWithPaystack(val["id"], paymentamount, val["UserEmail"], paymentamount, "Monetisation Application Fee");
-                    }else{
+                    } else {
                         swal({
                             title: "Oops!!!",
                             text: "You can only avail of this monetisation on or after value date",
@@ -11771,8 +11775,8 @@ function DisplayMyMonApplications(params) {
                             confirmButtonClass: 'btn btn-primary',
                             confirmButtonText: 'Continue'
                         });
-                    }                
-                }else{
+                    }
+                } else {
                     payWithPaystack(val["id"], paymentamount, val["UserEmail"], paymentamount, "Monetisation Application Fee");
                 }
             });

@@ -726,7 +726,7 @@ public class UserServlet extends HttpServlet {
                     int val = Integer.parseInt(data[0]);
                     String section = data[1];
                     String Case = data[2];
-                    int value = GeneralUserManager.GetValue(Case, section, val);
+                    int value = GeneralAddressManager.GetValue(Case, section, val);
                     json = new Gson().toJson(value);
                     break;
                 }
@@ -736,7 +736,7 @@ public class UserServlet extends HttpServlet {
                     String Section = data[0];
                     String AdditionName = data[1];
                     String[] resend = new String[3];
-                    value = GeneralUserManager.InsertNewSection(AdditionName, Section, data);
+                    value = GeneralAddressManager.InsertNewSection(AdditionName, Section, data);
                     resend[0] = Section;
                     resend[1] = AdditionName;
                     resend[2] = "" + value;

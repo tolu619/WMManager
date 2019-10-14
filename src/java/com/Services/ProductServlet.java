@@ -310,7 +310,7 @@ public class ProductServlet extends HttpServlet {
                     HashMap<Integer, ArrayList<HashMap<String, String>>> StatePickUpCenters = new HashMap<>();
                     if (!PickupStateIDs.isEmpty()) {
                         for (int stateid : PickupStateIDs) {
-                            HashMap<String, String> statedetails = GeneralUserManager.getStateDetails(stateid);
+                            HashMap<String, String> statedetails = GeneralAddressManager.getStateDetails(stateid);
                             StateList.put(stateid, statedetails);
                             ArrayList<HashMap<String, String>> CenterIds = new ArrayList<>();
                             ArrayList<Integer> PickupCenterIDs = GeneralUserManager.getPickUpCentreByStateId(stateid);
