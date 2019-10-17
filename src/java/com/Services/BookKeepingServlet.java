@@ -255,17 +255,32 @@ public class BookKeepingServlet extends HttpServlet {
                     json = new Gson().toJson(result);
                     break;
                 }
-//                case "ReplacePartiesWithUsersInTransaction":
-//                {
-//                    String[] data = request.getParameterValues("data[]");
-//                    for (int i = 0; i < data.length; i++)
-//                    {
-//                        data[i];
-//                    }
-//                    
-//                    json = new Gson().toJson(data);
-//                    break;
-//                }
+                case "CreateLedgerAccount":
+                {
+                    int NewLedgerID = 0;
+                    String[] JSONArray = request.getParameterValues("data[]");
+                    HashMap<String, Object> NewData = new HashMap<>();
+                    String Name = JSONArray[0]; String BookKeepingAccountType = JSONArray[1];
+                    NewData.put(Tables.LedgerAccounts.Name, Name);
+                    NewData.put(Tables.LedgerAccounts.BookKeepingAccountType, BookKeepingAccountType);
+                    NewLedgerID = DBManager.insertTableDataReturnID(Tables.LedgerAccounts.Table, NewData, "");
+                    json = new Gson().toJson(NewLedgerID);
+                    break;
+                }
+                case "CreateSubLedgerAccount":
+                {
+                    int NewSubLedgerID = 0;
+                    String[] JSONArray = request.getParameterValues("data[]");
+                    HashMap<String, Object> NewData = new HashMap<>();
+                    String Name = JSONArray[0]; String ParentType = JSONArray[2];
+                    int ParentID = Integer.parseInt(JSONArray[1]);
+                    NewData.put(Tables.SubLedgerAccounts.Name, Name);
+                    NewData.put(Tables.SubLedgerAccounts.ParentID, ParentID);
+                    NewData.put(Tables.SubLedgerAccounts.ParentType, ParentType);
+                    NewSubLedgerID = DBManager.insertTableDataReturnID(Tables.LedgerAccounts.Table, NewData, "");
+                    json = new Gson().toJson(NewSubLedgerID);
+                    break;
+                }
                 default: {
                     break;
                 }
