@@ -257,11 +257,14 @@ public class BookKeeper
     }
 
     public static String ExecuteTransactionCode(HashMap<Integer, HashMap<String, Object>> TransactionMap)
-            throws ClassNotFoundException, SQLException, ParseException, UnsupportedEncodingException {
+            throws ClassNotFoundException, SQLException, ParseException, UnsupportedEncodingException 
+    {
+        String Result = "";
         //Get each accounting entry out of the transaction code hashmap
         Set<Integer> keys = TransactionMap.keySet();
         Iterator<Integer> iterator = keys.iterator();
-        while (iterator.hasNext()) {
+        while (iterator.hasNext()) 
+        {
             int nextKey = iterator.next();
             HashMap<String, Object> TransactionTableData = TransactionMap.get(nextKey);
             String DebitAccountOwnerID = TransactionTableData.get(Tables.AccountingEntryDefinitions.debit_AccountOwner).toString();
@@ -275,6 +278,7 @@ public class BookKeeper
             TransactionTableData.put(Tables.Transaction.DebitAccountNumber, DebitAccountNumber);
             
             HashMap<String, Object> TransactionHistoryTableData = new HashMap<>();
+            Result = MoveWarrantsAsDefinedByAccountingEntry(TransactionTableData);
             TransactionHistoryTableData.putAll(TransactionTableData);  //Copy this out before removing some items from it
             TransactionTableData.remove(Tables.AccountingEntryDefinitions.credit_AccountOwner);
             TransactionTableData.remove(Tables.AccountingEntryDefinitions.debit_AccountOwner);
@@ -284,18 +288,102 @@ public class BookKeeper
             //Log Transaction History
             TransactionHistoryTableData.put(BookKeeper.CreditAccountOwnerIDString, CreditAccountOwnerID);
             TransactionHistoryTableData.put(BookKeeper.DebitAccountOwnerIDString, DebitAccountOwnerID);
-            String HistoryResult = LogTransactionHistory(TransactionHistoryTableData);
+            Result += LogTransactionHistory(TransactionHistoryTableData);
             //Get Old balance and new balance
         }
-        return "success";
+        return Result;
+    }
+    
+    public static String MoveWarrantsAsDefinedByAccountingEntry(HashMap<String, Object> AccountingEntryMap) throws ClassNotFoundException, SQLException, UnsupportedEncodingException
+    {
+        String result = "failed";
+        int FromAmount = Integer.parseInt(AccountingEntryMap.get(Tables.Transaction.DebitAmount).toString());
+        int FromUserID = Integer.parseInt(AccountingEntryMap.get(Tables.AccountingEntryDefinitions.debit_AccountOwner).toString());
+        int FromLedgerID = Integer.parseInt(AccountingEntryMap.get(DebitAccountTypeID).toString());
+        //Check if there is enough in this account to transfer
+        int AmountInSendersAccount = GetAccountBalanceBySubledgerID(FromUserID, FromLedgerID);
+        if (AmountInSendersAccount < FromAmount)
+        {
+            return "Insufficient Balance";
+        }
+        else
+        {
+            int ToAmount = Integer.parseInt(AccountingEntryMap.get(Tables.Transaction.CreditAmount).toString());
+            String FromAccountRecordString = DBManager.GetString(Tables.AccountRecord.AccountBalance, Tables.AccountRecord.Table, "where " + Tables.AccountRecord.UserID + "=" 
+                    + AccountingEntryMap.get(Tables.AccountingEntryDefinitions.debit_AccountOwner).toString());
+            String ToAccountRecordString = DBManager.GetString(Tables.AccountRecord.AccountBalance, Tables.AccountRecord.Table, "where " + Tables.AccountRecord.UserID + "=" 
+                    + AccountingEntryMap.get(Tables.AccountingEntryDefinitions.credit_AccountOwner).toString());
+            String ToAccountNewRecordString = ""; 
+            String FromAccountNewRecordString = FromAccountRecordString; //Initialize the post-transfer account records to the same value as the pre-transfer records
+            int ToUserID = Integer.parseInt(AccountingEntryMap.get(Tables.AccountingEntryDefinitions.credit_AccountOwner).toString());
+            int ToLedgerID = Integer.parseInt(AccountingEntryMap.get(CreditAccountTypeID).toString());
+            String[] Balances = FromAccountRecordString.split(";"); //All Balances of all Subledgers
+            int TotalBalance = 0; int Change = 0;
+            for (String ThisBalance : Balances) //Loop through all the Subledgers
+            {
+                if (ThisBalance.split(":")[0].equals(FromLedgerID + "")) //For the balance in the specific Subledger we are considering,
+                {
+                    String[] WarrantsArray = ThisBalance.split(":")[1].split("/"); //Get all the warrants that make up the total balance
+                    int Counter = 0;
+                    while (TotalBalance < FromAmount) 
+                    {
+                        int AmountLeftToTarget = FromAmount - TotalBalance;
+                        int warrantID = Integer.parseInt(WarrantsArray[Counter].split("_")[0]);
+                        int warrantValue = Integer.parseInt(WarrantsArray[Counter].split("_")[1]);
+                        int warrantParentTransactionID = Integer.parseInt(WarrantsArray[Counter].split("_")[2]);
+                        if (AmountLeftToTarget < warrantValue) //If there will be change left after transferring this specific warrant
+                        {
+                            Change = warrantValue - AmountLeftToTarget;
+                            ToAccountNewRecordString += warrantID + "_" + AmountLeftToTarget + "_" + warrantParentTransactionID;
+                            //Move only the amount of the warrant needed to the receiver's account
+                            FromAccountNewRecordString = FromAccountNewRecordString.replaceAll(WarrantsArray[Counter], 
+                                    warrantID + "_" + Change + "_" + warrantParentTransactionID); //replace the record of this warrant in the sender's account with
+                            //the amount of change left over in the same warrant
+                            TotalBalance += warrantValue;
+                            AmountLeftToTarget -= warrantValue;
+                        }
+                        else if (AmountLeftToTarget >= warrantValue) //There will be no change left over
+                        {
+                            ToAccountNewRecordString += warrantID + "_" + warrantValue + "_" + warrantParentTransactionID + "/"; 
+                            //since there's no change, move the entire thing
+                            FromAccountNewRecordString = FromAccountNewRecordString.replaceAll(WarrantsArray[Counter] + "/", ""); 
+                            //remove the record of this warrant from the sender's account
+                            TotalBalance += warrantValue;
+                            AmountLeftToTarget -= warrantValue;
+                        }
+                        Counter++;
+                    }
+                    
+                    String[] ReceiversBalances = ToAccountRecordString.split(";"); //All Balances of all Subledgers
+                    for (String Balance : ReceiversBalances) //Loop through all the Subledgers
+                    {
+                        if (Balance.split(":")[0].equals(ToLedgerID + "")) //For the balance in the specific Subledger we are considering,
+                        {
+                            ToAccountNewRecordString = Balance + "/" + ToAccountNewRecordString;
+                            ToAccountNewRecordString = ToAccountRecordString.replaceAll(Balance, ToAccountNewRecordString);
+                            //Replace the values in this subledger's record with the new record string
+                        }
+                    }
+                    result = DBManager.UpdateStringData(Tables.AccountRecord.Table, Tables.AccountRecord.AccountBalance, FromAccountNewRecordString, 
+                            "WHERE " + Tables.AccountRecord.UserID + "=" + FromUserID); //Update the sender's acccount with the correct account balance
+                    result += DBManager.UpdateStringData(Tables.AccountRecord.Table, Tables.AccountRecord.AccountBalance, ToAccountNewRecordString, 
+                            "WHERE " + Tables.AccountRecord.UserID + "=" + ToUserID); //Update the sender's acccount with the correct account balance
+                }
+            }
+        }
+        
+        return result;
     }
 
-    public String[] GetWarrantIDsForTransaction(int UserID, int SubledgerID, int AmountRequired) throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
+    public static String[] GetWarrantIDsForTransaction(int UserID, int SubledgerID, int AmountRequired) throws ClassNotFoundException, SQLException, UnsupportedEncodingException 
+    {
         String[] Warrants = null;
         if (GetAccountBalanceBySubledgerID(UserID, SubledgerID) < AmountRequired) //Insufficient Funds
         {
             return Warrants;
-        } else {
+        } 
+        else 
+        {
             int TotalBalance = 0;
             String DBText = DBManager.GetString(Tables.AccountRecord.AccountBalance, Tables.AccountRecord.Table, "where " + Tables.AccountRecord.UserID + "=" + UserID);
             String[] Balances = DBText.split(";"); //All Balances of all Subledgers
@@ -305,10 +393,12 @@ public class BookKeeper
                 {
                     String[] WarrantsArray = ThisBalance.split("/");
                     int Counter = 0;
-                    while (TotalBalance < AmountRequired) {
+                    while (TotalBalance < AmountRequired) 
+                    {
                         int warrantValue = Integer.parseInt(WarrantsArray[Counter].split("_")[1]);
                         TotalBalance += warrantValue;
                         Warrants[Counter] = WarrantsArray[Counter];
+                        Counter++;
                     }
                 }
             }
@@ -318,7 +408,8 @@ public class BookKeeper
 
     }
 
-    public Integer GetAccountBalanceBySubledgerID(int UserID, int SubledgerID) throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
+    public static Integer GetAccountBalanceBySubledgerID(int UserID, int SubledgerID) throws ClassNotFoundException, SQLException, UnsupportedEncodingException 
+    {
         int AccountBalance = 0;
         String DBText = DBManager.GetString(Tables.AccountRecord.AccountBalance, Tables.AccountRecord.Table, "where " + Tables.AccountRecord.UserID + "=" + UserID);
         String[] Balances = DBText.split(";"); //All Balances of all Subledgers
@@ -329,15 +420,9 @@ public class BookKeeper
                 if (ThisBalance.contains("/")) //Has more than one warrant making up its total balance
                 {
                     AccountBalance = GeneralAccountManager.GetWarrantValueFromWarrants(ThisBalance.split(":")[1]);
-//                    String[] WarrantsArray = ThisBalance.split("/");
-//                    for (String record: WarrantsArray)
-//                    {
-//                        String Temp = record.split(":")[1];
-//                        Temp = Temp.split("-")[1];
-//                        Temp = Temp.split("_")[0];
-//                        AccountBalance += Integer.parseInt(Temp); //add the value of this warrant to the total balance in the account
-//                    }
-                } else {
+                } 
+                else 
+                {
                     String Temp = ThisBalance.split(":")[1];
                     Temp = Temp.split("_")[1];
                     //Temp = Temp.split("_")[0];
