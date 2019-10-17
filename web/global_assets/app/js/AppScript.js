@@ -27,6 +27,7 @@ var transactionParams = {};
 var editableTransactionParams = {};
 var ParamsCount = 0;
 var finalAccountingEnteries = [];
+var searchPhraseCount = 3;
 
 //variable declarations for transactions and book keeping from Tolu
 var Parameters = [];
@@ -1824,6 +1825,18 @@ function btnEvents() {
         var subject = "Change Phone Number";
         var data = [actualuserid, subject, localStorage.ActualPhone, newPhone, "Phone"];
         GetData("User", "RequestChangeDetails", "LoadRequestChange", data);
+    });
+    $("#searchSettingsBtn").click(function(){
+        $("#searchSettings").removeClass("hide").show();
+    });
+    $("#searchValueSet").click(function(){
+        var searchcount = $("#searchPhraseCount").val();
+        var searchCount = parseInt(searchcount);
+        if (searchCount > 0){
+            searchPhraseCount = searchCount;
+            $("#searchSettings").addClass("hide").hide();
+        }
+        
     });
 }//end of btnEvents
 
@@ -12243,7 +12256,7 @@ function BookKeepingPageFunctions()
         }).then(function (dismiss) {
             if (dismiss.value) {
                 var NewTransactionCode = DivClone.find(".NewTransactionCode").val();
-                alert (NewTransactionCode);
+                alert(NewTransactionCode);
                 if (NewTransactionCode === "")
                     return alert("You must have a transaction code");
                 $("#NewProcessButton").removeClass("hide");
@@ -12745,7 +12758,7 @@ function DisplayAllTransactionTypes(data, parent) {
 
     partySearch.keydown(function () {
         var data = $("#partySearchText").val();
-        if (data.length < 4) {
+        if (data.length < searchPhraseCount-1) {
             parent.find($("#partySearchResult")).addClass("hide").hide();
         }
     });
@@ -12755,7 +12768,7 @@ function DisplayAllTransactionTypes(data, parent) {
 
     function searchPartyDetails() {
         var data = $("#partySearchText").val();
-        if (data.length >= 4) {
+        if (data.length > searchPhraseCount-1) {
             $("#partySearchResult").removeClass("hide").show();
             GetData("User", "SearchMembers", "LoadSearchResultPartyDetails", data);
         } else {
@@ -12906,6 +12919,11 @@ function DisplayParamsInvolvedInTransaction(data, parent) {
             childclone.hide();
         });
 
+        for (var i in editableTransactionParams) {
+            if (editableTransactionParams.hasOwnProperty(i)) {
+                ParamsCount++;
+            }
+        }
         var paramSet = $(".paramValueSet");
         paramSet.click(function () {
             var paramValue = $(this).closest(".txnParam").find(".paramValue").val();
@@ -12915,12 +12933,6 @@ function DisplayParamsInvolvedInTransaction(data, parent) {
                 editableParamsCounts++;
             }
 
-            var i;
-            for (i in editableTransactionParams) {
-                if (editableTransactionParams.hasOwnProperty(i)) {
-                    ParamsCount++;
-                }
-            }
             if (editableParamsCounts !== 0 && ParamsCount !== 0) {
                 if (editableParamsCounts === ParamsCount) {
                     $("#transactionCommentForm").removeClass("hide").show();
@@ -12962,7 +12974,7 @@ function DisplayAccountingEntriesInvolvedInTransaction(data, parent) {
             if (creditOwner !== "MOE") {
                 creditOwnerId = transactionPartiesIds[creditOwner];
                 var creditOwner = transactionParties[creditOwner];
-            }else{
+            } else {
                 creditOwnerId = "1";
             }
             newchild.find(".txnCreditOwner").text(creditOwner);
@@ -12984,8 +12996,8 @@ function DisplayAccountingEntriesInvolvedInTransaction(data, parent) {
             var debitAmount = transactionParams[debitAmountId];
             newchild.find(".creditAmount").text(creditAmount);
             newchild.find(".debitAmount").text(debitAmount);
-            var AccountingEntry = {"TransactionCode": transactionCode, "CreditAmount": creditAmount, "DebitAmount": debitAmount, 
-                CreditAccountTypeID: creditAccId, DebitAccountTypeID: debitAccId, "TransactionTypeID": transactionTypeId, "Comment": comment, 
+            var AccountingEntry = {"TransactionCode": transactionCode, "CreditAmount": creditAmount, "DebitAmount": debitAmount,
+                CreditAccountTypeID: creditAccId, DebitAccountTypeID: debitAccId, "TransactionTypeID": transactionTypeId, "Comment": comment,
                 "credit_AccountOwner": creditOwnerId, "debit_AccountOwner": debitOwnerId};
             var accountingEntry = JSON.stringify(AccountingEntry);
             finalAccountingEnteries.push(accountingEntry);

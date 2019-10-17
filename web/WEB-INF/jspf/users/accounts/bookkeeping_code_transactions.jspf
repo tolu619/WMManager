@@ -23,13 +23,13 @@
                 <div class="breadcrumb justify-content-center">
                     <a href=".create-transactionType-modal" class="breadcrumb-elements-item" data-toggle="modal">
                         <i class="icon-plus3 mr-2"></i>
-                        create New Code
+                        create New Transaction Type
                     </a>
                 </div>
                 <div class="breadcrumb justify-content-center ml-2">
                     <a href=".create-codeTransaction-modal" class="breadcrumb-elements-item" data-toggle="modal" id="createtransactionBtn">
                         <i class="icon-plus3 mr-2"></i>
-                        create New Transaction from code
+                        create New Transaction
                     </a>
                 </div>
             </div>
