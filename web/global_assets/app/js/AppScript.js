@@ -890,9 +890,14 @@ function btnEvents() {
 
     $("#createSubledgerAccount").click(function () {
         var name = $("#subledgerAccountName").val();
-        var parentId = $("#parentAccountSelect").val();
         var parentTypeId = $("input[name='parentAccount']:checked").val();
-        if (parentTypeId == 1){var parentType = "Ledger"}else{var parentType = "Sub-Ledger"};     
+        if (parentTypeId == 1) {
+            var parentType = "Ledger";
+            var parentId = $("#parentAccountSelect").val();
+        } else {
+            parentType = "SubLedger";
+            parentId = $("#subledgerAccountSelect").val();
+        }
         if (name.length < 1) {
             alert("please enter account name");
         } else {
