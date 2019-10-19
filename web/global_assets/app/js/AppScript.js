@@ -806,6 +806,125 @@ function btnEvents() {
         $(".bd-example-modaltransfer").modal("show");
     });
 
+    $("#createAccountBtn").click(function () {
+        $(".bd-account-create").modal("show");
+    });
+
+    $("#accountTypeSelect").change(function () {
+        var id = $(this).val();
+        if (id < 1 || !id) {
+            alert("please select a valid account type");
+            $("#createLedgerAccount").addClass("hide").hide();
+        } else {
+            $("#createLedgerAccount").removeClass("hide").show();
+        }
+    });
+
+    $("input[name='accountdefinition']").click(function () {
+        if ($(this).is(':checked') && $(this).val() == 1) {
+            $("#ledgerAcoount").removeClass("hide").show();
+            $("#subledgerAcoount").addClass("hide").hide();
+        } else if ($(this).is(':checked') && $(this).val() == 2) {
+            $("#subledgerAcoount").removeClass("hide").show();
+            $("#ledgerAcoount").addClass("hide").hide();
+            GetData("BookKeeping", "GetAllLedgerAccounts", "LoadAllLedgerAccounts");
+        }
+    });
+
+    $("input[name='parentAccount']").click(function () {
+        if ($(this).is(':checked') && $(this).val() == 1) {
+            $("#subledgerParentSelection").addClass("hide").hide();
+        } else if ($(this).is(':checked') && $(this).val() == 2) {
+            $("#parentAccountSelect").change(function () {
+                var ledgerId = $(this).val();
+                $("#subledgerParentSelection").removeClass("hide").show();
+                GetData("BookKeeping", "GetSubLedgersByLedgerID", "LoadSubLedgerAccounts", ledgerId);
+            });
+        }
+    });
+
+    $("#createLedgerAccount").click(function () {
+        var name = $("#NewAccountName").val();
+        var accountType = $("#accountTypeSelect option:selected").text();
+        if (name.length > 0 && accountType.length > 0) {
+            swal({
+                title: "Are you sure you want to create the account?",
+                text: "Press No if you still want to review the details. Press Yes to create the account.",
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonText: '<i class="icon-checkmark3 mr-2"></i> Yes ',
+                cancelButtonText: '<i class="icon-cancel-circle2 mr-2"></i> No',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false
+            }).then(function (dismiss) {
+                if (dismiss.value) {
+                    var data = [name, accountType];
+                    GetData("BookKeeping", "CreateLedgerAccount", "AccountCreationResponse", data);
+                } else {
+                    swal({
+                        title: 'Account not created',
+                        text: "Account has not been Created yet,you can review your account details!",
+                        type: 'info',
+                        showCancelButton: false,
+                        confirmButtonText: 'Ok!',
+                        confirmButtonClass: 'btn btn-info',
+                        buttonsStyling: false
+                    });
+                }
+            });
+        } else {
+            alert("please enter account name");
+        }
+    });
+
+    $("#parentAccountSelect").change(function () {
+        var id = $(this).val();
+        if (id < 1) {
+            alert("please select a valid parent account");
+            $("#createSubledgerAccount").addClass("hide").hide();
+        } else {
+            $("#createSubledgerAccount").removeClass("hide").show();
+        }
+    });
+
+    $("#createSubledgerAccount").click(function () {
+        var name = $("#subledgerAccountName").val();
+        var parentId = $("#parentAccountSelect").val();
+        var parentTypeId = $("input[name='parentAccount']:checked").val();
+        if (parentTypeId == 1){var parentType = "Ledger"}else{var parentType = "Sub-Ledger"};     
+        if (name.length < 1) {
+            alert("please enter account name");
+        } else {
+            swal({
+                title: "Are you sure you want to create the account?",
+                text: "Press No if you still want to review the details. Press Yes to create the account.",
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonText: '<i class="icon-checkmark3 mr-2"></i> Yes ',
+                cancelButtonText: '<i class="icon-cancel-circle2 mr-2"></i> No',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false
+            }).then(function (dismiss) {
+                if (dismiss.value) {
+                    var data = [name, parentId, parentType];
+                    GetData("BookKeeping", "CreateSubLedgerAccount", "AccountCreationResponse", data);
+                } else {
+                    swal({
+                        title: 'Account not created',
+                        text: "Account has not been Created yet,you can review your account details!",
+                        type: 'info',
+                        showCancelButton: false,
+                        confirmButtonText: 'Ok!',
+                        confirmButtonClass: 'btn btn-info',
+                        buttonsStyling: false
+                    });
+                }
+            });
+        }
+    });
+
     $(".AddNewContact").click(function () {
         $(".bd-example-modal-1").modal("show");
     });
@@ -1826,17 +1945,17 @@ function btnEvents() {
         var data = [actualuserid, subject, localStorage.ActualPhone, newPhone, "Phone"];
         GetData("User", "RequestChangeDetails", "LoadRequestChange", data);
     });
-    $("#searchSettingsBtn").click(function(){
+    $("#searchSettingsBtn").click(function () {
         $("#searchSettings").removeClass("hide").show();
     });
-    $("#searchValueSet").click(function(){
+    $("#searchValueSet").click(function () {
         var searchcount = $("#searchPhraseCount").val();
         var searchCount = parseInt(searchcount);
-        if (searchCount > 0){
+        if (searchCount > 0) {
             searchPhraseCount = searchCount;
             $("#searchSettings").addClass("hide").hide();
         }
-        
+
     });
 }//end of btnEvents
 
@@ -12758,7 +12877,7 @@ function DisplayAllTransactionTypes(data, parent) {
 
     partySearch.keydown(function () {
         var data = $("#partySearchText").val();
-        if (data.length < searchPhraseCount-1) {
+        if (data.length < searchPhraseCount - 1) {
             parent.find($("#partySearchResult")).addClass("hide").hide();
         }
     });
@@ -12768,12 +12887,42 @@ function DisplayAllTransactionTypes(data, parent) {
 
     function searchPartyDetails() {
         var data = $("#partySearchText").val();
-        if (data.length > searchPhraseCount-1) {
+        if (data.length > searchPhraseCount - 1) {
             $("#partySearchResult").removeClass("hide").show();
             GetData("User", "SearchMembers", "LoadSearchResultPartyDetails", data);
         } else {
             parent.find($("#partySearchResult")).addClass("hide").hide();
         }
+    }
+}
+
+function DisplayAllLedgerAccounts(data, parent) {
+    parent.empty();
+    if (data === "none") {
+        parent.text("No ledger accounts");
+    } else {
+        parent.append($('<option/>').val(0).text("Select ledger account"));
+        $.each(data, function (id, account) {
+            $("<option />", {
+                text: capitaliseFirstLetter(account["name"]),
+                value: id
+            }).appendTo(parent);
+        });
+    }
+}
+
+function DisplaySubLedgerAccounts(data, parent) {
+    parent.empty();
+    if (data === "none") {
+        parent.text("No sub-ledger accounts");
+    } else {
+        parent.append($('<option/>').val(0).text("Select sub-ledger account"));
+        $.each(data, function (id, account) {
+            $("<option />", {
+                text: capitaliseFirstLetter(account["name"]),
+                value: id
+            }).appendTo(parent);
+        });
     }
 }
 
@@ -13946,6 +14095,16 @@ function linkToFunction(action, params) {
             DisplayAllTransactionTypes(params, $("#transactionSelection"));
             break;
         }
+        case "LoadAllLedgerAccounts":
+        {
+            DisplayAllLedgerAccounts(params, $("#parentAccountSelect"));
+            break;
+        }
+        case "LoadSubLedgerAccounts":
+        {
+            DisplaySubLedgerAccounts(params, $("#subledgerAccountSelect"));
+            break;
+        }
         case "LoadPartiesInvolvedInTransaction":
         {
             DisplayPartiesInvolvedInTransaction(params);
@@ -13976,6 +14135,21 @@ function linkToFunction(action, params) {
             swal({
                 title: 'Transaction Executed',
                 text: "Transaction has been successfully Executed!",
+                type: 'success',
+                showCancelButton: false,
+                confirmButtonText: 'Ok!',
+                confirmButtonClass: 'btn btn-success',
+                onClose: function () {
+                    window.location.reload();
+                }
+            });
+            break;
+        }
+        case "AccountCreationResponse":
+        {
+            swal({
+                title: 'Account Created',
+                text: "Account has been successfully Created!",
                 type: 'success',
                 showCancelButton: false,
                 confirmButtonText: 'Ok!',
