@@ -57,7 +57,7 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <a href="/WMManager/" target="_blank"  class="btn btn-dark btn-block mt-3 mt-sm-0" ><i class="icon-circle-right2 mr-2"></i> Sign In</a>
+                                <a href="/WMManager/"  class="btn btn-dark btn-block mt-3 mt-sm-0" ><i class="icon-circle-right2 mr-2"></i> Sign In</a>
                             </div>
                         </div>
                         <!-- /buttons -->

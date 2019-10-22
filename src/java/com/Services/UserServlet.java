@@ -365,10 +365,14 @@ public class UserServlet extends HttpServlet {
                     HashMap<Integer, HashMap<String, Object>> users = new HashMap<>();
                     if (!ids.isEmpty()) {
                         for (int id : ids) {
-                            HashMap<String, Object> det = GeneralUserManager.GetUserDetails(usertype, id);
-                            int WarrantBalance = GeneralAccountManager.GetUserAvailableBalance(id, 1);
-                            det.put("AcctBalance", "" + WarrantBalance);
-                            users.put(id, det);
+                            try {
+                                HashMap<String, Object> det = GeneralUserManager.GetUserDetails(usertype, id);
+                                int WarrantBalance = GeneralAccountManager.GetUserAvailableBalance(id, 1);
+                                det.put("AcctBalance", "" + WarrantBalance);
+                                users.put(id, det);
+                            } catch (Exception ex) {
+
+                            }
                         }
                         json = new Gson().toJson(users);
                     } else {
@@ -726,7 +730,7 @@ public class UserServlet extends HttpServlet {
                     int val = Integer.parseInt(data[0]);
                     String section = data[1];
                     String Case = data[2];
-                    int value = GeneralUserManager.GetValue(Case, section, val);
+                    int value = GeneralAddressManager.GetValue(Case, section, val);
                     json = new Gson().toJson(value);
                     break;
                 }
@@ -736,7 +740,7 @@ public class UserServlet extends HttpServlet {
                     String Section = data[0];
                     String AdditionName = data[1];
                     String[] resend = new String[3];
-                    value = GeneralUserManager.InsertNewSection(AdditionName, Section, data);
+                    value = GeneralAddressManager.InsertNewSection(AdditionName, Section, data);
                     resend[0] = Section;
                     resend[1] = AdditionName;
                     resend[2] = "" + value;
@@ -774,21 +778,23 @@ public class UserServlet extends HttpServlet {
                     String userid = data[4];
                     int ReqID = Integer.parseInt(reqid);
                     int UserID = Integer.parseInt(userid);
-                    
+
                     if (subject == null) {
                         result = "failed";
                     } else {
                         switch (subject) {
-                            case "Change Phone Number": result = GeneralUserManager.UpdatePhoneNumber(UserID, new_detail);
+                            case "Change Phone Number":
+                                result = GeneralUserManager.UpdatePhoneNumber(UserID, new_detail);
                                 break;
-                            case "Change Email": result = GeneralUserManager.UpdateEmail(UserID, new_detail);
+                            case "Change Email":
+                                result = GeneralUserManager.UpdateEmail(UserID, new_detail);
                                 break;
                         }
                     }
                     if (result.equals("successful") || result.equals("success")) {
                         result = GeneralUserManager.UpdateRequestedChanges(ReqID, Status);
                         if (result.equals("successful") || result.equals("success")) {
-                            String body = "Your Request to "+ subject + " was Approved";
+                            String body = "Your Request to " + subject + " was Approved";
                             GeneralMessageManager.sendMemberMessage(GeneralAccountManager.WealthMarketUserID, body, subject, UserID);
                             json1 = new Gson().toJson("Successful.");
                             json2 = new Gson().toJson("success");
@@ -811,7 +817,7 @@ public class UserServlet extends HttpServlet {
                     int Id = Integer.parseInt(cid);
                     result = GeneralUserManager.UpdateRequestedChanges(Id, Status);
                     if (result.equals("successful") || result.equals("success")) {
-                        String body = "Your Request to "+ subject + " was Rejected";
+                        String body = "Your Request to " + subject + " was Rejected";
                         GeneralMessageManager.sendMemberMessage(GeneralAccountManager.WealthMarketUserID, body, subject, UserID);
                         json1 = new Gson().toJson("Successful.");
                         json2 = new Gson().toJson("success");
@@ -834,15 +840,14 @@ public class UserServlet extends HttpServlet {
                     break;
                 }
 
-                case "DeleteUserAddress": 
-                {
+                case "DeleteUserAddress": {
                     String params = request.getParameter("data");
                     int AddressID = Integer.parseInt(params);
 //                    HistoryManager.LogActivity(UserID, "Address", "Deleted Address", "Deleted Address");
                     result = GeneralAddressManager.DeleteUserAddress(AddressID);
                     json = new Gson().toJson(result);
                 }
-                
+
                 case "SearchMembers": {
                     String searchtxt = request.getParameter("data");
                     ArrayList<Integer> ids = GeneralUserManager.findMember(searchtxt);
