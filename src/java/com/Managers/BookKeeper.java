@@ -290,7 +290,7 @@ public class BookKeeper
             //Log Transaction History
             TransactionHistoryTableData.put(BookKeeper.CreditAccountOwnerIDString, CreditAccountOwnerID);
             TransactionHistoryTableData.put(BookKeeper.DebitAccountOwnerIDString, DebitAccountOwnerID);
-            Result += LogTransactionHistory(TransactionHistoryTableData);
+            Result += LogTransactionHistory(TransactionHistoryTableData) + TransactionRecordID;
             //Get Old balance and new balance
         }
         return Result;
