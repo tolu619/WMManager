@@ -28,6 +28,8 @@ public class BookKeeper
     public static String DebitAccountTypeID = "DebitAccountTypeID";
     public static String CreditAccountOwnerIDString = "CreditAccountOwnerID";
     public static String DebitAccountOwnerIDString = "DebitAccountOwnerID";
+    public static Integer CashLedgerAccountID = 4;
+    public static Integer MOEUserID = 1;
 
     public static HashMap<Integer, HashMap<String, String>> GetAllTransactionTypes() throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
         return DBManager.GetAllCollumnsLimitNumberOfRows(0, 50, Tables.TransactionType.Table, "");
@@ -259,38 +261,79 @@ public class BookKeeper
     public static String ExecuteTransactionCode(HashMap<Integer, HashMap<String, Object>> TransactionMap)
             throws ClassNotFoundException, SQLException, ParseException, UnsupportedEncodingException 
     {
-        String Result = "";
+        String Result = ""; ArrayList<Integer> CashAccountingEntries = new ArrayList<>();
         //Get each accounting entry out of the transaction code hashmap
         Set<Integer> keys = TransactionMap.keySet();
         Iterator<Integer> iterator = keys.iterator();
-        while (iterator.hasNext()) 
+        while (iterator.hasNext()) //PayeeSubLedgerID
         {
             int nextKey = iterator.next();
             HashMap<String, Object> TransactionTableData = TransactionMap.get(nextKey);
-            String DebitAccountOwnerID = TransactionTableData.get(Tables.AccountingEntryDefinitions.debit_AccountOwner).toString();
-            String CreditAccountOwnerID = TransactionTableData.get(Tables.AccountingEntryDefinitions.credit_AccountOwner).toString();
-            String TransactionID = GenerateTransactionID(TransactionTableData.get(Tables.Transaction.TransactionCode).toString(), DebitAccountOwnerID);
-            TransactionTableData.put(Tables.Transaction.TransactionID, TransactionID);
-            //Get Credit and Debit account numbers
-            String CreditAccountNumber = GeneralAccountManager.GetUserAccountNumber(Integer.parseInt(CreditAccountOwnerID), Integer.parseInt(TransactionTableData.get("CreditAccountTypeID").toString()));
-            String DebitAccountNumber = GeneralAccountManager.GetUserAccountNumber(Integer.parseInt(DebitAccountOwnerID), Integer.parseInt(TransactionTableData.get("DebitAccountTypeID").toString()));
-            TransactionTableData.put(Tables.Transaction.CreditAccountNumber, CreditAccountNumber);
-            TransactionTableData.put(Tables.Transaction.DebitAccountNumber, DebitAccountNumber);
-            
-            HashMap<String, Object> TransactionHistoryTableData = new HashMap<>();
-            Result = MoveWarrantsAsDefinedByAccountingEntry(TransactionTableData);
-            TransactionHistoryTableData.putAll(TransactionTableData);  //Copy this out before removing some items from it
-            TransactionTableData.remove(Tables.AccountingEntryDefinitions.credit_AccountOwner);
-            TransactionTableData.remove(Tables.AccountingEntryDefinitions.debit_AccountOwner);
-            TransactionTableData.remove(CreditAccountTypeID);
-            TransactionTableData.remove(DebitAccountTypeID);
-            int TransactionRecordID = DBManager.insertTableDataReturnID(Tables.Transaction.Table, TransactionTableData, "");
-            //Log Transaction History
-            TransactionHistoryTableData.put(BookKeeper.CreditAccountOwnerIDString, CreditAccountOwnerID);
-            TransactionHistoryTableData.put(BookKeeper.DebitAccountOwnerIDString, DebitAccountOwnerID);
-            Result += LogTransactionHistory(TransactionHistoryTableData) + TransactionRecordID;
-            //Get Old balance and new balance
+            int PayerSubLedgerID = Integer.parseInt(TransactionTableData.get(DebitAccountTypeID).toString());
+            int PayeeSubLedgerID = Integer.parseInt(TransactionTableData.get(CreditAccountTypeID).toString());
+            if (CheckIfSubLedgerIsCashAccount(PayerSubLedgerID) || CheckIfSubLedgerIsCashAccount(PayeeSubLedgerID))
+            {
+                CashAccountingEntries.add(nextKey);
+            }
         }
+        if (CashAccountingEntries.size() > 0) //If there are any accounting entries that involve cash
+        {
+            int TotalMOEIsReceiving = 0; int TotalMOEIsPaying = 0;
+            for (int index: CashAccountingEntries)
+            {
+                HashMap<String, Object> TransactionTableData = TransactionMap.get(index);
+                String DebitAccountOwnerID = TransactionTableData.get(Tables.AccountingEntryDefinitions.debit_AccountOwner).toString();
+                String CreditAccountOwnerID = TransactionTableData.get(Tables.AccountingEntryDefinitions.credit_AccountOwner).toString();
+                if (Integer.parseInt(DebitAccountOwnerID) == MOEUserID) //MOE is paying
+                {
+                    TotalMOEIsPaying += Integer.parseInt(TransactionTableData.get(Tables.Transaction.DebitAmount).toString());
+                }
+                if (Integer.parseInt(CreditAccountOwnerID) == MOEUserID) //MOE is receiving
+                {
+                    TotalMOEIsReceiving += Integer.parseInt(TransactionTableData.get(Tables.Transaction.CreditAmount).toString());
+                }
+            }
+            if (TotalMOEIsPaying > 0) //If the MOE is making a cash payment
+            {
+                Result = "MOE cannot make cash payments until we integrate with a bank";
+            }
+            if (TotalMOEIsReceiving > 0) //If the MOE is receiving a cash payment
+            {
+                Result = "Trigger Cash payment from user using this amount," + TotalMOEIsReceiving;
+            }
+        }
+        else //None of the accounting entries requires any cash transfers
+        {
+            while (iterator.hasNext()) 
+            {
+                int nextKey = iterator.next();
+                HashMap<String, Object> TransactionTableData = TransactionMap.get(nextKey);
+                String DebitAccountOwnerID = TransactionTableData.get(Tables.AccountingEntryDefinitions.debit_AccountOwner).toString();
+                String CreditAccountOwnerID = TransactionTableData.get(Tables.AccountingEntryDefinitions.credit_AccountOwner).toString();
+                String TransactionID = GenerateTransactionID(TransactionTableData.get(Tables.Transaction.TransactionCode).toString(), DebitAccountOwnerID);
+                TransactionTableData.put(Tables.Transaction.TransactionID, TransactionID);
+                //Get Credit and Debit account numbers
+                String CreditAccountNumber = GeneralAccountManager.GetUserAccountNumber(Integer.parseInt(CreditAccountOwnerID), Integer.parseInt(TransactionTableData.get("CreditAccountTypeID").toString()));
+                String DebitAccountNumber = GeneralAccountManager.GetUserAccountNumber(Integer.parseInt(DebitAccountOwnerID), Integer.parseInt(TransactionTableData.get("DebitAccountTypeID").toString()));
+                TransactionTableData.put(Tables.Transaction.CreditAccountNumber, CreditAccountNumber);
+                TransactionTableData.put(Tables.Transaction.DebitAccountNumber, DebitAccountNumber);
+
+                HashMap<String, Object> TransactionHistoryTableData = new HashMap<>();
+                Result = MoveWarrantsAsDefinedByAccountingEntry(TransactionTableData);
+                TransactionHistoryTableData.putAll(TransactionTableData);  //Copy this out before removing some items from it
+                TransactionTableData.remove(Tables.AccountingEntryDefinitions.credit_AccountOwner);
+                TransactionTableData.remove(Tables.AccountingEntryDefinitions.debit_AccountOwner);
+                TransactionTableData.remove(CreditAccountTypeID);
+                TransactionTableData.remove(DebitAccountTypeID);
+                int TransactionRecordID = DBManager.insertTableDataReturnID(Tables.Transaction.Table, TransactionTableData, "");
+                //Log Transaction History
+                TransactionHistoryTableData.put(BookKeeper.CreditAccountOwnerIDString, CreditAccountOwnerID);
+                TransactionHistoryTableData.put(BookKeeper.DebitAccountOwnerIDString, DebitAccountOwnerID);
+                Result += LogTransactionHistory(TransactionHistoryTableData) + TransactionRecordID;
+                //Get Old balance and new balance
+            }
+        }
+        
         return Result;
     }
     
@@ -373,6 +416,16 @@ public class BookKeeper
         }
         
         return result;
+    }
+    
+    public static Boolean CheckIfSubLedgerIsCashAccount(int SubLedgerID) throws ClassNotFoundException, SQLException, UnsupportedEncodingException
+    {
+        Boolean IsCashAccount = false;
+        if (DBManager.GetInt(Tables.SubLedgerAccounts.ParentID, Tables.SubLedgerAccounts.Table, "where " + Tables.SubLedgerAccounts.ID + "=" + SubLedgerID) == CashLedgerAccountID);
+        {
+            IsCashAccount = true;
+        }
+        return IsCashAccount;
     }
 
     public static String[] GetWarrantIDsForTransaction(int UserID, int SubledgerID, int AmountRequired) throws ClassNotFoundException, SQLException, UnsupportedEncodingException 
