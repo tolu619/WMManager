@@ -37,7 +37,7 @@ var FixedValueParameters = [];
 var DerivedParameters = [];
 var FormulaString, FormulaDisplayString;
 var FormulaArray = [];
-FormulaDisplayArray = [];
+var FormulaDisplayArray = [];
 var AccountsRequired = [];
 var NumberOfAccountsDebited, NumberOfAccountsCredited, NumberOfDerivedParameters = 0;
 var NumberOfProcesses = 0;
@@ -2204,7 +2204,6 @@ function productListingPageFunctions() {
 
     });
     $("#searchProduct").focus(function () {
-        alert("hiii");
         GetData("Product", "GetProductHscodes", "LoadProductHscodes");
     });
     $('#searchProduct').keypress(function (e) {
