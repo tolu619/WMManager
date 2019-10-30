@@ -1,17 +1,19 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
-<div class="padding double-padding-horizontal">
+<div class="padding double-padding-horizontal col-lg-10 ml-auto mr-auto">
     <h6>List a product on the WealthMarket</h6>
 
     <div class="card padding ">
-        <div class="col-lg-12 auto-margin">
-            <form class="wizard-form listUserProductForm" action="#" data-fouc>
-                <h6>Product's Specifications</h6>
-                <fieldset>
+            <form class="" action="#" data-fouc>
+                <div id="productSpecsDiv" class=" col-md-10 auto-margin">
+                   <div class="text-center center double-marginbottom">
+                        <h4 class="bold">Product's Specifications</h4>
+                        <p class="nomargintop">select the product category,sub-category and enter the other basic details like name,summary</p>    
+                   </div>
 
-                    <div class="col-md-10 auto-margin">
-
-                        <div class="form-group ">
+                    <div class="col-md-10 auto-margin double-margintop">
+                        <p class="double-marginbottom double-margintop"></p>
+                        <div class="form-group double-margintop">
                             <label>Select a Top Category: <span class="text-danger">*</span></label>
                             <select name="prodTopCategories" data-placeholder="Select a Category" 
                                     id="prodTopCategories" class="form-control form-control-select2 select-search select-clear required" data-fouc>
@@ -32,10 +34,11 @@
 
                             </select>
                         </div>
+                        
                     </div>
 
                     <div class=" prod-info hide">
-                        <div class="col-md-10 auto-margin ">
+                        <div class=" col-md-10 auto-margin">
                             <div class="form-group">
                                 <label>Product Name <span class="text-danger">*</span></label>
                                 <input type="text" id="prodName"  name="name" class="form-control required" placeholder="Product Name" autocomplete="off" >
@@ -44,8 +47,8 @@
                                 <label>Give us a summary of your product <span class="text-danger">*</span></label>
                                 <input type="textbox" id="prodSummary"  name="summary" class="form-control required " placeholder="Product Summary.."  autocomplete="off">
                             </div>
-
                         </div>
+                        
                         <div class="row">
                             <div class="col-md-4">
 
@@ -70,10 +73,19 @@
                             </div>
                         </div>
                     </div>
-                </fieldset>
-
-                <h6>Product's Details.</h6>
-                <fieldset>
+                    
+                    <div class="right">
+                        <button class="btn btn-outline-primary " id="listingStep2forward">Next<b><i class="icon-arrow-right13 ml-1"></i></b></button>
+                    </div>
+                </div>
+                
+                <div id="productDetailsDiv" class="hide">
+                    <div class="text-center center">
+                        <h4 class="bold">Product's Details.</h4>
+                        <p class="nomargintop">enter other product specific details like description,weight</p>    
+                    </div>
+                    <h6></h6>
+                   <fieldset>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -108,10 +120,15 @@
                             </div>
                         </div>
                     </div>
-                </fieldset>
-
-                <h6>Product's Properties</h6>
-                <fieldset>
+                   </fieldset>
+                </div>
+                
+                <div id="productPropertiesDiv" class="hide">
+                    <div class="text-center center">
+                        <h4 class="bold">Product's Properties.</h4>
+                        <p class="nomargintop">enter product properties like price,quantity</p>    
+                    </div>
+                   <fieldset>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group" id="prod-props">
@@ -168,10 +185,15 @@
                             </div>
                         </div>
                     </div>
-                </fieldset>
-
-                <h6>Product's Variations</h6>
-                <fieldset>
+                   </fieldset>
+                </div>
+                
+                <div id="productVariationsDiv" class="hide">
+                    <div class="text-center center">
+                        <h4 class="bold">Product's Variations.</h4>
+                        <p class="nomargintop">enter product variants details</p>    
+                    </div>
+                   <fieldset>
 
                     <div class="form-group ">
                         <div class="col-lg-12 double-marginbottom">
@@ -223,10 +245,15 @@
                     <div class="row double-marginbottom double-margintop">
 
                     </div>
-                </fieldset>
-
-                <h6>Product's Tags</h6>
-                <fieldset>
+                   </fieldset>
+                </div>
+                
+                <div id="productTagsDiv" class="hide">
+                    <div class="text-center center">
+                        <h4 class="bold">Product's Tags.</h4>
+                        <p class="nomargintop">enter relevant keywords as product tags</p>    
+                    </div>
+                   <fieldset>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -235,32 +262,89 @@
                             </div>
                         </div>
                     </div>
-                </fieldset>
-
-                <h6>Product's Preview</h6>
-                <fieldset>
+                   </fieldset>
+                </div>
+                
+                <div id="productReviewDiv" class="hide">
+                    <div class="text-center center">
+                        <h4 class="bold">Product's Preview.</h4>
+                        <p class="nomargintop">Review your entered product Details before you finally submit for listing</p>    
+                    </div>
+                   <fieldset>
                     <div class="row form-group">
                         <div class="col-md-12">
                             <h5>Review your entered product Details before you finally submit for listing</h5>
                         </div>
                     </div>
 
-                    <div class="card mt-5">
-                        <div class="parts">
-                            <div  class="">
-                                <h4><span>Product name: </span><span class="bold">Cheese</span></h4>
-                                <h4><span>Product category: </span><span>Agriculture/Food</span></h4
-                                <h4><span>Total quantity: </span><span>30</span></h4>
-                                <h4><span>Price: </span><span class="bold">#500</span></h4>
+                    <div class="card mt-5 padding-horizontal" id="productListingPreview">
+                        <div class="d-flex align-items-start flex-column flex-md-row margintop">
+
+                            <!-- Left content -->
+                            <div class="w-100 overflow-auto order-2 order-md-1">
+                                <div class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
+                                    <div class="media-body">
+                                        <h5 class="media-title">
+                                            <a href="#" class="shop_product-detail-name"><span>Product Name: </span><span class="bold">Cheese</span></a>
+                                        </h5>
+
+                                        <ul class="list-inline list-inline-dotted mb-3 mb-lg-2">
+                                            <li class="list-inline-item"><a href="#" class="text-muted shop_product-detail-categoryname">category</a></li>
+                                        </ul>
+
+                                        <div class="double-margintop">
+                                            <p class="mb-3 shop_product-details-description">It prepare is ye nothing blushes up brought. Or as gravity pasture limited evening on. Wicket around beauty say she. Frankness resembled say not new smallness you discovery. Noisier ferrars yet shyness weather ten colonel. Too him himself engaged husband pursuit musical...</p>
+                                            <p class="mb-3 shop_product-details-summary">It prepare is ye nothing blushes up brought. Or as gravity pasture limited evening on. Wicket around beauty say she. Frankness resembled say not new smallness you discovery. Noisier ferrars yet shyness weather ten colonel. Too him himself engaged husband pursuit musical...</p>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
+                                        <h3 class="mb-0 font-weight-semibold shop_product-detail-price"><span>Price: </span><span class="bold">$49.99</span></h3>
+                                        <!--<button type="button" class="btn bg-teal-400 mt-3 product-id-gen"><i class="icon-cart-add mr-2"></i> Add to cart</button>-->
+                                        <h4 class="list-inline-item">Quantity <a href="#" class="shop_product-detail-quantity">5</a></h4>
+                                    </div>
+                                    <!--</div>-->
+                                </div>
+
                             </div>
-                            <div  class="">
-                                <p><span>supplier name: </span><span>wale</span></p>
-                                <p><span>Phone Number: </span><span>08062467783</span></p>
-                                <p><span>Total quantity: </span><span>30</span></p>
-                                <p><span>Price: </span><span>#500</span></p> 
-                            </div>
+
+                            <!-- /left content -->
+
                         </div>
 
+                        <div class="row mt-3">
+                            <div class="col-lg-6">
+                                <div class="card card-body">
+                                    <div class="media">
+                                        <div class="mr-1">
+                                            <a href="#"><i class="icon-user text-success-400"></i></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <h6 class="media-title font-weight-semibold"><a href="#" class="text-default">Supplier Name</a></h6>
+                                            <span class="shop_product-details-owner-name"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card card-body">
+                                    <div class="media">
+                                        <div class="mr-1">
+                                            <a href="#"><i class="icon-phone2 text-success-400"></i></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <h6 class="media-title font-weight-semibold"><a href="#" class="text-default">Supplier Phone Number</a></h6>
+                                            <span class="shop_product-details-owner-phone"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
 
                         <div class="card margin text-center">
                             <div class="card-header"><h4>Variants</h4></div>
@@ -284,7 +368,9 @@
                             </table>
                         </div>
                     </div>
-                </fieldset>
+                   </fieldset>
+                </div>
+                
 
             </form>
 
@@ -304,7 +390,6 @@
                     </div>
                 </fieldset>
             </form> 
-        </div>
 
     </div>
 

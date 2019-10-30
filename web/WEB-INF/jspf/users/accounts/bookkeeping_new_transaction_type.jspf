@@ -308,6 +308,53 @@
                                     </tbody>
                                 </table>
                             </div>
+                            
+                            <h4 class="text-center bold margintop">Memorandum Entries 
+                                <button class="NewMemorandumEntryButton btn btn-sm btn-primary" type="submit" value="+" tooltip="Add New Memorandum Entry"><i class="icon-add mr-2"></i>Add new</button>
+                            </h4>
+                            <div class="card padding table-responsive">
+                                <table class="NewProcessMemorandumEntries TableHorizontalScroll table table-hover">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Step #</th>
+                                            <th>Description</th>
+                                            <th>Amount</th>
+                                            <th>Account</th>
+                                            <th >Account Type (Contingent)</th>
+                                            <th>Account Owner</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="MemorandumEntriesTableRowClone">
+                                            <td class="MemorandumEntriesIndexNumber">1</td>
+                                            <td><input class="MemorandumEntryDescription" placeholder="Brief description of this step of the transaction" /></td>
+                                            <td>
+                                                <div class="DebitAmountParent">
+                                                    <div>
+                                                        <select class="ParametersSelect DebitAmount"></select> 
+                                                    </div>
+                                                </div>
+                                            </td>                                        
+                                            <td>
+                                                <select class="AccountTypesDropdown "></select>
+                                                <select class="SubAccountTypesDropdown "></select><br>
+                                            </td>
+                                            <td ><span class="btn-info btn-sm"> assets </span></td>
+                                            <td>
+                                                <select class="">
+                                                    <option>MOE</option>
+                                                    <option>Party A</option>
+                                                    <option>Party B</option>
+                                                    <option>Party C</option>
+                                                    <option>Party D</option>
+                                                    <option>Party E</option>
+                                                    <option>Party F</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
                             <div class="text-center double-marginbottom right">                          
                                 <button class="SaveNewProcessButton btn btn-primary btn-sm" type="submit" value="Save New Process" >Save New Process</button>

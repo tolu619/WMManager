@@ -49,11 +49,13 @@
                                         <option value="0">select account type</option>
                                         <option></option>
                                         <option value="1">Assets</option>
-                                        <option value="2">Expenses</option>
-                                        <option value="3">Dividends</option>
-                                        <option value="4">Liabilities</option>
-                                        <option value="5">Equity</option>
-                                        <option value="6">Revenue</option>
+                                        <option value="2">Contingent Assets</option>
+                                        <option value="3">Expenses</option>
+                                        <option value="4">Dividends</option>
+                                        <option value="5">Liabilities</option>
+                                        <option value="6">Contingent Liabilities</option>
+                                        <option value="7">Equity</option>
+                                        <option value="8">Revenue</option>
                                     </select>
                                 </div>
                             </div>

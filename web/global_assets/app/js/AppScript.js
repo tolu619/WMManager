@@ -6854,6 +6854,21 @@ function DisplayContactAction(data) {
     });
 }
 
+function displayProductListingPreview(){
+    var parent = $("#productListingPreview");
+    var PName = $("#prodName").val();
+    alert(PName);
+    var category = $("#prodCategories").val();
+    var Summary = $("#prodSummary").val();
+    var Description = $("#prodDesc").val();
+    var quantity = $("#prod-prop-quantity").val();
+    var price = $("#prod-prop-price").val();
+    var tags = $("#prodtags").val();
+    var properties = "";
+    $("#previewProdName").text(PName);
+    
+}
+
 function listProduct() {//call this function from custom.js
     var PName = $("#prodName").val();
     var category = $("#prodCategories").val();
