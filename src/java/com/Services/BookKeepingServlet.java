@@ -239,15 +239,36 @@ public class BookKeepingServlet extends HttpServlet {
                     {
                         String[] AccountingEntriesArray = JSONArray[i].split(",");
                         HashMap<String, Object> TableDataHashMap = new HashMap<>();
-                        TableDataHashMap.put(Tables.Transaction.TransactionCode, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[0]).split(":")[1]);
-                        TableDataHashMap.put(Tables.Transaction.CreditAmount, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[1]).split(":")[1]);
-                        TableDataHashMap.put(Tables.Transaction.DebitAmount, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[2]).split(":")[1]);
-                        TableDataHashMap.put(BookKeeper.CreditAccountTypeID, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[3]).split(":")[1]);
-                        TableDataHashMap.put(BookKeeper.DebitAccountTypeID, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[4]).split(":")[1]);
-                        TableDataHashMap.put(Tables.Transaction.TransactionID, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[5]).split(":")[1]);
-                        TableDataHashMap.put(Tables.Transaction.Comment, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[6]).split(":")[1]);
-                        TableDataHashMap.put(Tables.AccountingEntryDefinitions.credit_AccountOwner, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[7]).split(":")[1]);
-                        TableDataHashMap.put(Tables.AccountingEntryDefinitions.debit_AccountOwner, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[8]).split(":")[1]);
+                        if (!JSONArray[i].contains("CreditAmount")) //This is a contingent liability accounting entry
+                        {
+                            TableDataHashMap.put(Tables.Transaction.TransactionCode, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[0]).split(":")[1]);
+                            TableDataHashMap.put(Tables.Transaction.DebitAmount, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[1]).split(":")[1]); 
+                            TableDataHashMap.put(BookKeeper.DebitAccountTypeID, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[2]).split(":")[1]); 
+                            TableDataHashMap.put(Tables.Transaction.TransactionID, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[3]).split(":")[1]); 
+                            TableDataHashMap.put(Tables.Transaction.Comment, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[4]).split(":")[1]); 
+                            TableDataHashMap.put(Tables.AccountingEntryDefinitions.debit_AccountOwner, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[5]).split(":")[1]); 
+                        }
+                        else if (!JSONArray[i].contains("DebitAmount")) //This is a contingent asset accounting entry
+                        {
+                            TableDataHashMap.put(Tables.Transaction.TransactionCode, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[0]).split(":")[1]);
+                            TableDataHashMap.put(Tables.Transaction.CreditAmount, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[1]).split(":")[1]);
+                            TableDataHashMap.put(BookKeeper.CreditAccountTypeID, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[2]).split(":")[1]); 
+                            TableDataHashMap.put(Tables.Transaction.TransactionID, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[3]).split(":")[1]); 
+                            TableDataHashMap.put(Tables.Transaction.Comment, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[4]).split(":")[1]); 
+                            TableDataHashMap.put(Tables.AccountingEntryDefinitions.credit_AccountOwner, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[5]).split(":")[1]);
+                        }
+                        else //This is a regular accounting entry
+                        {
+                            TableDataHashMap.put(Tables.Transaction.TransactionCode, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[0]).split(":")[1]);
+                            TableDataHashMap.put(Tables.Transaction.CreditAmount, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[1]).split(":")[1]);
+                            TableDataHashMap.put(Tables.Transaction.DebitAmount, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[2]).split(":")[1]);
+                            TableDataHashMap.put(BookKeeper.CreditAccountTypeID, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[3]).split(":")[1]);
+                            TableDataHashMap.put(BookKeeper.DebitAccountTypeID, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[4]).split(":")[1]);
+                            TableDataHashMap.put(Tables.Transaction.TransactionID, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[5]).split(":")[1]);
+                            TableDataHashMap.put(Tables.Transaction.Comment, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[6]).split(":")[1]);
+                            TableDataHashMap.put(Tables.AccountingEntryDefinitions.credit_AccountOwner, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[7]).split(":")[1]);
+                            TableDataHashMap.put(Tables.AccountingEntryDefinitions.debit_AccountOwner, BookKeeper.RemoveSpecialCharactersExceptColon(AccountingEntriesArray[8]).split(":")[1]);
+                        }
                         TransactionMap.put(i, TableDataHashMap);
                     }
 

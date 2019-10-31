@@ -239,22 +239,22 @@ public class BookKeeper
         return Accounts;
     }
 
-    public static String GenerateTransactionID(String TransactionCode, String FromUserID) throws ParseException {
+    public static String GenerateTransactionID(String TransactionCode, String SeedNumber) throws ParseException {
         String FirstTwoCharactersOfTransactionCode = TransactionCode.substring(0, 2);
         String dateNow = "" + UtilityManager.CurrentDate();
         String timeNow = "" + UtilityManager.CurrentTime();
         dateNow = dateNow.replace("-", "");
         timeNow = timeNow.replace(":", "");
         //If the UserID is greater than 4 digits, truncate it to 4 digits. If it's less than, add zeros until it becomes 4 digits
-        if (FromUserID.length() > 4) {
-            FromUserID = FromUserID.substring(0, 3);
-        } else if (FromUserID.length() < 4) {
-            int Difference = 4 - FromUserID.length();
-            for (int i = FromUserID.length(); i < Difference; i++) {
-                FromUserID = "0" + FromUserID;
+         if (SeedNumber.length() > 4) {
+            SeedNumber = SeedNumber.substring(0, 3);
+        } else if (SeedNumber.length() < 4) {
+            int Difference = 4 - SeedNumber.length();
+            for (int i = SeedNumber.length(); i < Difference; i++) {
+                SeedNumber = "0" + SeedNumber;
             }
         }
-        String TransactionId = FirstTwoCharactersOfTransactionCode + "" + FromUserID + "" + dateNow + "" + timeNow;
+        String TransactionId = FirstTwoCharactersOfTransactionCode + "" + SeedNumber + "" + dateNow + "" + timeNow;
         return TransactionId;
     }
 
@@ -269,11 +269,30 @@ public class BookKeeper
         {
             int nextKey = iterator.next();
             HashMap<String, Object> TransactionTableData = TransactionMap.get(nextKey);
-            int PayerSubLedgerID = Integer.parseInt(TransactionTableData.get(DebitAccountTypeID).toString());
-            int PayeeSubLedgerID = Integer.parseInt(TransactionTableData.get(CreditAccountTypeID).toString());
-            if (CheckIfSubLedgerIsCashAccount(PayerSubLedgerID) || CheckIfSubLedgerIsCashAccount(PayeeSubLedgerID))
+            int PayerSubLedgerID = 0; int PayeeSubLedgerID = 0;
+            try
             {
-                CashAccountingEntries.add(nextKey);
+                PayerSubLedgerID = Integer.parseInt(TransactionTableData.get(DebitAccountTypeID).toString());
+            }
+            catch (Exception e) //This is a contingent asset accounting entry
+            {
+                
+            }
+            try
+            {
+                PayeeSubLedgerID = Integer.parseInt(TransactionTableData.get(CreditAccountTypeID).toString());
+            }
+            catch (Exception e) //This is a contingent liability accounting entry
+            {
+                
+            }
+            
+            if (PayerSubLedgerID != 0 && PayeeSubLedgerID != 0) //if it isn't a memorandum entry
+            {
+                if (CheckIfSubLedgerIsCashAccount(PayerSubLedgerID) || CheckIfSubLedgerIsCashAccount(PayeeSubLedgerID))
+                {
+                    CashAccountingEntries.add(nextKey);
+                }
             }
         }
         if (CashAccountingEntries.size() > 0) //If there are any accounting entries that involve cash
@@ -304,38 +323,123 @@ public class BookKeeper
         }
         else //None of the accounting entries requires any cash transfers
         {
+            iterator = keys.iterator(); //reset the iterator for re-use
+            String SeedNumber = "" + UtilityManager.CurrentTime().getTime();
             while (iterator.hasNext()) 
             {
                 int nextKey = iterator.next();
                 HashMap<String, Object> TransactionTableData = TransactionMap.get(nextKey);
-                String DebitAccountOwnerID = TransactionTableData.get(Tables.AccountingEntryDefinitions.debit_AccountOwner).toString();
-                String CreditAccountOwnerID = TransactionTableData.get(Tables.AccountingEntryDefinitions.credit_AccountOwner).toString();
-                String TransactionID = GenerateTransactionID(TransactionTableData.get(Tables.Transaction.TransactionCode).toString(), DebitAccountOwnerID);
-                TransactionTableData.put(Tables.Transaction.TransactionID, TransactionID);
-                //Get Credit and Debit account numbers
-                String CreditAccountNumber = GeneralAccountManager.GetUserAccountNumber(Integer.parseInt(CreditAccountOwnerID), Integer.parseInt(TransactionTableData.get("CreditAccountTypeID").toString()));
-                String DebitAccountNumber = GeneralAccountManager.GetUserAccountNumber(Integer.parseInt(DebitAccountOwnerID), Integer.parseInt(TransactionTableData.get("DebitAccountTypeID").toString()));
-                TransactionTableData.put(Tables.Transaction.CreditAccountNumber, CreditAccountNumber);
-                TransactionTableData.put(Tables.Transaction.DebitAccountNumber, DebitAccountNumber);
-
                 HashMap<String, Object> TransactionHistoryTableData = new HashMap<>();
-                Result = MoveWarrantsAsDefinedByAccountingEntry(TransactionTableData);
-                TransactionHistoryTableData.putAll(TransactionTableData);  //Copy this out before removing some items from it
-                TransactionTableData.remove(Tables.AccountingEntryDefinitions.credit_AccountOwner);
-                TransactionTableData.remove(Tables.AccountingEntryDefinitions.debit_AccountOwner);
-                TransactionTableData.remove(CreditAccountTypeID);
-                TransactionTableData.remove(DebitAccountTypeID);
-                int TransactionRecordID = DBManager.insertTableDataReturnID(Tables.Transaction.Table, TransactionTableData, "");
-                //Log Transaction History
-                TransactionHistoryTableData.put(BookKeeper.CreditAccountOwnerIDString, CreditAccountOwnerID);
-                TransactionHistoryTableData.put(BookKeeper.DebitAccountOwnerIDString, DebitAccountOwnerID);
-                Result += LogTransactionHistory(TransactionHistoryTableData) + TransactionRecordID;
-                //Get Old balance and new balance
-            }
-        }
+                String TransactionID = GenerateTransactionID(TransactionTableData.get(Tables.Transaction.TransactionCode).toString(), SeedNumber);
+                if (TransactionTableData.get(Tables.AccountingEntryDefinitions.debit_AccountOwner) == null) //This is a contingent asset accounting entry
+                {
+                    String CreditAccountOwnerID = TransactionTableData.get(Tables.AccountingEntryDefinitions.credit_AccountOwner).toString();
+                    TransactionTableData.put(Tables.Transaction.TransactionID, TransactionID);
+                    String CreditAccountNumber = GeneralAccountManager.GetUserAccountNumber(Integer.parseInt(CreditAccountOwnerID), Integer.parseInt(TransactionTableData.get("CreditAccountTypeID").toString()));
+                    TransactionTableData.put(Tables.Transaction.CreditAccountNumber, CreditAccountNumber);
+                    Result = ExecuteContingentAssetAccountingEntry(TransactionTableData);
+                    TransactionHistoryTableData.putAll(TransactionTableData);  //Copy this out before removing some items from it
+                    TransactionTableData.remove(Tables.AccountingEntryDefinitions.credit_AccountOwner);
+                    TransactionTableData.remove(CreditAccountTypeID);
+                    int TransactionRecordID = DBManager.insertTableDataReturnID(Tables.Transaction.Table, TransactionTableData, "");
+                    //Log Transaction History
+                    TransactionHistoryTableData.put(BookKeeper.CreditAccountOwnerIDString, CreditAccountOwnerID);
+                    Result += LogMemorandumTransactionHistory(TransactionHistoryTableData) + TransactionRecordID;
+                }
+                else if (TransactionTableData.get(Tables.AccountingEntryDefinitions.credit_AccountOwner) == null) //This is a contingent liability accounting entry
+                {
+                    String DebitAccountOwnerID = TransactionTableData.get(Tables.AccountingEntryDefinitions.debit_AccountOwner).toString();
+                    TransactionTableData.put(Tables.Transaction.TransactionID, TransactionID);
+                    Result = ExecuteContingentLiabilityAccountingEntry(TransactionTableData);
+                    TransactionHistoryTableData.putAll(TransactionTableData);  //Copy this out before removing some items from it
+                    TransactionTableData.remove(Tables.AccountingEntryDefinitions.debit_AccountOwner);
+                    TransactionTableData.remove(DebitAccountTypeID);
+                    int TransactionRecordID = DBManager.insertTableDataReturnID(Tables.Transaction.Table, TransactionTableData, "");
+                    //Log Transaction History
+                    TransactionHistoryTableData.put(BookKeeper.DebitAccountOwnerIDString, DebitAccountOwnerID);
+                    Result += LogMemorandumTransactionHistory(TransactionHistoryTableData) + TransactionRecordID;
+                }
+                else
+                {
+                    String DebitAccountOwnerID = TransactionTableData.get(Tables.AccountingEntryDefinitions.debit_AccountOwner).toString();
+                    String CreditAccountOwnerID = TransactionTableData.get(Tables.AccountingEntryDefinitions.credit_AccountOwner).toString();
+                    TransactionTableData.put(Tables.Transaction.TransactionID, TransactionID);
+                    //Get Credit and Debit account numbers
+                    String CreditAccountNumber = GeneralAccountManager.GetUserAccountNumber(Integer.parseInt(CreditAccountOwnerID), Integer.parseInt(TransactionTableData.get("CreditAccountTypeID").toString()));
+                    String DebitAccountNumber = GeneralAccountManager.GetUserAccountNumber(Integer.parseInt(DebitAccountOwnerID), Integer.parseInt(TransactionTableData.get("DebitAccountTypeID").toString()));
+                    TransactionTableData.put(Tables.Transaction.CreditAccountNumber, CreditAccountNumber);
+                    TransactionTableData.put(Tables.Transaction.DebitAccountNumber, DebitAccountNumber);
+
+                    Result = MoveWarrantsAsDefinedByAccountingEntry(TransactionTableData);
+                    TransactionHistoryTableData.putAll(TransactionTableData);  //Copy this out before removing some items from it
+                    TransactionTableData.remove(Tables.AccountingEntryDefinitions.credit_AccountOwner);
+                    TransactionTableData.remove(Tables.AccountingEntryDefinitions.debit_AccountOwner);
+                    TransactionTableData.remove(CreditAccountTypeID);
+                    TransactionTableData.remove(DebitAccountTypeID);
+                    int TransactionRecordID = DBManager.insertTableDataReturnID(Tables.Transaction.Table, TransactionTableData, "");
+                    //Log Transaction History
+                    TransactionHistoryTableData.put(BookKeeper.CreditAccountOwnerIDString, CreditAccountOwnerID);
+                    TransactionHistoryTableData.put(BookKeeper.DebitAccountOwnerIDString, DebitAccountOwnerID);
+                    Result += LogTransactionHistory(TransactionHistoryTableData) + TransactionRecordID;
+                    //Get Old balance and new balance
+                }
+                
+            } //END while loop that iterates through hashmap of accounting entries
+        } //END "none of the accounting entries requires any cash transfers" else block
         
         return Result;
     }
+    
+    public static String ExecuteContingentAssetAccountingEntry(HashMap<String, Object> AccountingEntryMap) throws ClassNotFoundException, SQLException, UnsupportedEncodingException
+    {
+        String result = "failed";
+        int Amount = Integer.parseInt(AccountingEntryMap.get(Tables.Transaction.CreditAmount).toString());
+        String AccountRecordOldString = DBManager.GetString(Tables.AccountRecord.AccountBalance, Tables.AccountRecord.Table, "where " + Tables.AccountRecord.UserID + "="
+                + AccountingEntryMap.get(Tables.AccountingEntryDefinitions.credit_AccountOwner).toString());
+        int ReceiversUserID = Integer.parseInt(AccountingEntryMap.get(Tables.AccountingEntryDefinitions.credit_AccountOwner).toString());
+        int LedgerID = Integer.parseInt(AccountingEntryMap.get(CreditAccountTypeID).toString());
+        String AccountRecordNewString = LedgerID + ":" + Amount + "_" + AccountingEntryMap.get(Tables.Transaction.TransactionID);
+        String[] ReceiversBalances = AccountRecordOldString.split(";"); //All Balances of all Subledgers
+        for (String Balance : ReceiversBalances) //Loop through all the Subledgers
+        {
+            if (Balance.split(":")[0].equals(LedgerID + "")) //For the balance in the specific Subledger we are considering,
+            {
+                AccountRecordNewString = Balance + "/" + AccountRecordNewString;
+                AccountRecordNewString = AccountRecordOldString.replaceAll(Balance, AccountRecordNewString);
+                //Replace the values in this subledger's record with the new record string
+            }
+        }
+        result = DBManager.UpdateStringData(Tables.AccountRecord.Table, Tables.AccountRecord.AccountBalance, AccountRecordNewString,
+                "WHERE " + Tables.AccountRecord.UserID + "=" + ReceiversUserID); //Update the reciever's acccount with the correct account balance
+        
+        return result;
+    }
+    
+    public static String ExecuteContingentLiabilityAccountingEntry(HashMap<String, Object> AccountingEntryMap) throws ClassNotFoundException, SQLException, UnsupportedEncodingException
+    {
+        String result = "failed";
+        int Amount = Integer.parseInt(AccountingEntryMap.get(Tables.Transaction.DebitAmount).toString());
+        String AccountRecordOldString = DBManager.GetString(Tables.AccountRecord.AccountBalance, Tables.AccountRecord.Table, "where " + Tables.AccountRecord.UserID + "="
+                + AccountingEntryMap.get(Tables.AccountingEntryDefinitions.debit_AccountOwner).toString());
+        int ReceiversUserID = Integer.parseInt(AccountingEntryMap.get(Tables.AccountingEntryDefinitions.debit_AccountOwner).toString());
+        int LedgerID = Integer.parseInt(AccountingEntryMap.get(DebitAccountTypeID).toString());
+        String AccountRecordNewString = LedgerID + ":" + Amount + "_" + AccountingEntryMap.get(Tables.Transaction.TransactionID);
+        String[] ReceiversBalances = AccountRecordOldString.split(";"); //All Balances of all Subledgers
+        for (String Balance : ReceiversBalances) //Loop through all the Subledgers
+        {
+            if (Balance.split(":")[0].equals(LedgerID + "")) //For the balance in the specific Subledger we are considering,
+            {
+                AccountRecordNewString = Balance + "/" + AccountRecordNewString;
+                AccountRecordNewString = AccountRecordOldString.replaceAll(Balance, AccountRecordNewString);
+                //Replace the values in this subledger's record with the new record string
+            }
+        }
+        result = DBManager.UpdateStringData(Tables.AccountRecord.Table, Tables.AccountRecord.AccountBalance, AccountRecordNewString,
+                "WHERE " + Tables.AccountRecord.UserID + "=" + ReceiversUserID); //Update the contingent acccount with the correct account balance
+        
+        return result;
+    }
+    
     
     public static String MoveWarrantsAsDefinedByAccountingEntry(HashMap<String, Object> AccountingEntryMap) throws ClassNotFoundException, SQLException, UnsupportedEncodingException
     {
@@ -410,7 +514,7 @@ public class BookKeeper
                     result = DBManager.UpdateStringData(Tables.AccountRecord.Table, Tables.AccountRecord.AccountBalance, FromAccountNewRecordString, 
                             "WHERE " + Tables.AccountRecord.UserID + "=" + FromUserID); //Update the sender's acccount with the correct account balance
                     result += DBManager.UpdateStringData(Tables.AccountRecord.Table, Tables.AccountRecord.AccountBalance, ToAccountNewRecordString, 
-                            "WHERE " + Tables.AccountRecord.UserID + "=" + ToUserID); //Update the sender's acccount with the correct account balance
+                            "WHERE " + Tables.AccountRecord.UserID + "=" + ToUserID); //Update the receiver's acccount with the correct account balance
                 }
             }
         }
@@ -550,6 +654,45 @@ public class BookKeeper
         }
         return result;
     }
+    
+    public static String LogMemorandumTransactionHistory(HashMap<String, Object> TransactionData) throws SQLException, ClassNotFoundException, UnsupportedEncodingException, ParseException {
+        String result = "failed";
+        HashMap<String, Object> TransactionHistoryTableData = new HashMap<>();
+        String dateNow = "" + UtilityManager.CurrentDate();
+        String timeNow = "" + UtilityManager.CurrentTime();
+        dateNow = dateNow.replace("-", "");
+        timeNow = timeNow.replace(":", "");
+        TransactionHistoryTableData.put(Tables.TransactionHistory.Date, dateNow);
+        TransactionHistoryTableData.put(Tables.TransactionHistory.Time, timeNow);
+        TransactionHistoryTableData.put(Tables.TransactionHistory.TransactionId, TransactionData.get(Tables.TransactionHistory.TransactionId));
+        TransactionHistoryTableData.put(Tables.TransactionHistory.TransactionCode, TransactionData.get(Tables.TransactionHistory.TransactionCode));
+        String Description = "";
+//        TransactionHistoryTableData.put(Tables.TransactionHistory.Status, "Completed");
+        if (TransactionData.get(BookKeeper.DebitAccountOwnerIDString) == null) //This is a contingent asset memorandum entry
+        {
+            String CreditName = DBManager.GetString(Tables.Member.FirstName, Tables.Member.Table, "where " + Tables.Member.UserID + "=" + TransactionData.get(BookKeeper.CreditAccountOwnerIDString));
+            CreditName += " " + DBManager.GetString(Tables.Member.LastName, Tables.Member.Table, "where " + Tables.Member.UserID + "=" + TransactionData.get(BookKeeper.CreditAccountOwnerIDString));
+            Description = "Memorandum entry to credit " + CreditName + " with " + TransactionData.get(Tables.Transaction.CreditAmount);
+        }
+        else if (TransactionData.get(BookKeeper.CreditAccountOwnerIDString) == null) //This is a contingent liability memorandum entry
+        {
+            String DebitName = DBManager.GetString(Tables.Member.FirstName, Tables.Member.Table, "where " + Tables.Member.UserID + "=" + TransactionData.get(BookKeeper.DebitAccountOwnerIDString));
+            DebitName += " " + DBManager.GetString(Tables.Member.LastName, Tables.Member.Table, "where " + Tables.Member.UserID + "=" + TransactionData.get(BookKeeper.DebitAccountOwnerIDString));
+            Description = "Memorandum entry to debit " + DebitName + " with " + TransactionData.get(Tables.Transaction.DebitAmount);
+        }
+        TransactionHistoryTableData.put(Tables.TransactionHistory.Description, Description);
+        
+        try 
+        {
+            result = DBManager.insertTableData(Tables.TransactionHistory.Table, TransactionHistoryTableData, "");
+        } 
+        catch (SQLException e) 
+        {
+            String error = e.getMessage();
+            System.out.print(error);
+        }
+        return result;
+    }
 
     public static HashMap<Integer, Object> GetAccountBalancesByUserID(int userID, Boolean IsWarrant) throws SQLException, ClassNotFoundException, UnsupportedEncodingException {
         HashMap<Integer, Object> balances = new HashMap<>();
@@ -580,7 +723,7 @@ class JournalEntry {
 
     public enum BookKeepingEntryType {
 
-        Debit, Credit
+        Debit, Credit, 
     }
     public BookKeepingEntryType EntryType;
 
