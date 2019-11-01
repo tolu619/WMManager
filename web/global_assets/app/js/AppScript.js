@@ -6853,7 +6853,7 @@ function DisplayContactAction(data) {
     });
 }
 
-function displayProductListingPreview(){
+function displayProductListingPreview() {
     var parent = $("#productListingPreview");
     var PName = $("#prodName").val();
     alert(PName);
@@ -6865,7 +6865,7 @@ function displayProductListingPreview(){
     var tags = $("#prodtags").val();
     var properties = "";
     $("#previewProdName").text(PName);
-    
+
 }
 
 function listProduct() {//call this function from custom.js
@@ -12374,6 +12374,7 @@ function BookKeepingPageFunctions()
         InstantiateNewProcessDivUI(ThisChild);
         ThisChild.appendTo(Parent).show();
         CloneTemplate.hide();
+        GetData("BookKeeping", "GetAllLedgerAccounts", "LoadContingentLedgerAccounts");
 //        DeleteAllCookies();
 //        alert(document.cookie);
 //        document.getElementsByClassName("NewAccountingEntryButton")[0].addEventListener('click', AddNewAccountingEntryTableRow, false);
@@ -12798,6 +12799,7 @@ var AddNewAccountingEntryTableRow = function ()
     ThisChild.find(".AccountingEntriesIndexNumber").text(NumberOfAccountingEntriesInCurrentProcess);
     ThisChild.appendTo(Parent).show();
 };
+
 function PopulateLedgerDropDownsMethod(data)
 {
     var AccountTypesDropDownLists = $(".AccountTypesDropdown");
@@ -12816,6 +12818,7 @@ function LedgerDropDownValueChanged(ID, ThisDropDown)
     SubDropDownList.empty();
     GetData("BookKeeping", "GetSubLedgersByLedgerID", "PopulateSubLedgerDropDowns", ID);
 }
+
 function PopulateSubLedgerDropDownsMethod(data)
 {
     var SubAccountTypesDropDownLists = $(".SubAccountTypesDropdown");
@@ -12864,7 +12867,7 @@ function DisplayThirdPartyJournalEntryDetailsForTransactionType(data)
     ChildClone.hide();
 }
 
-function DisplayAllTransactionTypes(data, parent) {
+function DisplayTransactionTypes(data, parent) {
     var txnparent = parent.find($("#transactionTypeSelect"));
     var partySearch = $("#partySearchText");
     txnparent.empty();
@@ -12927,6 +12930,46 @@ function DisplayAllLedgerAccounts(data, parent) {
                 value: id
             }).appendTo(parent);
         });
+    }
+}
+
+function DisplayContingentLedgerAccounts(data, parent) {
+    parent.empty();
+    if (data === "none") {
+        parent.text("No ledger accounts");
+    } else {
+        var contigentAccounts = [];
+        $.each(data, function (id, account) {
+            var type = account["BookKeepingAccountType"];
+            if (type.includes("Contingent")) {
+                contigentAccounts.push(account);
+            }
+        });
+        if (contigentAccounts.length > 0) {
+            parent.append($('<option/>').val(0).text("Select ledger account"));
+            $.each(contigentAccounts, function (id, account) {
+                parent.append($('<option/>').val(account["id"]).text(account["name"]));
+            });
+        } else {
+            parent.append($('<option/>').val(0).text("No Contingent account"));
+        }
+
+        parent.change(function () {
+            var ledgerId = $(this).val();
+            if (ledgerId != 0) {
+                var account = data[ledgerId];
+                var type = account["BookKeepingAccountType"].split(" ")[1];
+                $(".contingentAccType").text(type).removeClass("hide").show();
+                $(".ContingentSubLedgerAccountsDropdown").removeClass("hide").show();
+                GetData("BookKeeping", "GetSubLedgersByLedgerID", "LoadContingentSubLedgerAccounts", ledgerId);
+            } else {
+                alert("please select a valid account");
+                $(".ContingentSubLedgerAccountsDropdown").addClass("hide").hide();
+                $(".contingentAccType").addClass("hide").hide();
+            }
+
+        });
+
     }
 }
 
@@ -14111,7 +14154,7 @@ function linkToFunction(action, params) {
         }
         case "LoadAllTransactionTypes":
         {
-            DisplayAllTransactionTypes(params, $("#transactionSelection"));
+            DisplayTransactionTypes(params, $("#transactionSelection"));
             break;
         }
         case "LoadAllLedgerAccounts":
@@ -14119,9 +14162,19 @@ function linkToFunction(action, params) {
             DisplayAllLedgerAccounts(params, $("#parentAccountSelect"));
             break;
         }
+        case "LoadContingentLedgerAccounts":
+        {
+            DisplayContingentLedgerAccounts(params, $(".ContingentLedgerAccountsDropdown"));
+            break;
+        }
         case "LoadSubLedgerAccounts":
         {
             DisplaySubLedgerAccounts(params, $("#subledgerAccountSelect"));
+            break;
+        }
+        case "LoadContingentSubLedgerAccounts":
+        {
+            DisplaySubLedgerAccounts(params, $(".ContingentSubLedgerAccountsDropdown"));
             break;
         }
         case "LoadPartiesInvolvedInTransaction":

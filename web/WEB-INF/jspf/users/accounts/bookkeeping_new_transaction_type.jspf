@@ -336,10 +336,10 @@
                                                 </div>
                                             </td>                                        
                                             <td>
-                                                <select class="AccountTypesDropdown "></select>
-                                                <select class="SubAccountTypesDropdown "></select><br>
+                                                <select class="ContingentLedgerAccountsDropdown "></select>
+                                                <select class="ContingentSubLedgerAccountsDropdown hide "></select><br>
                                             </td>
-                                            <td ><span class="btn-info btn-sm"> assets </span></td>
+                                            <td ><span class="btn-info btn-sm contingentAccType hide" id="contingentAccType"> assets </span></td>
                                             <td>
                                                 <select class="">
                                                     <option>MOE</option>
