@@ -4,7 +4,7 @@
 <div class="navbar navbar-expand-md navbar-dark">
     <div class="navbar-brand">
        <a href="/WMHome" class="d-inline-block" target="_blank">
-            <img src="../../global_assets/images/wm/wm-name3.png" alt="">
+            <img src="../../global_assets/img/wm/wm-name3.png" alt="">
         </a>
     </div>
 
@@ -45,7 +45,7 @@
                         <!-- /search -->
                         <div class="row">
                             <div class="col-sm-12 text-center mb-3">
-                                <img src="../../global_assets/images/wm/wicon.jpg" alt="" width="40" height="40"/>
+                                <img src="../../global_assets/img/wm/wicon.jpg" alt="" width="40" height="40"/>
                             </div>
 
                         </div>

@@ -291,7 +291,7 @@ var TagInputs = function() {
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             prefetch: {
-                url: '../../../global_assets/demo_data/tags_input/citynames.json',
+                url: '../../../../global_assets/demo_data/tags_input/citynames.json',
                 filter: function(list) {
                     return $.map(list, function(cityname) {
                     return { name: cityname }; });
@@ -323,7 +323,7 @@ var TagInputs = function() {
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             limit: 10,
             prefetch: {
-                url: '../../../global_assets/demo_data/tags_input/cities.json'
+                url: '../../../../global_assets/demo_data/tags_input/cities.json'
             }
         });
 
@@ -362,7 +362,7 @@ var TagInputs = function() {
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             limit: 10,
             prefetch: {
-                url: '../../../global_assets/demo_data/tags_input/cities.json'
+                url: '../../../../global_assets/demo_data/tags_input/cities.json'
             }
         });
 
