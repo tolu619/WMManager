@@ -42,8 +42,11 @@
             <div class="accordion-parent clone hide col-12">
                 <div class="accordion-handler cursor mb-2 promo-name font-weight-semibold bg-grey pt-2 pb-2 pl-3 left threequarterwide"></div>
                 <div class="right bg-grey pt-2 pb-2 pr-3 quarterwide">
-                    <a href=".add-promo-product-modal" data-toggle="modal" data-popup="tooltip" title="Add product to promo" data-placement="top" class="text-white" id="promoprodbtn">
-                        <i class="icon-plus-circle2 mr-2"></i>
+                    <a href=".add-promo-product-modal" data-toggle="modal" data-popup="tooltip" title="Add product to promo" data-placement="top" class="text-white" id="addPromoProdBtn">
+                      Add Product  <i class="icon-plus-circle2 mr-2"></i>
+                    </a>
+                    <a href="#"  data-popup="tooltip" title="Delete Promo" data-placement="top" class="text-white pl-2" id="deletePromoBtn">
+                      Delete Promo/Deal  <i class="icon-trash mr-2"></i>
                     </a>
                 </div>
                 <div class="accordion-content accordion-expanded">
@@ -90,7 +93,8 @@
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <a href=".product-detail-modal" data-toggle="modal"  class="dropdown-item text-primary-800 promoprodbtn"><i class="icon-info22"></i> View Details</a>
                                                     <div class="dropdown-divider"></div>
-                                                    <a href="#" class="dropdown-item editPricebtn text-primary-800"><i class="icon-pencil7"></i> Edit Price</a>
+                                                    <a href="#" class="dropdown-item editPromoProdPriceBtn text-primary-800"><i class="icon-pencil7"></i> Edit Price</a>
+                                                    <a href="#" class="dropdown-item deletePromoProdBtn text-danger-800"><i class="icon-trash"></i> Remove Product</a>
                                                 </div>
                                             </div>
                                         </div>

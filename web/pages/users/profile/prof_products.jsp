@@ -12,17 +12,17 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>WM-Manager - :: Products</title>
-        <!--<link href="../../../global_assets/app/css/helpers.css" rel="stylesheet" type="text/css">-->
-        <link rel="icon" type="image/png" href="../../../global_assets/images/wm/favicon-16x16.png"/>
+        <!--<link href="../../../global_assets/css/helpers.css" rel="stylesheet" type="text/css">-->
+        <link rel="icon" type="image/png" href="../../../global_assets/img/wm/favicon-16x16.png"/>
 
         <!-- Global stylesheets -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
         <link href="../../../global_assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css"/>
-        <link href="../../../global_assets/app/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="../../../global_assets/app/css/bootstrap_limitless.min.css" rel="stylesheet" type="text/css">
-        <link href="../../../global_assets/app/css/layout.min.css" rel="stylesheet" type="text/css">
-        <link href="../../../global_assets/app/css/components.min.css" rel="stylesheet" type="text/css">
-        <link href="../../../global_assets/app/css/colors.min.css" rel="stylesheet" type="text/css">
+        <link href="../../../global_assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../../global_assets/css/bootstrap_limitless.min.css" rel="stylesheet" type="text/css">
+        <link href="../../../global_assets/css/layout.min.css" rel="stylesheet" type="text/css">
+        <link href="../../../global_assets/css/components.min.css" rel="stylesheet" type="text/css">
+        <link href="../../../global_assets/css/colors.min.css" rel="stylesheet" type="text/css">
         <link href="../../../global_assets/js/plugins/dropify/css/dropify.min.css" rel="stylesheet" type="text/css"/>
         <!-- /global stylesheets -->
 
@@ -76,14 +76,14 @@
         <script src="../../../global_assets/js/plugins/forms/validation/validate.min.js"></script>
 
 
-        <script src="../../../global_assets/app/js/app.js"></script>
-        <script src="../../../global_assets/app/js/helper.js"></script>
-        <script src="../../../global_assets/app/js/AppScript.js"></script>
+        <script src="../../../global_assets/js/app.js"></script>
+        <script src="../../../global_assets/js/helper.js"></script>
+        <script src="../../../global_assets/js/AppScript.js"></script>
 
         <!-- /theme JS files -->
         <script src="../../../global_assets/js/plugins/dropify/js/dropify.min.js" type="text/javascript"></script>
         <script src="../../../global_assets/js/plugins/parsleyjs/dist/parsley.min.js" type="text/javascript"></script>
-        <script src="../../../global_assets/app/js/custom.js"></script>
+        <script src="../../../global_assets/js/custom.js"></script>
         <script src="../../../global_assets/js/demo_pages/form_tags_input.js"></script>
 
 
