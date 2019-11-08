@@ -3,7 +3,7 @@
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header bg-primary">
-            <h6 class="modal-title">Quick Transaction with Code</h6>
+            <h6 class="modal-title">Create a Quick Transaction from a Transaction type</h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
 
@@ -36,11 +36,26 @@
                     <p class="smalltext marginbottom"> please click on each party involved to fill in their details</p>
                     <p id="transactionPartiesBtn" class="padding text-center"></p>
                 </div>
+                
+                <div class="hide card padding text-center" id="searchSettings">
+                    <p class="marginbottom">set the number of characters to press before searched party shows (default is 3)</p>
+                    <label class="margintop">search-phrase character count</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control " id="searchPhraseCount" required placeholder="enter character count">
+                            <div class="input-group-append">
+                                <span class="btn btn-sm  btn-primary" id="searchValueSet">set count</span>
+                            </div>
+                        </div>
+                </div>
 
                 <div class="col-md-12 hide" id="partySearchInput">
-                    <div class="row">
-                        <h5>search for <span class="partyTitle"></span></h5>
-                        <span class="right"><i class="fas fa-cog"></i></span>
+                    <div class="row col-12">
+                        <div class="col-6">                           
+                            <h5>search for <span class="partyTitle"></span></h5>
+                        </div>
+                        <div class="col-6">                           
+                            <h5 class="right"><span class="btn btn-info" id="searchSettingsBtn"><i class="icon-cog3 mr-2"></i>settings</span></h5>
+                        </div>
                     </div>
                         <div class="input-group mb-3">
                             <div class=" form-group-feedback form-group-feedback-left">
@@ -187,23 +202,23 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">Description</th>
-                                    <th scope="col">credit Account owner</th>
-                                    <th scope="col">credit Account type</th>
-                                    <th scope="col">credit Amount (#)</th>
                                     <th scope="col">debit Account owner</th>
                                     <th scope="col">debit Account type</th>
                                     <th scope="col">debit Amount (#)</th>
+                                    <th scope="col">credit Account owner</th>
+                                    <th scope="col">credit Account type</th>
+                                    <th scope="col">credit Amount (#)</th>
                                 </tr>
                             </thead>
                             <tbody id="transAccountEnteries">
                                 <tr class="accountClone">
                                     <td class="txnDescription"></td>
-                                    <td class="txnCreditOwner"></td>
-                                    <td class="txnCreditAccType"></td>
-                                    <td class="creditAmount"></td>
                                     <td class="txnDebitOwner"></td>
                                     <td class="txnDebitAccType"></td>
                                     <td class="debitAmount"></td>
+                                    <td class="txnCreditOwner"></td>
+                                    <td class="txnCreditAccType"></td>
+                                    <td class="creditAmount"></td>
                                 </tr>
                             </tbody>
                         </table>

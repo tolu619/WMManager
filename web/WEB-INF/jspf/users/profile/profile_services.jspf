@@ -92,8 +92,8 @@
                                 <div class="card card-body">
                                     <div class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
                                         <div class="mr-lg-3 mb-3 mb-lg-0">
-                                            <a href="../../../global_assets/images/placeholders/placeholder.jpg" data-popup="lightbox">
-                                                <img src="../../../global_assets/images/placeholders/placeholder.jpg" width="96" alt="">
+                                            <a href="../../../global_assets/img/placeholders/placeholder.jpg" data-popup="lightbox">
+                                                <img src="../../../global_assets/img/placeholders/placeholder.jpg" width="96" alt="">
                                             </a>
                                         </div>
 
@@ -168,8 +168,8 @@
                                 <div class="card card-body">
                                     <div class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
                                         <div class="mr-lg-3 mb-3 mb-lg-0">
-                                            <a href="../../../global_assets/images/placeholders/placeholder.jpg" data-popup="lightbox">
-                                                <img src="../../../global_assets/images/placeholders/placeholder.jpg" width="96" alt="">
+                                            <a href="../../../global_assets/img/placeholders/placeholder.jpg" data-popup="lightbox">
+                                                <img src="../../../global_assets/img/placeholders/placeholder.jpg" width="96" alt="">
                                             </a>
                                         </div>
 

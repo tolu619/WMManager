@@ -48,6 +48,9 @@
     <div  class="modal fade bd-account-details">
         <%@include file="../users/accounts/accounts_account_details.jspf" %>
     </div>
+    <div  class="modal fade bd-account-create">
+        <%@include file="../users/accounts/account_create_new_account.jspf" %>
+    </div>
     <div  class="modal fade TransPeriodModal">
         <%@include file="../users/accounts/accounts_generate_transactions.jspf" %>
     </div>
