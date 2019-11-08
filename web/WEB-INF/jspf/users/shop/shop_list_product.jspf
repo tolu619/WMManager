@@ -192,7 +192,7 @@
 
             <div id="productVariationsDiv" class="hide col-md-10 auto-margin">
                 <div class="text-center center">
-                    <h4 class="bold">Product's Variations.</h4>
+                    <h4 class="bold">Product's Variations.</h4> <br/>
                     <p class="nomargintop">enter product variants details</p>    
                 </div>
 
@@ -272,7 +272,6 @@
                     <h4 class="bold">Product's Preview.</h4>
                     <p class="nomargintop">Review your entered product Details before you finally submit for listing</p>    
                 </div>
-                <fieldset>
                     <div class="row form-group">
                         <div class="col-md-12">
                             <h5>Review your entered product Details before you finally submit for listing</h5>
@@ -370,9 +369,10 @@
                             </table>
                         </div>
                     </div>
-                </fieldset>
+                
+                <button class="btn btn-outline-info " id="listingStep5back" ><b><i class="icon-arrow-left8 mr-1"></i></b>previous</button></span>
+                <span class="right"><button class="btn btn-outline-primary" id="listProduct"><b>List product<b><i class="icon-arrow-right13 ml-1"></i></button></span>
             </div>
-
         </form>
 
         <form class="wizard-form listProductImageForm hide" action="${pageContext.request.contextPath}/ProductImageServlet" method="POST" enctype="multipart/form-data" id="FileUploadForm" data-fouc>
