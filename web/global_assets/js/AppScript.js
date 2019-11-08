@@ -27,6 +27,7 @@ var transactionParams = {};
 var editableTransactionParams = {};
 var ParamsCount = 0;
 var finalAccountingEnteries = [];
+var searchPhraseCount = 3;
 
 //variable declarations for transactions and book keeping from Tolu
 var Parameters = [];
@@ -41,6 +42,7 @@ var AccountsRequired = [];
 var NumberOfAccountsDebited, NumberOfAccountsCredited, NumberOfDerivedParameters = 0;
 var NumberOfProcesses = 0;
 var NumberOfAccountingEntriesInCurrentProcess = 0;
+var NumberOfMemorandumEntriesInCurrentProcess = 0;
 var AttachedAlert = function ()
 {
     alert("attached alert");
@@ -804,6 +806,131 @@ function btnEvents() {
     $("#QTransferBtn").click(function () {
         $(".bd-example-modaltransfer").modal("show");
     });
+
+    $("#createAccountBtn").click(function () {
+        $(".bd-account-create").modal("show");
+    });
+
+    $("#accountTypeSelect").change(function () {
+        var id = $(this).val();
+        if (id < 1 || !id) {
+            alert("please select a valid account type");
+            $("#createLedgerAccount").addClass("hide").hide();
+        } else {
+            $("#createLedgerAccount").removeClass("hide").show();
+        }
+    });
+
+    $("input[name='accountdefinition']").click(function () {
+        if ($(this).is(':checked') && $(this).val() == 1) {
+            $("#ledgerAcoount").removeClass("hide").show();
+            $("#subledgerAcoount").addClass("hide").hide();
+        } else if ($(this).is(':checked') && $(this).val() == 2) {
+            $("#subledgerAcoount").removeClass("hide").show();
+            $("#ledgerAcoount").addClass("hide").hide();
+            GetData("BookKeeping", "GetAllLedgerAccounts", "LoadAllLedgerAccounts");
+        }
+    });
+
+    $("input[name='parentAccount']").click(function () {
+        if ($(this).is(':checked') && $(this).val() == 1) {
+            $("#subledgerParentSelection").addClass("hide").hide();
+        } else if ($(this).is(':checked') && $(this).val() == 2) {
+            $("#parentAccountSelect").change(function () {
+                var ledgerId = $(this).val();
+                $("#subledgerParentSelection").removeClass("hide").show();
+                GetData("BookKeeping", "GetSubLedgersByLedgerID", "LoadSubLedgerAccounts", ledgerId);
+            });
+        }
+    });
+
+    $("#createLedgerAccount").click(function () {
+        var name = $("#NewAccountName").val();
+        var accountType = $("#accountTypeSelect option:selected").text();
+        if (name.length > 0 && accountType.length > 0) {
+            swal({
+                title: "Are you sure you want to create the account?",
+                text: "Press No if you still want to review the details. Press Yes to create the account.",
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonText: '<i class="icon-checkmark3 mr-2"></i> Yes ',
+                cancelButtonText: '<i class="icon-cancel-circle2 mr-2"></i> No',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false
+            }).then(function (dismiss) {
+                if (dismiss.value) {
+                    var data = [name, accountType];
+                    GetData("BookKeeping", "CreateLedgerAccount", "AccountCreationResponse", data);
+                } else {
+                    swal({
+                        title: 'Account not created',
+                        text: "Account has not been Created yet,you can review your account details!",
+                        type: 'info',
+                        showCancelButton: false,
+                        confirmButtonText: 'Ok!',
+                        confirmButtonClass: 'btn btn-info',
+                        buttonsStyling: false
+                    });
+                }
+            });
+        } else {
+            alert("please enter account name");
+        }
+    });
+
+    $("#parentAccountSelect").change(function () {
+        var id = $(this).val();
+        if (id < 1) {
+            alert("please select a valid parent account");
+            $("#createSubledgerAccount").addClass("hide").hide();
+        } else {
+            $("#createSubledgerAccount").removeClass("hide").show();
+        }
+    });
+
+    $("#createSubledgerAccount").click(function () {
+        var name = $("#subledgerAccountName").val();
+        var parentTypeId = $("input[name='parentAccount']:checked").val();
+        if (parentTypeId == 1) {
+            var parentType = "Ledger";
+            var parentId = $("#parentAccountSelect").val();
+        } else {
+            parentType = "SubLedger";
+            parentId = $("#subledgerAccountSelect").val();
+        }
+        if (name.length < 1) {
+            alert("please enter account name");
+        } else {
+            swal({
+                title: "Are you sure you want to create the account?",
+                text: "Press No if you still want to review the details. Press Yes to create the account.",
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonText: '<i class="icon-checkmark3 mr-2"></i> Yes ',
+                cancelButtonText: '<i class="icon-cancel-circle2 mr-2"></i> No',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false
+            }).then(function (dismiss) {
+                if (dismiss.value) {
+                    var data = [name, parentId, parentType];
+                    GetData("BookKeeping", "CreateSubLedgerAccount", "AccountCreationResponse", data);
+                } else {
+                    swal({
+                        title: 'Account not created',
+                        text: "Account has not been Created yet,you can review your account details!",
+                        type: 'info',
+                        showCancelButton: false,
+                        confirmButtonText: 'Ok!',
+                        confirmButtonClass: 'btn btn-info',
+                        buttonsStyling: false
+                    });
+                }
+            });
+        }
+    });
+
 
     $(".AddNewContact").click(function () {
         $(".bd-example-modal-1").modal("show");
@@ -1825,6 +1952,18 @@ function btnEvents() {
         var data = [actualuserid, subject, localStorage.ActualPhone, newPhone, "Phone"];
         GetData("User", "RequestChangeDetails", "LoadRequestChange", data);
     });
+    $("#searchSettingsBtn").click(function () {
+        $("#searchSettings").removeClass("hide").show();
+    });
+    $("#searchValueSet").click(function () {
+        var searchcount = $("#searchPhraseCount").val();
+        var searchCount = parseInt(searchcount);
+        if (searchCount > 0) {
+            searchPhraseCount = searchCount;
+            $("#searchSettings").addClass("hide").hide();
+        }
+
+    });
 }//end of btnEvents
 
 function profilePageFundtions() {
@@ -2053,6 +2192,72 @@ function productListingPageFunctions() {
 //        $(".second-content").hide();
 //    });
 
+
+    $("#listingStep2forward").click(function () {
+        var prodName = $("#prodName").val();
+        var prodSummary = $("#prodSummary").val();
+        if (prodName.length < 1  ||  prodSummary.length < 1) {
+            alert("please fill all details");
+        } else {
+            $("#productSpecsDiv").addClass("hide").hide();
+            $("#productDetailsDiv").removeClass("hide").show();
+        }
+    });
+    $("#listingStep1back").click(function () {
+        $("#productDetailsDiv").addClass("hide").hide();
+        $("#productSpecsDiv").removeClass("hide").show();
+    });
+    $("#listingStep3forward").click(function () {
+        var prodDesc = $("#prodDesc").val();
+        if (prodDesc.length < 1) {
+            alert("please fill all details");
+        } else {
+            $("#productDetailsDiv").addClass("hide").hide();
+            $("#productPropertiesDiv").removeClass("hide").show();
+        }
+    });
+    $("#listingStep2back").click(function () {
+        $("#productPropertiesDiv").addClass("hide").hide();
+        $("#productDetailsDiv").removeClass("hide").show();
+    });
+    $("#listingStep4forward").click(function () {
+        var prodQuantity = $("#prod-prop-quantity").val();
+        var prodPrice = $("#prod-prop-price").val();
+        if (prodQuantity.length < 1 || prodPrice.length < 1) {
+            alert("please fill all details");
+        } else {
+            $("#productPropertiesDiv").addClass("hide").hide();
+            $("#productVariationsDiv").removeClass("hide").show();
+        }
+    });
+    $("#listingStep3back").click(function () {
+        $("#productVariationsDiv").addClass("hide").hide();
+        $("#productPropertiesDiv").removeClass("hide").show();
+    });
+    $("#listingStep5forward").click(function () {
+        var variant = $("#variantSelect1").val();
+        var variantValue = $("#variantValueSelect1").val();
+        alert(variant + " : " + variantValue);
+        if ($("#varCheckbox").prop("checked") == false) {
+            $("#productVariationsDiv").addClass("hide").hide();
+            $("#productTagsDiv").removeClass("hide").show();
+        } else {
+            if (variant.length < 1 || variantValue.length < 1) {
+                alert("please select variant options");
+            } else {
+                $("#productVariationsDiv").addClass("hide").hide();
+                $("#productTagsDiv").removeClass("hide").show();
+            }
+        }
+    });
+    $("#listingStep4back").click(function () {
+        $("#productTagsDiv").addClass("hide").hide();
+        $("#productVariationsDiv").removeClass("hide").show();
+    });
+    $("#listingStep6forward").click(function () {
+        $("#productTagsDiv").addClass("hide").hide();
+        $("#productReviewDiv").removeClass("hide").show();
+    });
     $("#warrantyCheck").click(function () {
         if ($(this).prop("checked") == true) {
             $("#prod-warranty-type").removeClass("hide");
@@ -6775,6 +6980,21 @@ function DisplayContactAction(data) {
             window.location.reload();
         }
     });
+}
+
+function displayProductListingPreview() {
+    var parent = $("#productListingPreview");
+    var PName = $("#prodName").val();
+    alert(PName);
+    var category = $("#prodCategories").val();
+    var Summary = $("#prodSummary").val();
+    var Description = $("#prodDesc").val();
+    var quantity = $("#prod-prop-quantity").val();
+    var price = $("#prod-prop-price").val();
+    var tags = $("#prodtags").val();
+    var properties = "";
+    $("#previewProdName").text(PName);
+
 }
 
 function listProduct() {//call this function from custom.js
@@ -12269,12 +12489,14 @@ function BookKeepingPageFunctions()
         if (NumberOfProcesses > 0)
             NumberOfProcesses--;
         NumberOfAccountingEntriesInCurrentProcess = 0;
+        NumberOfMemorandumEntriesInCurrentProcess = 0;
         $("#NumberOfProcessLabel").text(NumberOfProcesses);
     });
     $("#NewProcessButton").click(function ()
     {
         NumberOfProcesses++;
         NumberOfAccountingEntriesInCurrentProcess++;
+        NumberOfMemorandumEntriesInCurrentProcess++;
         $("#NumberOfProcessLabel").text(NumberOfProcesses);
         $("#NewProcessButtonDiv").addClass("hide");
         var Parent = $("#NewProcessParent");
@@ -12283,6 +12505,7 @@ function BookKeepingPageFunctions()
         InstantiateNewProcessDivUI(ThisChild);
         ThisChild.appendTo(Parent).show();
         CloneTemplate.hide();
+        GetData("BookKeeping", "GetAllLedgerAccounts", "LoadContingentLedgerAccounts");
 //        DeleteAllCookies();
 //        alert(document.cookie);
 //        document.getElementsByClassName("NewAccountingEntryButton")[0].addEventListener('click', AddNewAccountingEntryTableRow, false);
@@ -12407,6 +12630,7 @@ function InstantiateNewProcessDivUI(DivClone)
     DivClone.find(".AccountingEntriesTableRowClone").addClass("clearclone ProcessWIP"); //Use this to identify Work In Progress UI for accounting entries
     DivClone.find("tr").removeClass("AccountingEntriesTableRowClone");
     DivClone.find(".NewAccountingEntryButton").click(AddNewAccountingEntryTableRow);
+    DivClone.find(".NewMemorandumEntryButton").click(AddNewMemorandumEntryTableRow);
     GetData("BookKeeping", "GetTransactionParameters", "PopulateParametersSelect");
     DivClone.find("#parameterTypeSelect").change(function ()
     {
@@ -12427,6 +12651,24 @@ function InstantiateNewProcessDivUI(DivClone)
             DivClone.find(".NewDerivedParamDiv").addClass("hide");
             DivClone.find(".NewIndependentParamDiv").addClass("hide");
             DivClone.find(".NewFixedParamDiv").addClass("hide");
+        }
+
+    });
+    DivClone.find("#entryTypeSelect").change(function ()
+    {
+        var entryTypeOption = $("#entryTypeSelect").val();
+        if (entryTypeOption == 1) {
+            DivClone.find("#balanceSheetEntryDiv").removeClass("hide");
+            DivClone.find(".SaveNewProcessButton").removeClass("hide");
+            DivClone.find("#memorandumEntryDiv").addClass("hide");
+        } else if (entryTypeOption == 2) {
+            DivClone.find("#memorandumEntryDiv").removeClass("hide");
+            DivClone.find(".SaveNewProcessButton").removeClass("hide");
+            DivClone.find("#balanceSheetEntryDiv").addClass("hide");
+        } else {
+            DivClone.find("#balanceSheetEntryDiv").addClass("hide");
+            DivClone.find("#memorandumEntryDiv").addClass("hide");
+            DivClone.find(".SaveNewProcessButton").addClass("hide");
         }
 
     });
@@ -12467,6 +12709,7 @@ function InstantiateNewProcessDivUI(DivClone)
     {
         alert("Saving New Transaction. In updated version, this will save only the current process's accounting entries. This will not save the new transaction");
         SaveNewTransactionType(DivClone);
+        $("#savedAccountingEnteries").removeClass("hide").show();
     });
 }
 function AddNewIndependentParam(DivClone)
@@ -12693,7 +12936,7 @@ function DisplayJournalEntryDetailsForTransactionType(data)
 
 var AddNewAccountingEntryTableRow = function ()
 {
-    var Parent = $(".AccountingEntriesTableBody");
+    var Parent = $("#AccountingEntriesTableBody");
     var ChildClone = $(".AccountingEntriesTableRowClone");
     var ThisChild = ChildClone.clone();
     ThisChild.removeClass("AccountingEntriesTableRowClone");
@@ -12707,6 +12950,24 @@ var AddNewAccountingEntryTableRow = function ()
     ThisChild.find(".AccountingEntriesIndexNumber").text(NumberOfAccountingEntriesInCurrentProcess);
     ThisChild.appendTo(Parent).show();
 };
+
+var AddNewMemorandumEntryTableRow = function ()
+{
+    var Parent = $("#MemorandumEntriesTableBody");
+    var ChildClone = $(".Clone");
+    var ThisChild = ChildClone.clone();
+    ThisChild.removeClass("Clone");
+    ThisChild.addClass("memorandumclone");
+    ThisChild.addClass("ProcessWIP"); //Use this to identify Work In Progress UI for accounting entries
+    ThisChild.find(".ContingentLedgerAccountsDropdown").change(function ()
+    {
+        LedgerDropDownValueChanged(this.value, this);
+    });
+    NumberOfMemorandumEntriesInCurrentProcess++;
+    ThisChild.find(".MemorandumEntriesIndexNumber").text(NumberOfMemorandumEntriesInCurrentProcess);
+    ThisChild.appendTo(Parent).show();
+};
+
 function PopulateLedgerDropDownsMethod(data)
 {
     var AccountTypesDropDownLists = $(".AccountTypesDropdown");
@@ -12714,8 +12975,10 @@ function PopulateLedgerDropDownsMethod(data)
     $("<option />", {text: "--Please select a Ledger Account--", value: 0}).appendTo(AccountTypesDropDownLists);
     $.each(data, function (index, Value)
     {
-//        var SubLedgers = Value["BookKeepingAccountType"];  just work
-        $("<option />", {text: capitaliseFirstLetter(Value["name"]), value: Value["id"]}).appendTo(AccountTypesDropDownLists);
+        var type = Value["BookKeepingAccountType"];
+        if (!(type.includes("Contingent"))) {
+            $("<option />", {text: capitaliseFirstLetter(Value["name"]), value: Value["id"]}).appendTo(AccountTypesDropDownLists);
+        }
     });
 }
 
@@ -12723,8 +12986,10 @@ function LedgerDropDownValueChanged(ID, ThisDropDown)
 {
     var SubDropDownList = $(ThisDropDown).closest("td").find(".SubAccountTypesDropdown");
     SubDropDownList.empty();
+    $(".SubAccountTypesDropdown").removeClass("hide").show();
     GetData("BookKeeping", "GetSubLedgersByLedgerID", "PopulateSubLedgerDropDowns", ID);
 }
+
 function PopulateSubLedgerDropDownsMethod(data)
 {
     var SubAccountTypesDropDownLists = $(".SubAccountTypesDropdown");
@@ -12773,7 +13038,7 @@ function DisplayThirdPartyJournalEntryDetailsForTransactionType(data)
     ChildClone.hide();
 }
 
-function DisplayAllTransactionTypes(data, parent) {
+function DisplayTransactionTypes(data, parent) {
     var txnparent = parent.find($("#transactionTypeSelect"));
     var partySearch = $("#partySearchText");
     txnparent.empty();
@@ -12805,7 +13070,7 @@ function DisplayAllTransactionTypes(data, parent) {
 
     partySearch.keydown(function () {
         var data = $("#partySearchText").val();
-        if (data.length < 4) {
+        if (data.length < searchPhraseCount - 1) {
             parent.find($("#partySearchResult")).addClass("hide").hide();
         }
     });
@@ -12815,12 +13080,81 @@ function DisplayAllTransactionTypes(data, parent) {
 
     function searchPartyDetails() {
         var data = $("#partySearchText").val();
-        if (data.length >= 4) {
+        if (data.length > searchPhraseCount - 1) {
             $("#partySearchResult").removeClass("hide").show();
             GetData("User", "SearchMembers", "LoadSearchResultPartyDetails", data);
         } else {
             parent.find($("#partySearchResult")).addClass("hide").hide();
         }
+    }
+}
+
+function DisplayAllLedgerAccounts(data, parent) {
+    parent.empty();
+    if (data === "none") {
+        parent.text("No ledger accounts");
+    } else {
+        parent.append($('<option/>').val(0).text("Select ledger account"));
+        $.each(data, function (id, account) {
+            $("<option />", {
+                text: capitaliseFirstLetter(account["name"]),
+                value: id
+            }).appendTo(parent);
+        });
+    }
+}
+
+function DisplayContingentLedgerAccounts(data, parent) {
+    parent.empty();
+    if (data === "none") {
+        parent.text("No ledger accounts");
+    } else {
+        var contigentAccounts = [];
+        $.each(data, function (id, account) {
+            var type = account["BookKeepingAccountType"];
+            if (type.includes("Contingent")) {
+                contigentAccounts.push(account);
+            }
+        });
+        if (contigentAccounts.length > 0) {
+            parent.append($('<option/>').val(0).text("Select ledger account"));
+            $.each(contigentAccounts, function (id, account) {
+                parent.append($('<option/>').val(account["id"]).text(account["name"]));
+            });
+        } else {
+            parent.append($('<option/>').val(0).text("No Contingent account"));
+        }
+        parent.change(function () {
+            var ledgerId = $(this).val();
+            if (ledgerId != 0) {
+                var account = data[ledgerId];
+                var type = account["BookKeepingAccountType"].split(" ")[1];
+                $(this).closest(".MemorandumEntriesTableRow").find(".contingentAccType").text(type).removeClass("hide").show();
+                $(this).closest(".MemorandumEntriesTableRow").find(".ContingentSubLedgerAccountsDropdown").removeClass("hide").show();
+                GetData("BookKeeping", "GetSubLedgersByLedgerID", "LoadContingentSubLedgerAccounts", ledgerId);
+            } else {
+                alert("please select a valid account");
+                $(".ContingentSubLedgerAccountsDropdown").addClass("hide").hide();
+                $(".contingentAccType").addClass("hide").hide();
+            }
+
+        });
+
+    }
+}
+
+function DisplaySubLedgerAccounts(data, parent) {
+    parent.empty();
+    if (data === "none") {
+        parent.text("No sub-ledger accounts");
+    } else {
+        parent.append($('<option/>').val(0).text("Select sub-ledger account"));
+        $.each(data, function (id, account) {
+            $("<option />", {
+                text: capitaliseFirstLetter(account["name"]),
+                value: id
+            }).appendTo(parent);
+        });
     }
 }
 
@@ -12966,6 +13300,11 @@ function DisplayParamsInvolvedInTransaction(data, parent) {
             childclone.hide();
         });
 
+        for (var i in editableTransactionParams) {
+            if (editableTransactionParams.hasOwnProperty(i)) {
+                ParamsCount++;
+            }
+        }
         var paramSet = $(".paramValueSet");
         paramSet.click(function () {
             var paramValue = $(this).closest(".txnParam").find(".paramValue").val();
@@ -13991,7 +14330,27 @@ function linkToFunction(action, params) {
         }
         case "LoadAllTransactionTypes":
         {
-            DisplayAllTransactionTypes(params, $("#transactionSelection"));
+            DisplayTransactionTypes(params, $("#transactionSelection"));
+            break;
+        }
+        case "LoadAllLedgerAccounts":
+        {
+            DisplayAllLedgerAccounts(params, $("#parentAccountSelect"));
+            break;
+        }
+        case "LoadContingentLedgerAccounts":
+        {
+            DisplayContingentLedgerAccounts(params, $(".ContingentLedgerAccountsDropdown"));
+            break;
+        }
+        case "LoadSubLedgerAccounts":
+        {
+            DisplaySubLedgerAccounts(params, $("#subledgerAccountSelect"));
+            break;
+        }
+        case "LoadContingentSubLedgerAccounts":
+        {
+            DisplaySubLedgerAccounts(params, $(".ContingentSubLedgerAccountsDropdown"));
             break;
         }
         case "LoadPartiesInvolvedInTransaction":
@@ -14024,6 +14383,21 @@ function linkToFunction(action, params) {
             swal({
                 title: 'Transaction Executed',
                 text: "Transaction has been successfully Executed!",
+                type: 'success',
+                showCancelButton: false,
+                confirmButtonText: 'Ok!',
+                confirmButtonClass: 'btn btn-success',
+                onClose: function () {
+                    window.location.reload();
+                }
+            });
+            break;
+        }
+        case "AccountCreationResponse":
+        {
+            swal({
+                title: 'Account Created',
+                text: "Account has been successfully Created!",
                 type: 'success',
                 showCancelButton: false,
                 confirmButtonText: 'Ok!',
@@ -14092,7 +14466,44 @@ function linkToFunction(action, params) {
                     ThisChild.find(".CreditAccountOwner").text(CreditAccountOwner);
                     ThisChild.appendTo(Parent).show();
                 }
+                if (index < NumberOfMemorandumEntriesInCurrentProcess) //To avoid picking values from the hidden DOM elements that were cloned to create this UI
+                {
+                    var ThisChild = ChildClone.clone();
+                    ThisChild.removeClass("AccountingEntriesDisplayTableDataClone");
+                    ThisChild.removeClass("hide");
+                    ThisChild.addClass("clearclone");
+                    var MemorandumEntriesIndexNumber = $(this).find(".MemorandumEntriesIndexNumber").text();
+                    var MemorandumEntryDescription = $(this).find(".MemorandumEntryDescription").val();
+                    var Amount = $(this).find(".DebitAmount").val();
+                    var Account = $(this).find(".ContingentLedgerAccountsDropdown").val();
+                    var SubAccount = $(this).find(".ContingentSubLedgerAccountsDropdown").val();
+                    var AccountOwner = $(this).find(".DebitAccountOwner").val();
+                    var Type = $(this).find(".contingentAccType").text();
+                    if (Type == "assets") {
+                        var data = [MemorandumEntriesIndexNumber, MemorandumEntryDescription, "", "",
+                            "", Amount, SubAccount, AccountOwner, NewTransactionID];
+                        GetData("BookKeeping", "NewAccountingEntry", "SaveNewAccountingEntryResponse", data);
+                        ThisChild.find(".AccountingEntriesIndexNumber").text(MemorandumEntriesIndexNumber);
+                        ThisChild.find(".AccountingEntryDescription").text(MemorandumEntryDescription);
+                        ThisChild.find(".CreditAmount").text(Amount);
+                        ThisChild.find(".CreditAccount").text(Account);
+                        ThisChild.find(".CreditSubAccount").text(SubAccount);
+                        ThisChild.find(".CreditAccountOwner").text(AccountOwner);
+                    } else {
+                        var data = [MemorandumEntriesIndexNumber, MemorandumEntryDescription, Amount, SubAccount,
+                            AccountOwner, "", "", "", NewTransactionID];
+                        GetData("BookKeeping", "NewAccountingEntry", "SaveNewAccountingEntryResponse", data);
+                        ThisChild.find(".AccountingEntriesIndexNumber").text(MemorandumEntriesIndexNumber);
+                        ThisChild.find(".AccountingEntryDescription").text(MemorandumEntryDescription);
+                        ThisChild.find(".DebitAmount").text(Amount);
+                        ThisChild.find(".DebitAccount").text(Account);
+                        ThisChild.find(".DebitSubAccount").text(SubAccount);
+                        ThisChild.find(".DebitAccountOwner").text(AccountOwner);
+                    }
+                    ThisChild.appendTo(Parent).show();
+                }
             });
+
             //Code group two. Replace this with the code block of the same name from Evernote 
             DOM_Element.remove();
             break;

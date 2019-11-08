@@ -298,7 +298,7 @@ public class BookKeepingServlet extends HttpServlet {
                     NewData.put(Tables.SubLedgerAccounts.Name, Name);
                     NewData.put(Tables.SubLedgerAccounts.ParentID, ParentID);
                     NewData.put(Tables.SubLedgerAccounts.ParentType, ParentType);
-                    NewSubLedgerID = DBManager.insertTableDataReturnID(Tables.LedgerAccounts.Table, NewData, "");
+                    NewSubLedgerID = DBManager.insertTableDataReturnID(Tables.SubLedgerAccounts.Table, NewData, "");
                     json = new Gson().toJson(NewSubLedgerID);
                     break;
                 }

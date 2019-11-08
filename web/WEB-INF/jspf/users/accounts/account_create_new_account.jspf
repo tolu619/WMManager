@@ -1,0 +1,142 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header bg-primary">
+            <h6 class="modal-title">Create New Account</h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+
+            <form role="form"  class="form-validation" autocomplete="off">  
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card card-body border-top-primary">
+                            <div class="text-center">
+                                <h6 class="m-0 font-weight-semibold mb-2">Select Account Type to create</h6>
+
+                                <div class="col-md-12">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="accountdefinition" value="1" class="form-check-input-styled-primary" checked data-fouc>
+                                        <label class="form-check-label"><span class="ml-2 text-primary-700">Ledger Account</span></label>  
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="accountdefinition" value="2" class="form-check-input-styled-success" data-fouc>
+                                        <label class="form-check-label"><span class="ml-2 text-success-700">Sub-ledger Account</span></label>  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" id="ledgerAcoount">
+                    <div class="card-header text-center">
+                        <h5 class="card-title bold">New ledger Account</h5>
+                        <p>fill the necessary details to create a new ledger account</p>
+                    </div>
+
+                    <div class="row padding">
+                        <div class="form-group row padding col-12">
+                            <label for="NewAccountName" class="col-sm-4">ledger Account Name</label>
+                            <input type="text" class="form-control col-sm-8" id="NewAccountName" placeholder="enter account name" required="true" required>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-12" id="accountSelection">
+                                <div class="form-group margintop">
+                                    <label>Account Type</label>
+                                    <select id="accountTypeSelect" class="form-control form-control-select2 select-search select-clear " data-fouc>
+                                        <option value="0">select account type</option>
+                                        <option></option>
+                                        <option value="1">Assets</option>
+                                        <option value="2">Contingent Assets</option>
+                                        <option value="3">Expenses</option>
+                                        <option value="4">Dividends</option>
+                                        <option value="5">Liabilities</option>
+                                        <option value="6">Contingent Liabilities</option>
+                                        <option value="7">Equity</option>
+                                        <option value="8">Revenue</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-outline-primary ml-auto hide" id="createLedgerAccount"><b><i class="icon-transmission mr-1"></i></b> Create ledger Account</button>
+                    </div>
+                </div>
+
+                <div class="card hide" id="subledgerAcoount">
+                    <div class="card-header text-center">
+                        <h5 class="card-title bold">New sub-ledger Account</h5>
+                        <p>fill the necessary details to create a new sub-ledger account</p>
+                    </div>
+
+                    <div class="row padding">
+                        <div class="form-group row padding col-12">
+                            <label for="subledgerAccountName" class="col-sm-4">sub-ledger Account Name</label>
+                            <input type="text" class="form-control col-sm-8" id="subledgerAccountName" placeholder="enter account name" required="true" required>
+                        </div>
+
+                        <div class="text-center padding center">
+                            <h6 class="m-0 font-weight-semibold mb-2">Select Parent account type</h6>
+
+                            <div class="col-md-12 text-center">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" name="parentAccount" value="1" class="form-check-input-styled-primary" checked data-fouc>
+                                    <label class="form-check-label"><span class="ml-2 text-primary-700 radiotext">Ledger</span></label>  
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" name="parentAccount" value="2" class="form-check-input-styled-success" data-fouc>
+                                    <label class="form-check-label"><span class="ml-2 text-success-700 radiotext">Sub-ledger</span></label>  
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12" id="ledgerParentSelection">
+                            <div class="form-group margintop">
+                                <label>parent ledger Account</label>
+                                <select id="parentAccountSelect" class="form-control form-control-select2 select-search select-clear " data-fouc>
+                                    <option>select ledger account</option>
+                                    <option></option>
+                                    <option value="1">Assets</option>
+                                    <option value="2">Expenses</option>
+                                    <option value="3">Dividends</option>
+                                    <option value="4">Liabilities</option>
+                                    <option value="5">Equity</option>
+                                    <option value="6">Revenue</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 hide" id="subledgerParentSelection">
+                            <div class="form-group margintop">
+                                <label>parent sub-ledger Account</label>
+                                <select id="subledgerAccountSelect" class="form-control form-control-select2 select-search select-clear " data-fouc>
+                                    <option>select sub-ledger account</option>
+                                    <option></option>
+                                    <option value="1">Assets</option>
+                                    <option value="2">Expenses</option>
+                                    <option value="3">Dividends</option>
+                                    <option value="4">Liabilities</option>
+                                    <option value="5">Equity</option>
+                                    <option value="6">Revenue</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-outline-primary ml-auto hide" id="createSubledgerAccount"><b><i class="icon-transmission mr-1"></i></b> Create sub-ledger Account</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
