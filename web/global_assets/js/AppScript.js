@@ -102,7 +102,7 @@ function performPageActions() {
         extension = "../../../";
         $("#id_main_shop").addClass("active");
         $("#id_shop_products_listing").addClass("active bg-white blacktext");
-        productListingPageFunctions();
+        singleListingPageFunctions();
     } else if (page === "prof_listings.jsp") {
         extension = "../../../";
         profilePageFundtions();
@@ -2192,11 +2192,37 @@ function productListingPageFunctions() {
 //        $(".second-content").hide();
 //    });
 
+    $("#prodSearch").click(function () {
+
+    });
+    $("#searchProduct").focus(function () {
+        GetData("Product", "GetProductHscodes", "LoadProductHscodes");
+    });
+    $('#searchProduct').keypress(function (e) {
+        if (e.which === 13) {
+            var txt = $(this).text();
+            if (txt.length > 2) {
+                alert(txt);
+            }
+        }
+    });
+
+    function listingDefault() {
+        $("#batch-listing").hide();
+        $(".first-content").hide();
+        $("#single-listing").hide();
+        $(".second-content").show();
+    }
+}
+
+function singleListingPageFunctions() {
+    GetData("Category", "GetTopCategories", "LoadTopCategories");
+    GetData("Product", "GetProductMeasurementUnits", "LoadProductUnits");
 
     $("#listingStep2forward").click(function () {
         var prodName = $("#prodName").val();
         var prodSummary = $("#prodSummary").val();
-        if (prodName.length < 1  ||  prodSummary.length < 1) {
+        if (prodName.length < 1 || prodSummary.length < 1) {
             alert("please fill all details");
         } else {
             $("#productSpecsDiv").addClass("hide").hide();
@@ -2237,13 +2263,14 @@ function productListingPageFunctions() {
     $("#listingStep5forward").click(function () {
         var variant = $("#variantSelect1").val();
         var variantValue = $("#variantValueSelect1").val();
-        alert(variant + " : " + variantValue);
+        var variantQty = $("#variantQty").val();
+        var variantPrice = $("#variantPrice").val();
         if ($("#varCheckbox").prop("checked") == false) {
             $("#productVariationsDiv").addClass("hide").hide();
             $("#productTagsDiv").removeClass("hide").show();
         } else {
-            if (variant.length < 1 || variantValue.length < 1) {
-                alert("please select variant options");
+            if (variant.length < 1 || variantValue.length < 1 || variantQty.length < 1 || variantPrice.length < 1) {
+                alert("please select variant options and fill all details");
             } else {
                 $("#productVariationsDiv").addClass("hide").hide();
                 $("#productTagsDiv").removeClass("hide").show();
@@ -2258,42 +2285,6 @@ function productListingPageFunctions() {
         $("#productTagsDiv").addClass("hide").hide();
         $("#productReviewDiv").removeClass("hide").show();
     });
-    $("#warrantyCheck").click(function () {
-        if ($(this).prop("checked") == true) {
-            $("#prod-warranty-type").removeClass("hide");
-            $("#prod-warranty-type").show();
-        } else {
-            $("#prod-warranty-type").hide();
-        }
-
-    });
-
-    $("#prodSearch").click(function () {
-
-    });
-    $("#searchProduct").focus(function () {
-        GetData("Product", "GetProductHscodes", "LoadProductHscodes");
-    });
-    $('#searchProduct').keypress(function (e) {
-        if (e.which === 13) {
-            var txt = $(this).text();
-            if (txt.length > 2) {
-                alert(txt);
-            }
-        }
-    });
-
-    function listingDefault() {
-        $("#batch-listing").hide();
-        $(".first-content").hide();
-        $("#single-listing").hide();
-        $(".second-content").show();
-    }
-}
-
-function singleListingPageFunctions() {
-    GetData("Category", "GetTopCategories", "LoadTopCategories");
-    GetData("Product", "GetProductMeasurementUnits", "LoadProductUnits");
 
     $("#warrantyCheck").click(function () {
         if ($(this).prop("checked") == true) {
@@ -13309,16 +13300,10 @@ function DisplayParamsInvolvedInTransaction(data, parent) {
         paramSet.click(function () {
             var paramValue = $(this).closest(".txnParam").find(".paramValue").val();
             var paramId = $(this).closest(".txnParam").find(".paramId").val();
+
             if (paramValue.length > 0) {
                 transactionParams[paramId] = paramValue;
                 editableParamsCounts++;
-            }
-
-            var i;
-            for (i in editableTransactionParams) {
-                if (editableTransactionParams.hasOwnProperty(i)) {
-                    ParamsCount++;
-                }
             }
             if (editableParamsCounts !== 0 && ParamsCount !== 0) {
                 if (editableParamsCounts === ParamsCount) {
