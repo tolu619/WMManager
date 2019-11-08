@@ -42,6 +42,7 @@ var AccountsRequired = [];
 var NumberOfAccountsDebited, NumberOfAccountsCredited, NumberOfDerivedParameters = 0;
 var NumberOfProcesses = 0;
 var NumberOfAccountingEntriesInCurrentProcess = 0;
+var NumberOfMemorandumEntriesInCurrentProcess = 0;
 var AttachedAlert = function ()
 {
     alert("attached alert");
@@ -929,6 +930,7 @@ function btnEvents() {
             });
         }
     });
+
 
     $(".AddNewContact").click(function () {
         $(".bd-example-modal-1").modal("show");
@@ -2190,6 +2192,72 @@ function productListingPageFunctions() {
 //        $(".second-content").hide();
 //    });
 
+
+    $("#listingStep2forward").click(function () {
+        var prodName = $("#prodName").val();
+        var prodSummary = $("#prodSummary").val();
+        if (prodName.length < 1  ||  prodSummary.length < 1) {
+            alert("please fill all details");
+        } else {
+            $("#productSpecsDiv").addClass("hide").hide();
+            $("#productDetailsDiv").removeClass("hide").show();
+        }
+    });
+    $("#listingStep1back").click(function () {
+        $("#productDetailsDiv").addClass("hide").hide();
+        $("#productSpecsDiv").removeClass("hide").show();
+    });
+    $("#listingStep3forward").click(function () {
+        var prodDesc = $("#prodDesc").val();
+        if (prodDesc.length < 1) {
+            alert("please fill all details");
+        } else {
+            $("#productDetailsDiv").addClass("hide").hide();
+            $("#productPropertiesDiv").removeClass("hide").show();
+        }
+    });
+    $("#listingStep2back").click(function () {
+        $("#productPropertiesDiv").addClass("hide").hide();
+        $("#productDetailsDiv").removeClass("hide").show();
+    });
+    $("#listingStep4forward").click(function () {
+        var prodQuantity = $("#prod-prop-quantity").val();
+        var prodPrice = $("#prod-prop-price").val();
+        if (prodQuantity.length < 1 || prodPrice.length < 1) {
+            alert("please fill all details");
+        } else {
+            $("#productPropertiesDiv").addClass("hide").hide();
+            $("#productVariationsDiv").removeClass("hide").show();
+        }
+    });
+    $("#listingStep3back").click(function () {
+        $("#productVariationsDiv").addClass("hide").hide();
+        $("#productPropertiesDiv").removeClass("hide").show();
+    });
+    $("#listingStep5forward").click(function () {
+        var variant = $("#variantSelect1").val();
+        var variantValue = $("#variantValueSelect1").val();
+        alert(variant + " : " + variantValue);
+        if ($("#varCheckbox").prop("checked") == false) {
+            $("#productVariationsDiv").addClass("hide").hide();
+            $("#productTagsDiv").removeClass("hide").show();
+        } else {
+            if (variant.length < 1 || variantValue.length < 1) {
+                alert("please select variant options");
+            } else {
+                $("#productVariationsDiv").addClass("hide").hide();
+                $("#productTagsDiv").removeClass("hide").show();
+            }
+        }
+    });
+    $("#listingStep4back").click(function () {
+        $("#productTagsDiv").addClass("hide").hide();
+        $("#productVariationsDiv").removeClass("hide").show();
+    });
+    $("#listingStep6forward").click(function () {
+        $("#productTagsDiv").addClass("hide").hide();
+        $("#productReviewDiv").removeClass("hide").show();
+    });
     $("#warrantyCheck").click(function () {
         if ($(this).prop("checked") == true) {
             $("#prod-warranty-type").removeClass("hide");
@@ -12360,12 +12428,14 @@ function BookKeepingPageFunctions()
         if (NumberOfProcesses > 0)
             NumberOfProcesses--;
         NumberOfAccountingEntriesInCurrentProcess = 0;
+        NumberOfMemorandumEntriesInCurrentProcess = 0;
         $("#NumberOfProcessLabel").text(NumberOfProcesses);
     });
     $("#NewProcessButton").click(function ()
     {
         NumberOfProcesses++;
         NumberOfAccountingEntriesInCurrentProcess++;
+        NumberOfMemorandumEntriesInCurrentProcess++;
         $("#NumberOfProcessLabel").text(NumberOfProcesses);
         $("#NewProcessButtonDiv").addClass("hide");
         var Parent = $("#NewProcessParent");
@@ -12499,6 +12569,7 @@ function InstantiateNewProcessDivUI(DivClone)
     DivClone.find(".AccountingEntriesTableRowClone").addClass("clearclone ProcessWIP"); //Use this to identify Work In Progress UI for accounting entries
     DivClone.find("tr").removeClass("AccountingEntriesTableRowClone");
     DivClone.find(".NewAccountingEntryButton").click(AddNewAccountingEntryTableRow);
+    DivClone.find(".NewMemorandumEntryButton").click(AddNewMemorandumEntryTableRow);
     GetData("BookKeeping", "GetTransactionParameters", "PopulateParametersSelect");
     DivClone.find("#parameterTypeSelect").change(function ()
     {
@@ -12519,6 +12590,24 @@ function InstantiateNewProcessDivUI(DivClone)
             DivClone.find(".NewDerivedParamDiv").addClass("hide");
             DivClone.find(".NewIndependentParamDiv").addClass("hide");
             DivClone.find(".NewFixedParamDiv").addClass("hide");
+        }
+
+    });
+    DivClone.find("#entryTypeSelect").change(function ()
+    {
+        var entryTypeOption = $("#entryTypeSelect").val();
+        if (entryTypeOption == 1) {
+            DivClone.find("#balanceSheetEntryDiv").removeClass("hide");
+            DivClone.find(".SaveNewProcessButton").removeClass("hide");
+            DivClone.find("#memorandumEntryDiv").addClass("hide");
+        } else if (entryTypeOption == 2) {
+            DivClone.find("#memorandumEntryDiv").removeClass("hide");
+            DivClone.find(".SaveNewProcessButton").removeClass("hide");
+            DivClone.find("#balanceSheetEntryDiv").addClass("hide");
+        } else {
+            DivClone.find("#balanceSheetEntryDiv").addClass("hide");
+            DivClone.find("#memorandumEntryDiv").addClass("hide");
+            DivClone.find(".SaveNewProcessButton").addClass("hide");
         }
 
     });
@@ -12559,6 +12648,7 @@ function InstantiateNewProcessDivUI(DivClone)
     {
         alert("Saving New Transaction. In updated version, this will save only the current process's accounting entries. This will not save the new transaction");
         SaveNewTransactionType(DivClone);
+        $("#savedAccountingEnteries").removeClass("hide").show();
     });
 }
 function AddNewIndependentParam(DivClone)
@@ -12785,7 +12875,7 @@ function DisplayJournalEntryDetailsForTransactionType(data)
 
 var AddNewAccountingEntryTableRow = function ()
 {
-    var Parent = $(".AccountingEntriesTableBody");
+    var Parent = $("#AccountingEntriesTableBody");
     var ChildClone = $(".AccountingEntriesTableRowClone");
     var ThisChild = ChildClone.clone();
     ThisChild.removeClass("AccountingEntriesTableRowClone");
@@ -12800,6 +12890,23 @@ var AddNewAccountingEntryTableRow = function ()
     ThisChild.appendTo(Parent).show();
 };
 
+var AddNewMemorandumEntryTableRow = function ()
+{
+    var Parent = $("#MemorandumEntriesTableBody");
+    var ChildClone = $(".Clone");
+    var ThisChild = ChildClone.clone();
+    ThisChild.removeClass("Clone");
+    ThisChild.addClass("memorandumclone");
+    ThisChild.addClass("ProcessWIP"); //Use this to identify Work In Progress UI for accounting entries
+    ThisChild.find(".ContingentLedgerAccountsDropdown").change(function ()
+    {
+        LedgerDropDownValueChanged(this.value, this);
+    });
+    NumberOfMemorandumEntriesInCurrentProcess++;
+    ThisChild.find(".MemorandumEntriesIndexNumber").text(NumberOfMemorandumEntriesInCurrentProcess);
+    ThisChild.appendTo(Parent).show();
+};
+
 function PopulateLedgerDropDownsMethod(data)
 {
     var AccountTypesDropDownLists = $(".AccountTypesDropdown");
@@ -12807,8 +12914,10 @@ function PopulateLedgerDropDownsMethod(data)
     $("<option />", {text: "--Please select a Ledger Account--", value: 0}).appendTo(AccountTypesDropDownLists);
     $.each(data, function (index, Value)
     {
-//        var SubLedgers = Value["BookKeepingAccountType"];  just work
-        $("<option />", {text: capitaliseFirstLetter(Value["name"]), value: Value["id"]}).appendTo(AccountTypesDropDownLists);
+        var type = Value["BookKeepingAccountType"];
+        if (!(type.includes("Contingent"))) {
+            $("<option />", {text: capitaliseFirstLetter(Value["name"]), value: Value["id"]}).appendTo(AccountTypesDropDownLists);
+        }
     });
 }
 
@@ -12816,6 +12925,7 @@ function LedgerDropDownValueChanged(ID, ThisDropDown)
 {
     var SubDropDownList = $(ThisDropDown).closest("td").find(".SubAccountTypesDropdown");
     SubDropDownList.empty();
+    $(".SubAccountTypesDropdown").removeClass("hide").show();
     GetData("BookKeeping", "GetSubLedgersByLedgerID", "PopulateSubLedgerDropDowns", ID);
 }
 
@@ -12953,14 +13063,13 @@ function DisplayContingentLedgerAccounts(data, parent) {
         } else {
             parent.append($('<option/>').val(0).text("No Contingent account"));
         }
-
         parent.change(function () {
             var ledgerId = $(this).val();
             if (ledgerId != 0) {
                 var account = data[ledgerId];
                 var type = account["BookKeepingAccountType"].split(" ")[1];
-                $(".contingentAccType").text(type).removeClass("hide").show();
-                $(".ContingentSubLedgerAccountsDropdown").removeClass("hide").show();
+                $(this).closest(".MemorandumEntriesTableRow").find(".contingentAccType").text(type).removeClass("hide").show();
+                $(this).closest(".MemorandumEntriesTableRow").find(".ContingentSubLedgerAccountsDropdown").removeClass("hide").show();
                 GetData("BookKeeping", "GetSubLedgersByLedgerID", "LoadContingentSubLedgerAccounts", ledgerId);
             } else {
                 alert("please select a valid account");
@@ -13144,6 +13253,12 @@ function DisplayParamsInvolvedInTransaction(data, parent) {
                 editableParamsCounts++;
             }
 
+            var i;
+            for (i in editableTransactionParams) {
+                if (editableTransactionParams.hasOwnProperty(i)) {
+                    ParamsCount++;
+                }
+            }
             if (editableParamsCounts !== 0 && ParamsCount !== 0) {
                 if (editableParamsCounts === ParamsCount) {
                     $("#transactionCommentForm").removeClass("hide").show();
@@ -14290,7 +14405,44 @@ function linkToFunction(action, params) {
                     ThisChild.find(".CreditAccountOwner").text(CreditAccountOwner);
                     ThisChild.appendTo(Parent).show();
                 }
+                if (index < NumberOfMemorandumEntriesInCurrentProcess) //To avoid picking values from the hidden DOM elements that were cloned to create this UI
+                {
+                    var ThisChild = ChildClone.clone();
+                    ThisChild.removeClass("AccountingEntriesDisplayTableDataClone");
+                    ThisChild.removeClass("hide");
+                    ThisChild.addClass("clearclone");
+                    var MemorandumEntriesIndexNumber = $(this).find(".MemorandumEntriesIndexNumber").text();
+                    var MemorandumEntryDescription = $(this).find(".MemorandumEntryDescription").val();
+                    var Amount = $(this).find(".DebitAmount").val();
+                    var Account = $(this).find(".ContingentLedgerAccountsDropdown").val();
+                    var SubAccount = $(this).find(".ContingentSubLedgerAccountsDropdown").val();
+                    var AccountOwner = $(this).find(".DebitAccountOwner").val();
+                    var Type = $(this).find(".contingentAccType").text();
+                    if (Type == "assets") {
+                        var data = [MemorandumEntriesIndexNumber, MemorandumEntryDescription, "", "",
+                            "", Amount, SubAccount, AccountOwner, NewTransactionID];
+                        GetData("BookKeeping", "NewAccountingEntry", "SaveNewAccountingEntryResponse", data);
+                        ThisChild.find(".AccountingEntriesIndexNumber").text(MemorandumEntriesIndexNumber);
+                        ThisChild.find(".AccountingEntryDescription").text(MemorandumEntryDescription);
+                        ThisChild.find(".CreditAmount").text(Amount);
+                        ThisChild.find(".CreditAccount").text(Account);
+                        ThisChild.find(".CreditSubAccount").text(SubAccount);
+                        ThisChild.find(".CreditAccountOwner").text(AccountOwner);
+                    } else {
+                        var data = [MemorandumEntriesIndexNumber, MemorandumEntryDescription, Amount, SubAccount,
+                            AccountOwner, "", "", "", NewTransactionID];
+                        GetData("BookKeeping", "NewAccountingEntry", "SaveNewAccountingEntryResponse", data);
+                        ThisChild.find(".AccountingEntriesIndexNumber").text(MemorandumEntriesIndexNumber);
+                        ThisChild.find(".AccountingEntryDescription").text(MemorandumEntryDescription);
+                        ThisChild.find(".DebitAmount").text(Amount);
+                        ThisChild.find(".DebitAccount").text(Account);
+                        ThisChild.find(".DebitSubAccount").text(SubAccount);
+                        ThisChild.find(".DebitAccountOwner").text(AccountOwner);
+                    }
+                    ThisChild.appendTo(Parent).show();
+                }
             });
+
             //Code group two. Replace this with the code block of the same name from Evernote 
             DOM_Element.remove();
             break;

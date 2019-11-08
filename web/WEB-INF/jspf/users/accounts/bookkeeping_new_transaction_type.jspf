@@ -88,6 +88,7 @@
                     </table>
                 </div>
 
+
                 <div id="NewTransactionUI">
                     <div class="tilebar padding-horizontal ">
                         <div id="NewTransactionBasicInfo" class="tiletablerow padding-horizontal">
@@ -181,7 +182,7 @@
                                     <div class="row padding">
                                         <label class="col-sm-3" for="parameterTypeSelect">Existing Parameters</label>
                                         <select class="FormulaParametersSelect"></select>
-                                        <button class=" AddParamToFormulaButton btn btn-sm btn-primary marginleft" type="submit" value="Add To Formula">Add To Formula</button>
+                                        <button class=" AddParamToFormulaButton btn btn-sm btn-outline-primary marginleft" type="submit" value="Add To Formula">Add To Formula</button>
                                     </div>
                                     <div class="row padding">
                                         <label class="col-sm-2" for="parameterTypeSelect">Pick Operator</label>
@@ -195,8 +196,8 @@
                                             <option value="(">( (Open Bracket)</option>
                                             <option value=")">) (Close Bracket)</option>
                                         </select>
-                                        <button class=" AddParamToFormulaButton btn btn-sm btn-primary margin-horizontal" type="submit" value="Add To Formula">Add to formula</button>
-                                        <button class=" BackspaceFormulaButton btn btn-sm btn-danger" type="submit" value="backspace">backspace</button>
+                                        <button class=" AddParamToFormulaButton btn btn-sm btn-outline-primary margin-horizontal" type="submit" value="Add To Formula">Add to formula</button>
+                                        <button class=" BackspaceFormulaButton btn btn-sm btn-outline-danger" type="submit" value="backspace">backspace</button>
                                     </div>
 
                                     <h4>Formula: <label class="FormulaLabel"></label></h4><br>
@@ -211,210 +212,223 @@
 
                             <h4><b>Parameters:</b> <label class="ParametersLabel"></label></h4><br>
 
-                            <h4 class="text-center bold margintop">Accounting Entries 
-                                <button class="NewAccountingEntryButton btn btn-sm btn-primary" type="submit" value="+" tooltip="Add New Accounting Entry"><i class="icon-add mr-2"></i>Add new</button>
-                            </h4>
+                            <!--                            <div class=" hide ShowNewProcessesDiv card padding table-responsive">
+                                                            <table class="table table-hover">
+                                                                <thead class="thead-dark">
+                                                                    <tr>
+                                                                        <th>Step #</th>
+                                                                        <th>Description</th>
+                                                                        <th>Debit (Amount)</th>
+                                                                        <th>Debit (Account)</th>
+                                                                        <th>Debit Account owner</th>
+                                                                        <th>Credit (Amount)</th>
+                                                                        <th>Credit (Account)</th>
+                                                                        <th>Credit Account owner</th>
+                                                                    </tr>
+                                                                    <tr class="ShowInTableRowOriginal">
+                                                                        <td class="ShowInTableStepNo">Step #</td>
+                                                                        <td class="ShowInTableDescription">Step #</td>
+                                                                        <td class="ShowInTableDebitAmount">Step #</td>
+                                                                        <td class="ShowInTableDebitAccount">Step #</td>
+                                                                        <td class="ShowInTableDebitAccountOwner">Step #</td>
+                                                                        <td class="ShowInTableCreditAmount">Step #</td>
+                                                                        <td class="ShowInTableCreditAccount">Step #</td>
+                                                                        <td class="ShowInTableCreditOwner">Step #</td>
+                                                                    </tr>
+                                                                </thead>
+                                                            </table>
+                                                        </div>-->
 
-                            <div class=" hide ShowNewProcessesDiv card padding table-responsive">
-                                <table class="table table-hover">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Step #</th>
-                                            <th>Description</th>
-                                            <th>Debit (Amount)</th>
-                                            <th>Debit (Account)</th>
-                                            <th>Debit Account owner</th>
-                                            <th>Credit (Amount)</th>
-                                            <th>Credit (Account)</th>
-                                            <th>Credit Account owner</th>
-                                        </tr>
-                                        <tr class="ShowInTableRowOriginal">
-                                            <td class="ShowInTableStepNo">Step #</td>
-                                            <td class="ShowInTableDescription">Step #</td>
-                                            <td class="ShowInTableDebitAmount">Step #</td>
-                                            <td class="ShowInTableDebitAccount">Step #</td>
-                                            <td class="ShowInTableDebitAccountOwner">Step #</td>
-                                            <td class="ShowInTableCreditAmount">Step #</td>
-                                            <td class="ShowInTableCreditAccount">Step #</td>
-                                            <td class="ShowInTableCreditOwner">Step #</td>
-                                        </tr>
-                                    </thead>
-                                </table>
+                            <div>
+                                <h4 class="text-center margintop bold">Transaction Accounting entries</h4>
+                                <div class="row marginbottom">
+                                    <label class="col-sm-3" for="entryTypeSelect">Accounting entry Type</label>
+                                    <select class="custom-select col-sm-9" id="entryTypeSelect">
+                                        <option selected>select accounting entry type</option>
+                                        <option ></option>
+                                        <option value="1">Balance sheet Entries </option>
+                                        <option value="2">Memorandum Entries</option>
+                                    </select>
+                                </div>
                             </div>
 
-                            <div class="card padding table-responsive">
-                                <table class="NewProcessAccountingEntries TableHorizontalScroll table table-hover">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Step #</th>
-                                            <th>Description</th>
-                                            <th>Debit (Amount)</th>
-                                            <th>Debit (Account)</th>
-                                            <th>Debit Account owner</th>
-                                            <th>Credit (Amount)</th>
-                                            <th>Credit (Account)</th>
-                                            <th>Credit Account owner</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="AccountingEntriesTableRowClone">
-                                            <td class="AccountingEntriesIndexNumber">1</td>
-                                            <td><input class="AccountingEntryDescription" placeholder="Brief description of this step of the transaction" /></td>
-                                            <td>
-                                                <div class="DebitAmountParent">
-                                                    <div>
-                                                        <select class="ParametersSelect DebitAmount"></select> 
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <select class="AccountTypesDropdown DebitAccount "></select>
-                                                <select class="SubAccountTypesDropdown DebitSubAccount "></select><br>
-                                            </td>
-                                            <td>
-                                                <select class="DebitAccountOwner">
-                                                    <option>MOE</option>
-                                                    <option>Party A</option>
-                                                    <option>Party B</option>
-                                                    <option>Party C</option>
-                                                    <option>Party D</option>
-                                                    <option>Party E</option>
-                                                    <option>Party F</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <div class="ThirdPartyRecieveListParent">
-                                                    <div>
-                                                        <select class="ParametersSelect CreditAmount"></select> 
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <select class="AccountTypesDropdown CreditAccount "></select>
-                                                <select class="SubAccountTypesDropdown CreditSubAccount "></select><br>
-                                            </td>
-                                            <td>
-                                                <select class="CreditAccountOwner">
-                                                    <option>MOE</option>
-                                                    <option>Party A</option>
-                                                    <option>Party B</option>
-                                                    <option>Party C</option>
-                                                    <option>Party D</option>
-                                                    <option>Party E</option>
-                                                    <option>Party F</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                            <h4 class="text-center bold margintop">Memorandum Entries 
-                                <button class="NewMemorandumEntryButton btn btn-sm btn-primary" type="submit" value="+" tooltip="Add New Memorandum Entry"><i class="icon-add mr-2"></i>Add new</button>
-                            </h4>
-                            <div class="card padding table-responsive">
-                                <table class="NewProcessMemorandumEntries TableHorizontalScroll table table-hover">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Step #</th>
-                                            <th>Description</th>
-                                            <th>Amount</th>
-                                            <th>Account</th>
-                                            <th >Account Type (Contingent)</th>
-                                            <th>Account Owner</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="MemorandumEntriesTableRowClone">
-                                            <td class="MemorandumEntriesIndexNumber">1</td>
-                                            <td><input class="MemorandumEntryDescription" placeholder="Brief description of this step of the transaction" /></td>
-                                            <td>
-                                                <div class="DebitAmountParent">
-                                                    <div>
-                                                        <select class="ParametersSelect DebitAmount"></select> 
-                                                    </div>
-                                                </div>
-                                            </td>                                        
-                                            <td>
-                                                <select class="ContingentLedgerAccountsDropdown "></select>
-                                                <select class="ContingentSubLedgerAccountsDropdown hide "></select><br>
-                                            </td>
-                                            <td ><span class="btn-info btn-sm contingentAccType hide" id="contingentAccType"> assets </span></td>
-                                            <td>
-                                                <select class="">
-                                                    <option>MOE</option>
-                                                    <option>Party A</option>
-                                                    <option>Party B</option>
-                                                    <option>Party C</option>
-                                                    <option>Party D</option>
-                                                    <option>Party E</option>
-                                                    <option>Party F</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div class="">
+                                <div id="balanceSheetEntryDiv" class="hide">
+                                    <h4 class="text-center bold margintop">Balance Sheet Entries 
+                                        <button class="NewAccountingEntryButton btn btn-sm btn-primary" type="submit" value="+" tooltip="Add New Accounting Entry"><i class="icon-add mr-2"></i>Add new</button>
+                                    </h4>
+                                    <div class="card padding table-responsive">
+                                        <table class="NewProcessAccountingEntries TableHorizontalScroll table table-hover">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Step #</th>
+                                                    <th>Description</th>
+                                                    <th>Debit (Amount)</th>
+                                                    <th>Debit (Account)</th>
+                                                    <th>Debit Account owner</th>
+                                                    <th>Credit (Amount)</th>
+                                                    <th>Credit (Account)</th>
+                                                    <th>Credit Account owner</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="AccountingEntriesTableBody">
+                                                <tr class="AccountingEntriesTableRowClone">
+                                                    <td class="AccountingEntriesIndexNumber">1</td>
+                                                    <td><input class="AccountingEntryDescription" placeholder="Brief description of this step of the transaction" /></td>
+                                                    <td>
+                                                        <div class="DebitAmountParent">
+                                                            <div>
+                                                                <select class="ParametersSelect DebitAmount"></select> 
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <select class="AccountTypesDropdown DebitAccount "></select>
+                                                        <select class="SubAccountTypesDropdown DebitSubAccount hide"></select><br>
+                                                    </td>
+                                                    <td>
+                                                        <select class="DebitAccountOwner">
+                                                            <option>MOE</option>
+                                                            <option>Party A</option>
+                                                            <option>Party B</option>
+                                                            <option>Party C</option>
+                                                            <option>Party D</option>
+                                                            <option>Party E</option>
+                                                            <option>Party F</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <div class="ThirdPartyRecieveListParent">
+                                                            <div>
+                                                                <select class="ParametersSelect CreditAmount"></select> 
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <select class="AccountTypesDropdown CreditAccount "></select>
+                                                        <select class="SubAccountTypesDropdown CreditSubAccount hide"></select><br>
+                                                    </td>
+                                                    <td>
+                                                        <select class="CreditAccountOwner">
+                                                            <option>MOE</option>
+                                                            <option>Party A</option>
+                                                            <option>Party B</option>
+                                                            <option>Party C</option>
+                                                            <option>Party D</option>
+                                                            <option>Party E</option>
+                                                            <option>Party F</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div id="memorandumEntryDiv" class="hide">
+                                    <h4 class="text-center bold margintop">Memorandum Entries 
+                                        <button class="NewMemorandumEntryButton btn btn-sm btn-primary" type="submit" value="+" tooltip="Add New Memorandum Entry"><i class="icon-add mr-2"></i>Add new</button>
+                                    </h4>
+
+                                    <div class="card padding table-responsive">
+                                        <table class="NewProcessMemorandumEntries TableHorizontalScroll table table-hover">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Step #</th>
+                                                    <th>Description</th>
+                                                    <th>Amount</th>
+                                                    <th>Account</th>
+                                                    <th >Account Type (Contingent)</th>
+                                                    <th>Account Owner</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="MemorandumEntriesTableBody">
+                                                <tr class="MemorandumEntriesTableRow Clone">
+                                                    <td class="MemorandumEntriesIndexNumber">1</td>
+                                                    <td><input class="MemorandumEntryDescription" placeholder="Brief description of this step of the transaction" /></td>
+                                                    <td>
+                                                        <div class="DebitAmountParent">
+                                                            <div>
+                                                                <select class="ParametersSelect DebitAmount"></select> 
+                                                            </div>
+                                                        </div>
+                                                    </td>                                        
+                                                    <td>
+                                                        <select class="ContingentLedgerAccountsDropdown "></select>
+                                                        <select class="ContingentSubLedgerAccountsDropdown hide "></select><br>
+                                                    </td>
+                                                    <td ><span class="btn-info btn-sm contingentAccType hide" > assets </span></td>
+                                                    <td>
+                                                        <select class="">
+                                                            <option>MOE</option>
+                                                            <option>Party A</option>
+                                                            <option>Party B</option>
+                                                            <option>Party C</option>
+                                                            <option>Party D</option>
+                                                            <option>Party E</option>
+                                                            <option>Party F</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                                <div class="text-center double-marginbottom right double-margintop">                          
+                                    <button class="SaveNewProcessButton btn btn-primary btn-sm hide" type="submit" value="Save New Process" >Save New Process</button>
+                                </div>
                             </div>
 
-                            <div class="text-center double-marginbottom right">                          
-                                <button class="SaveNewProcessButton btn btn-primary btn-sm" type="submit" value="Save New Process" >Save New Process</button>
+                        </div>
+
+                        <div class="card padding table-responsive double-margintop hide" id="savedAccountingEnteries">
+                            <h5 class="text-center bold"> Saved accounting enteries</h5>
+                            <table class="AccountingEntriesDisplayTable table table-hover" >
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Step #</th>
+                                        <th>Description</th>
+                                        <th>Debit (Amount)</th>
+                                        <th>Debit (Account)</th>
+                                        <th>Debit (Sub Account)</th>
+                                        <th>Debit Account Owner</th>
+                                        <th>Credit (Amount)</th>
+                                        <th>Credit (Account)</th>
+                                        <th>Credit (Sub Account)</th>
+                                        <th>Credit Account Owner</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="AccountingEntriesDisplayTableDataParent">
+                                    <tr class="AccountingEntriesDisplayTableDataClone hide">
+                                        <td class="AccountingEntriesIndexNumber"></td>
+                                        <td class="AccountingEntryDescription"></td>
+                                        <td class="DebitAmount"></td>
+                                        <td class="DebitAccount"></td>
+                                        <td class="DebitSubAccount"></td>
+                                        <td class="DebitAccountOwner"></td>
+                                        <td class="CreditAmount"></td>
+                                        <td class="CreditAccount"></td>
+                                        <td class="CreditSubAccount"></td>
+                                        <td class="CreditAccountOwner"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="margintop row col-12" >
+                            <div class="form-group row col-12">
+                                <label for="NewTransactionComments">Other Notes and Comments</label>
+                                <textarea class="form-control" id="NewTransactionComments" rows="3"></textarea>
+                            </div>
+
+                            <div class="  row text-center center">
+                                <button class="btn btn-danger " id="CancelNewTransactionButton"><b><i class="icon-cancel-circle2 mr-1"></i></b>Cancel New Transaction Type</button>
+                                <span class="right marginleft"><button class="btn btn-primary " id="SaveNewTransactionButton">Save New Transaction Type<b><i class="icon-checkmark-circle ml-1"></i></b></button></span>
                             </div>
                         </div>
 
-                            <div class="card padding table-responsive double-margintop">
-                                <h5 class="text-center bold"> Saved accounting enteries</h5>
-                                <table class="AccountingEntriesDisplayTable table table-hover" >
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Step #</th>
-                                            <th>Description</th>
-                                            <th>Debit (Amount)</th>
-                                            <th>Debit (Account)</th>
-                                            <th>Debit (Sub Account)</th>
-                                            <th>Debit Account Owner</th>
-                                            <th>Credit (Amount)</th>
-                                            <th>Credit (Account)</th>
-                                            <th>Credit (Sub Account)</th>
-                                            <th>Credit Account Owner</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="AccountingEntriesDisplayTableDataParent">
-
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="card padding table-responsive">
-                                <table class="hide table table-hover">
-                                    <thead class="thead-dark"></thead>
-                                    <tbody>
-                                        <tr class="AccountingEntriesDisplayTableDataClone hide">
-                                            <td class="AccountingEntriesIndexNumber"></td>
-                                            <td class="AccountingEntryDescription"></td>
-                                            <td class="DebitAmount"></td>
-                                            <td class="DebitAccount"></td>
-                                            <td class="DebitSubAccount"></td>
-                                            <td class="DebitAccountOwner"></td>
-                                            <td class="CreditAmount"></td>
-                                            <td class="CreditAccount"></td>
-                                            <td class="CreditSubAccount"></td>
-                                            <td class="CreditAccountOwner"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        <div class="form-group">
-                            <label for="NewTransactionComments">Other Notes and Comments</label>
-                            <textarea class="form-control" id="NewTransactionComments" rows="3"></textarea>
-                        </div>
-
-                        <div class=" margin padding row">
-                            <button class=" CancelNewTransactionButton btn btn-sm btn-danger" id="CancelNewTransactionButton" type="submit" value="Cancel New Transaction Type">Cancel New Transaction Type</button>
-                            <div class="right">     
-                                <button class="SaveNewTransactionButton btn btn-primary btn-sm marginleft" id="SaveNewTransactionButton" type="submit" value="Save New Transaction Type" >Save New Transaction Type</button>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="padding">
