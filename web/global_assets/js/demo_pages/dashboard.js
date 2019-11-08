@@ -3780,10 +3780,8 @@ var Dashboard = function () {
             // Progress charts
             _ProgressPieChart('#today-progress', 20, 20, '#7986CB');
             _ProgressPieChart('#yesterday-progress', 20, 20, '#7986CB');
-            _RoundedProgressChart('#hours-available-progress', 38, 2, '#F06292', 0.23, 'icon-price-tags text-pink-400', 'Products', '35% average');
-            _RoundedProgressChart('#hours-available-progress2', 38, 2, '#F06292', 0.45, 'icon-credit-card2 text-pink-400', 'Cash', '64% average');
-            _RoundedProgressChart('#goal-progress', 38, 2, '#5C6BC0', 0.12, 'icon-stats-decline text-indigo-400', 'Service', '45% average');
-            _RoundedProgressChart('#goal-progress2', 38, 2, '#5C6BC0', 0.52, 'icon-coins text-indigo-400', 'Warrant', '87% average');
+            _RoundedProgressChart('#hours-available-progress', 38, 2, '#F06292', 0.68, 'icon-watch text-pink-400', 'Hours available', '64% average');
+            _RoundedProgressChart('#goal-progress', 38, 2, '#5C6BC0', 0.82, 'icon-trophy3 text-indigo-400', 'Productivity goal', '87% average');
 
             // Donut charts
             _MarketingCampaignsDonutChart('#campaigns-donut', 42);
@@ -3792,9 +3790,7 @@ var Dashboard = function () {
 
             // Bar charts
             _BarChart('#hours-available-bars', 24, 40, true, 'elastic', 1200, 50, '#EC407A', 'hours');
-            _BarChart('#hours-available-bars2', 24, 40, true, 'elastic', 1200, 50, '#EC407A', 'hours');
             _BarChart('#goal-bars', 24, 40, true, 'elastic', 1200, 50, '#5C6BC0', 'goal');
-            _BarChart('#goal-bars2', 24, 40, true, 'elastic', 1200, 50, '#5C6BC0', 'goal');
             _BarChart('#members-online', 24, 50, true, 'elastic', 1200, 50, 'rgba(255,255,255,0.5)', 'members');
 
             // Heatmap

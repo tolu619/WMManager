@@ -160,7 +160,7 @@ public class CategoryServlet extends HttpServlet {
                                         if (!catdetails.isEmpty()) {
                                             CatIds.add(catdetails);
                                             ArrayList<HashMap<String, String>> SubCatIds = new ArrayList<>();
-                                            ArrayList<Integer> subids = GeneralProductManager.getCat_SubCatsWithoutLimit(catid);
+                                            ArrayList<Integer> subids = GeneralProductManager.getCat_SubCatIDsWithoutLimit(catid);
                                             if (!subids.isEmpty()) {
                                                 for (int subid : subids) {
                                                     HashMap<String, String> subdetails = GeneralProductManager.GetProductCatDetails(subid);

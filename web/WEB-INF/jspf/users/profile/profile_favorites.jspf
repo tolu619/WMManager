@@ -91,7 +91,7 @@
                                                 <div class="mr-sm-3 mb-2 mb-sm-0">
                                                     <div class="card-img-actions">
                                                         <a href="#">
-                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <img src="../../../global_assets/img/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
                                                         </a>
                                                     </div>
                                                 </div>
@@ -110,7 +110,7 @@
                                                 <div class="mr-sm-3 mb-2 mb-sm-0">
                                                     <div class="card-img-actions">
                                                         <a href="#">
-                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <img src="../../../global_assets/img/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
                                                             <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
                                                         </a>
                                                     </div>
@@ -130,7 +130,7 @@
                                                 <div class="mr-sm-3 mb-2 mb-sm-0">
                                                     <div class="card-img-actions">
                                                         <a href="#">
-                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <img src="../../../global_assets/img/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
                                                             <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
                                                         </a>
                                                     </div>
@@ -150,7 +150,7 @@
                                                 <div class="mr-sm-3 mb-2 mb-sm-0">
                                                     <div class="card-img-actions">
                                                         <a href="#">
-                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <img src="../../../global_assets/img/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
                                                             <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
                                                         </a>
                                                     </div>
@@ -170,7 +170,7 @@
                                                 <div class="mr-sm-3 mb-2 mb-sm-0">
                                                     <div class="card-img-actions">
                                                         <a href="#">
-                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <img src="../../../global_assets/img/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
                                                             <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
                                                         </a>
                                                     </div>
@@ -202,7 +202,7 @@
                                 <div class="col-12 col-lg-4">
                                     <div class="card card-body">
                                         <div class="mb-3">
-                                            <a href="#"><img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid rounded" alt=""></a>
+                                            <a href="#"><img src="../../../global_assets/img/placeholders/placeholder.jpg" class="img-fluid rounded" alt=""></a>
                                         </div>
 
                                         <h5 class="font-weight-semibold">Limitless UI kit</h5>
@@ -237,7 +237,7 @@
                                                 <div class="mr-sm-3 mb-2 mb-sm-0">
                                                     <div class="card-img-actions">
                                                         <a href="#">
-                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <img src="../../../global_assets/img/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
                                                             <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
                                                         </a>
                                                     </div>
@@ -257,7 +257,7 @@
                                                 <div class="mr-sm-3 mb-2 mb-sm-0">
                                                     <div class="card-img-actions">
                                                         <a href="#">
-                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <img src="../../../global_assets/img/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
                                                             <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
                                                         </a>
                                                     </div>
@@ -277,7 +277,7 @@
                                                 <div class="mr-sm-3 mb-2 mb-sm-0">
                                                     <div class="card-img-actions">
                                                         <a href="#">
-                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <img src="../../../global_assets/img/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
                                                             <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
                                                         </a>
                                                     </div>
@@ -297,7 +297,7 @@
                                                 <div class="mr-sm-3 mb-2 mb-sm-0">
                                                     <div class="card-img-actions">
                                                         <a href="#">
-                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <img src="../../../global_assets/img/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
                                                             <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
                                                         </a>
                                                     </div>
@@ -331,7 +331,7 @@
                                 <div class="col-12 col-lg-4">
                                     <div class="card card-body">
                                         <div class="mb-3">
-                                            <a href="#"><img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid rounded" alt=""></a>
+                                            <a href="#"><img src="../../../global_assets/img/placeholders/placeholder.jpg" class="img-fluid rounded" alt=""></a>
                                         </div>
 
                                         <h5 class="font-weight-semibold">Limitless UI kit</h5>
@@ -436,7 +436,7 @@
                                                 <div class="mr-sm-3 mb-2 mb-sm-0">
                                                     <div class="card-img-actions">
                                                         <a href="#">
-                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <img src="../../../global_assets/img/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
                                                             <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
                                                         </a>
                                                     </div>
@@ -456,7 +456,7 @@
                                                 <div class="mr-sm-3 mb-2 mb-sm-0">
                                                     <div class="card-img-actions">
                                                         <a href="#">
-                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <img src="../../../global_assets/img/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
                                                             <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
                                                         </a>
                                                     </div>
@@ -476,7 +476,7 @@
                                                 <div class="mr-sm-3 mb-2 mb-sm-0">
                                                     <div class="card-img-actions">
                                                         <a href="#">
-                                                            <img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
+                                                            <img src="../../../global_assets/img/placeholders/placeholder.jpg" class="img-fluid img-preview rounded" alt="">
                                                             <span class="card-img-actions-overlay card-img"><i class="icon-play3"></i></span>
                                                         </a>
                                                     </div>
@@ -510,7 +510,7 @@
                                 <div class="col-12 col-lg-4">
                                     <div class="card card-body">
                                         <div class="mb-3">
-                                            <a href="#"><img src="../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid rounded" alt=""></a>
+                                            <a href="#"><img src="../../../global_assets/img/placeholders/placeholder.jpg" class="img-fluid rounded" alt=""></a>
                                         </div>
 
                                         <h5 class="font-weight-semibold">Limitless UI kit</h5>

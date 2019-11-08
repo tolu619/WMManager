@@ -304,6 +304,39 @@ public class ProductServlet extends HttpServlet {
                     json = new Gson().toJson(result);
                     break;
                 }
+                case "DeletePromoProduct": {
+                    String[] data = request.getParameterValues("data[]");
+                    String promoid = data[0];
+                    String prodid = data[1];
+                    int Promoid = Integer.parseInt(promoid);
+                    int Prodid = Integer.parseInt(prodid);
+                    result = GeneralProductManager.DeletePromoProduct(Promoid, Prodid);
+                    if (result.equals("successful") || result.equals("success")) {
+                        json1 = new Gson().toJson("Successful.");
+                        json2 = new Gson().toJson("success");
+                    } else {
+                        json1 = new Gson().toJson("Oop! something went wrong, please try again.");
+                        json2 = new Gson().toJson("warning");
+                    }
+                    String json3 = new Gson().toJson("Delete Promo Product");
+                    json = "[" + json1 + "," + json2 + "," + json3 + "]";
+                    break;
+                }
+                case "DeletePromo": {
+                    String promoid = request.getParameter("data");;
+                    int Promoid = Integer.parseInt(promoid);
+                    result = GeneralProductManager.DeletePromo(Promoid);
+                    if (result.equals("successful") || result.equals("success")) {
+                        json1 = new Gson().toJson("Successful.");
+                        json2 = new Gson().toJson("success");
+                    } else {
+                        json1 = new Gson().toJson("Oop! something went wrong, please try again.");
+                        json2 = new Gson().toJson("warning");
+                    }
+                    String json3 = new Gson().toJson("Delete Promo/Deal");
+                    json = "[" + json1 + "," + json2 + "," + json3 + "]";
+                    break;
+                }
                 case "GetPickUpCentres": {
                     ArrayList<Integer> PickupStateIDs = GeneralUserManager.getPickUpCentreStateIDs();
                     HashMap<Integer, HashMap<String, String>> StateList = new HashMap<>();
@@ -656,7 +689,7 @@ public class ProductServlet extends HttpServlet {
                     }
                     break;
                 }
-                
+
                 case "AddAddressTypes": {
                     String[] data = request.getParameterValues("data[]");
                     String addtype = data[0];
